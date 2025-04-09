@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "@/app/globals.css";
 
 import {
   Disclosure,
@@ -10,7 +10,7 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, BellIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 const user = {
@@ -90,23 +90,10 @@ export default function RootLayout({
                       <input
                         type="text"
                         placeholder="Search for tv topics, courses or zone"
-                        className="flex-grow px-4 py-2 outline-none"
+                        className="flex-grow px-1 py-2 outline-none"
                       />
                       <button className="px-4 text-white hover:text-gray-700">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          class="w-5 h-5"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 103 10.5a7.5 7.5 0 0013.15 6.15z"
-                          />
-                        </svg>
+                        <MagnifyingGlassIcon className="w-5 h-5" />
                       </button>
                     </div>
 
