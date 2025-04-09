@@ -1,0 +1,178 @@
+
+
+import { Paginations } from "@/components/forms";
+
+import {
+  ArrowLongLeftIcon,
+  ArrowLongRightIcon,
+  MagnifyingGlassIcon,
+  PlusCircleIcon,
+} from "@heroicons/react/16/solid";
+
+const people = [
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    department: "Optimization",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+    image:
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    department: "Optimization",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+    image:
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    department: "Optimization",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+    image:
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    department: "Optimization",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+    image:
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    department: "Optimization",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+    image:
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  },
+];
+
+export default function Subscription() {
+  return (
+    <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
+      <h1 className="text-2xl font-semibold text-gray-600 ">Titles</h1>
+      <div className="sm:flex sm:items-center mt-4 ">
+        <div className="sm:flex-auto">
+          <div className="relative w-full max-w-md">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <MagnifyingGlassIcon
+                className="h-6 w-6 text-gray-500"
+                aria-hidden="true"
+              />
+            </div>
+            <input
+              type="text"
+              placeholder="Type of search..."
+              className="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-red-300 sm:text-sm"
+            />
+          </div>
+        </div>
+        <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+          <button
+            type="button"
+            className="flex items-center gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            <PlusCircleIcon className="w-6 h-6" /> Add New Subscriptions
+          </button>
+        </div>
+      </div>
+      <div className="mt-8 flow-root">
+        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+            <table className="min-w-full divide-y divide-gray-300">
+              <thead>
+                <tr>
+                  <th
+                    scope="col"
+                    className="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                  >
+                    Name
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                  >
+                    Type
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                  >
+                    Release Date Rating
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                  >
+                    Local Views
+                  </th>
+                  <th scope="col" className="relative py-3.5 pr-4 pl-3 sm:pr-0">
+                    <span className="sr-only">Edit</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200 bg-white">
+                {people.map((person) => (
+                  <tr key={person.email}>
+                    <td className="py-5 pr-3 pl-4 text-sm whitespace-nowrap sm:pl-0">
+                      <div className="flex items-center">
+                        <div className="size-11 shrink-0">
+                          <img
+                            alt=""
+                            src={person.image}
+                            className="size-11 rounded-full"
+                          />
+                        </div>
+                        <div className="ml-4">
+                          <div className="font-medium text-gray-900">
+                            {person.name}
+                          </div>
+                          <div className="mt-1 text-gray-500">
+                            {person.email}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-3 py-5 text-sm whitespace-nowrap text-gray-500">
+                      <div className="text-gray-900">{person.title}</div>
+                      <div className="mt-1 text-gray-500">
+                        {person.department}
+                      </div>
+                    </td>
+                    <td className="px-3 py-5 text-sm whitespace-nowrap text-gray-500">
+                      <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset">
+                        Active
+                      </span>
+                    </td>
+                    <td className="px-3 py-5 text-sm whitespace-nowrap text-gray-500">
+                      {person.role}
+                    </td>
+                    <td className="relative py-5 pr-4 pl-3 text-right text-sm font-medium whitespace-nowrap sm:pr-0">
+                      <a
+                        href="#"
+                        className="text-red-600 hover:text-indigo-900"
+                      >
+                        Edit<span className="sr-only">, {person.name}</span>
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <Paginations />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
