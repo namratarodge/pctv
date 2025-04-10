@@ -1,8 +1,8 @@
 
-export default function Settings() {
+export default function Content() {
   return (
     <div className="px-4 sm:px-6 lg:px-2 flex">
-      General 11
+      Content
     </div>
   );
 }

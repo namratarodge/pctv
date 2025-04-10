@@ -42,9 +42,9 @@ import {
   ];
 
   export const navigationSettings = [
-    { name: "General", href: "#", current: true },
-    { name: "Content", href: "#", current: false },
-    { name: "Localization", href: "#", current: false },
+    { name: "General", href: "/admin/settings", current: true },
+    { name: "Content", href: "/admin/settings/content", current: false },
+    { name: "Localization", href: "/", current: false },
     { name: "Authentication", href: "#", current: false },
     { name: "Uploading", href: "#", current: false },
     { name: "Mail", href: "#", current: false },
