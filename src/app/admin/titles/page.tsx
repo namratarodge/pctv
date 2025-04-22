@@ -3,9 +3,6 @@
 import { Filter, Paginations } from "@/components/forms";
 
 import {
-  ArrowLongLeftIcon,
-  ArrowLongRightIcon,
-  MagnifyingGlassIcon,
   PlusCircleIcon,
 } from "@heroicons/react/16/solid";
 
@@ -161,12 +158,12 @@ export default function Subscription() {
   return (
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
       <h1 className="text-2xl font-semibold text-gray-600 ">Titles</h1>
-      <div className="sm:flex sm:items-center mt-4 ">
-        <Filter />
-        <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+      <div className="sm:flex sm:items-center mt-4  h-auto ">
+        <Filter /> 
+        <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none ">
           <button
             type="button"
-            className="flex items-center gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="flex items-center  gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             <PlusCircleIcon className="w-6 h-6" /> Add New Subscriptions
           </button>
