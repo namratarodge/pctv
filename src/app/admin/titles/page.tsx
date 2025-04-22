@@ -1,6 +1,6 @@
 
 
-import { Paginations } from "@/components/forms";
+import { Filter, Paginations } from "@/components/forms";
 
 import {
   ArrowLongLeftIcon,
@@ -162,21 +162,7 @@ export default function Subscription() {
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
       <h1 className="text-2xl font-semibold text-gray-600 ">Titles</h1>
       <div className="sm:flex sm:items-center mt-4 ">
-        <div className="sm:flex-auto">
-          <div className="relative w-full max-w-md">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <MagnifyingGlassIcon
-                className="h-6 w-6 text-gray-500"
-                aria-hidden="true"
-              />
-            </div>
-            <input
-              type="text"
-              placeholder="Type of search..."
-              className="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-red-300 sm:text-sm"
-            />
-          </div>
-        </div>
+        <Filter />
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <button
             type="button"
