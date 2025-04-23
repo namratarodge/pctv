@@ -51,7 +51,7 @@ export default function Model({
               <h2 className="text-lg font-semibold">{title}</h2>
               <button
                 onClick={onClose}
-                className="text-gray-400 hover:text-gray-600"
+                className="text-gray-400 hover:text-gray-600 cursor-pointer"
               >
                 <XMarkIcon className="w-6 h-6" />
               </button>
@@ -101,14 +101,14 @@ export default function Model({
               <div className="flex justify-end gap-2 pt-4">
                 <button
                   type="submit"
-                  className="bg-red-600 text-white px-4 py-2 rounded-md"
+                  className="bg-red-600 text-white px-4 py-2 rounded-md cursor-pointer"
                 >
-                  Save
+                  Add new Plan
                 </button>
                 <button
                   type="button"
                   onClick={onClose}
-                  className="text-gray-600 hover:underline"
+                  className="text-gray-600 cursor-pointer px-4"
                 >
                   Cancel
                 </button>
