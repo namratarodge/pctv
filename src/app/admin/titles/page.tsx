@@ -1,10 +1,8 @@
+"use client";
+import { Filter, Paginations, Model } from "@/components/forms";
 
-
-import { Filter, Paginations } from "@/components/forms";
-
-import {
-  PlusCircleIcon,
-} from "@heroicons/react/16/solid";
+import { PlusCircleIcon } from "@heroicons/react/16/solid";
+import { useState } from "react";
 
 const people = [
   {
@@ -152,17 +150,61 @@ const people = [
     image: "https://randomuser.me/api/portraits/men/12.jpg",
   },
 ];
-
+import { Currencies } from "@/constants/Main";
 
 export default function Subscription() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const fields = [
+    {
+      type: "text",
+      name: "name",
+      label: "Name",
+      placeholder: "Enter plan name",
+    },
+    {
+      type: "select",
+      name: "parentPlan",
+      label: "Parent Plan",
+      options: [
+        { label: "Plan", value: "plan" },
+        { label: "Plan 2", value: "plan2" },
+        { label: "Plan 3", value: "plan3" },
+      ],
+      helperText:
+        "Used for creating yearly, weekly etc versions of base plan. Child plans will inherit their parent permissions/features.",
+    },
+    {
+      type: "select",
+      name: "currency",
+      label: "Currency",
+      options: Currencies.map((c) => ({ label: c.name, value: c.value })),
+    },
+    {
+      type: "select",
+      name: "Interval",
+      label: "Interval",
+      options: [
+        { label: "Monthly", value: "monthly" },
+        { label: "Yearly", value: "yearly" },
+        { label: "Weekly", value: "weekly" },
+      ],
+    },
+  ];
+
+  const handleFormSubmit = (data: Record<string, string>) => {
+    console.log("Form submitted:", data);
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
       <h1 className="text-2xl font-semibold text-gray-600 ">Titles</h1>
       <div className="sm:flex sm:items-center mt-4  h-auto ">
-        <Filter /> 
+        <Filter />
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none ">
           <button
             type="button"
+            onClick={() => setIsModalOpen(true)}
             className="flex items-center  gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             <PlusCircleIcon className="w-6 h-6" /> Add New Subscriptions
@@ -256,6 +298,13 @@ export default function Subscription() {
           </div>
         </div>
       </div>
+      <Model
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Create a New Plan"
+        fields={fields}
+        onSubmit={handleFormSubmit}
+      />
     </div>
   );
 }
