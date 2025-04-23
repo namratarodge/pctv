@@ -25,7 +25,7 @@ import {
     { name: "Plans", href: "/admin/plans", icon: CalendarIcon, current: false },
     { name: "Subscription", href: "/admin/subscriptions", icon: CreditCardIcon, current: false },
     { name: "Titles", href: "/admin/titles", icon: ChartPieIcon, current: false },
-    { name: "People", href: "#", icon: UsersIcon, current: false },
+    { name: "People", href: "/admin/people", icon: UsersIcon, current: false },
     { name: "News", href: "#", icon: NewspaperIcon, current: false },
     { name: "Video", href: "#", icon: FilmIcon, current: false },
     { name: "Lists", href: "#", icon: ListBulletIcon, current: false },
