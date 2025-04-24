@@ -21,7 +21,7 @@ import {
   export const navigation = [
     { name: "Dashboard", href: "/admin", icon: HomeIcon, current: true },
     { name: "Settings", href: "/admin/settings", icon: Cog6ToothIcon, current: false },
-    { name: "Additional Tags", href: "#", icon: TagIcon, current: false },
+    { name: "Additional Tags", href: "/admin/additional-tags", icon: TagIcon, current: false },
     { name: "Plans", href: "/admin/plans", icon: CalendarIcon, current: false },
     { name: "Subscription", href: "/admin/subscriptions", icon: CreditCardIcon, current: false },
     { name: "Titles", href: "/admin/titles", icon: ChartPieIcon, current: false },

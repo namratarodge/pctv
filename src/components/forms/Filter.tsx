@@ -6,9 +6,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
-import { filterType } from '@/constants/Filter'
-
-export default function Filter() {
+export default function Filter({ filterType }: { filterType: any[] }) {
   const [showFilter, setShowFilter] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState([]);
   const [filterValues, setFilterValues] = useState({});
@@ -48,6 +46,12 @@ export default function Filter() {
     }
   };
 
+  // Clear all selected filters
+  const clearFilter = () => {
+    setSelectedFilter([]);
+    setFilterValues({});
+  }
+
   return (
     <div className="sm:flex-auto">
       <div className="relative w-full flex  border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-red-300">
@@ -86,6 +90,12 @@ export default function Filter() {
                 {item.name}
               </div>
             ))}
+            <div
+              onClick={() => clearFilter()}
+              className="px-4 py-2 w-full cursor-pointer hover:bg-gray-200"
+            >
+              Clear All
+            </div>
           </div>
         )}
       </div>
@@ -133,7 +143,6 @@ export default function Filter() {
           </div>
         )}
       </div>
-      {filterValues?.length}
     </div>
   );
 }

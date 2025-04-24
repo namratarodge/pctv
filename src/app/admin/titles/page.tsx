@@ -3,7 +3,7 @@ import { Filter, Paginations, Model } from "@/components/forms";
 import { PlusCircleIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
 import { fields } from "@/constants/Form";
-
+import { filterType } from "@/constants/Filter";
 const people = [
   {
     name: "Amelia Wright",
@@ -163,7 +163,7 @@ export default function Subscription() {
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
       <h1 className="text-2xl font-semibold text-gray-600 ">Titles</h1>
       <div className="sm:flex sm:items-center mt-4  h-auto ">
-        <Filter />
+        <Filter filterType={filterType} />
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none ">
           <button
             type="button"
