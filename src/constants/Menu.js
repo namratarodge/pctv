@@ -28,12 +28,12 @@ import {
     { name: "People", href: "/admin/people", icon: UsersIcon, current: false },
     { name: "News", href: "#", icon: NewspaperIcon, current: false },
     { name: "Video", href: "#", icon: FilmIcon, current: false },
-    { name: "Lists", href: "#", icon: ListBulletIcon, current: false },
+    { name: "Lists", href: "/admin/lists", icon: ListBulletIcon, current: false },
     { name: "Reviews", href: "#", icon: StarIcon, current: false },
     { name: "Comments", href: "#", icon: ChatBubbleBottomCenterTextIcon, current: false },
-    { name: "Users", href: "#", icon: UserGroupIcon, current: false },
-    { name: "Roles", href: "#", icon: KeyIcon, current: false },
-    { name: "Pages", href: "#", icon: DocumentTextIcon, current: false },
+    { name: "Users", href: "/admin/users", icon: UserGroupIcon, current: false },
+    { name: "Pages", href: "/admin/pages", icon: KeyIcon, current: false },
+    { name: "Tags", href: "/admin/tags", icon: DocumentTextIcon, current: false },
   ];
   export const teams = [
     { id: 1, name: "Heroicons", href: "#", initial: "H", current: false },

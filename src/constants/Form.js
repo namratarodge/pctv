@@ -36,3 +36,33 @@ export const fields = [
     ],
   },
 ];
+
+export const TagsFields = [
+  {
+    type: "text",
+    name: "name",
+    label: "Name",
+    placeholder: "Enter plan name",
+    helperText:
+      "Unique tag identifier.",
+  },
+  {
+    type: "text",
+    name: "display_name",
+    label: "Display Name",
+    placeholder: "Enter plan name",
+    helperText:
+      "User friendly tag name.",
+  },
+  {
+    type: "select",
+    name: "type",
+    label: "Type",
+    options: [
+      { label: "TV Topic", value: "plan" },
+      { label: "Categories", value: "plan2" },
+      { label: "Production Country", value: "plan3" },
+      { label: "Custom", value: "plan31" },
+    ]
+  },
+];

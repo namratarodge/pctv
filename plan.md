@@ -6,12 +6,12 @@
 4. Tittle - Done 
 5. People - Done 
 6. Video
-7. Lists 
+7. Lists - Done
 8. Reviews 
 9. Comments 
-10. Users 
-11. Pages 
-12. Tags 
+10. Users - Done
+11. Pages - Done
+12. Tags - Done
 
 
 

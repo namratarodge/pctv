@@ -5,7 +5,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import React from "react";
 
 type FieldType = {
-  type: "text" | "select";
+  type: "text" | "select" | "date";
   name: string;
   label: string;
   placeholder?: string;
@@ -19,6 +19,7 @@ type ModalProps = {
   onClose: () => void;
   title?: string;
   fields: FieldType[];
+  submitText?: string;
   onSubmit: (formData: Record<string, string>) => void;
 };
 
@@ -27,6 +28,7 @@ export default function Model({
   onClose,
   title = "Form",
   fields,
+  submitText = "Submit",
   onSubmit,
 }: ModalProps) {
   const [formData, setFormData] = React.useState<Record<string, string>>({});
@@ -103,7 +105,7 @@ export default function Model({
                   type="submit"
                   className="bg-red-600 text-white px-4 py-2 rounded-md cursor-pointer"
                 >
-                  Add new Plan
+                  {submitText}
                 </button>
                 <button
                   type="button"
