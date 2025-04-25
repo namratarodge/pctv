@@ -68,12 +68,13 @@ export default function Filter({ filterType }: { filterType: any[] }) {
           placeholder="Type of search..."
           className="block w-5/6 pr-4 py-3 focus:outline-none sm:text-md"
         />
+        {selectedFilter.length > 0 && ( 
         <button onClick={clearFilter}>
           <XMarkIcon
             className="h-5 w-5 text-gray-500 cursor-pointer"
             aria-hidden="true"
           />
-        </button>
+        </button> )}
         <button
           className={` ${
             showFilter ? "text-red-400" : "text-gray-700"

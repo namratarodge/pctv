@@ -7,7 +7,7 @@
 5. People - Done 
 6. Video - Done
 7. Lists - Done
-8. Reviews 
+8. Reviews - Done
 9. Comments - not required
 10. Users - Done
 11. Pages - Done
