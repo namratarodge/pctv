@@ -5,7 +5,7 @@
 3. Subscription - Done  
 4. Tittle - Done 
 5. People - Done 
-6. Video 
+6. Video - Done
 7. Lists - Done
 8. Reviews 
 9. Comments - not required

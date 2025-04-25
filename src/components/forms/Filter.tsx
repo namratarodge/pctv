@@ -3,6 +3,7 @@
 import {
   AdjustmentsHorizontalIcon,
   MagnifyingGlassIcon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
@@ -48,13 +49,14 @@ export default function Filter({ filterType }: { filterType: any[] }) {
 
   // Clear all selected filters
   const clearFilter = () => {
+    setShowFilter(false);
     setSelectedFilter([]);
     setFilterValues({});
   }
 
   return (
     <div className="sm:flex-auto">
-      <div className="relative w-full flex  border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-red-300">
+      <div className="relative w-full flex border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-red-300">
         <div className="border-l-1 border-gray-300 px-4 inset-y-0 left-0  flex items-center pointer-events-none">
           <MagnifyingGlassIcon
             className="h-5 w-5 text-gray-500"
@@ -66,6 +68,12 @@ export default function Filter({ filterType }: { filterType: any[] }) {
           placeholder="Type of search..."
           className="block w-5/6 pr-4 py-3 focus:outline-none sm:text-md"
         />
+        <button onClick={clearFilter}>
+          <XMarkIcon
+            className="h-5 w-5 text-gray-500 cursor-pointer"
+            aria-hidden="true"
+          />
+        </button>
         <button
           className={` ${
             showFilter ? "text-red-400" : "text-gray-700"
