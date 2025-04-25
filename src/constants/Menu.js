@@ -27,7 +27,7 @@ import {
     { name: "Titles", href: "/admin/titles", icon: ChartPieIcon, current: false },
     { name: "People", href: "/admin/people", icon: UsersIcon, current: false },
     { name: "News", href: "#", icon: NewspaperIcon, current: false },
-    { name: "Video", href: "#", icon: FilmIcon, current: false },
+    { name: "Video", href: "/admin/videos", icon: FilmIcon, current: false },
     { name: "Lists", href: "/admin/lists", icon: ListBulletIcon, current: false },
     { name: "Reviews", href: "#", icon: StarIcon, current: false },
     { name: "Comments", href: "#", icon: ChatBubbleBottomCenterTextIcon, current: false },

@@ -1,9 +1,16 @@
 "use client";
-import { Filter, Paginations, ModelWithForm } from "@/components/forms";
-import { PlusCircleIcon } from "@heroicons/react/16/solid";
+import { Filter, Paginations, Model } from "@/components/forms";
+import { PlusCircleIcon, UserCircleIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
-import { TagsFields } from "@/constants/Form";
-import { TagsfilterType } from "@/constants/Filter";
+import { fields } from "@/constants/Form";
+import { filterType } from "@/constants/Filter";
+
+import {
+  videoOptions,
+  QualityOptions,
+  languageOptions,
+  videoCategory,
+} from "@/constants/Main";
 const people = [
   {
     name: "Amelia Wright",
@@ -151,8 +158,13 @@ const people = [
   },
 ];
 
-export default function Tags() {
+export default function Videos() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [videoType, setVideoType] = useState("embed");
+
+  const videoOptionsMap = Object.fromEntries(
+    videoOptions.map(({ key, value }) => [key, value])
+  );
 
   const handleFormSubmit = (data: Record<string, string>) => {
     console.log("Form submitted:", data);
@@ -161,16 +173,16 @@ export default function Tags() {
 
   return (
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
-      <h1 className="text-2xl font-semibold text-gray-600 ">Tags</h1>
+      <h1 className="text-2xl font-semibold text-gray-600 ">Videos</h1>
       <div className="sm:flex sm:items-center mt-4  h-auto ">
-        <Filter filterType={TagsfilterType} />
+        <Filter filterType={filterType} />
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none ">
           <button
             type="button"
             onClick={() => setIsModalOpen(true)}
-            className="flex items-center  gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="flex items-center cursor-pointer  gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            <PlusCircleIcon className="w-6 h-6" /> Add  Tags
+            <PlusCircleIcon className="w-6 h-6" /> Add New Video
           </button>
         </div>
       </div>
@@ -261,13 +273,165 @@ export default function Tags() {
           </div>
         </div>
       </div>
-      <ModelWithForm
+      <Model
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title="Create a New Tag"
-        fields={TagsFields}
-        submitText="Create"
-        onSubmit={handleFormSubmit}
+        title="Create video"
+        form={
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleFormSubmit();
+            }}
+          >
+            <div className=" space-y-4 overflow-auto h-120 scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-200 shadow-inner">
+              <div>
+                <label className="text-md ">Name</label>
+                <input
+                  type="text"
+                  placeholder="Enter title"
+                  className="mt-2 px-4 py-2 w-full border border-gray-300 rounded-md"
+                />
+              </div>
+              <div className="col-span-full">
+                <label
+                  htmlFor="photo"
+                  className="block text-sm/6 font-medium text-gray-900"
+                >
+                  Thubnail
+                </label>
+                <div className="mt-2 flex items-center gap-x-3">
+                  <UserCircleIcon
+                    aria-hidden="true"
+                    className="size-12 text-gray-300"
+                  />
+                  <button
+                    type="button"
+                    className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
+                  >
+                    Upload Photo
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label className="text-md ">Type</label>
+                <select
+                  value={videoType}
+                  onChange={(e) => setVideoType(e.target.value)}
+                  className="mt-2 px-4 py-2 w-full border border-gray-300 rounded-md"
+                >
+                  {videoOptions.map((type) => (
+                    <option key={type.key} value={type.key}>
+                      {type.value}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="col-span-full">
+                <label
+                  htmlFor="photo"
+                  className="block text-sm/6 font-medium text-gray-900"
+                >
+                  {videoOptionsMap[videoType]}
+                </label>
+
+                {videoType === "basicUrl" ||
+                  (videoType === "adaptive" && (
+                    <input
+                      type="text"
+                      placeholder="Enter embed code"
+                      className="mt-2 px-4 py-2 w-full border border-gray-300 rounded-md"
+                    />
+                  ))}
+                {videoType === "directVideo" && (
+                  <div className="mt-2 flex items-center gap-x-3">
+                    <UserCircleIcon
+                      aria-hidden="true"
+                      className="size-12 text-gray-300"
+                    />
+                    <button
+                      type="button"
+                      className="rounded-md bg-white px-2.5 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
+                    >
+                      Upload Photo
+                    </button>
+                  </div>
+                )}
+                {videoType === "embed" && (
+                  <textarea
+                    placeholder="Enter embed code"
+                    className="mt-2 px-4 py-2 w-full border border-gray-300 rounded-md"
+                    rows={4}
+                  />
+                )}
+              </div>
+              <div className=" flex  gap-4">
+                <div className="w-1/2">
+                  <label className="text-md ">Quality</label>
+                  <select className="mt-2 px-4 py-2 w-full border border-gray-300 rounded-md">
+                    {QualityOptions.map((type) => (
+                      <option key={type.key} value={type.key}>
+                        {type.value}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="w-1/2">
+                  <label className="text-md ">Language</label>
+                  <select className="mt-2 px-4 py-2 w-full border border-gray-300 rounded-md">
+                    {languageOptions.map((type) => (
+                      <option key={type.key} value={type.key}>
+                        {type.value}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label className="text-md ">Title</label>
+                <input
+                  type="text"
+                  placeholder="Enter title"
+                  className="mt-2 px-4 py-2 w-full border border-gray-300 rounded-md"
+                />
+              </div>
+              <div>
+                <label className="text-md ">Category</label>
+                <select className="mt-2 px-4 py-2 w-full border border-gray-300 rounded-md">
+                  {videoCategory.map((type) => (
+                    <option key={type.key} value={type.key}>
+                      {type.value}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="text-md ">Position</label>
+                <input
+                  type="number"
+                  placeholder="Enter Position"
+                  className="mt-2 px-4 py-2 w-full border border-gray-300 rounded-md"
+                />
+              </div>
+            </div>
+            {/* Add more fields here */}
+            <div className="flex justify-end gap-2 pt-4">
+              <button
+                type="submit"
+                className="bg-red-600 text-white px-4 py-2 rounded-md cursor-pointer"
+              >
+                Submit
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsModalOpen(false)}
+                className="text-gray-600 px-4 cursor-pointer"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        }
       />
     </div>
   );

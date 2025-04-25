@@ -1,5 +1,5 @@
 "use client";
-import { Filter, Paginations, Model } from "@/components/forms";
+import { Filter, Paginations, ModelWithForm } from "@/components/forms";
 import { PlusCircleIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
 import { fields } from "@/constants/Form";
@@ -261,7 +261,7 @@ export default function Subscription() {
           </div>
         </div>
       </div>
-      <Model
+      <ModelWithForm
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         title="Create a New Plan"

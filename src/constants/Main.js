@@ -71,3 +71,40 @@ export const Currencies = [
   { name: "JPY - Japanese Yen", value: "jpy" },
   { name: "JOD - Jordanian Dinar", value: "jod" },
 ];
+
+export const videoOptions = [
+  { key: "embed", value: "Embed" },
+  { key: "directVideo", value: "Direct Video (.mp4, .webm, .avi, .mov etc.)" },
+  { key: "adaptive", value: "Adaptive Stream (hls, dash)" },
+  { key: "basicUrl", value: "Basic Url" },
+];
+
+export const QualityOptions = [
+  { key: "regular", value: "Regular" },
+  { key: "sd", value: "SD" },
+  { key: "hd", value: "HD" },
+  { key: "720", value: "720p" },
+  { key: "1080", value: "1080p" },
+  { key: "4k", value: "4K" },
+];
+
+export const languageOptions = [
+  { key: "english", value: "English" },
+  { key: "french", value: "French" },
+  { key: "spanish", value: "Spanish" },
+  { key: "german", value: "German" },
+  { key: "chinese", value: "Chinese" },
+];
+
+export const videoCategory = [
+  { key: "movie", value: "Movie" },
+  { key: "tvShow", value: "TV Show" },
+  { key: "documentary", value: "Documentary" },
+  { key: "musicVideo", value: "Music Video" },
+  { key: "sports", value: "Sports" },
+  { key: "news", value: "News" },
+  { key: "education", value: "Education" },
+  { key: "entertainment", value: "Entertainment" },
+  { key: "gaming", value: "Gaming" },
+  { key: "lifestyle", value: "Lifestyle" },
+];
