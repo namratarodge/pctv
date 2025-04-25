@@ -10,7 +10,7 @@ export default function SettingsLayout({
       <div className="w-1/4 px-4">
         <SettingSideBar />
       </div>
-      <div className="w-3/4 border border-gray-400 rounded-md p-4 bg-white">
+      <div className="w-3/4 border border-gray-300 rounded-sm p-4 bg-white">
         <div className="bg-white text-gray-500">{children}</div>
       </div>
     </div>
