@@ -5,9 +5,11 @@ import {
   PlusCircleIcon,
   TrashIcon,
 } from "@heroicons/react/16/solid";
+import axios from "axios";
 import { AdditionalTagFilter } from "@/constants/Filter";
 import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const AdditionalTag = [
   {
@@ -37,6 +39,38 @@ const AdditionalTagColumn: {
 ];
 
 export default function Subscription() {
+  const [getTaggables, setGetTaggables] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const token = localStorage.getItem("token");
+
+  const fetJobListing = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/getPeoples`,
+        {
+          headers: {
+            "Authorization": token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.data.status) {
+        console.log(response.data.data);
+        setGetTaggables(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false); // Always stop loading, whether success or failure
+    }
+  };
+
+  useEffect(() => {
+    fetJobListing();
+  }, []);
+
   return (
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
       <h1 className="text-2xl font-semibold text-gray-600 ">Additional Tag</h1>

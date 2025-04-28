@@ -60,7 +60,7 @@ export default function Content() {
             placeholder="UA-222738367-1"
           />
         </div>
-        <button className="px-4 py-2 bg-red-500 text-white rounded-md  text-sm">
+        <button className="px-4 py-2 bg-red-400 text-white rounded-md  text-sm cursor-pointer hover:bg-red-500">
           Update
         </button>
       </div>

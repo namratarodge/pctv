@@ -31,6 +31,8 @@ const userNavigation = [
   { name: "Sign out", href: "#" },
 ];
 
+import { ToastContainer } from 'react-toastify';
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -219,6 +221,7 @@ export default function RootLayout({
 
           {children}
         </div>
+        <ToastContainer />
       </body>
     </html>
   );

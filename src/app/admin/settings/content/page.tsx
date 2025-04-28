@@ -34,7 +34,7 @@ export default function Content() {
             />
           </div>
         </div>
-        <button className="px-4 py-2 bg-red-500 text-white rounded-md  text-sm">
+        <button className="px-4 py-2 bg-red-500 text-white rounded-md  text-sm cursor-pointer">
           Update
         </button>
       </div>

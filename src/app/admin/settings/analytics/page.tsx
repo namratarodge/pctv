@@ -11,18 +11,24 @@ export default function Content() {
       </p>
       <div className="w-1/2 mt-4 space-y-4">
         <div className="mt-4">
-        <label htmlFor="photo" className="block text-sm/6 font-medium text-gray-900">
-        Google Service Account Key File (.json)
-              </label>
-              <div className="mt-2 flex items-center gap-x-3">
-                <ArrowUpTrayIcon aria-hidden="true" className="size-10 text-gray-300" />
-                <button
-                  type="button"
-                  className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
-                >
-                  Upload Json
-                </button>
-              </div>
+          <label
+            htmlFor="photo"
+            className="block text-sm/6 font-medium text-gray-900"
+          >
+            Google Service Account Key File (.json)
+          </label>
+          <div className="mt-2 flex items-center gap-x-3">
+            <ArrowUpTrayIcon
+              aria-hidden="true"
+              className="size-10 text-gray-300"
+            />
+            <button
+              type="button"
+              className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
+            >
+              Upload Json
+            </button>
+          </div>
         </div>
         <div className=" mt-4">
           <label className="text-md">Google Analytics View ID</label>

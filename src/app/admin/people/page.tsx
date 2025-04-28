@@ -3,155 +3,187 @@ import { Filter, Paginations, Model } from "@/components/forms";
 import { PlusCircleIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
 import { filterType } from "@/constants/Filter";
-const people = [
-  {
-    name: "Amelia Wright",
-    title: "UI/UX Designer",
-    department: "Design",
-    email: "amelia.wright@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/women/68.jpg",
-  },
-  {
-    name: "Noah Johnson",
-    title: "Back-end Developer",
-    department: "Engineering",
-    email: "noah.johnson@example.com",
-    role: "Admin",
-    image: "https://randomuser.me/api/portraits/men/65.jpg",
-  },
-  {
-    name: "Sophia Lee",
-    title: "Product Manager",
-    department: "Product",
-    email: "sophia.lee@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/women/52.jpg",
-  },
-  {
-    name: "Elijah Smith",
-    title: "DevOps Engineer",
-    department: "Infrastructure",
-    email: "elijah.smith@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/men/54.jpg",
-  },
-  {
-    name: "Olivia Brown",
-    title: "Marketing Specialist",
-    department: "Marketing",
-    email: "olivia.brown@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/women/72.jpg",
-  },
-  {
-    name: "Liam Davis",
-    title: "Mobile Developer",
-    department: "Development",
-    email: "liam.davis@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/men/29.jpg",
-  },
-  {
-    name: "Mia Wilson",
-    title: "QA Engineer",
-    department: "Quality Assurance",
-    email: "mia.wilson@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/women/43.jpg",
-  },
-  {
-    name: "James Taylor",
-    title: "Technical Writer",
-    department: "Content",
-    email: "james.taylor@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/men/36.jpg",
-  },
-  {
-    name: "Emily Anderson",
-    title: "Data Analyst",
-    department: "Analytics",
-    email: "emily.anderson@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/women/44.jpg",
-  },
-  {
-    name: "Benjamin Moore",
-    title: "Customer Support",
-    department: "Support",
-    email: "benjamin.moore@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/men/48.jpg",
-  },
-  {
-    name: "Charlotte Clark",
-    title: "Recruiter",
-    department: "HR",
-    email: "charlotte.clark@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/women/59.jpg",
-  },
-  {
-    name: "Lucas Lewis",
-    title: "Security Engineer",
-    department: "IT Security",
-    email: "lucas.lewis@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/men/60.jpg",
-  },
-  {
-    name: "Harper Hall",
-    title: "Financial Analyst",
-    department: "Finance",
-    email: "harper.hall@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/women/65.jpg",
-  },
-  {
-    name: "Henry Allen",
-    title: "Legal Advisor",
-    department: "Legal",
-    email: "henry.allen@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/men/50.jpg",
-  },
-  {
-    name: "Ella Young",
-    title: "Graphic Designer",
-    department: "Creative",
-    email: "ella.young@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/women/29.jpg",
-  },
-  {
-    name: "Jack Martinez",
-    title: "Business Analyst",
-    department: "Business",
-    email: "jack.martinez@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/men/25.jpg",
-  },
-  {
-    name: "Abigail Hernandez",
-    title: "Content Strategist",
-    department: "Content",
-    email: "abigail.hernandez@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/women/19.jpg",
-  },
-  {
-    name: "Aiden Scott",
-    title: "Machine Learning Engineer",
-    department: "AI",
-    email: "aiden.scott@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/men/12.jpg",
-  },
-];
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { UserIcon } from "@heroicons/react/24/outline";
+// const people = [
+//   {
+//     name: "Amelia Wright",
+//     title: "UI/UX Designer",
+//     department: "Design",
+//     email: "amelia.wright@example.com",
+//     role: "Member",
+//     image: "https://randomuser.me/api/portraits/women/68.jpg",
+//   },
+//   {
+//     name: "Noah Johnson",
+//     title: "Back-end Developer",
+//     department: "Engineering",
+//     email: "noah.johnson@example.com",
+//     role: "Admin",
+//     image: "https://randomuser.me/api/portraits/men/65.jpg",
+//   },
+//   {
+//     name: "Sophia Lee",
+//     title: "Product Manager",
+//     department: "Product",
+//     email: "sophia.lee@example.com",
+//     role: "Member",
+//     image: "https://randomuser.me/api/portraits/women/52.jpg",
+//   },
+//   {
+//     name: "Elijah Smith",
+//     title: "DevOps Engineer",
+//     department: "Infrastructure",
+//     email: "elijah.smith@example.com",
+//     role: "Member",
+//     image: "https://randomuser.me/api/portraits/men/54.jpg",
+//   },
+//   {
+//     name: "Olivia Brown",
+//     title: "Marketing Specialist",
+//     department: "Marketing",
+//     email: "olivia.brown@example.com",
+//     role: "Member",
+//     image: "https://randomuser.me/api/portraits/women/72.jpg",
+//   },
+//   {
+//     name: "Liam Davis",
+//     title: "Mobile Developer",
+//     department: "Development",
+//     email: "liam.davis@example.com",
+//     role: "Member",
+//     image: "https://randomuser.me/api/portraits/men/29.jpg",
+//   },
+//   {
+//     name: "Mia Wilson",
+//     title: "QA Engineer",
+//     department: "Quality Assurance",
+//     email: "mia.wilson@example.com",
+//     role: "Member",
+//     image: "https://randomuser.me/api/portraits/women/43.jpg",
+//   },
+//   {
+//     name: "James Taylor",
+//     title: "Technical Writer",
+//     department: "Content",
+//     email: "james.taylor@example.com",
+//     role: "Member",
+//     image: "https://randomuser.me/api/portraits/men/36.jpg",
+//   },
+//   {
+//     name: "Emily Anderson",
+//     title: "Data Analyst",
+//     department: "Analytics",
+//     email: "emily.anderson@example.com",
+//     role: "Member",
+//     image: "https://randomuser.me/api/portraits/women/44.jpg",
+//   },
+//   {
+//     name: "Benjamin Moore",
+//     title: "Customer Support",
+//     department: "Support",
+//     email: "benjamin.moore@example.com",
+//     role: "Member",
+//     image: "https://randomuser.me/api/portraits/men/48.jpg",
+//   },
+//   {
+//     name: "Charlotte Clark",
+//     title: "Recruiter",
+//     department: "HR",
+//     email: "charlotte.clark@example.com",
+//     role: "Member",
+//     image: "https://randomuser.me/api/portraits/women/59.jpg",
+//   },
+//   {
+//     name: "Lucas Lewis",
+//     title: "Security Engineer",
+//     department: "IT Security",
+//     email: "lucas.lewis@example.com",
+//     role: "Member",
+//     image: "https://randomuser.me/api/portraits/men/60.jpg",
+//   },
+//   {
+//     name: "Harper Hall",
+//     title: "Financial Analyst",
+//     department: "Finance",
+//     email: "harper.hall@example.com",
+//     role: "Member",
+//     image: "https://randomuser.me/api/portraits/women/65.jpg",
+//   },
+//   {
+//     name: "Henry Allen",
+//     title: "Legal Advisor",
+//     department: "Legal",
+//     email: "henry.allen@example.com",
+//     role: "Member",
+//     image: "https://randomuser.me/api/portraits/men/50.jpg",
+//   },
+//   {
+//     name: "Ella Young",
+//     title: "Graphic Designer",
+//     department: "Creative",
+//     email: "ella.young@example.com",
+//     role: "Member",
+//     image: "https://randomuser.me/api/portraits/women/29.jpg",
+//   },
+//   {
+//     name: "Jack Martinez",
+//     title: "Business Analyst",
+//     department: "Business",
+//     email: "jack.martinez@example.com",
+//     role: "Member",
+//     image: "https://randomuser.me/api/portraits/men/25.jpg",
+//   },
+//   {
+//     name: "Abigail Hernandez",
+//     title: "Content Strategist",
+//     department: "Content",
+//     email: "abigail.hernandez@example.com",
+//     role: "Member",
+//     image: "https://randomuser.me/api/portraits/women/19.jpg",
+//   },
+//   {
+//     name: "Aiden Scott",
+//     title: "Machine Learning Engineer",
+//     department: "AI",
+//     email: "aiden.scott@example.com",
+//     role: "Member",
+//     image: "https://randomuser.me/api/portraits/men/12.jpg",
+//   },
+// ];
 
-export default function Subscription() {
+export default function People() {
+  const [people, setPeople] = useState([]);
+  const [loading, setLoading] = useState(false);
 
+  const fetchPeople = async () => {
+    const token = localStorage.getItem("token");
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/getPeoples`,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.data.status) {
+        console.log(response.data.data);
+        setPeople(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false); // Always stop loading, whether success or failure
+    }
+  };
+
+  useEffect(() => {
+    fetchPeople();
+  }, []);
 
   return (
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
@@ -175,7 +207,7 @@ export default function Subscription() {
                 <tr>
                   <th
                     scope="col"
-                    className="sticky top-0 z-10 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                    className="sticky top-0  py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-0"
                   >
                     Name
                   </th>
@@ -183,19 +215,25 @@ export default function Subscription() {
                     scope="col"
                     className="sticky top-0 z-10 px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
-                    Type
+                    Birthday Place
                   </th>
                   <th
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
-                    Release Date Rating
+                    Local View
                   </th>
                   <th
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
-                    Local Views
+                    Popularity
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                  >
+                    Last Updated
                   </th>
                   <th scope="col" className="relative py-3.5 pr-4 pl-3 sm:pr-0">
                     <span className="sr-only">Edit</span>
@@ -204,39 +242,41 @@ export default function Subscription() {
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
                 {people.map((person) => (
-                  <tr key={person.email}>
+                  <tr key={person._id}>
                     <td className="py-5 pr-3 pl-4 text-sm whitespace-nowrap sm:pl-0">
                       <div className="flex items-center">
-                        <div className="size-11 shrink-0">
-                          <img
-                            alt=""
-                            src={person.image}
-                            className="size-11 rounded-full"
-                          />
+                        <div className="size-14 shrink-0">
+                          {person.poster ? (
+                            <img
+                              alt=""
+                              src={
+                                "https://projectcontrolstv.com/" + person.poster
+                              }
+                              className="w-14 h-14 rounded-full"
+                              onError={(e) => {
+                                e.target.onerror = null; // prevent infinite loop
+                                e.target.src =
+                                  "/default-image.jpg"; // fallback image
+                              }}
+                            />
+                          ) : (
+                            <UserIcon className="w-11 h-11 text-gray-400" />
+                          )}
                         </div>
-                        <div className="ml-4">
-                          <div className="font-medium text-gray-900">
-                            {person.name}
-                          </div>
-                          <div className="mt-1 text-gray-500">
-                            {person.email}
-                          </div>
-                        </div>
+                        <div className="ml-4">{person.name}</div>
                       </div>
                     </td>
                     <td className="px-3 py-5 text-sm whitespace-nowrap text-gray-500">
-                      <div className="text-gray-900">{person.title}</div>
-                      <div className="mt-1 text-gray-500">
-                        {person.department}
-                      </div>
+                      <div className="text-gray-900">{person.birth_place}</div>
                     </td>
                     <td className="px-3 py-5 text-sm whitespace-nowrap text-gray-500">
-                      <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset">
-                        Active
-                      </span>
+                      {person.views}
                     </td>
                     <td className="px-3 py-5 text-sm whitespace-nowrap text-gray-500">
-                      {person.role}
+                      {person.popularity}
+                    </td>
+                    <td className="px-3 py-5 text-sm whitespace-nowrap text-gray-500">
+                      {person.updated_at}
                     </td>
                     <td className="relative py-5 pr-4 pl-3 text-right text-sm font-medium whitespace-nowrap sm:pr-0">
                       <a
