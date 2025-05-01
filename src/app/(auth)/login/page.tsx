@@ -28,7 +28,7 @@ export default function Login() {
       console.log('Login successful:', data);
       localStorage.setItem('token', data.token); // Store the token in local storage
       // You can redirect the user or store the token here
-      window.location.href = '/admin/dashboard';
+      window.location.href = '/admin';
 
     } catch (error) {
       toast('Error during login:' + error);

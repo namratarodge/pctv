@@ -43,7 +43,7 @@ export default function DataTable<T extends { [key: string]: any }>({
           {data.map((row, index) => (
             <tr key={index} className="hover:bg-gray-50">
               {columns.map((col) => (
-                <td key={String(col.key)}  className="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-700 sm:pl-3">
+                <td key={String(col.key)}  className="py-4 pr-3  text-sm font-medium whitespace-nowrap text-gray-700 ">
                   {row[col.key]}
                 </td>
               ))}
