@@ -1,9 +1,11 @@
 "use client";
-import { BackwardIcon } from "@heroicons/react/24/outline";
+import { useForm } from "react-hook-form";
 // pages/create-profile.tsx
 import React, { useState } from "react";
+import Error from "@/components/layout/Error";
 
 export default function CreateProfile() {
+  
   const [formData, setFormData] = useState({
     name: "",
     knownFor: "",
@@ -16,6 +18,12 @@ export default function CreateProfile() {
     allowAutoUpdate: false,
     image: null,
   });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -30,8 +38,7 @@ export default function CreateProfile() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = (data: any) => {
     console.log(formData);
   };
 
@@ -43,66 +50,88 @@ export default function CreateProfile() {
             Add New People
           </h1>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-gray-600 mb-1">Name</label>
               <input
                 type="text"
-                name="name"
-                onChange={handleChange}
+                {...register("name", { required: "Name is required" })}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+              {errors.name && (
+                <Error message={errors.name.message} />
+              )}
             </div>
 
             <div>
               <label className="block text-gray-600 mb-1">Known For</label>
               <input
                 type="text"
-                name="knownFor"
-                onChange={handleChange}
+                {...register("knownFor", { required: "Known For is required" })}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+              {errors.knownFor && (
+               <Error message={errors.knownFor.message} />
+              )}
             </div>
 
             <div>
               <label className="block text-gray-600 mb-1">Birth Date</label>
               <input
                 type="date"
-                name="birthDate"
-                onChange={handleChange}
+                {...register("birthdate", {
+                  required: "Birth date is required",
+                })}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+              {errors.birthdate && (
+                <p className="text-red-500 text-sm">
+                  <Error message={errors.birthdate.message} />
+                </p>
+              )}
             </div>
 
             <div>
               <label className="block text-gray-600 mb-1">Death Date</label>
               <input
                 type="date"
-                name="deathDate"
-                onChange={handleChange}
+                {...register("deathDate", {
+                  required: "Dead date is required",
+                })}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+              {errors.deathDate && (
+                 <Error message={errors.deathDate.message} />
+              )}
             </div>
 
             <div>
               <label className="block text-gray-600 mb-1">Birth Place</label>
               <input
                 type="text"
-                name="birthPlace"
-                onChange={handleChange}
+                {...register("birthPlace", {
+                  required: "Birth Place is required",
+                })}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+              {errors.birthPlace && (
+                <Error message={errors.birthPlace.message} />
+              )}
             </div>
 
             <div>
               <label className="block text-gray-600 mb-1">Popularity</label>
               <input
                 type="number"
-                name="popularity"
-                onChange={handleChange}
+                {...register("popularity", {
+                  required: "Popularity is required",
+                })}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+              {errors.popularity && (
+                <Error message={errors.popularity.message} />
+              )}
             </div>
           </div>
 
@@ -129,11 +158,15 @@ export default function CreateProfile() {
           <div>
             <label className="block text-gray-600 mb-1">Bio</label>
             <textarea
-              name="bio"
               rows={4}
-              onChange={handleChange}
+              {...register("bio", {
+                required: "Bio is required",
+              })}
               className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             ></textarea>
+            {errors.bio && (
+              <Error message={errors.bio.message} />
+            )}
           </div>
 
           <div>
