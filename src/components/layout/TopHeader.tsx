@@ -18,6 +18,10 @@ type SideBarProps = {
   setSideBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+const singOut = async () => {
+  localStorage.clear(); // or remove specific keys
+  window.location.href = "/login"; // or use router.push('/login') if using Next.js router
+};
 export default function TopHeader({
   sideBarOpen,
   setSideBarOpen,
@@ -97,16 +101,27 @@ export default function TopHeader({
                   tom@example.com
                 </p>
               </div>
-              {userNavigation.map((item) => (
-                <MenuItem key={item.name}>
-                  <a
-                    href={item.href}
-                    className="block px-3 py-1 text-sm/6 text-gray-900 data-focus:bg-gray-50 data-focus:outline-hidden"
-                  >
-                    {item.name}
-                  </a>
-                </MenuItem>
-              ))}
+              {userNavigation.map((item) =>
+                item.name === "Sign out" ? (
+                  <MenuItem key={item.name}>
+                    <button
+                      onClick={() => singOut()}
+                      className="cursor-pointer block w-full text-left px-3 py-1 text-sm/6 text-gray-900 data-focus:bg-gray-50 data-focus:outline-hidden"
+                    >
+                      {item.name}
+                    </button>
+                  </MenuItem>
+                ) : (
+                  <MenuItem key={item.name}>
+                    <a
+                      href={item.href}
+                      className="block px-3 py-1 text-sm/6 text-gray-900 data-focus:bg-gray-50 data-focus:outline-hidden"
+                    >
+                      {item.name}
+                    </a>
+                  </MenuItem>
+                )
+              )}
             </MenuItems>
           </Menu>
         </div>
