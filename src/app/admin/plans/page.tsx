@@ -9,29 +9,7 @@ import { useEffect, useState } from "react";
 import { formatDate } from "@/utils/common";
 import axios from "axios";
 import Loading from "@/components/layout/Loading";
-
-type typeOfPlans = {
-  name: "string";
-  amount: "number";
-  currency: "string";
-  interval: "string";
-  recommended: "boolean";
-  position: "number";
-  updated_at: "string";
-};
-
-const planColumn: {
-  key: keyof typeOfPlans;
-  label: string;
-}[] = [
-  { key: "name", label: "Name" },
-  { key: "amount", label: "Amount" },
-  { key: "currency", label: "Currency" },
-  { key: "interval", label: "Interval" },
-  { key: "recommended", label: "Recommended" },
-  { key: "position", label: "position" },
-  { key: "updated_at", label: "Last Updated" },
-];
+import { planColumn  } from "@/constants/DataTableColumn";
 
 export default function Plans() {
   const [plans, setPlans] = useState([]);

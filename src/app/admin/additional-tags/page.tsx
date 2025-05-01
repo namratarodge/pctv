@@ -11,25 +11,8 @@ import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Loading from "@/components/layout/Loading";
-
-type AdditionalTagItem = {
-  name: string;
-  birth_place: string;
-  views: number;
-  popularity: number;
-  updated_at: string;
-};
-
-const AdditionalTagColumn: {
-  key: keyof AdditionalTagItem;
-  label: string;
-}[] = [
-  { key: "name", label: "Name" },
-  { key: "birth_place", label: "Birthday" },
-  { key: "views", label: "Local View" },
-  { key: "popularity", label: "Popularity" },
-  { key: "updated_at", label: "Last Updated" },
-];
+import { AdditionalTagColumn } from "@/constants/DataTableColumn";
+import { formatDate } from "@/utils/common";
 
 export default function Subscription() {
   const [additionalTags, setAdditionalTags] = useState([]);
@@ -50,8 +33,12 @@ export default function Subscription() {
       );
       if (response.data.status) {
         console.log(response.data.data);
+        const modifiedData = response.data.data.map((item: any) => ({
+          ...item,
+          updated_at: `${formatDate(item.updated_at)} `,
+        }));
         setLoading(false);
-        setAdditionalTags(response.data.data);
+        setAdditionalTags(modifiedData);
       }
     } catch (error) {
       console.error("Error fetching data:", error);

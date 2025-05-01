@@ -13,42 +13,55 @@ type DataTableProps<T> = {
   renderActions?: (row: T) => React.ReactNode;
 };
 
-export default function AdvanceDataTable<T extends { [key: string]: any }>({
+export default function AdvanceDataTable<T extends Record<string, any>>({
   columns,
   data,
   renderActions,
 }: DataTableProps<T>) {
   return (
-    <div className="inline-block min-w-full py-2 align-middle">
+    <div className="overflow-x-auto rounded-xl shadow-md border border-gray-200">
       <table className="min-w-full divide-y divide-gray-200 bg-white">
-        <thead >
+        <thead className="bg-gray-50">
           <tr>
-            {columns.map((col) => (
+            {columns.map((col, index) => (
               <th
                 key={String(col.key)}
                 scope="col"
-                className="sticky top-0 z-10 py-4 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                className={`px-4 py-4 text-sm font-semibold text-gray-700 ${
+                  index === 0 ? "text-left" : "text-center"
+                }`}
               >
                 {col.label}
               </th>
             ))}
             {renderActions && (
-              <th scope="col" className=" py-3.5 pr-4 pl-3 text-right">
+              <th
+                scope="col"
+                className="px-4 py-4 text-sm font-semibold text-gray-700 text-right"
+              >
                 Actions
               </th>
             )}
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200 bg-white">
-          {data.map((row, index) => (
-            <tr key={index} className="hover:bg-gray-50">
-              {columns.map((col) => (
-                <td key={String(col.key)}  className="py-4 pr-3  text-sm font-medium whitespace-nowrap text-gray-700">
+        <tbody className="divide-y divide-gray-100">
+          {data.map((row, rowIndex) => (
+            <tr
+              key={rowIndex}
+              className="hover:bg-gray-50 transition-colors duration-200"
+            >
+              {columns.map((col, colIndex) => (
+                <td
+                  key={String(col.key)}
+                  className={`px-4 py-4 text-sm text-gray-600 whitespace-nowrap ${
+                    colIndex === 0 ? "text-left" : "text-center"
+                  }`}
+                >
                   {row[col.key]}
                 </td>
               ))}
               {renderActions && (
-                <td className=" py-3 text-sm text-right text-gray-500">
+                <td className="px-4 py-4 text-sm text-right text-gray-500">
                   {renderActions(row)}
                 </td>
               )}
