@@ -1,10 +1,11 @@
-'use client'
+"use client";
 
 import "@/app/globals.css";
 
 import { useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 const navigation = [
   { name: "Product", href: "#" },
@@ -27,16 +28,18 @@ export default function RootLayout({
           <header className="absolute inset-x-0 top-0 z-50">
             <nav
               aria-label="Global"
-              className="flex items-center justify-between p-6 lg:px-8"
+              className="flex items-center justify-between p-6 lg:px-8 mx-auto max-w-6xl"
             >
               <div className="flex lg:flex-1">
                 <a href="#" className="-m-1.5 p-1.5">
-                  <span className="sr-only">Your Company</span>
-                  <img
-                    alt=""
-                    src="https://projectcontrolstv.com/storage/branding_media/5lbRjBu1jH2A3Q61DkPaPLVxw3fidK9SlSwU8PAU.png"
-                    className="h-8 w-auto"
-                  />
+                  <span className="sr-only">Project Control TV</span>
+                  <Link href="/">
+                    <img
+                      alt=""
+                      src="https://projectcontrolstv.com/storage/branding_media/5lbRjBu1jH2A3Q61DkPaPLVxw3fidK9SlSwU8PAU.png"
+                      className="h-8 w-auto"
+                    />
+                  </Link>
                 </a>
               </div>
               <div className="flex lg:hidden">
@@ -49,24 +52,19 @@ export default function RootLayout({
                   <Bars3Icon aria-hidden="true" className="size-6" />
                 </button>
               </div>
-              <div className="hidden lg:flex lg:gap-x-12">
-                {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="text-sm/6 font-semibold text-white"
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </div>
               <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-4 ">
-                <button  className="text-sm/6  text-white bg-gray-800 px-6 py-1 rounded-full">
-                  Log in 
-                </button>
-                <button  className="text-sm/6  text-white bg-red-500 px-6 py-1 rounded-full">
-                  Sign Up 
-                </button>
+                <Link
+                  href="/login"
+                  className="text-sm/6  text-white bg-gray-800 px-6 py-1 rounded-full"
+                >
+                  Log in
+                </Link>
+                <Link
+                  href="/register"
+                  className="text-sm/6  text-white bg-red-500 px-6 py-1 rounded-full"
+                >
+                  Sign Up
+                </Link>
               </div>
             </nav>
             <Dialog
@@ -120,7 +118,6 @@ export default function RootLayout({
               </DialogPanel>
             </Dialog>
           </header>
-
           {children}
         </div>
       </body>
