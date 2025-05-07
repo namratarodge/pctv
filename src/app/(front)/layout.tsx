@@ -9,10 +9,10 @@ import Link from "next/link";
 import { Footer } from "@/components/layout";
 
 const navigation = [
-  { name: "Product", href: "#" },
-  { name: "Features", href: "#" },
-  { name: "Marketplace", href: "#" },
-  { name: "Company", href: "#" },
+  { name: "Home", href: "#" },
+  { name: "TV Topics", href: "#" },
+  { name: "Course/Zones", href: "#" },
+  { name: "Pricing", href: "#" },
 ];
 
 export default function RootLayout({
@@ -26,7 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <div className="bg-[#161f27]">
-          <header className="absolute inset-x-0 top-0 z-50 ">
+          <header className="absolute inset-x-0 top-0 z-50">
             <nav
               aria-label="Global"
               className="flex items-center justify-between p-4 lg:px-2 mx-auto max-w-7xl"
@@ -42,6 +42,21 @@ export default function RootLayout({
                     />
                   </Link>
                 </div>
+                <div className="hidden sm:ml-6 sm:block">
+                  <div className="flex space-x-4">
+                    {navigation.map((item) => (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        className={
+                          "text-gray-400 text-sm hover:text-white items-center justify-center px-3 py-2 rounded-md font-semibold"
+                        }
+                      >
+                        {item.name}
+                      </a>
+                    ))}
+                  </div>
+                </div>
               </div>
               <div className="flex lg:hidden">
                 <button
@@ -53,6 +68,7 @@ export default function RootLayout({
                   <Bars3Icon aria-hidden="true" className="size-6" />
                 </button>
               </div>
+
               <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-4 ">
                 <Link
                   href="/login"
