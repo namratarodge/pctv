@@ -31,7 +31,7 @@ export default function RootLayout({
               className="flex items-center justify-between p-6 lg:px-8 mx-auto max-w-6xl"
             >
               <div className="flex lg:flex-1">
-                <a href="#" className="-m-1.5 p-1.5">
+                <div className="-m-1.5 p-1.5">
                   <span className="sr-only">Project Control TV</span>
                   <Link href="/">
                     <img
@@ -40,7 +40,7 @@ export default function RootLayout({
                       className="h-8 w-auto"
                     />
                   </Link>
-                </a>
+                </div>
               </div>
               <div className="flex lg:hidden">
                 <button

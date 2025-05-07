@@ -41,7 +41,7 @@ export default function Login() {
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8 h-screen">
         <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-[480px]">
-          <div className="bg-gray-800  px-6 py-12 shadow-sm sm:rounded-xl sm:px-12">
+          <div className="bg-gray-800  px-6 py-12 shadow-sm sm:rounded-xl sm:px-12 ">
             <form onSubmit={handleSubmit} className="space-y-6">
               <h2 className="text-white text-2xl">Log In</h2>
               <p className="text-gray-200 text-sm">
