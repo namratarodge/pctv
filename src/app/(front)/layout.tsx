@@ -28,7 +28,7 @@ export default function RootLayout({
           <header className="absolute inset-x-0 top-0 z-50">
             <nav
               aria-label="Global"
-              className="flex items-center justify-between p-6 lg:px-8 mx-auto max-w-6xl"
+              className="flex items-center justify-between p-6 lg:px-2 mx-auto max-w-6xl"
             >
               <div className="flex lg:flex-1">
                 <div className="-m-1.5 p-1.5">
