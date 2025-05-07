@@ -1,4 +1,4 @@
-import { Footer, Slider, SliderNumber } from "@/components/layout";
+import { Footer, Slider, SliderNumber, TopicSlider } from "@/components/layout";
 import { SpeakerXMarkIcon } from "@heroicons/react/24/outline";
 import { PlayCircleIcon } from "@heroicons/react/24/solid";
 
@@ -98,6 +98,7 @@ export default function Home() {
         <Slider title="Continue Watching" progress />
         <Slider title="PCTv Regions" speakers  />
         <SliderNumber title="PCTv Top 10 Sessions"   />
+        <TopicSlider title="PCTv Topic"   />
       </div>
       <Footer />
     </>

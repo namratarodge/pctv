@@ -5,3 +5,4 @@ export { default as Error } from "./Error";
 export { default as Footer } from "./Footer";
 export { default as Slider } from "./Slider";
 export { default as SliderNumber } from "./SliderNumber";
+export { default as TopicSlider } from "./TopicSlider";

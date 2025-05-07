@@ -52,7 +52,7 @@ type VoicesSliderProps = {
   title: string;
 };
 
-export default function VoicesSlider({ title }: VoicesSliderProps) {
+export default function SliderNumber({ title }: VoicesSliderProps) {
   return (
     <div className=" py-8  text-white relative">
       <h2 className="text-xl font-bold mb-4">{title}</h2>
@@ -60,27 +60,30 @@ export default function VoicesSlider({ title }: VoicesSliderProps) {
         modules={[Navigation, Pagination]}
         spaceBetween={16}
         slidesPerView={2.2}
-        navigation
         pagination={{
           el: ".swiper-progressbar",
           type: "progressbar",
         }}
         breakpoints={{
           768: { slidesPerView: 3 },
-          1024: { slidesPerView: 5 },
+          1024: { slidesPerView: 4 },
         }}
         className="relative"
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
-            <div className={`relative rounded-sm gap-2 shadow-lg flex`}>
-              <div className="absolute -left-4 top-1/2 transform -translate-y-1/2 text-[120px] text-white/10 font-extrabold select-none pointer-events-none">
-                1
+            <div className="relative h-40 bg-gray-900 flex items-center justify-center p-4 overflow-hidden ">
+              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[8rem] font-bold text-white opacity-20 leading-none z-0 ">
+                {index + 1}
               </div>
-              <img
-                src="https://picsum.photos/300/200/"
-                className="w-full h-auto rounded-sm"
-              />
+
+              <div className="relative z-10 max-w-4xl w-full ml-11 ">
+                <img
+                  src="https://picsum.photos/300/200"
+                  alt="Masterclass Card"
+                  className="w-full rounded-md shadow-2xl "
+                />
+              </div>
             </div>
           </SwiperSlide>
         ))}
