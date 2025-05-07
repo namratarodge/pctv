@@ -100,7 +100,6 @@ export default function Home() {
         <SliderNumber title="PCTv Top 10 Sessions"   />
         <TopicSlider title="PCTv Topic"   />
       </div>
-      <Footer />
     </>
   );
 }

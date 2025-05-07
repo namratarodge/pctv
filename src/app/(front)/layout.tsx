@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { Footer } from "@/components/layout";
 
 const navigation = [
   { name: "Product", href: "#" },
@@ -24,11 +25,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="bg-gray-900">
-          <header className="absolute inset-x-0 top-0 z-50">
+        <div className="bg-[#161f27]">
+          <header className="absolute inset-x-0 top-0 z-50 ">
             <nav
               aria-label="Global"
-              className="flex items-center justify-between p-6 lg:px-2 mx-auto max-w-6xl"
+              className="flex items-center justify-between p-4 lg:px-2 mx-auto max-w-7xl"
             >
               <div className="flex lg:flex-1">
                 <div className="-m-1.5 p-1.5">
@@ -119,6 +120,7 @@ export default function RootLayout({
             </Dialog>
           </header>
           {children}
+          <Footer />
         </div>
       </body>
     </html>
