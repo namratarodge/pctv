@@ -9,11 +9,18 @@ import Link from "next/link";
 import { Footer } from "@/components/layout";
 
 const navigation = [
-  { name: "Home", href: "#" },
-  { name: "TV Topics", href: "#" },
+  { name: "Home", href: "/" },
+  { name: "TV Topics", href: "/browse" },
   { name: "Course/Zones", href: "#" },
   { name: "Pricing", href: "#" },
 ];
+
+import { usePathname } from "next/navigation";
+
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 
 export default function RootLayout({
   children,
@@ -21,6 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pageName = usePathname();
 
   return (
     <html lang="en">
@@ -48,9 +56,10 @@ export default function RootLayout({
                       <a
                         key={item.name}
                         href={item.href}
-                        className={
+                        className={classNames(
+                          item.href === pageName && "text-white",
                           "text-gray-400 text-sm hover:text-white items-center justify-center px-3 py-2 rounded-md font-semibold"
-                        }
+                        )}
                       >
                         {item.name}
                       </a>
