@@ -39,7 +39,7 @@ const Levels = [
 
 export default function Browser() {
   return (
-    <div className="pt-18 max-w-7xl mx-auto flex">
+    <div className="pt-18 max-w-7xl mx-auto flex mb-10">
       <div className="w-1/4 px-4 py-6 overflow-auto h-screen">
         <div className="w-full border-b border-gray-500 pb-6">
           <div className="text-gray-300">TV Topic</div>
@@ -75,8 +75,8 @@ export default function Browser() {
         </div>
         <div className="w-full max-w-md mx-auto mt-4 border-b pb-6 border-gray-500">
           <label
-            for="yearRange"
-            class="block text-md font-medium text-gray-700 mb-2"
+            htmlFor="yearRange"
+            className="block text-md font-medium text-gray-700 mb-2"
           >
             Year
           </label>
@@ -85,7 +85,6 @@ export default function Browser() {
             id="yearRange"
             min="2010"
             max="2025"
-            value="2017"
             className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
           />
           <div className="flex justify-between text-xs text-gray-500 mt-1">
