@@ -3,20 +3,36 @@
 "use client"; // if using App Router
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import { useCallback } from "react";
+
 import { useState } from "react";
+interface PaginationData {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
 
-export default function Pagination() {
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 20; // example total page count
+interface PaginationProps {
+  pagination: PaginationData;
+  onPageChange: (page: number) => void;
+  onLimitChange: (limit: number) => void;
+}
+export default function Paginations({
+  pagination,
+  onPageChange,
+  onLimitChange,
+}: PaginationProps) {
+  const { total, page, limit, totalPages } = pagination;
 
-  const handlePrev = () => {
-    setCurrentPage((prev) => Math.max(prev - 1, 1));
-  };
+  const handlePrev = useCallback(() => {
+    if (page > 1) onPageChange(page - 1);
+  }, [page, onPageChange]);
 
-  const handleNext = () => {
-    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-  };
+  const handleNext = useCallback(() => {
+    console.log(page);
+    if (page < totalPages) onPageChange(page + 1);
+  }, [page, totalPages, onPageChange]);
 
   return (
     <div className="flex items-center justify-between gap-4 flex-wrap py-4  rounded-lg bg-white ">
@@ -24,10 +40,10 @@ export default function Pagination() {
       <div className="flex items-center gap-2">
         <span className="text-sm text-gray-600">Items per page:</span>
         <select
-          value={itemsPerPage}
+          value={limit}
           onChange={(e) => {
-            setItemsPerPage(Number(e.target.value));
-            setCurrentPage(1); // reset to first page
+            onLimitChange(Number(e.target.value));
+            onPageChange(1); // reset to first page on limit change
           }}
           className="border border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
         >
@@ -43,7 +59,7 @@ export default function Pagination() {
       <div className="flex items-center gap-2">
         <button
           onClick={handlePrev}
-          disabled={currentPage === 1}
+          disabled={page === 1}
           className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md text-sm text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <ChevronLeftIcon className="h-4 w-4" />
@@ -51,13 +67,12 @@ export default function Pagination() {
         </button>
 
         <span className="text-sm text-gray-700">
-          Page <span className="font-medium">{currentPage}</span> of{" "}
-          {totalPages}
+          Page <span className="font-medium">{page}</span> of {totalPages}
         </span>
 
         <button
           onClick={handleNext}
-          disabled={currentPage === totalPages}
+          disabled={page === totalPages}
           className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md text-sm text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Next

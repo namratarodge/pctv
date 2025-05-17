@@ -5,3 +5,5 @@ export { default as ModelWithForm } from "./ModelWithForm";
 export { default as DataTable } from "./DataTable";
 export { default as SectorMultiSelect } from "./SectorMultiSelect";
 export { default as Toggle } from "./Toggle";
+
+export { default as NewTable } from "./NewTable";

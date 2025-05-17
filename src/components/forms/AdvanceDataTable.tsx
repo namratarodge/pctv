@@ -19,7 +19,7 @@ export default function AdvanceDataTable<T extends Record<string, any>>({
   renderActions,
 }: DataTableProps<T>) {
   return (
-    <div className="overflow-x-auto rounded-xl shadow-md border border-gray-200">
+    <div className="overflow-x-auto rounded shadow-md border border-gray-200">
       <table className="min-w-full divide-y divide-gray-200 bg-white">
         <thead className="bg-gray-50">
           <tr>

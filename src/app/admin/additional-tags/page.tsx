@@ -17,28 +17,42 @@ import { formatDate } from "@/utils/common";
 export default function Subscription() {
   const [additionalTags, setAdditionalTags] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [pagination, setPagination] = useState({
+    total: 0,
+    page: 1,
+    limit: 10,
+    totalPages: 0,
+  });
+
+  const [pages, setPages] = useState(1);
+  const [limits, setLimits] = useState(10);
 
   const fetchAdditionalTag = async () => {
     const token = localStorage.getItem("token");
     setLoading(true);
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/getPeoples?known_for=sub-tv-topic`,
+        `${process.env.NEXT_PUBLIC_API_URL}/getPeoples`,
         {
           headers: {
             Authorization: token,
             "Content-Type": "application/json",
           },
+          params: {
+            known_for: "sub-tv-topic",
+            limit: limits,
+            page: pages,
+          },
         }
       );
       if (response.data.status) {
-        console.log(response.data.data);
-        const modifiedData = response.data.data.map((item: any) => ({
+        const modifiedData = response.data.data.data.map((item: any) => ({
           ...item,
           updated_at: `${formatDate(item.updated_at)} `,
         }));
-        setLoading(false);
         setAdditionalTags(modifiedData);
+        setPagination(response.data.data.pagination);
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -47,9 +61,17 @@ export default function Subscription() {
     }
   };
 
+  const setPage = (value: number) => {
+    setPages(value);
+  };
+
+  const setLimit = (value: number) => {
+    setLimits(value);
+  };
+
   useEffect(() => {
     fetchAdditionalTag();
-  }, []);
+  }, [pages, limits]);
 
   return (
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
@@ -92,7 +114,14 @@ export default function Subscription() {
                     </div>
                   )}
                 />
-                <Paginations />
+                {/* <Paginations data={pegination}/>
+                 */}
+
+                <Paginations
+                  pagination={pagination}
+                  onPageChange={setPage}
+                  onLimitChange={setLimit}
+                />
               </div>
             </div>
           </div>
