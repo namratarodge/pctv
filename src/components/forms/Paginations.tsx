@@ -60,7 +60,7 @@ export default function Paginations({
         <button
           onClick={handlePrev}
           disabled={page === 1}
-          className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md text-sm text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="cursor-pointer flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md text-sm text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <ChevronLeftIcon className="h-4 w-4" />
           Prev
@@ -73,7 +73,7 @@ export default function Paginations({
         <button
           onClick={handleNext}
           disabled={page === totalPages}
-          className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md text-sm text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="cursor-pointer flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md text-sm text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Next
           <ChevronRightIcon className="h-4 w-4" />

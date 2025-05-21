@@ -25,6 +25,8 @@ export default function Filter({ filterType }: { filterType: any[] }) {
   };
 
   const handleSelectChange = (name, value) => {
+    console.log(name)
+    console.log(value)
     setFilterValues((prev) => ({
       ...prev,
       [name]: {
@@ -43,7 +45,6 @@ export default function Filter({ filterType }: { filterType: any[] }) {
       if (filterObj) {
         setSelectedFilter([...selectedFilter, filterObj]);
       }
-      console.log("Selected filter:", selectedFilter);
     }
   };
 
