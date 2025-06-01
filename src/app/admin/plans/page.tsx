@@ -20,7 +20,7 @@ export default function Plans() {
     setLoading(true);
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/getPlans`,
+        `${process.env.NEXT_PUBLIC_API_URL}/billing-plan`,
         {
           headers: {
             Authorization: token,
@@ -29,8 +29,7 @@ export default function Plans() {
         }
       );
       if (response.data.status) {
-        console.log(response.data.data);
-        const modifiedData = response.data.data.map((item: any) => ({
+        const modifiedData = response.data.data.data.map((item: any) => ({
           ...item,
           amount: `${item.currency} ${item.amount}`,
           updated_at: `${formatDate(item.updated_at)} `,

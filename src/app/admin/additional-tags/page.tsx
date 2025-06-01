@@ -80,9 +80,9 @@ export default function Subscription() {
         <Loading />
       ) : (
         <>
-          <div className="sm:flex sm:items-center mt-4  h-auto ">
+          <div className="sm:flex sm:items-center mt-4  h-auto gap-4">
             <Filter filterType={AdditionalTagFilter} />
-            <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none ">
+            <div className="mt-4 sm:mt-0  ">
               <Link
                 href="additional-tags/create"
                 className="flex items-center  gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -114,8 +114,6 @@ export default function Subscription() {
                     </div>
                   )}
                 />
-                {/* <Paginations data={pegination}/>
-                 */}
 
                 <Paginations
                   pagination={pagination}

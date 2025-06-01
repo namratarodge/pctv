@@ -66,7 +66,7 @@
   export const AdditionalTagFilter = [
     {
       name: "Image",
-      value: "Image",
+      key: "poster",
       option: [
         { name: "Has Image", value: "Yes" },
         { name: "Does't have Image", value: "No" },
@@ -74,17 +74,17 @@
     },
     {
       name: "Known For",
-      value: "knownFor",
+      key: "knownFor",
       option: [
         { name: "Acting", value: "Acting" },
         { name: "Directing", value: "Directing" },
-        { name: "Art", value: "art" },
+        { name: "Art", value: "Art" },
         { name: "Camera", value: "Camera" },
       ],
     },
     {
       name: "Birthday",
-      value: "birthday",
+      key: "birthday",
       option: [
         { name: "is", value: "=" },
         { name: "is not", value: "!=" },
@@ -100,14 +100,14 @@
     },
     {
       name: "Views",
-      value: "views",
+      key: "views",
       option: [
-        { name: "is", value: "is" },
-        { name: "is not", value: "is not" },
-        { name: "is greater than ", value: "is greater than" },
-        { name: "is greater than or equal to", value: "is on or before" },
-        { name: "is less than ", value: "is less than" },
-        { name: "is less than or equal to", value: "is on or before" },
+        { name: "is", value: "=" },
+        { name: "is not", value: "!=" },
+        { name: "is greater than ", value: "<" },
+        { name: "is greater than or equal to", value: "=<" },
+        { name: "is less than ", value: ">" },
+        { name: "is less than or equal to", value: ">=" },
       ],
       field: {
         type: "number",
@@ -116,7 +116,7 @@
     },
     {
       name: "Created At",
-      value: "created_at",
+      key: "created_at",
       option: [
         { name: "is", value: "=" },
         { name: "is not", value: "!=" },
