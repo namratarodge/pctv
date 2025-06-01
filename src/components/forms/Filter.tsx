@@ -14,6 +14,16 @@ export default function Filter({ filterType }: { filterType: any[] }) {
 
   const toggleFilter = () => setShowFilter((prev) => !prev);
 
+  const handleInputSearch = (value) => {
+    const name = filterType[0].search;
+    setFilterValues((prev) => ({
+      ...prev,
+      [name]: {
+        ...prev[name],
+        value, // directly set the new value
+      },
+    }));
+  };
   const handleInputChange = (name, inputValue) => {
     setFilterValues((prev) => ({
       ...prev,
@@ -84,6 +94,7 @@ export default function Filter({ filterType }: { filterType: any[] }) {
         </div>
         <input
           type="text"
+          onChange={(e) => handleInputSearch(e.target.value)}
           placeholder="Type of search..."
           className="block w-5/6 pr-4 py-3 focus:outline-none sm:text-md"
         />
@@ -131,7 +142,7 @@ export default function Filter({ filterType }: { filterType: any[] }) {
         )}
       </div>
 
-      <small>{ queryString }</small>
+      <small>{queryString}</small>
       <div>
         {selectedFilter.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-2">
@@ -171,14 +182,14 @@ export default function Filter({ filterType }: { filterType: any[] }) {
                       handleInputChange(filter.key, e.target.value)
                     }
                     placeholder={filter.field.placeholder}
-                    className="px-4 py-2 w-full cursor-pointer hover:bg-gray-200"
+                    className="px-4 py-2 w-40 text-md cursor-pointer hover:bg-gray-200"
                   />
                 )}
               </div>
             ))}
           </div>
         )}
-        {/* <pre>{ queryString }</pre> */}
+        <pre>{JSON.stringify(filterValues, null, 2)}</pre>
       </div>
     </div>
   );

@@ -64,13 +64,15 @@
   ];
 
   export const AdditionalTagFilter = [
+    
     {
       name: "Image",
       key: "poster",
       option: [
         { name: "Has Image", value: "Yes" },
-        { name: "Does't have Image", value: "No" },
+        { name: "Doesn't have Image", value: "No" },
       ],
+      search : 'name'
     },
     {
       name: "Known For",
