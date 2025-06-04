@@ -275,6 +275,72 @@
     },
   ];
 
+  export const VideoFilter = [
+  
+    {
+      name: "Type",
+      key: "type",
+      option: [
+        { name: "All", value: "all" },
+        { name: "Embed", value: "embed" },
+        { name: "Direct Video", value: "direct_video" },
+        { name: "Frame", value: "frame" },
+        { name: "Remote Link", value: "remote_link" },
+      ],
+      search : 'name'
+    },
+    {
+      name: "Status",
+      key: "status",
+      option: [
+        { name: "Approved", value: "approved" },
+        { name: "Not Approved", value: "not_approved" },
+      ],
+    },
+    {
+      name: "Quality",
+      key: "quality",
+      option: [
+        { name: "SD", value: "sd" },
+        { name: "HD", value: "hd" },
+        { name: "4K", value: "4k" },
+        { name: "HDR", value: "hdr" },
+      ],
+    },
+    {
+      name: "Gender",
+      key: "gender",
+      option: [
+        { name: "Male", value: "male" },
+        { name: "Female", value: "female" },
+      ],
+    },
+    {
+      name: "Title",
+      key: "title",
+      field: {
+        type: "text",
+        placeholder: "Enter Title",
+      },
+    },
+    {
+      name: "Created At",
+      key: "created_at",
+      option: [
+        { name: "is", value: "=" },
+        { name: "is not", value: "!=" },
+        { name: "is greater than ", value: "<" },
+        { name: "is greater than or equal to", value: "=<" },
+        { name: "is less than ", value: ">" },
+        { name: "is less than or equal to", value: ">=" },
+      ],
+      field: {
+        type: "date",
+        placeholder: "Select date",
+      },
+    },
+  ];
+
 
   export const TagsfilterType = [
     {

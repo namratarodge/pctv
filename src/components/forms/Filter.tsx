@@ -51,7 +51,7 @@ export default function Filter({ filterType }: { filterType: any[] }) {
     .map(([key, val]) => {
       if (val.value1 !== undefined) {
         // value + value1 (e.g., created_at=<2025-06-17)
-        return `${key}${val.value}${val.value1}`;
+        return `${key}=${val.value}${val.value1}`;
       } else {
         // only value (e.g., knownFor=art)
         return `${key}=${String(val.value)}`;
@@ -71,7 +71,8 @@ export default function Filter({ filterType }: { filterType: any[] }) {
       });
     } else {
       const filterObj = filterType.find((f) => f.name === filterName);
-      handleSelectChange(filterObj, filterObj.option[0].value);
+      const value =  filterObj.option ? filterObj?.option[0]?.value : '';
+      handleSelectChange(filterObj,value);
       if (filterObj) {
         setSelectedFilter([...selectedFilter, filterObj]);
       }
@@ -158,7 +159,7 @@ export default function Filter({ filterType }: { filterType: any[] }) {
                 </span>
 
                 {/* Filter dropdown options if any */}
-                {filter.option && (
+                {filter?.option && (
                   <select
                     className=" w-20"
                     onChange={(e) =>

@@ -85,3 +85,37 @@ export const PeopleColumn: {
   { key: "popularity", label: "Popularity" },
   { key: "last_update", label: "Last Update" },
 ];
+
+
+// Video  Column
+type VideoItem = {
+  name: string;
+  title: string;
+  type: number;
+  category: number;
+  approved: number;
+  plays: number;
+  quality: number;
+  score: number;
+  reports: number;
+  sessions: number;
+  episode: number;
+
+};
+
+export const VideoColumn: {
+  key: keyof VideoItem;
+  label: string;
+}[] = [
+  { key: "name", label: "Name" },
+  { key: "title", label: "Title" },
+  { key: "type", label: "Type" },
+  { key: "category", label: "Category" },
+  { key: "approved", label: "Approved" },
+  { key: "plays", label: "Plays" },
+  { key: "quality", label: "quality" },
+  { key: "score", label: "score" },
+  { key: "reports", label: "reports" },
+  { key: "sessions", label: "session" },
+  { key: "episode", label: "Episode" },
+];
