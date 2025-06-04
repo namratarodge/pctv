@@ -119,3 +119,24 @@ export const VideoColumn: {
   { key: "sessions", label: "session" },
   { key: "episode", label: "Episode" },
 ];
+
+
+// List Column
+type typeOfList = {
+  name: "string";
+  owner: "number";
+  item_count: "string";
+  public: boolean;
+  updated_at: "string";
+};
+
+export const listColumn: {
+  key: keyof typeOfList;
+  label: string;
+}[] = [
+  { key: "name", label: "Name" },
+  { key: "owner", label: "Owner" },
+  { key: "item_count", label: "Item Count" },
+  { key: "public", label: "Public" },
+  { key: "updated_at", label: "Last Updated" },
+];
