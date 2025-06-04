@@ -3,9 +3,16 @@ import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 import Error from "@/components/layout/Error";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
 
 export default function CreateProfile() {
   const [loading, setLoading] = useState(true);
+  const [searchParams] = useSearchParams();
+  console.log('tes')
+  console.log(searchParams)
+  const knownFor = searchParams.get('known_for'); 
+  console.log(knownFor)
+
   const {
     register,
     handleSubmit,
@@ -67,7 +74,7 @@ export default function CreateProfile() {
               </label>
               <input
                 type="text"
-                value={"sub-tv-topic"}
+                value={knownFor}
                 disabled
                 {...register("known_for", { required: "Known For is required" })}
                 className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 text-gray-700"

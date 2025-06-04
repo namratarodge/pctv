@@ -64,3 +64,24 @@ export const TitleColumn: {
   { key: "views", label: "Local View" },
   { key: "popularity", label: "Popularity" },
 ];
+
+
+// People  Column
+type PeopleItem = {
+  name: string;
+  birthdate: string;
+  views: number;
+  popularity: number;
+  last_update: number;
+};
+
+export const PeopleColumn: {
+  key: keyof PeopleItem;
+  label: string;
+}[] = [
+  { key: "name", label: "Name" },
+  { key: "birthdate", label: "Birth Date" },
+  { key: "views", label: "Local View" },
+  { key: "popularity", label: "Popularity" },
+  { key: "last_update", label: "Last Update" },
+];

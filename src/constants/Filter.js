@@ -195,6 +195,87 @@
     },
   ];
 
+
+  export const PeopleFilter = [
+  
+    {
+      name: "Image",
+      key: "poster",
+      option: [
+        { name: "Has Image", value: "Yes" },
+        { name: "Doesn't have Image", value: "No" },
+      ],
+      search : 'name'
+    },
+    {
+      name: "Known For",
+      key: "knownFor",
+      option: [
+        { name: "Acting", value: "Acting" },
+        { name: "Directing", value: "Directing" },
+        { name: "Art", value: "Art" },
+        { name: "Camera", value: "Camera" },
+      ],
+    },
+    {
+      name: "Birthday",
+      key: "birthday",
+      option: [
+        { name: "is", value: "=" },
+        { name: "is not", value: "!=" },
+        { name: "is greater than ", value: "<" },
+        { name: "is greater than or equal to", value: "=<" },
+        { name: "is less than ", value: ">" },
+        { name: "is less than or equal to", value: ">=" },
+      ],
+      field: {
+        type: "date",
+        placeholder: "Select date",
+      },
+    },
+    {
+      name: "Gender",
+      key: "gender",
+      option: [
+        { name: "Male", value: "male" },
+        { name: "Female", value: "female" },
+      ],
+    },
+    {
+      name: "Views",
+      key: "views",
+      option: [
+        { name: "is", value: "=" },
+        { name: "is not", value: "!=" },
+        { name: "is greater than ", value: "<" },
+        { name: "is greater than or equal to", value: "=<" },
+        { name: "is less than ", value: ">" },
+        { name: "is less than or equal to", value: ">=" },
+      ],
+      field: {
+        type: "number",
+        placeholder: "Enter View",
+      },
+    },
+    {
+      name: "Created At",
+      key: "created_at",
+      option: [
+        { name: "is", value: "=" },
+        { name: "is not", value: "!=" },
+        { name: "is greater than ", value: "<" },
+        { name: "is greater than or equal to", value: "=<" },
+        { name: "is less than ", value: ">" },
+        { name: "is less than or equal to", value: ">=" },
+      ],
+      field: {
+        type: "date",
+        placeholder: "Select date",
+      },
+    },
+  ];
+
+
   export const TagsfilterType = [
     {
       name: "Type",

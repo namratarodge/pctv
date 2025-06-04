@@ -1,12 +1,16 @@
 "use client";
 import { BackwardIcon } from "@heroicons/react/24/outline";
+import { useSearchParams } from "next/navigation";
 // pages/create-profile.tsx
 import React, { useState } from "react";
 
 export default function CreateProfile() {
+  const searchParams = useSearchParams(); // type: URLSearchParams
+  const known_for = searchParams.get('known_for') ?? ''; 
+    
   const [formData, setFormData] = useState({
     name: "",
-    knownFor: "",
+    knownFor: known_for,
     bio: "",
     gender: "",
     birthDate: "",
@@ -60,6 +64,8 @@ export default function CreateProfile() {
               <input
                 type="text"
                 name="knownFor"
+                disabled={known_for && true}
+                value={known_for}
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
