@@ -34,13 +34,15 @@ export default function Filter({ filterType }: { filterType: any[] }) {
     }));
   };
 
-  const handleSelectChange = (name, value) => {
-    console.log("filterSelect");
+  const handleSelectChange = (filter, value) => {
+    const currentDate = new Date().toISOString().split("T")[0]; // format: YYYY-MM-DD
+
     setFilterValues((prev) => ({
       ...prev,
-      [name]: {
-        ...prev[name],
+      [filter.key]: {
+        ...prev[filter.key],
         value, // directly set the new value
+        ...(filter?.field?.type === 'date' ? { value1: currentDate } : {}), 
       },
     }));
   };
@@ -52,7 +54,7 @@ export default function Filter({ filterType }: { filterType: any[] }) {
         return `${key}${val.value}${val.value1}`;
       } else {
         // only value (e.g., knownFor=art)
-        return `${key}=${String(val.value).toLowerCase()}`;
+        return `${key}=${String(val.value)}`;
       }
     })
     .join("&");
@@ -69,7 +71,7 @@ export default function Filter({ filterType }: { filterType: any[] }) {
       });
     } else {
       const filterObj = filterType.find((f) => f.name === filterName);
-      handleSelectChange(filterObj.key, filterObj.option[0].value);
+      handleSelectChange(filterObj, filterObj.option[0].value);
       if (filterObj) {
         setSelectedFilter([...selectedFilter, filterObj]);
       }
@@ -141,7 +143,6 @@ export default function Filter({ filterType }: { filterType: any[] }) {
           </div>
         )}
       </div>
-
       <small>{queryString}</small>
       <div>
         {selectedFilter.length > 0 && (
@@ -161,7 +162,7 @@ export default function Filter({ filterType }: { filterType: any[] }) {
                   <select
                     className=" w-20"
                     onChange={(e) =>
-                      handleSelectChange(filter.key, e.target.value)
+                      handleSelectChange(filter, e.target.value)
                     }
                   >
                     {filter.option.map((option) => (
@@ -189,7 +190,7 @@ export default function Filter({ filterType }: { filterType: any[] }) {
             ))}
           </div>
         )}
-        <pre>{JSON.stringify(filterValues, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(filterValues, null, 2)}</pre> */}
       </div>
     </div>
   );

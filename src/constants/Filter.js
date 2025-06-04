@@ -64,7 +64,7 @@
   ];
 
   export const AdditionalTagFilter = [
-    
+  
     {
       name: "Image",
       key: "poster",
@@ -87,6 +87,67 @@
     {
       name: "Birthday",
       key: "birthday",
+      option: [
+        { name: "is", value: "=" },
+        { name: "is not", value: "!=" },
+        { name: "is greater than ", value: "<" },
+        { name: "is greater than or equal to", value: "=<" },
+        { name: "is less than ", value: ">" },
+        { name: "is less than or equal to", value: ">=" },
+      ],
+      field: {
+        type: "date",
+        placeholder: "Select date",
+      },
+    },
+    {
+      name: "Views",
+      key: "views",
+      option: [
+        { name: "is", value: "=" },
+        { name: "is not", value: "!=" },
+        { name: "is greater than ", value: "<" },
+        { name: "is greater than or equal to", value: "=<" },
+        { name: "is less than ", value: ">" },
+        { name: "is less than or equal to", value: ">=" },
+      ],
+      field: {
+        type: "number",
+        placeholder: "Enter View",
+      },
+    },
+    {
+      name: "Created At",
+      key: "created_at",
+      option: [
+        { name: "is", value: "=" },
+        { name: "is not", value: "!=" },
+        { name: "is greater than ", value: "<" },
+        { name: "is greater than or equal to", value: "=<" },
+        { name: "is less than ", value: ">" },
+        { name: "is less than or equal to", value: ">=" },
+      ],
+      field: {
+        type: "date",
+        placeholder: "Select date",
+      },
+    },
+  ];
+
+  export const TitleFilter = [
+  
+    {
+      name: "Image",
+      key: "poster",
+      option: [
+        { name: "Has Image", value: "yes" },
+        { name: "Doesn't have Image", value: "no" },
+      ],
+      search : 'name'
+    },
+    {
+      name: "Release Date",
+      key: "release_date",
       option: [
         { name: "is", value: "=" },
         { name: "is not", value: "!=" },

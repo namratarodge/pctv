@@ -41,3 +41,26 @@ export const AdditionalTagColumn: {
   { key: "popularity", label: "Popularity" },
   { key: "updated_at", label: "Last Updated" },
 ];
+
+
+// Title  Column
+type TitleItem = {
+  name: string;
+  type: string;
+  release_date: number;
+  rating: number;
+  views: number;
+  popularity: number;
+};
+
+export const TitleColumn: {
+  key: keyof TitleItem;
+  label: string;
+}[] = [
+  { key: "name", label: "Name" },
+  { key: "type", label: "Type" },
+  { key: "release_date", label: "Release Date" },
+  { key: "rating", label: "Rating" },
+  { key: "views", label: "Local View" },
+  { key: "popularity", label: "Popularity" },
+];
