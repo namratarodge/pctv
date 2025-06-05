@@ -185,7 +185,7 @@ export default function Subscription() {
     setLoading(true);
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/getTitles`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/getTitles`,
         {
           headers: {
             Authorization: token,

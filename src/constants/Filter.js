@@ -345,28 +345,17 @@
   export const TagsfilterType = [
     {
       name: "Type",
-      value: "Type",
+      key: "type",
       option: [
-        { name: "All", value: "All" },
-        { name: "Bug", value: "Bug" },
-        { name: "Feature", value: "Feature" },
-        { name: "Task", value: "Task" },
-        { name: "Improvement", value: "Improvement" },
+        { name: "TV Topic", value: "tv_topic" },
+        { name: "categories", value: "categories" },
+        { name: "Production Country", value: "production_country" },
+        { name: "Custom", value: "custom" },
       ],
     },
     {
-      name: "Status",
-      value: "Status",
-      option: [
-        { name: "All", value: "All" },
-        { name: "Open", value: "Open" },
-        { name: "In Progress", value: "In Progress" },
-        { name: "Closed", value: "Closed" },
-      ],
-    },
-    {
-      name: "Created",
-      value: "Date",
+      name: "Created At",
+      key: "created_at",
       option: [
         { name: "is", value: "=" },
         { name: "is not", value: "!=" },
@@ -381,27 +370,22 @@
       },
     },
     {
-      name: "Revenue",
-      value: "Revenue",
+      name: "Updated At",
+      key: "updated_at",
       option: [
-        { name: "is", value: "is" },
-        { name: "is not", value: "is not" },
-        { name: "is greater than ", value: "is greater than" },
-        { name: "is greater than or equal to", value: "is on or before" },
-        { name: "is less than ", value: "is less than" },
-        { name: "is less than or equal to", value: "is on or before" },
+        { name: "is", value: "=" },
+        { name: "is not", value: "!=" },
+        { name: "is greater than ", value: "<" },
+        { name: "is greater than or equal to", value: "=<" },
+        { name: "is less than ", value: ">" },
+        { name: "is less than or equal to", value: ">=" },
       ],
       field: {
-        type: "number",
-        placeholder: "Enter revenue",
+        type: "date",
+        placeholder: "Select date",
       },
     },
-    {
-      name: "Tags",
-      value: "Tags",
-    },
-    {
-      name: "Assigned to",
-      value: "Assigned to",
-    },
   ];
+
+
+  

@@ -29,7 +29,7 @@ export default function People() {
     setLoading(true);
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/getVideos`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/getVideos`,
         {
           headers: {
             Authorization: token,

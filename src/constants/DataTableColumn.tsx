@@ -42,7 +42,6 @@ export const AdditionalTagColumn: {
   { key: "updated_at", label: "Last Updated" },
 ];
 
-
 // Title  Column
 type TitleItem = {
   name: string;
@@ -65,7 +64,6 @@ export const TitleColumn: {
   { key: "popularity", label: "Popularity" },
 ];
 
-
 // People  Column
 type PeopleItem = {
   name: string;
@@ -86,7 +84,6 @@ export const PeopleColumn: {
   { key: "last_update", label: "Last Update" },
 ];
 
-
 // Video  Column
 type VideoItem = {
   name: string;
@@ -100,7 +97,6 @@ type VideoItem = {
   reports: number;
   sessions: number;
   episode: number;
-
 };
 
 export const VideoColumn: {
@@ -120,7 +116,6 @@ export const VideoColumn: {
   { key: "episode", label: "Episode" },
 ];
 
-
 // List Column
 type typeOfList = {
   name: "string";
@@ -138,5 +133,23 @@ export const listColumn: {
   { key: "owner", label: "Owner" },
   { key: "item_count", label: "Item Count" },
   { key: "public", label: "Public" },
+  { key: "updated_at", label: "Last Updated" },
+];
+
+// tags Column
+type typeOTags = {
+  name: "string";
+  type: "number";
+  display_name: "string";
+  updated_at: "string";
+};
+
+export const tagsColumn: {
+  key: keyof typeOTags;
+  label: string;
+}[] = [
+  { key: "name", label: "Name" },
+  { key: "type", label: "Type" },
+  { key: "display_name", label: "Display Name" },
   { key: "updated_at", label: "Last Updated" },
 ];

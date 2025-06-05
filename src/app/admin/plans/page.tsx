@@ -20,7 +20,7 @@ export default function Plans() {
     setLoading(true);
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/billing-plan`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/billing-plan`,
         {
           headers: {
             Authorization: token,

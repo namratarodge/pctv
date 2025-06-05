@@ -36,7 +36,6 @@ export default function Filter({ filterType }: { filterType: any[] }) {
 
   const handleSelectChange = (filter, value) => {
     const currentDate = new Date().toISOString().split("T")[0]; // format: YYYY-MM-DD
-
     setFilterValues((prev) => ({
       ...prev,
       [filter.key]: {
