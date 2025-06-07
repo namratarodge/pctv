@@ -1,5 +1,5 @@
 "use client";
-import { Filter, Paginations, ModelWithForm } from "@/components/forms";
+import { Filter, Paginations, ModelForm } from "@/components/forms";
 import {
   PencilIcon,
   PlusCircleIcon,
@@ -13,155 +13,21 @@ import { formatDate } from "@/utils/common";
 import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
 import { TitleColumn } from "@/constants/DataTableColumn";
 import Loading from "@/components/layout/Loading";
-const people = [
-  {
-    name: "Amelia Wright",
-    title: "UI/UX Designer",
-    department: "Design",
-    email: "amelia.wright@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/women/68.jpg",
-  },
-  {
-    name: "Noah Johnson",
-    title: "Back-end Developer",
-    department: "Engineering",
-    email: "noah.johnson@example.com",
-    role: "Admin",
-    image: "https://randomuser.me/api/portraits/men/65.jpg",
-  },
-  {
-    name: "Sophia Lee",
-    title: "Product Manager",
-    department: "Product",
-    email: "sophia.lee@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/women/52.jpg",
-  },
-  {
-    name: "Elijah Smith",
-    title: "DevOps Engineer",
-    department: "Infrastructure",
-    email: "elijah.smith@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/men/54.jpg",
-  },
-  {
-    name: "Olivia Brown",
-    title: "Marketing Specialist",
-    department: "Marketing",
-    email: "olivia.brown@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/women/72.jpg",
-  },
-  {
-    name: "Liam Davis",
-    title: "Mobile Developer",
-    department: "Development",
-    email: "liam.davis@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/men/29.jpg",
-  },
-  {
-    name: "Mia Wilson",
-    title: "QA Engineer",
-    department: "Quality Assurance",
-    email: "mia.wilson@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/women/43.jpg",
-  },
-  {
-    name: "James Taylor",
-    title: "Technical Writer",
-    department: "Content",
-    email: "james.taylor@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/men/36.jpg",
-  },
-  {
-    name: "Emily Anderson",
-    title: "Data Analyst",
-    department: "Analytics",
-    email: "emily.anderson@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/women/44.jpg",
-  },
-  {
-    name: "Benjamin Moore",
-    title: "Customer Support",
-    department: "Support",
-    email: "benjamin.moore@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/men/48.jpg",
-  },
-  {
-    name: "Charlotte Clark",
-    title: "Recruiter",
-    department: "HR",
-    email: "charlotte.clark@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/women/59.jpg",
-  },
-  {
-    name: "Lucas Lewis",
-    title: "Security Engineer",
-    department: "IT Security",
-    email: "lucas.lewis@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/men/60.jpg",
-  },
-  {
-    name: "Harper Hall",
-    title: "Financial Analyst",
-    department: "Finance",
-    email: "harper.hall@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/women/65.jpg",
-  },
-  {
-    name: "Henry Allen",
-    title: "Legal Advisor",
-    department: "Legal",
-    email: "henry.allen@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/men/50.jpg",
-  },
-  {
-    name: "Ella Young",
-    title: "Graphic Designer",
-    department: "Creative",
-    email: "ella.young@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/women/29.jpg",
-  },
-  {
-    name: "Jack Martinez",
-    title: "Business Analyst",
-    department: "Business",
-    email: "jack.martinez@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/men/25.jpg",
-  },
-  {
-    name: "Abigail Hernandez",
-    title: "Content Strategist",
-    department: "Content",
-    email: "abigail.hernandez@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/women/19.jpg",
-  },
-  {
-    name: "Aiden Scott",
-    title: "Machine Learning Engineer",
-    department: "AI",
-    email: "aiden.scott@example.com",
-    role: "Member",
-    image: "https://randomuser.me/api/portraits/men/12.jpg",
-  },
-];
+import { useForm } from "react-hook-form";
+
+type FormValues = {
+  title: string;
+  description: string;
+};
 
 export default function Subscription() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -177,7 +43,6 @@ export default function Subscription() {
 
   const handleFormSubmit = (data: Record<string, string>) => {
     console.log("Form submitted:", data);
-    setIsModalOpen(false);
   };
 
   const fetch = async () => {
@@ -278,13 +143,28 @@ export default function Subscription() {
           </div>
         </>
       )}
-      <ModelWithForm
+      <ModelForm
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         title="Create a New Plan"
-        fields={fields}
-        onSubmit={handleFormSubmit}
-      />
+        onSubmit={handleSubmit(handleFormSubmit)}
+      >
+        <div className="flex flex-col">
+          <label className="mb-1 text-gray-800">Title</label>
+          <input
+            {...register("title", { required: "Title is required" })}
+            className="px-4 py-2 rounded-md border border-gray-300 text-gray-700"
+          />
+          {errors.title && <p>{errors.title.message}</p>}
+        </div>
+        <div className="flex flex-col">
+          <label className="mb-1 text-gray-800">Description</label>
+          <textarea
+            {...register("description")}
+            className="px-4 py-2 rounded-md border border-gray-300 text-gray-700"
+          />
+        </div>
+      </ModelForm>
     </div>
   );
 }
