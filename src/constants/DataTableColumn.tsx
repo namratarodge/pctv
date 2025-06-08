@@ -198,3 +198,42 @@ export const usersColumn: {
   { key: "last_name", label: "Last Name" },
   { key: "updated_at", label: "Last Updated" },
 ];
+
+
+// pages Column
+type typeOfPages = {
+  slug: "string";
+  user_id: "number";
+  type: "string";
+  updated_at: "string";
+};
+
+export const pagesColumn: {
+  key: keyof typeOfPages;
+  label: string;
+  render?: (row: typeOfPages) => React.ReactNode;
+}[] = [
+  { key: "slug", label: "Slug" },
+  { key: "user_id", label: "Owner",
+
+  render: (row) => (
+    <div className="flex items-center space-x-2">
+      <img
+        src={"/default-user.jpg"}
+        className="w-8 h-8 rounded-full object-cover"
+        onError={(e) => {
+          const target = e.currentTarget;
+          target.onerror = null; // prevent infinite loop
+          target.src = "/default-image.jpg";
+        }}
+      />
+      <span className="flex flex-col">
+        Sandesh Mankar
+        <small>sandesh@gmail.com</small>
+      </span>
+    </div>
+  ),
+   },
+  { key: "type", label: "Type" },
+  { key: "updated_at", label: "Last Updated" },
+];

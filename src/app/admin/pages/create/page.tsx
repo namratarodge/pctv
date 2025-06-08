@@ -1,38 +1,34 @@
 "use client";
+import { PageFormData, pageSchema } from "@/constants/Validation";
+import dynamic from "next/dynamic";
+
+const EditorInput = dynamic(() => import("@/components/forms/EditorInput"), {
+  ssr: false,
+});
 import { BackwardIcon } from "@heroicons/react/24/outline";
+import { zodResolver } from "@hookform/resolvers/zod";
 // pages/create-profile.tsx
 import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 
 export default function CreateProfile() {
-  const [formData, setFormData] = useState({
-    name: "",
-    knownFor: "",
-    bio: "",
-    gender: "",
-    birthDate: "",
-    deathDate: "",
-    popularity: "",
-    birthPlace: "",
-    allowAutoUpdate: false,
-    image: null,
+  const {
+    register,
+    handleSubmit,
+    control,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<PageFormData>({
+    resolver: zodResolver(pageSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+    },
   });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value, type, checked, files } = e.target;
-    if (type === "checkbox") {
-      setFormData({ ...formData, [name]: checked });
-    } else if (type === "file") {
-      setFormData({ ...formData, image: files?.[0] || null });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log(formData);
+  const onSubmit = (data: PageFormData) => {
+    console.log(data);
   };
 
   return (
@@ -43,27 +39,65 @@ export default function CreateProfile() {
             Add New Page
           </h1>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className=" gap-6">
             <div>
               <label className="block text-gray-800 mb-1">Page Title</label>
               <input
                 type="text"
-                name="name"
-                onChange={handleChange}
+                {...register("title")}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+              {errors.title && (
+                <p className="text-red-500 text-sm">{errors.title.message}</p>
+              )}
             </div>
           </div>
 
           <div>
-            <label className="block text-gray-600 mb-1">Bio</label>
-            <textarea
-              name="bio"
-              rows={4}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            ></textarea>
+            <label
+              htmlFor="company-website"
+              className="block text-sm/6 font-medium text-gray-900"
+            >
+              Slug Name
+            </label>
+            <div className="mt-2">
+              <div className="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+                <div className="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
+                  https://projectcontrolstv.com/pages/*/
+                </div>
+                <input
+                  id="company-website"
+                  {...register("slug")}
+                  type="text"
+                  placeholder="www.example.com"
+                  className="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+                />
+              </div>
+              {errors.slug && (
+                <p className="text-red-500 text-sm">{errors.slug.message}</p>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <Controller
+              name="description"
+              control={control}
+              render={({ field }) => (
+                <EditorInput
+                  name="description"
+                  label="Description"
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              )}
+            />
+            {errors.description && (
+              <p className="text-red-500 text-sm">
+                {errors.description.message}
+              </p>
+            )}
           </div>
 
           <div className="flex gap-3">
