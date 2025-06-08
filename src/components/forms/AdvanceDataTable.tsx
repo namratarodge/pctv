@@ -27,7 +27,7 @@ export default function AdvanceDataTable<T extends Record<string, any>>({
               <th
                 key={String(col.key)}
                 scope="col"
-                className={`px-4 py-4 text-sm font-semibold text-gray-700 ${
+                className={`px-4 py-4 text-sm font-semibold text-gray-700  ${
                   index === 0 ? "text-left" : "text-left"
                 }`}
               >

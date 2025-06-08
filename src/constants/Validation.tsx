@@ -47,3 +47,21 @@ export const videoSchema = z.object({
   image: z.any().nullable(),
 });
 export type VideoFormData = z.infer<typeof videoSchema>;
+
+export const userSchema = z.object({
+  first_name: z.string().min(1, "First Name is required"),
+  last_name: z.string().min(1, "Last Name is required"),
+
+  email: z.string().min(1, "Email is required"),
+
+  email_confirmed: z.string().min(1, "Email Confirmed is required"),
+
+  user_type: z.enum(["user", "admin"], {
+    errorMap: () => ({ message: "User Type is required" }),
+  }),
+
+  password: z.string().min(1, "Password is required"),
+  password_confirmed: z.string().min(1, "Password confimed is required"),
+  image: z.any().nullable(),
+});
+export type UserFormData = z.infer<typeof userSchema>;
