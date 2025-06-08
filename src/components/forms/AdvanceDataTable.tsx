@@ -28,7 +28,7 @@ export default function AdvanceDataTable<T extends Record<string, any>>({
                 key={String(col.key)}
                 scope="col"
                 className={`px-4 py-4 text-sm font-semibold text-gray-700 ${
-                  index === 0 ? "text-left" : "text-center"
+                  index === 0 ? "text-left" : "text-left"
                 }`}
               >
                 {col.label}
@@ -54,10 +54,12 @@ export default function AdvanceDataTable<T extends Record<string, any>>({
                 <td
                   key={String(col.key)}
                   className={`px-4 py-4 text-sm text-gray-600 whitespace-nowrap ${
-                    colIndex === 0 ? "text-left" : "text-center"
+                    colIndex === 0 ? "text-left" : "text-left"
                   }`}
                 >
-                  {row[col.key]}
+                  {col.render
+                    ? col.render(row)
+                    : (row[col.key] as string | number)}
                 </td>
               ))}
               {renderActions && (

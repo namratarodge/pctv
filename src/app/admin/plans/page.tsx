@@ -32,6 +32,7 @@ export default function Plans() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormValues>();
 
@@ -96,6 +97,7 @@ export default function Plans() {
         toast("Plan created successfully:", response.data);
         setIsModalOpen(false); // Close modal
         fetchGetPlans(); // Refresh list
+        reset();
       } else {
         toast("Plan creation failed:", response.data.message);
       }

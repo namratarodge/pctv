@@ -153,3 +153,48 @@ export const tagsColumn: {
   { key: "display_name", label: "Display Name" },
   { key: "updated_at", label: "Last Updated" },
 ];
+
+// users Column
+type typeOfUsers = {
+  user: "string";
+  subscribed: "number";
+  userType: "string";
+  first_name: "string";
+  last_name: "string";
+  updated_at: "string";
+  avatar?: string; // Optional avatar URL
+};
+
+export const usersColumn: {
+  key: keyof typeOfUsers;
+  label: string;
+  render?: (row: typeOfUsers) => React.ReactNode;
+}[] = [
+  {
+    key: "user",
+    label: "User",
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        <img
+          src={row.avatar || "/default-image.jpg"}
+          alt={row.first_name}
+          className="w-8 h-8 rounded-full object-cover"
+          onError={(e) => {
+            const target = e.currentTarget;
+            target.onerror = null; // prevent infinite loop
+            target.src = "/default-image.jpg";
+          }}
+        />
+        <span className="flex flex-col">
+          {row.first_name} {row.last_name}
+          <small>{row.email}</small>
+        </span>
+      </div>
+    ),
+  },
+  { key: "subscribed", label: "Subscribed" },
+  { key: "userType", label: "Roles" },
+  { key: "first_name", label: "First Name" },
+  { key: "last_name", label: "Last Name" },
+  { key: "updated_at", label: "Last Updated" },
+];
