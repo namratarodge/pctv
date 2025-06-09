@@ -196,7 +196,9 @@ export default function Plans() {
                 {...register("name", { required: "Name is required" })}
                 className="px-4 py-2 rounded-md border border-gray-300 text-gray-700"
               />
-              {errors.name && <p>{errors.name.message}</p>}
+              {errors.name && (
+                <p className="text-red-500">{errors.name.message}</p>
+              )}
             </div>
 
             <div className="flex flex-col">
@@ -260,7 +262,9 @@ export default function Plans() {
                 })}
                 className="px-4 py-2 rounded-md border border-gray-300 text-gray-700"
               />
-              {errors.interval_count && <p>{errors.interval_count.message}</p>}
+              {errors.interval_count && (
+                <p className="text-red-500">{errors.interval_count.message}</p>
+              )}
             </div>
           </ModelForm>
         </div>
