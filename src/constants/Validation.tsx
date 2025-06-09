@@ -76,6 +76,6 @@ export const pageSchema = z.object({
   title: z.string().min(1, "Title is required"),
   slug: z.string().min(1, "slug is required"),
 
-  description: z.string().min(1, "description is required"),
+  body: z.string().min(1, "body is required"),
 });
 export type PageFormData = z.infer<typeof pageSchema>;

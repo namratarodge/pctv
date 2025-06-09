@@ -10,6 +10,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 // pages/create-profile.tsx
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 export default function CreateProfile() {
   const {
@@ -17,18 +19,42 @@ export default function CreateProfile() {
     handleSubmit,
     control,
     setValue,
+    reset,
     watch,
     formState: { errors },
   } = useForm<PageFormData>({
     resolver: zodResolver(pageSchema),
     defaultValues: {
       title: "",
-      description: "",
+      body: "",
     },
   });
 
-  const onSubmit = (data: PageFormData) => {
-    console.log(data);
+  const onSubmit = async (data: PageFormData) => {
+    const newData = {
+      ...data,
+      type: "default",
+      user_id: 1,
+    };
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.post(
+        process.env.NEXT_PUBLIC_API_URL + "/page",
+        data,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.data.status) {
+        toast("Pages created sucessfully.");
+        reset();
+      }
+    } catch (error) {
+      toast("Failed to create person:", error);
+    }
   };
 
   return (
@@ -82,21 +108,19 @@ export default function CreateProfile() {
 
           <div>
             <Controller
-              name="description"
+              name="body"
               control={control}
               render={({ field }) => (
                 <EditorInput
-                  name="description"
-                  label="Description"
+                  name="body"
+                  label="body"
                   value={field.value}
                   onChange={field.onChange}
                 />
               )}
             />
-            {errors.description && (
-              <p className="text-red-500 text-sm">
-                {errors.description.message}
-              </p>
+            {errors.body && (
+              <p className="text-red-500 text-sm">{errors.body.message}</p>
             )}
           </div>
 
