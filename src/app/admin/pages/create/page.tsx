@@ -8,6 +8,7 @@ import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Loading from "@/components/layout/Loading";
 
 const EditorInput = dynamic(() => import("@/components/forms/EditorInput"), {
   ssr: false,
@@ -18,7 +19,7 @@ export default function CreateOrEditPage() {
   const router = useRouter();
   const pageId = searchParams.get("id"); // edit mode if this exists
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -40,7 +41,7 @@ export default function CreateOrEditPage() {
   useEffect(() => {
     if (pageId) {
       const token = localStorage.getItem("token");
-      setIsLoading(true);
+      setLoading(true);
       axios
         .get(`${process.env.NEXT_PUBLIC_API_URL}/pages?_id=${pageId}`, {
           headers: { Authorization: token },
@@ -55,7 +56,7 @@ export default function CreateOrEditPage() {
           }
         })
         .catch(() => toast.error("Failed to load page"))
-        .finally(() => setIsLoading(false));
+        .finally(() => setLoading(false));
     }
   }, [pageId, reset]);
 
@@ -109,77 +110,80 @@ export default function CreateOrEditPage() {
         <h1 className="text-xl font-bold mb-6 text-gray-800">
           {pageId ? "Edit Page" : "Add New Page"}
         </h1>
-
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          {/* Title */}
-          <div>
-            <label className="block text-gray-800 mb-1">Page Title</label>
-            <input
-              type="text"
-              {...register("title")}
-              className="w-full border border-gray-300 rounded-md px-4 py-2"
-            />
-            {errors.title && (
-              <p className="text-red-500 text-sm">{errors.title.message}</p>
-            )}
-          </div>
-
-          {/* Slug */}
-          <div>
-            <label className="block text-sm/6 font-medium text-gray-900">
-              Slug Name
-            </label>
-            <div className="mt-2 flex items-center rounded-md border px-3 py-2">
-              <span className="text-gray-500 text-sm">
-                https://projectcontrolstv.com/pages/
-              </span>
+        {loading ? (
+          <Loading />
+        ) : (
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            {/* Title */}
+            <div>
+              <label className="block text-gray-800 mb-1">Page Title</label>
               <input
                 type="text"
-                {...register("slug")}
-                className="flex-1 border-0 outline-none pl-1 text-gray-900 text-sm"
+                {...register("title")}
+                className="w-full border border-gray-300 rounded-md px-4 py-2"
               />
-            </div>
-            {errors.slug && (
-              <p className="text-red-500 text-sm">{errors.slug.message}</p>
-            )}
-          </div>
-
-          {/* Body */}
-          <div>
-            <Controller
-              name="body"
-              control={control}
-              render={({ field }) => (
-                <EditorInput
-                  name="body"
-                  label="Body"
-                  value={field.value}
-                  onChange={field.onChange}
-                />
+              {errors.title && (
+                <p className="text-red-500 text-sm">{errors.title.message}</p>
               )}
-            />
-            {errors.body && (
-              <p className="text-red-500 text-sm">{errors.body.message}</p>
-            )}
-          </div>
+            </div>
 
-          {/* Buttons */}
-          <div className="flex gap-3">
-            <button
-              type="submit"
-              className="px-6 bg-red-400 hover:bg-red-500 text-white font-semibold py-2 rounded-md"
-            >
-              {pageId ? "Update" : "Create"}
-            </button>
-            <button
-              type="button"
-              onClick={() => router.back()}
-              className="px-6 bg-gray-300 text-black font-semibold py-2 rounded-md"
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
+            {/* Slug */}
+            <div>
+              <label className="block text-sm/6 font-medium text-gray-900">
+                Slug Name
+              </label>
+              <div className="mt-2 flex items-center rounded-md border px-3 py-2">
+                <span className="text-gray-500 text-sm">
+                  https://projectcontrolstv.com/pages/
+                </span>
+                <input
+                  type="text"
+                  {...register("slug")}
+                  className="flex-1 border-0 outline-none pl-1 text-gray-900 text-sm"
+                />
+              </div>
+              {errors.slug && (
+                <p className="text-red-500 text-sm">{errors.slug.message}</p>
+              )}
+            </div>
+
+            {/* Body */}
+            <div>
+              <Controller
+                name="body"
+                control={control}
+                render={({ field }) => (
+                  <EditorInput
+                    name="body"
+                    label="Body"
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                )}
+              />
+              {errors.body && (
+                <p className="text-red-500 text-sm">{errors.body.message}</p>
+              )}
+            </div>
+
+            {/* Buttons */}
+            <div className="flex gap-3">
+              <button
+                type="submit"
+                className="px-6 bg-red-400 hover:bg-red-500 text-white font-semibold py-2 rounded-md"
+              >
+                {pageId ? "Update" : "Create"}
+              </button>
+              <button
+                type="button"
+                onClick={() => router.back()}
+                className="px-6 bg-gray-300 text-black font-semibold py-2 rounded-md"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );

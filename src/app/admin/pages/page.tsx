@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 
 export default function People() {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState({
     total: 0,
     page: 1,

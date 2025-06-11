@@ -29,6 +29,9 @@ type tagmValues = {
 export default function Tags() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingTagId, setEditingTagId] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -52,9 +55,66 @@ export default function Tags() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/createTag`,
+      const url = isEditing
+        ? `${process.env.NEXT_PUBLIC_API_URL}/api/updateTag/${editingTagId}`
+        : `${process.env.NEXT_PUBLIC_API_URL}/api/createTag`;
+
+      const method = isEditing ? "put" : "post";
+
+      const response = await axios({
+        url,
+        method,
         data,
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.data.status) {
+        toast.success(`Tag ${isEditing ? "updated" : "created"} successfully`);
+        setIsModalOpen(false); // Close modal
+        fetch(); // Refresh list
+        reset();
+        setIsEditing(false);
+        setEditingTagId(null);
+      } else {
+        toast("Tags creation failed:", response.data.message);
+      }
+    } catch (error) {
+      toast("Error creating plan:", error);
+    }
+  };
+
+  const handleEdit = (tag: any) => {
+    setIsEditing(true);
+    setEditingTagId(tag._id);
+    setIsModalOpen(true);
+
+    // Populate form with existing data
+    reset({
+      name: tag.name,
+      display_name: tag.display_name,
+      type: tag.type,
+    });
+  };
+
+  const addNewTags = () => {
+    reset({
+      name: "",
+      display_name: "",
+    });
+    setIsEditing(false);
+    setEditingTagId(null);
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = async (id: string) => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/deleteTag/${id}`,
         {
           headers: {
             Authorization: token,
@@ -64,15 +124,13 @@ export default function Tags() {
       );
 
       if (response.data.status) {
-        toast("Tag created successfully:", response.data);
-        setIsModalOpen(false); // Close modal
-        fetch(); // Refresh list
-        reset();
+        toast("Tag deleted successfully");
+        fetch(); // Refresh the plans list
       } else {
-        toast("Plan creation failed:", response.data.message);
+        toast("Delete failed:", response.data.message);
       }
     } catch (error) {
-      toast("Error creating plan:", error);
+      toast("Error deleting plan:", error);
     }
   };
 
@@ -109,32 +167,6 @@ export default function Tags() {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    const token = localStorage.getItem("token");
-
-    try {
-      const response = await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/deleteTag/${id}`,
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.data.status) {
-        toast("Tag deleted successfully");
-        fetch(); // Refresh the plans list
-      } else {
-        toast("Delete failed:", response.data.message);
-      }
-    } catch (error) {
-      toast("Error deleting plan:", error);
-    }
-  };
-
-
   const setPage = (value: number) => {
     setPages(value);
   };
@@ -155,7 +187,7 @@ export default function Tags() {
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none ">
           <button
             type="button"
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => addNewTags()}
             className="flex items-center  gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             <PlusCircleIcon className="w-6 h-6" /> Add Tags
@@ -165,30 +197,30 @@ export default function Tags() {
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-          {loading ? (
-            <Loading />
-          ) : (
-            <AdvanceDataTable
-              columns={tagsColumn}
-              data={data}
-              renderActions={(person) => (
-                <div className="flex gap-3 justify-end">
-                  <button
-                    onClick={() => console.log("Edit", person)}
-                    className="text-blue-600 hover:text-blue-800 cursor-pointer"
-                  >
-                    <PencilIcon className="w-5 h-5" />
-                  </button>
-                  <button
-                     onClick={() => handleDelete(person._id)}
-                    className="text-red-600 hover:text-red-800 cursor-pointer"
-                  >
-                    <TrashIcon className="w-5 h-5" />
-                  </button>
-                </div>
-              )}
-            />
-          )}
+            {loading ? (
+              <Loading />
+            ) : (
+              <AdvanceDataTable
+                columns={tagsColumn}
+                data={data}
+                renderActions={(person) => (
+                  <div className="flex gap-3 justify-end">
+                    <button
+                      onClick={() => handleEdit(person)}
+                      className="text-blue-600 hover:text-blue-800 cursor-pointer"
+                    >
+                      <PencilIcon className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(person._id)}
+                      className="text-red-600 hover:text-red-800 cursor-pointer"
+                    >
+                      <TrashIcon className="w-5 h-5" />
+                    </button>
+                  </div>
+                )}
+              />
+            )}
 
             <Paginations
               pagination={pagination}
@@ -201,7 +233,7 @@ export default function Tags() {
       <ModelForm
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title="Create a New Plan"
+        title={isEditing ? "Edit Tags" : "Create a New Tags"}
         onSubmit={handleSubmit(handleFormSubmit)}
       >
         <div className="flex flex-col">
