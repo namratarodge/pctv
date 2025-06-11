@@ -54,7 +54,7 @@ export default function CreateProfile() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-100 flex justify-center p-4">
       <div className="w-full bg-white rounded-md shadow-xl p-8">
         <div className="flex gap-2">
           <h1 className="text-xl font-bold mb-6  text-gray-800">

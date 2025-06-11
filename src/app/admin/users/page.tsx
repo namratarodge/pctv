@@ -10,6 +10,7 @@ import { formatDate } from "@/utils/common";
 import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
 import { usersColumn } from "@/constants/DataTableColumn";
 import Loading from "@/components/layout/Loading";
+import { toast } from "react-toastify";
 
 export default function People() {
   const [data, setData] = useState([]);
@@ -54,6 +55,31 @@ export default function People() {
       console.error("Error fetching data:", error);
     } finally {
       setLoading(false); // Always stop loading, whether success or failure
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/user/${id}`,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data.status) {
+        toast("User deleted successfully");
+        fetch(); // Refresh the plans list
+      } else {
+        toast("Delete failed:", response.data.message);
+      }
+    } catch (error) {
+      toast("Error deleting plan:", error);
     }
   };
 
@@ -102,7 +128,7 @@ export default function People() {
                         <PencilIcon className="w-5 h-5" />
                       </button>
                       <button
-                        onClick={() => console.log("Delete", person)}
+                        onClick={() => handleDelete(person._id)}
                         className="text-red-600 hover:text-red-800 cursor-pointer"
                       >
                         <TrashIcon className="w-5 h-5" />
