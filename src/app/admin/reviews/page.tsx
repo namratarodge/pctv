@@ -2,13 +2,10 @@
 import {
   Filter,
   Paginations,
-  Model,
   ModelForm,
   TenStarRating,
 } from "@/components/forms";
-import { PlusCircleIcon } from "@heroicons/react/16/solid";
-import Link from "next/link";
-import { PeopleFilter } from "@/constants/Filter";
+import { ReviewfilterType } from "@/constants/Filter";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { PencilIcon, TrashIcon, UserIcon } from "@heroicons/react/24/outline";
@@ -116,7 +113,6 @@ export default function People() {
 
   const handleEdit = async (data: object) => {
     setIsModalOpen(true);
-    console.log(data);
     setReview(data);
   };
 
@@ -140,7 +136,7 @@ export default function People() {
       ) : (
         <>
           <div className="sm:flex sm:items-center mt-4  h-auto ">
-            <Filter filterType={PeopleFilter} />
+            <Filter filterType={ReviewfilterType} />
           </div>
           <div className="mt-8 flow-root">
             <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
