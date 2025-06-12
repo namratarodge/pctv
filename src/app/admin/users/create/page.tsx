@@ -3,11 +3,17 @@ import { UserFormData, userSchema } from "@/constants/Validation";
 import { BackwardIcon } from "@heroicons/react/24/outline";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import React, { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 export default function CreateProfile() {
+
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id"); // check for ID in query param
+
+
   const {
     register,
     handleSubmit,
@@ -19,6 +25,33 @@ export default function CreateProfile() {
   });
 
   const [previewUrl, setPreviewUrl] = useState(null);
+
+
+  // Fetch user details if in edit mode
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (id) {
+      axios
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/user?_id=${id}`, {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          const user = res.data.data.data;
+          setValue("first_name", user.first_name);
+          setValue("last_name", user.last_name);
+          setValue("email", user.email);
+          setValue("email_confirmed", user.email_confirmed ? "yes" : "no");
+          setValue("user_type", user.user_type);
+          setPreviewUrl(user.image_url); // existing image
+        })
+        .catch(() => {
+          toast.error("Failed to fetch user details.");
+        });
+    }
+  }, [id, setValue]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
