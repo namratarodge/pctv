@@ -1,3 +1,5 @@
+import { StarIcon } from "@heroicons/react/24/solid";
+
 // Plans Column
 type typeOfPlans = {
   name: "string";
@@ -199,7 +201,6 @@ export const usersColumn: {
   { key: "updated_at", label: "Last Updated" },
 ];
 
-
 // pages Column
 type typeOfPages = {
   slug: "string";
@@ -214,26 +215,98 @@ export const pagesColumn: {
   render?: (row: typeOfPages) => React.ReactNode;
 }[] = [
   { key: "slug", label: "Slug" },
-  { key: "user_id", label: "Owner",
+  {
+    key: "user_id",
+    label: "Owner",
 
-  render: (row) => (
-    <div className="flex items-center space-x-2">
-      <img
-        src={"/default-user.jpg"}
-        className="w-8 h-8 rounded-full object-cover"
-        onError={(e) => {
-          const target = e.currentTarget;
-          target.onerror = null; // prevent infinite loop
-          target.src = "/default-image.jpg";
-        }}
-      />
-      <span className="flex flex-col">
-        Sandesh Mankar
-        <small>sandesh@gmail.com</small>
-      </span>
-    </div>
-  ),
-   },
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        <img
+          src={"/default-user.jpg"}
+          className="w-8 h-8 rounded-full object-cover"
+          onError={(e) => {
+            const target = e.currentTarget;
+            target.onerror = null; // prevent infinite loop
+            target.src = "/default-image.jpg";
+          }}
+        />
+        <span className="flex flex-col">
+          Sandesh Mankar
+          <small>sandesh@gmail.com</small>
+        </span>
+      </div>
+    ),
+  },
   { key: "type", label: "Type" },
+  { key: "updated_at", label: "Last Updated" },
+];
+
+// review Column
+type reviewOfPages = {
+  score: "string";
+  user_id: "string";
+  reviewable: "string";
+  reviewable_type: "string";
+  updated_at: "string";
+};
+
+export const reviewColumn: {
+  key: keyof reviewOfPages;
+  label: string;
+  render?: (row: typeOfPages) => React.ReactNode;
+}[] = [
+  {
+    key: "score",
+    label: "Score",
+    render: (row) => (
+      <div className="flex items-center flex-col space-x-2">
+        <StarIcon className="h-5 w-5 text-yellow-400" />
+        {row.score} / 10
+      </div>
+    ),
+  },
+
+  {
+    key: "user_id",
+    label: "Owner",
+
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        <img
+          src={"/default-user.jpg"}
+          className="w-10 h-10 rounded-full object-cover"
+          onError={(e) => {
+            const target = e.currentTarget;
+            target.onerror = null; // prevent infinite loop
+            target.src = "/default-image.jpg";
+          }}
+        />
+        <span className="flex flex-col text-md">
+          Sandesh Mankar
+          <small className="text-gray-400">sandesh@gmail.com</small>
+        </span>
+      </div>
+    ),
+  },
+  {
+    key: "reviewable",
+    label: "Reviewable",
+
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        <img
+          src={"/default-user.jpg"}
+          className="w-8 h-8 rounded-full object-cover"
+          onError={(e) => {
+            const target = e.currentTarget;
+            target.onerror = null; // prevent infinite loop
+            target.src = "/default-image.jpg";
+          }}
+        />
+        <span className="flex flex-col">Project communications</span>
+      </div>
+    ),
+  },
+  { key: "reviewable_type", label: "Type" },
   { key: "updated_at", label: "Last Updated" },
 ];
