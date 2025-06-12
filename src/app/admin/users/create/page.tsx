@@ -9,10 +9,8 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 export default function CreateProfile() {
-
   const searchParams = useSearchParams();
   const id = searchParams.get("id"); // check for ID in query param
-
 
   const {
     register,
@@ -25,7 +23,6 @@ export default function CreateProfile() {
   });
 
   const [previewUrl, setPreviewUrl] = useState(null);
-
 
   // Fetch user details if in edit mode
   useEffect(() => {
@@ -43,8 +40,8 @@ export default function CreateProfile() {
           setValue("first_name", user.first_name);
           setValue("last_name", user.last_name);
           setValue("email", user.email);
-          setValue("email_confirmed", user.email_confirmed ? "yes" : "no");
-          setValue("user_type", user.user_type);
+          // setValue("email_confirmed", user.email_confirmed ? "yes" : "no");
+          setValue("user_type", user.userType);
           setPreviewUrl(user.image_url); // existing image
         })
         .catch(() => {
@@ -91,7 +88,7 @@ export default function CreateProfile() {
       <div className="w-full bg-white rounded-md shadow-xl p-8">
         <div className="flex gap-2">
           <h1 className="text-xl font-bold mb-6  text-gray-800">
-            Add Users
+            {id ? "Edit Users" : "Add User"}
           </h1>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -125,6 +122,8 @@ export default function CreateProfile() {
               <input
                 type="email"
                 {...register("email")}
+                disabled={!!id} // Disable if editing existing user
+                autoComplete="email"
                 name="email"
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -133,21 +132,26 @@ export default function CreateProfile() {
               )}
             </div>
 
-            <div>
-              <label className="block text-gray-600 mb-1">
-                Email Confirmed
-              </label>
-              <select
-                {...register("email_confirmed")}
-                className="col-start-1 row-start-1 w-2/6 appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-              >
-                <option value="yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-              {errors.email_confirmed && (
-                <p className="text-red-500">{errors.email_confirmed.message}</p>
-              )}
-            </div>
+            {!id && (
+              <div>
+                <label className="block text-gray-600 mb-1">
+                  Email Confirmed
+                </label>
+                <select
+                  disabled={!!id} // Disable if editing existing user
+                  {...register("email_confirmed")}
+                  className="col-start-1 row-start-1 w-2/6 appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                >
+                  <option value="yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+                {errors.email_confirmed && (
+                  <p className="text-red-500">
+                    {errors.email_confirmed.message}
+                  </p>
+                )}
+              </div>
+            )}
 
             <div>
               <label className="block text-gray-600 mb-1">Password</label>
@@ -218,7 +222,7 @@ export default function CreateProfile() {
 
           <button
             type="submit"
-            className="w-50 bg-red-400 hover:bg-red-500 text-white font-semibold py-3 rounded-md transition-all"
+            className="w-50 bg-red-400 hover:bg-red-500 text-white font-semibold py-3 rounded-md transition-all cursor-pointer"
           >
             Submit
           </button>
