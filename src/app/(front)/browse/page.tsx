@@ -62,12 +62,14 @@ export default function Browser() {
           <div className="mt-2">
             <ul className="list-none">
               {categorys.map((category) => (
-                <li className="text-gray-300 py-1" key={category.id}>
+                <li className="text-gray-300 py-1 cursor-pointer" key={category.id}>
+                  <label className="cursor-pointer">
                   <input
                     type="checkbox"
                     className="mr-2 form-checkbox accent-red-500 border border-red-400"
                   />{" "}
                   {category.name}
+                  </label>
                 </li>
               ))}
             </ul>

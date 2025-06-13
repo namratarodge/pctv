@@ -87,7 +87,7 @@ const navigation = {
   ],
 };
 
-export default function Example() {
+export default function Footer() {
   return (
     <footer className="border-t border-gray-700">
       <div className="mx-auto max-w-7xl px-6  pb-8 sm:pt-10 lg:px-2 ">
