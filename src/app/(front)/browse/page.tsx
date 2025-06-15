@@ -1,15 +1,9 @@
-const categorys = [
-  { id: 1, name: "Digital Marketing" },
-  { id: 2, name: "E-commerce" },
-  { id: 3, name: "Social Media" },
-  { id: 4, name: "Mobile Apps" },
-  { id: 5, name: "Web Development" },
-  { id: 6, name: "Cybersecurity" },
-  { id: 7, name: "Cloud Computing" },
-  { id: 8, name: "Digital Design" },
-  { id: 9, name: "Online Education" },
-  { id: 10, name: "Digital Analytics" },
-];
+"use client";
+
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { usePublicData } from "@/components/context/PublicDataContext";
+
 const country = [
   { id: 1, name: "United States" },
   { id: 2, name: "Canada" },
@@ -38,17 +32,47 @@ const Levels = [
 ];
 
 export default function Browser() {
+  const [title, setTitle] = useState([]);
+  const { tvtopic, categories } = usePublicData();
+  const [loading, setLoading] = useState(true);
+
+  const fetchTitlte = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/titles`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.data.status) {
+        const modifiedData = response.data.data.data;
+        setLoading(false);
+        setTitle(modifiedData);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false); // Always stop loading, whether success or failure
+    }
+  };
+
+  useEffect(() => {
+    fetchTitlte();
+  }, []);
+
   return (
-    <div className="pt-18 max-w-7xl mx-auto flex mb-10">
-      <div className="w-1/4 px-4 py-6 overflow-auto h-screen">
+    <div className="pt-18 max-w-8xl mx-auto flex mb-10">
+      <div className="w-1/5 px-4 py-6 overflow-auto h-screen">
         <div className="w-full border-b border-gray-500 pb-6">
           <div className="text-gray-300">TV Topic</div>
           <div className="relative inline-block mt-4 w-full">
             <select className="block appearance-none w-full border border-gray-500  text-gray-300 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 ">
-              <option>2010</option>
-              <option>2015</option>
-              <option>2020</option>
-              <option>2025</option>
+              {tvtopic.map((data) => (
+                <option key={data._id}>{data.display_name}</option>
+              ))}
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-red-600">
               <svg className="fill-current h-4 w-4" viewBox="0 0 20 20">
@@ -61,14 +85,17 @@ export default function Browser() {
           <h2 className="text-gray-400">Categories</h2>
           <div className="mt-2">
             <ul className="list-none">
-              {categorys.map((category) => (
-                <li className="text-gray-300 py-1 cursor-pointer" key={category.id}>
+              {categories.map((category) => (
+                <li
+                  className="text-gray-300 py-1 cursor-pointer"
+                  key={category._id}
+                >
                   <label className="cursor-pointer">
-                  <input
-                    type="checkbox"
-                    className="mr-2 form-checkbox accent-red-500 border border-red-400"
-                  />{" "}
-                  {category.name}
+                    <input
+                      type="checkbox"
+                      className="mr-2 form-checkbox accent-red-500 border border-red-400"
+                    />{" "}
+                    {category.display_name}
                   </label>
                 </li>
               ))}
@@ -148,14 +175,21 @@ export default function Browser() {
             Reset Filter
           </button>
         </div>
-
       </div>
-      <div className="w-3/4 px-4 py-2">
+      <div className="w-4/5 px-4 py-2">
         <h1 className="text-3xl text-white">PCE Brazil</h1>
-        <div className="grid grid-cols-4 gap-2 mt-4">
-          {categorys.map((category) => (
-            <div className="border" key={category.id}>
-              <img src="https://picsum.photos/300/200/" className="rounded-lg" />
+        <div className="grid grid-cols-4 gap-4 mt-4">
+          {title.map((data) => (
+            <div className=" text-white gap-4" key={data._id}>
+              <img
+                src={"https://projectcontrolstv.com/" + data.poster}
+                className="rounded-lg"
+              />
+              <div className="mt-4">
+                <a href="#" className="text-sm">
+                  {data.name.slice(0, 34)}
+                </a>
+              </div>
             </div>
           ))}
         </div>

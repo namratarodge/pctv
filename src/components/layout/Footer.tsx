@@ -87,7 +87,11 @@ const navigation = {
   ],
 };
 
+import { usePublicData } from "@/components/context/PublicDataContext";
+
 export default function Footer() {
+  const { tvtopic, categories } = usePublicData();
+
   return (
     <footer className="border-t border-gray-700">
       <div className="mx-auto max-w-7xl px-6  pb-8 sm:pt-10 lg:px-2 ">
@@ -120,13 +124,13 @@ export default function Footer() {
               <div>
                 <h3 className="text-sm/6 font-semibold text-white">TV Topic</h3>
                 <ul role="list" className="mt-6 space-y-4">
-                  {navigation.solutions.map((item) => (
-                    <li key={item.name}>
+                  {tvtopic.map((item) => (
+                    <li key={item._id}>
                       <a
-                        href={item.href}
+                        href="#"
                         className="text-sm/6 text-gray-400 hover:text-white"
                       >
-                        {item.name}
+                        {item.display_name}
                       </a>
                     </li>
                   ))}

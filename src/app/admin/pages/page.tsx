@@ -117,17 +117,17 @@ export default function People() {
       </div>
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-            {loading ? (
-              <Loading />
-            ) : (
+          {loading ? (
+            <Loading />
+          ) : (
+            <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
               <AdvanceDataTable
                 columns={pagesColumn}
                 data={data}
                 renderActions={(person) => (
                   <div className="flex gap-3 justify-end">
                     <Link
-                      href={"pages/create?id="+person._id}
+                      href={"pages/create?id=" + person._id}
                       className="text-blue-600 hover:text-blue-800 cursor-pointer"
                     >
                       <PencilIcon className="w-5 h-5" />
@@ -141,14 +141,14 @@ export default function People() {
                   </div>
                 )}
               />
-            )}
 
-            <Paginations
-              pagination={pagination}
-              onPageChange={setPage}
-              onLimitChange={setLimit}
-            />
-          </div>
+              <Paginations
+                pagination={pagination}
+                onPageChange={setPage}
+                onLimitChange={setLimit}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

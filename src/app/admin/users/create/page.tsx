@@ -59,6 +59,7 @@ export default function CreateProfile() {
 
   const onSubmit = async (data: UserFormData) => {
     const token = localStorage.getItem("token");
+    console.log(data)
     // write post request to
     try {
       const response = await axios.post(
