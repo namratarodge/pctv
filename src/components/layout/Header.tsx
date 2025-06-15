@@ -57,13 +57,13 @@ export default function Header() {
   }, [tvtopic, categories]);
 
   return (
-    <header className="absolute inset-x-0 top-0 z-50">
+    <header className="absolute inset-x-0 top-0 z-50 ">
       <nav
         aria-label="Global"
-        className="flex items-center justify-between py-4 lg:px-2 mx-auto max-w-8xl"
+        className="flex items-center justify-between py-2 lg:px-4 mx-auto max-w-8xl "
       >
-        <div className="flex lg:flex-1">
-          <div className="-m-1.5 p-1.5">
+        <div className="flex lg:flex-1  items-center ">
+          <div className=" p-1.5">
             <span className="sr-only">Project Control TV</span>
             <Link href="/">
               <img
@@ -76,13 +76,13 @@ export default function Header() {
           <div className="hidden sm:ml-6 sm:block">
             <div className="flex space-x-4">
               {navigation.map((item) => (
-                <div key={item.name} className="relative group ">
+                <div key={item.name} className="relative group uppercase">
                   {/* Main menu link */}
                   <a
                     href={item.href}
                     className={classNames(
                       item.href === pageName && "text-white ",
-                      "text-gray-400 text-sm hover:text-white items-center justify-center px-3 py-2 rounded-md font-semibold"
+                      "text-gray-300 text-sm hover:text-white items-center justify-center px-3 py-2 rounded-md font-semibold"
                     )}
                   >
                     {item.name}
@@ -90,13 +90,13 @@ export default function Header() {
 
                   {/* Submenu */}
                   {item.children && item.children.length > 0 && (
-                    <div className="border absolute left-0 mt-0 w-54 cursor-pointer rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-opacity duration-200 z-50">
+                    <div className=" absolute left-0 mt-0 w-54 cursor-pointer rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-opacity duration-200 z-50">
                       <div className="py-1">
                         {item.children.map((subItem) => (
                           <a
-                            key={subItem._id}
+                            key={subItem.name}
                             href={subItem.href}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-black"
+                            className="capitalize block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-black"
                           >
                             {subItem.name}
                           </a>

@@ -31,6 +31,9 @@ const Levels = [
   { id: 3, name: "Expert" },
 ];
 
+import Loading from "@/components/layout/Loading";
+import { ListBulletIcon, TableCellsIcon } from "@heroicons/react/24/outline";
+
 export default function Browser() {
   const [title, setTitle] = useState([]);
   const { tvtopic, categories } = usePublicData();
@@ -63,11 +66,15 @@ export default function Browser() {
     fetchTitlte();
   }, []);
 
+  if (loading) {
+    return <Loading title="" />;
+  }
+
   return (
-    <div className="pt-18 max-w-8xl mx-auto flex mb-10">
-      <div className="w-1/5 px-4 py-6 overflow-auto h-screen">
-        <div className="w-full border-b border-gray-500 pb-6">
-          <div className="text-gray-300">TV Topic</div>
+    <div className="pt-18 max-w-8xl mx-auto flex flex-col lg:flex-row mb-10">
+      <div className="w-full lg:w-1/5 px-4 py-4 overflow-auto lg:h-screen ">
+        <div className="w-full border-b border-gray-500 pb-4">
+          <div className="text-gray-300 text-lg">TV Topic</div>
           <div className="relative inline-block mt-4 w-full">
             <select className="block appearance-none w-full border border-gray-500  text-gray-300 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 ">
               {tvtopic.map((data) => (
@@ -176,9 +183,17 @@ export default function Browser() {
           </button>
         </div>
       </div>
-      <div className="w-4/5 px-4 py-2">
-        <h1 className="text-3xl text-white">PCE Brazil</h1>
-        <div className="grid grid-cols-4 gap-4 mt-4">
+      <div className="w-full lg:w-4/5 px-4 py-2 ">
+        <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
+          <h1 className="text-2xl text-white">PCE Brazil</h1>
+
+          <div className="flex items-center gap-4    px-3 py-1 text-white">
+            <TableCellsIcon className="w-6 h-6 cursor-pointer hover:text-red-400" />
+            <ListBulletIcon className="w-6 h-6 cursor-pointer hover:text-red-400" />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
           {title.map((data) => (
             <div className=" text-white gap-4" key={data._id}>
               <img
