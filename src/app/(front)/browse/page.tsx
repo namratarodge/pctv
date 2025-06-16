@@ -32,12 +32,62 @@ const Levels = [
 ];
 
 import Loading from "@/components/layout/Loading";
-import { ListBulletIcon, TableCellsIcon } from "@heroicons/react/24/outline";
+import {
+  ListBulletIcon,
+  TableCellsIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Browser() {
+  const router = useRouter();
   const [title, setTitle] = useState([]);
   const { tvtopic, categories } = usePublicData();
   const [loading, setLoading] = useState(true);
+
+  const searchParams = useSearchParams();
+  const keyword = searchParams.get("keyword");
+  const genreParam = searchParams.get("genre");
+  const [selectedGenres, setSelectedGenres] = useState(
+    genreParam ? genreParam.split(",") : []
+  );
+  const genreList = genreParam ? genreParam.split(",") : [];
+
+  const handleChangeKeyword = (e: any) => {
+    const selectedValue = e.target.value;
+    const params = new URLSearchParams(window.location.search);
+    if (selectedValue === "all") {
+      params.delete("keyword");
+    } else {
+      params.set("keyword", selectedValue);
+    }
+    router.push(`/browse?${params.toString()}`);
+  };
+
+  const handleCheckboxChange = (name: string) => {
+    let updatedGenres = [];
+
+    if (selectedGenres.includes(name)) {
+      updatedGenres = selectedGenres.filter((g) => g !== name);
+    } else {
+      updatedGenres = [...selectedGenres, name];
+    }
+
+    setSelectedGenres(updatedGenres);
+
+    const query = new URLSearchParams(window.location.search);
+
+    if (updatedGenres.length > 0) {
+      query.set("genre", updatedGenres.join(","));
+    } else {
+      query.delete("genre");
+    }
+
+    const newQueryString = query.toString(); // automatically handles `&` placement
+
+    router.push(`/browse?${newQueryString}`);
+  };
 
   const fetchTitlte = async () => {
     setLoading(true);
@@ -63,6 +113,7 @@ export default function Browser() {
   };
 
   useEffect(() => {
+    console.log(keyword);
     fetchTitlte();
   }, []);
 
@@ -72,13 +123,27 @@ export default function Browser() {
 
   return (
     <div className="pt-18 max-w-8xl mx-auto flex flex-col lg:flex-row mb-10">
-      <div className="w-full lg:w-1/5 px-4 py-4 overflow-auto lg:h-screen ">
+      <div className="w-full md:w-1/5 px-4 py-4 overflow-auto lg:h-screen ">
         <div className="w-full border-b border-gray-500 pb-4">
           <div className="text-gray-300 text-lg">TV Topic</div>
-          <div className="relative inline-block mt-4 w-full">
-            <select className="block appearance-none w-full border border-gray-500  text-gray-300 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 ">
-              {tvtopic.map((data) => (
-                <option key={data._id}>{data.display_name}</option>
+          <div className="relative inline-block mt-4 w-full text-white">
+            {/* {selectedGenres} */}
+            {/* {genreParam} */}
+            <br />
+            {/* {keyword} */}
+            <select
+              className="block appearance-none w-full border border-gray-500  text-gray-300 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2"
+              onChange={handleChangeKeyword}
+            >
+              <option value="all">All</option>
+              {tvtopic.map((data: any) => (
+                <option
+                  key={data.name}
+                  value={data.name}
+                  selected={data.name === keyword}
+                >
+                  {data.display_name}
+                </option>
               ))}
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-red-600">
@@ -95,11 +160,13 @@ export default function Browser() {
               {categories.map((category) => (
                 <li
                   className="text-gray-300 py-1 cursor-pointer"
-                  key={category._id}
+                  key={category.name}
                 >
                   <label className="cursor-pointer">
                     <input
                       type="checkbox"
+                      checked={genreList.includes(category.name)}
+                      onChange={() => handleCheckboxChange(category.name)}
                       className="mr-2 form-checkbox accent-red-500 border border-red-400"
                     />{" "}
                     {category.display_name}
@@ -185,7 +252,17 @@ export default function Browser() {
       </div>
       <div className="w-full lg:w-4/5 px-4 py-2 ">
         <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
-          <h1 className="text-2xl text-white">PCE Brazil</h1>
+          <div className="flex gap-4 items-center ">
+            <h1 className="text-3xl text-white">PCE Brazil</h1>
+
+            {selectedGenres ||
+              (genreParam && (
+                <div className="flex px-4 py-2  text-sm rounded-full bg-gray-700 text-gray-400 items-center cursor-pointer">
+                  Reset Filter
+                  <XMarkIcon className="w-6 h-6 cursor-pointer text-red-400" />
+                </div>
+              ))}
+          </div>
 
           <div className="flex items-center gap-4    px-3 py-1 text-white">
             <TableCellsIcon className="w-6 h-6 cursor-pointer hover:text-red-400" />
@@ -195,7 +272,7 @@ export default function Browser() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
           {title.map((data) => (
-            <div className=" text-white gap-4" key={data._id}>
+            <div className=" text-white gap-4" key={data.name}>
               <img
                 src={"https://projectcontrolstv.com/" + data.poster}
                 className="rounded-lg"

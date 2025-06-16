@@ -1,3 +1,5 @@
+'use client'
+
 const navigation = {
   solutions: [
     { name: "Marketing", href: "#" },
