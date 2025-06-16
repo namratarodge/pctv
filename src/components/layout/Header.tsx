@@ -90,13 +90,14 @@ export default function Header() {
 
                   {/* Submenu */}
                   {item.children && item.children.length > 0 && (
-                    <div className=" absolute left-0 mt-0 w-54 cursor-pointer rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-opacity duration-200 z-50">
+                    <div className=" absolute  whitespace-nowrap
+                     left-0 mt-0 w-60 cursor-pointer rounded-md  bg-gray-800  ring-opacity-5 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-opacity duration-200 z-50">
                       <div className="py-1">
                         {item.children.map((subItem) => (
                           <a
                             key={subItem.name}
                             href={subItem.href}
-                            className="capitalize block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-black"
+                            className="capitalize block px-4 py-2 text-sm text-gray-400 hover:text-gray-300 "
                           >
                             {subItem.name}
                           </a>
