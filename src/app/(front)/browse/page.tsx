@@ -39,6 +39,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Browser() {
   const router = useRouter();
@@ -272,7 +273,8 @@ export default function Browser() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
           {title.map((data) => (
-            <div className=" text-white gap-4" key={data._id}>
+            <Link href={'titles/'+data._id} key={data._id}>
+            <div className=" text-white gap-4" >
               <img
                 src={"https://projectcontrolstv.com/" + data.poster}
                 className="rounded-lg"
@@ -283,6 +285,7 @@ export default function Browser() {
                 </a>
               </div>
             </div>
+            </Link>
           ))}
         </div>
       </div>
