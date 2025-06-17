@@ -127,18 +127,15 @@ export default function Browser() {
         <div className="w-full border-b border-gray-500 pb-4">
           <div className="text-gray-300 text-lg">TV Topic</div>
           <div className="relative inline-block mt-4 w-full text-white">
-            {/* {selectedGenres} */}
-            {/* {genreParam} */}
-            <br />
-            {/* {keyword} */}
+         
             <select
               className="block appearance-none w-full border border-gray-500  text-gray-300 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2"
               onChange={handleChangeKeyword}
             >
               <option value="all">All</option>
-              {tvtopic.map((data: any) => (
+              {tvtopic.map((data: any, index : number) => (
                 <option
-                  key={data.name}
+                  key={index}
                   value={data.name}
                   selected={data.name === keyword}
                 >
@@ -160,7 +157,7 @@ export default function Browser() {
               {categories.map((category) => (
                 <li
                   className="text-gray-300 py-1 cursor-pointer"
-                  key={category.name}
+                  key={category._id}
                 >
                   <label className="cursor-pointer">
                     <input
@@ -272,7 +269,7 @@ export default function Browser() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
           {title.map((data) => (
-            <div className=" text-white gap-4" key={data.name}>
+            <div className=" text-white gap-4" key={data._id}>
               <img
                 src={"https://projectcontrolstv.com/" + data.poster}
                 className="rounded-lg"

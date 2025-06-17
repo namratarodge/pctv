@@ -56,8 +56,8 @@ export default function Tags() {
 
     try {
       const url = isEditing
-        ? `${process.env.NEXT_PUBLIC_API_URL}/api/updateTag/${editingTagId}`
-        : `${process.env.NEXT_PUBLIC_API_URL}/api/createTag`;
+        ? `${process.env.NEXT_PUBLIC_API_URL}/tag/${editingTagId}`
+        : `${process.env.NEXT_PUBLIC_API_URL}/tag`;
 
       const method = isEditing ? "put" : "post";
 
@@ -114,7 +114,7 @@ export default function Tags() {
 
     try {
       const response = await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/deleteTag/${id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/tag/${id}`,
         {
           headers: {
             Authorization: token,
