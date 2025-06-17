@@ -1,3 +1,5 @@
+'use client'
+
 import { Footer, Slider, SliderNumber, TopicSlider } from "@/components/layout";
 import {
   PlusIcon,
@@ -5,6 +7,8 @@ import {
   SpeakerXMarkIcon,
 } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/24/solid";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const people = [
   {
@@ -60,8 +64,42 @@ const people = [
 ];
 
 export default function Home() {
+  const [title, setTitle] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchTitlte = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/titles`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          params: {
+            limit : 20
+          }
+        }
+      );
+      if (response.data.status) {
+        const modifiedData = response.data.data.data;
+        setLoading(false);
+        setTitle(modifiedData);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false); // Always stop loading, whether success or failure
+    }
+  };
+
+  useEffect(() => {
+    fetchTitlte();
+  }, []);
+
+
   return (
-    <div className="pt-18 flex  max-w-7xl mx-auto">
+    <div className="pt-18  flex max-w-11/12 mx-auto">
       <div className="w-2/3 ">
         <img
           src="https://picsum.photos/300/200/"
@@ -152,19 +190,19 @@ export default function Home() {
       </div>
       <div className="w-1/3 ">
         <h2 className="text-white px-4">Recommended Videos for you </h2>
-        <div className="flex flex-col gap-4 px-2">
-          {people.map((person, index) => (
-            <div key={index} className="flex items-center gap-4 p-2">
+        <div className="flex flex-col gap-1 px-2">
+          {title.map((data, index) => (
+            <div key={index} className="flex items-center gap-4 px-2 py-1 ">
               <img
-                src="https://picsum.photos/300/200/"
+                src={"https://projectcontrolstv.com/" + data.poster}
                 className="w-2/5  rounded-lg"
               />
               <div>
                 <h2 className="text-sm font-semibold text-gray-300 mb-2">
-                  {person.title}
+                {data.name.slice(0, 34)}
                 </h2>
-                <p className="text-gray-400 text-sm">{person.name}</p>
-                <p className="text-gray-400 text-sm ">{person.position}</p>
+                <p className="text-gray-400 text-sm">{data.language}</p>
+                <p className="text-gray-400 text-sm ">Director of India</p>
               </div>
             </div>
           ))}

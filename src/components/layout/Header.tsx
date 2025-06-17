@@ -100,10 +100,10 @@ export default function Header() {
     >
       <nav
         aria-label="Global"
-        className="flex items-center justify-between py-2 lg:px-4 mx-auto max-w-11/12 "
+        className="flex items-center justify-between py-2  mx-auto max-w-11/12 "
       >
         <div className="flex lg:flex-1  items-center ">
-          <div className=" p-1.5">
+          <div className="p-1.5">
             <span className="sr-only">Project Control TV</span>
             <Link href="/">
               <img
