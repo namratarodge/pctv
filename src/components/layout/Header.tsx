@@ -11,6 +11,7 @@ import {
 import {
   Bars3Icon,
   ChevronDownIcon,
+  MagnifyingGlassIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
@@ -162,7 +163,8 @@ export default function Header() {
           </button>
         </div>
 
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-4 ">
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-6 items-center">
+          <MagnifyingGlassIcon className="w-5 h-5 text-white cursor-pointer" />
           {Object.keys(user).length > 0 ? (
             <Menu as="div" className="relative">
               <MenuButton className="-m-1.5 flex items-center p-1.5">

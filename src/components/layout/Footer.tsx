@@ -89,11 +89,12 @@ const navigation = {
   ],
 };
 
+
 import { usePublicData } from "@/components/context/PublicDataContext";
 
 export default function Footer() {
-  const { tvtopic, categories } = usePublicData();
-
+  const { tvtopic, pages } = usePublicData();
+  
   return (
     <footer className="border-t border-gray-700">
       <div className="mx-auto max-w-11/12 px-6  pb-8 sm:pt-10 lg:px-2 ">
@@ -139,7 +140,7 @@ export default function Footer() {
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <h3 className="text-sm/6 font-semibold text-white">Support</h3>
+                <h3 className="text-sm/6 font-semibold text-white">Project Controls Expo</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.support.map((item) => (
                     <li key={item.name}>
@@ -154,15 +155,15 @@ export default function Footer() {
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <h3 className="text-sm/6 font-semibold text-white">Support</h3>
+                <h3 className="text-sm/6 font-semibold text-white">Pages</h3>
                 <ul role="list" className="mt-6 space-y-4">
-                  {navigation.support.map((item) => (
-                    <li key={item.name}>
+                  {pages.map((item) => (
+                    <li key={item._id}>
                       <a
-                        href={item.href}
+                        href={item.slug}
                         className="text-sm/6 text-gray-400 hover:text-white"
                       >
-                        {item.name}
+                        {item.title}
                       </a>
                     </li>
                   ))}
@@ -173,7 +174,7 @@ export default function Footer() {
         </div>
         <div className="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24">
           <p className="text-sm/6 text-gray-400">
-            &copy; 2024 Your Company, Inc. All rights reserved.
+            &copy; 2025 Your Company, Inc. All rights reserved.
           </p>
         </div>
       </div>

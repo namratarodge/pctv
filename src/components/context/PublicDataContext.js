@@ -6,6 +6,7 @@ const PublicDataContext = createContext();
 export function PublicDataProvider({ children }) {
   const [categories, setCategories] = useState([]);
   const [tvtopic, setTvtopic] = useState([]);
+  const [pages, setPages] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchTVTopic = async () => {
@@ -58,9 +59,36 @@ export function PublicDataProvider({ children }) {
     }
   };
 
+  const fetchPages = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/pages`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          params : {
+            limit : 5
+          }
+        }
+      );
+      if (response.data.status) {
+        const modifiedData = response.data.data.data;
+        setLoading(false);
+        setPages(modifiedData);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false); // Always stop loading, whether success or failure
+    }
+  };
+
   useEffect(() => {
     fetchTVTopic();
     fetchCategories();
+    fetchPages();
   }, []);
 
   return (
@@ -68,6 +96,7 @@ export function PublicDataProvider({ children }) {
       value={{
         tvtopic,
         categories,
+        pages,
         loading,
       }}
     >

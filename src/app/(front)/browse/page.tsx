@@ -98,6 +98,9 @@ export default function Browser() {
           headers: {
             "Content-Type": "application/json",
           },
+          params: {
+            limit : 20
+          }
         }
       );
       if (response.data.status) {
