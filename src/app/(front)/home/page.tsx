@@ -53,8 +53,8 @@ export default function Home() {
             className="relative left-[calc(50%-11rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
           />
         </div>
-        <div className="mx-auto max-w-6xl   lg:px-8">
-          <div className="mx-auto max-w-6xl py-32 sm:py-48 lg:py-56">
+        <div className="mx-auto lg:px-8">
+          <div className="mx-auto max-w-11/12  py-32 sm:py-48 lg:py-56 ">
             <div className="text-left">
               <h1 className="text-3xl font-semibold tracking-tight text-balance text-white sm:text-5xl w-1/2">
                 Delivering the UK's most complex projects and programmes
@@ -93,7 +93,7 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="p-6 lg:px-8 mx-auto max-w-6xl">
+      <div className="p-6 lg:px-8 mx-auto max-w-11/12">
         <Slider title="End Client and Govt. Voices" progress/>
         <Slider title="Continue Watching" progress />
         <Slider title="PCTv Regions" speakers  />

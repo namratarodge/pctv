@@ -1,10 +1,13 @@
+'use client'
+
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Bars3Icon, BellIcon } from "@heroicons/react/24/outline";
 import {
   ChevronDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
 
 const userNavigation = [
   { name: "Your profile", href: "#" },
@@ -26,6 +29,18 @@ export default function TopHeader({
   sideBarOpen,
   setSideBarOpen,
 }: SideBarProps) {
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const token = localStorage.getItem("token"); // Or from cookie if accessible
+    console.log(token);
+    if (token) {
+      const decoded = jwtDecode(token);
+      setUser(decoded);
+      console.log("User info:", decoded);
+    }
+  }, []);
+
   return (
     <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-xs sm:gap-x-6 sm:px-6 lg:px-8">
       <button
@@ -83,7 +98,7 @@ export default function TopHeader({
                   aria-hidden="true"
                   className="ml-4 text-sm/6 font-semibold text-gray-900"
                 >
-                  Sandesh Mankar
+                  {user.username}
                 </span>
                 <ChevronDownIcon
                   aria-hidden="true"
@@ -98,7 +113,7 @@ export default function TopHeader({
               <div className="px-4 py-3">
                 <p className="text-sm">Signed in as</p>
                 <p className="truncate text-sm font-medium text-gray-900">
-                  tom@example.com
+                  {user.email}
                 </p>
               </div>
               {userNavigation.map((item) =>

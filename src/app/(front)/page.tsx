@@ -91,7 +91,7 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="p-6 lg:px-8 mx-auto max-w-6xl">
+      <div className="p-6 lg:px-8 mx-auto max-w-11/12">
         <h2 className="text-white text-xl">More reasons To Join PCTV</h2>
         <div className="mt-4 flex gap-4 ">
           {joinPCTV.map((item, index) => (
@@ -112,7 +112,7 @@ export default function Home() {
           ))}
         </div>
       </div>
-      <div className="p-6 lg:px-8 mx-auto max-w-6xl">
+      <div className="p-6 lg:px-8 mx-auto max-w-11/12">
         <h2 className="text-white text-xl">Our Top Voice</h2>
         <div className="mt-4 grid grid-cols-4 gap-4">
           {people.map((item, index) => (

@@ -18,9 +18,12 @@ type SideBarProps = {
   setSideBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 export default function SideBar({ sideBarOpen, setSideBarOpen }: SideBarProps) {
   const pageName = usePathname();
+
+
 
   return (
     <>

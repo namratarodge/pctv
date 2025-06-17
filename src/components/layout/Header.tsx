@@ -1,11 +1,23 @@
 "use client";
 import { use, useEffect, useState } from "react";
-import { Dialog, DialogPanel } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Dialog,
+  DialogPanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+} from "@headlessui/react";
+import {
+  Bars3Icon,
+  ChevronDownIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { usePublicData } from "@/components/context/PublicDataContext";
 
 import { usePathname } from "next/navigation";
+import { jwtDecode } from "jwt-decode";
 
 const baseNavigation = [
   { name: "Home", href: "/" },
@@ -18,6 +30,12 @@ const baseNavigation = [
   { name: "Course/Zones", key: "categories", href: "#", children: [] },
   { name: "Pricing", href: "#" },
 ];
+
+const userNavigation = [
+  { name: "Your profile", href: "#" },
+  { name: "Sign out", href: "#" },
+];
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -25,11 +43,19 @@ function classNames(...classes) {
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { tvtopic, categories, loading } = usePublicData();
+  const [user, setUser] = useState({});
   const pageName = usePathname();
 
   const [navigation, setNavigation] = useState(baseNavigation);
+  const token = localStorage.getItem("token"); // Or from cookie if accessible
 
   useEffect(() => {
+    console.log(token);
+    if (token) {
+      const decoded = jwtDecode(token);
+      console.log("User info:", decoded);
+      setUser(decoded);
+    }
     const merged = baseNavigation.map((item) => {
       if (item.key === "tv_topics") {
         return {
@@ -56,11 +82,17 @@ export default function Header() {
     setNavigation(merged);
   }, [tvtopic, categories]);
 
+
+  const singOut = async () => {
+    localStorage.clear(); // or remove specific keys
+    window.location.href = "/login"; // or use router.push('/login') if using Next.js router
+  };
+
   return (
-    <header className="absolute inset-x-0 top-0 z-50 ">
+    <header className={` absolute inset-x-0 top-0 z-50  ${pageName !== "/" && 'bg-black'}`}>
       <nav
         aria-label="Global"
-        className="flex items-center justify-between py-2 lg:px-4 mx-auto max-w-8xl "
+        className="flex items-center justify-between py-2 lg:px-4 mx-auto max-w-11/12 "
       >
         <div className="flex lg:flex-1  items-center ">
           <div className=" p-1.5">
@@ -76,7 +108,7 @@ export default function Header() {
           <div className="hidden sm:ml-6 sm:block">
             <div className="flex space-x-4">
               {navigation.map((item) => (
-                <div key={item.name} className="relative group uppercase">
+                <div key={item.name} className="relative group">
                   {/* Main menu link */}
                   <a
                     href={item.href}
@@ -90,8 +122,10 @@ export default function Header() {
 
                   {/* Submenu */}
                   {item.children && item.children.length > 0 && (
-                    <div className=" absolute  whitespace-nowrap
-                     left-0 mt-0 w-60 cursor-pointer rounded-md  bg-gray-800  ring-opacity-5 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-opacity duration-200 z-50">
+                    <div
+                      className=" absolute  whitespace-nowrap
+                     left-0 mt-0 w-60 cursor-pointer rounded-md  bg-gray-800  ring-opacity-5 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-opacity duration-200 z-50"
+                    >
                       <div className="py-1">
                         {item.children.map((subItem) => (
                           <a
@@ -122,18 +156,72 @@ export default function Header() {
         </div>
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-4 ">
-          <Link
-            href="/login"
-            className="text-sm/6  text-white bg-gray-800 px-6 py-1 rounded-full"
-          >
-            Log in
-          </Link>
-          <Link
-            href="/register"
-            className="text-sm/6  text-white bg-red-500 px-6 py-1 rounded-full"
-          >
-            Sign Up
-          </Link>
+          {user ? (
+            <Menu as="div" className="relative">
+              <MenuButton className="-m-1.5 flex items-center p-1.5">
+                <span className="sr-only">Open user menu</span>
+                <img
+                  alt=""
+                  src="default-front.jpg"
+                  className="size-8 rounded-full bg-gray-50"
+                />
+                <span className="hidden lg:flex lg:items-center cursor-pointer">
+                  <span
+                    aria-hidden="true"
+                    className="ml-4 text-sm/6 font-semibold text-white"
+                  >
+                    {user.username}
+                  </span>
+                  <ChevronDownIcon
+                    aria-hidden="true"
+                    className="ml-2 size-5 text-gray-400"
+                  />
+                </span>
+              </MenuButton>
+              <MenuItems
+                transition
+                className="absolute right-0 z-10 mt-2.5 w-56 origin-top-right rounded-md bg-gray-800 py-2 ring-1 shadow-lg  transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+              >
+               
+                {userNavigation.map((item) => (
+                  item.name === "Sign out" ? (
+                    <MenuItem key={item.name}>
+                      <button
+                        onClick={() => singOut()}
+                        className="cursor-pointer block w-full text-left px-3 py-1 text-sm/6 text-gray-400 hover:text-gray-200 data-focus:outline-hidden"
+                      >
+                        {item.name}
+                      </button>
+                    </MenuItem>
+                  ) : (
+                    <MenuItem key={item.name}>
+                      <a
+                        href={item.href}
+                        className="block px-3 py-1 text-sm/6 text-gray-400  data-focus:outline-hidden hover:text-gray-200"
+                      >
+                        {item.name}
+                      </a>
+                    </MenuItem>
+                  )
+                ))}
+              </MenuItems>
+            </Menu>
+          ) : (
+            <div>
+              <Link
+                href="/login"
+                className="text-sm/6  text-white bg-gray-800 px-6 py-1 rounded-full"
+              >
+                Log in
+              </Link>
+              <Link
+                href="/register"
+                className="text-sm/6  text-white bg-red-500 px-6 py-1 rounded-full"
+              >
+                Sign Up
+              </Link>
+            </div>
+          )}
         </div>
       </nav>
       <Dialog

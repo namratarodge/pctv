@@ -31,7 +31,12 @@ export default function Login() {
       console.log("Login successful:", data);
       localStorage.setItem("token", data.token);
       // You can redirect the user or store the token here
-      window.location.href = "/admin";
+      if(data.user.userType === 'admin'){
+         window.location.href = "/admin";
+      }else{
+        window.location.href = "/";
+      }
+     
     } catch (error) {
       toast("Error during login:" + error);
     }

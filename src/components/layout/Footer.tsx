@@ -96,7 +96,7 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-gray-700">
-      <div className="mx-auto max-w-7xl px-6  pb-8 sm:pt-10 lg:px-2 ">
+      <div className="mx-auto max-w-11/12 px-6  pb-8 sm:pt-10 lg:px-2 ">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
             <img

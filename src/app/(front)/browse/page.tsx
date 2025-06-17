@@ -122,7 +122,7 @@ export default function Browser() {
   }
 
   return (
-    <div className="pt-18 max-w-8xl mx-auto flex flex-col lg:flex-row mb-10">
+    <div className="pt-18  max-w-11/12 mx-auto flex flex-col lg:flex-row mb-10">
       <div className="w-full md:w-1/5 px-4 py-4 overflow-auto lg:h-screen ">
         <div className="w-full border-b border-gray-500 pb-4">
           <div className="text-gray-300 text-lg">TV Topic</div>
