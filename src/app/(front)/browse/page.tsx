@@ -116,6 +116,12 @@ export default function Browser() {
     }
   };
 
+  const slugify = (text: string) =>
+    text
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
   useEffect(() => {
     console.log(keyword);
     fetchTitlte();
@@ -272,20 +278,22 @@ export default function Browser() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-          {title.map((data) => (
-            <Link href={'titles/'+data._id} key={data._id}>
-            <div className=" text-white gap-4" >
+          {title.map((title) => (
+           
+            <div className=" text-white gap-4" key={title._id}> 
+              <Link href={`/titles/${title.slug}`}>
               <img
-                src={"https://projectcontrolstv.com/" + data.poster}
+                src={"https://projectcontrolstv.com/" + title.poster}
                 className="rounded-lg"
               />
               <div className="mt-4">
                 <a href="#" className="text-sm">
-                  {data.name.slice(0, 34)}
+                  {title.name.slice(0, 34)}
                 </a>
               </div>
-            </div>
+
             </Link>
+            </div>
           ))}
         </div>
       </div>
