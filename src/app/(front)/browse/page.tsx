@@ -283,7 +283,7 @@ export default function Browser() {
             <div className=" text-white gap-4" key={title._id}> 
               <Link href={`/titles/${title._id}/${title.slug}`}>
               <img
-                src={"https://projectcontrolstv.com/" + title.poster}
+                src={`${process.env.NEXT_PUBLIC_WEBSITE}/${title.poster} `}
                 className="rounded-lg"
               />
               <div className="mt-4">

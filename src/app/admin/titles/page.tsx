@@ -14,6 +14,7 @@ import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
 import { TitleColumn } from "@/constants/DataTableColumn";
 import Loading from "@/components/layout/Loading";
 import { useForm } from "react-hook-form";
+import Link from "next/link";
 
 type FormValues = {
   title: string;
@@ -117,12 +118,13 @@ export default function Subscription() {
                   data={data}
                   renderActions={(person) => (
                     <div className="flex gap-3 justify-end">
-                      <button
+                      <Link
+                      href={`titles/${person._id}/edit/ `}
                         onClick={() => console.log("Edit", person)}
                         className="text-blue-600 hover:text-blue-800 cursor-pointer"
                       >
                         <PencilIcon className="w-5 h-5" />
-                      </button>
+                      </Link>
                       <button
                         onClick={() => console.log("Delete", person)}
                         className="text-red-600 hover:text-red-800 cursor-pointer"
@@ -143,28 +145,7 @@ export default function Subscription() {
           </div>
         </>
       )}
-      <ModelForm
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Create a New Plan"
-        onSubmit={handleSubmit(handleFormSubmit)}
-      >
-        <div className="flex flex-col">
-          <label className="mb-1 text-gray-800">Title</label>
-          <input
-            {...register("title", { required: "Title is required" })}
-            className="px-4 py-2 rounded-md border border-gray-300 text-gray-700"
-          />
-          {errors.title && <p>{errors.title.message}</p>}
-        </div>
-        <div className="flex flex-col">
-          <label className="mb-1 text-gray-800">Description</label>
-          <textarea
-            {...register("description")}
-            className="px-4 py-2 rounded-md border border-gray-300 text-gray-700"
-          />
-        </div>
-      </ModelForm>
+      
     </div>
   );
 }

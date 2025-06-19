@@ -53,3 +53,16 @@ import {
     { name: "Logging", href: "#", current: false },
     { name: "Recaptcha", href: "/admin/settings/recaptcha", current: false },
   ];
+
+  export const navigationTitleSubMenu = [
+    { name: "Primary Facts", href: "primaryFacts" },
+    { name: "Seasons", href: "seasons" },
+    { name: "Images", href: "images" },
+    { name: "Videos", href: "videos" },
+    { name: "Cast", href: "cast" },
+    { name: "Crew", href: "crew" },
+    { name: "Categories", href: "genres" },
+    { name: "TV Topics", href: "keywords" },
+    { name: "Countries", href: "countries" },
+    { name: "Reviews", href: "reviews" },
+  ];

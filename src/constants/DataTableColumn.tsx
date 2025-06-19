@@ -57,8 +57,31 @@ type TitleItem = {
 export const TitleColumn: {
   key: keyof TitleItem;
   label: string;
+  render?: (row: TitleItem) => React.ReactNode;
 }[] = [
-  { key: "name", label: "Name" },
+  {
+    key: "name",
+    label: "Name",
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        <img
+          src={
+            row.poster
+              ? `${process.env.NEXT_PUBLIC_WEBSITE}/${row.poster}`
+              : "/default-image.jpg"
+          }
+          alt={row.poster}
+          className="w-8 h-8 rounded-sm object-cover"
+          onError={(e) => {
+            const target = e.currentTarget;
+            target.onerror = null; // prevent infinite loop
+            target.src = "/default-image.jpg";
+          }}
+        />
+        <span className="flex flex-col">{row.name}</span>
+      </div>
+    ),
+  },
   { key: "type", label: "Type" },
   { key: "release_date", label: "Release Date" },
   { key: "rating", label: "Rating" },
