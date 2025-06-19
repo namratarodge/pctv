@@ -281,7 +281,7 @@ export default function Browser() {
           {title.map((title) => (
            
             <div className=" text-white gap-4" key={title._id}> 
-              <Link href={`/titles/${title.slug}`}>
+              <Link href={`/titles/${title._id}/${title.slug}`}>
               <img
                 src={"https://projectcontrolstv.com/" + title.poster}
                 className="rounded-lg"

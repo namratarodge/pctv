@@ -1,4 +1,4 @@
-"use client";
+"use client"; // ✅ client component, hooks allowed
 
 import { Footer, Slider, SliderNumber, TopicSlider } from "@/components/layout";
 import Loading from "@/components/layout/Loading";
@@ -13,73 +13,29 @@ import { useEffect, useState } from "react";
 import { StringValidation } from "zod";
 import Link from "next/link";
 
-const people = [
-  {
-    title: "Global Transforms of Projects Control within Worlds",
-    name: "Andy Browns",
-    position: "Project Controls Director",
-  },
-  {
-    title: "Optimizing Risk in Large Infrastructure Programs",
-    name: "Samantha Lee",
-    position: "Senior Risk Analyst",
-  },
-  {
-    title: "AI in Cost Engineering: Future or Fad?",
-    name: "Michael Chen",
-    position: "Lead Cost Engineer",
-  },
-  {
-    title: "The New Metrics of Success in Capital Projects",
-    name: "Laura Gutierrez",
-    position: "Performance Management Advisor",
-  },
-  {
-    title: "Digitizing Project Forecasting in Real Time",
-    name: "Robert Knight",
-    position: "PMO Lead",
-  },
-  {
-    title: "Post-Pandemic Challenges in Transit Development",
-    name: "Fatima Al-Sayeed",
-    position: "Transportation Strategy Consultant",
-  },
-  {
-    title: "Sustainable Controls for Green Construction",
-    name: "Daniel Johnson",
-    position: "Sustainability & Cost Manager",
-  },
-  {
-    title: "Data-Driven Decisions in Project Controls",
-    name: "Emily Nakamura",
-    position: "Project Controls Analyst",
-  },
-  {
-    title: "Transforming Owner Organizations for Agility",
-    name: "Thomas Müller",
-    position: "Capital Projects Consultant",
-  },
-  {
-    title: "Bridging Technology and Human Insight",
-    name: "Priya Mehta",
-    position: "Innovation Lead, Infrastructure",
-  },
-];
+interface Title {
+  _id: string;
+  name: string;
+  slug: string;
+  poster: string;
+  language: string;
+  description: string;
+  created_at: string;
+}
 
 interface PageProps {
   params: {
-    slug: string;
+    titleId: string;
   };
 }
 
 export default function TitleDetailPage({ params }: PageProps) {
-  const { slug } = params;
-  const [title, setTitle] = useState([]);
-  const [titleDetails, setTitleDetails] = useState([]);
+  const { titleId } = params;
+  const [title, setTitle] = useState<Title[]>([]);
+  const [titleDetails, setTitleDetails] = useState<Title | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchTitlte = async () => {
-    setLoading(true);
+  const fetchTitleList = async () => {
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/titles`,
@@ -93,19 +49,14 @@ export default function TitleDetailPage({ params }: PageProps) {
         }
       );
       if (response.data.status) {
-        const modifiedData = response.data.data.data;
-        setLoading(false);
-        setTitle(modifiedData);
+        setTitle(response.data.data.data);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false); // Always stop loading, whether success or failure
     }
   };
 
   const fetchTitleDetails = async () => {
-    setLoading(true);
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/titles`,
@@ -114,29 +65,31 @@ export default function TitleDetailPage({ params }: PageProps) {
             "Content-Type": "application/json",
           },
           params: {
-            slug: decodeURIComponent(slug),
+            _id: titleId,
           },
         }
       );
       if (response.data.status) {
-        const modifiedData = response.data.data.data[0];
-        console.log('fetch details')
-        console.log(modifiedData)
-        setLoading(false);
-        setTitleDetails(modifiedData);
+        setTitleDetails(response.data.data.data[0]);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false); // Always stop loading, whether success or failure
     }
   };
 
   useEffect(() => {
-    console.log(slug, "slug");
-    fetchTitleDetails();
-    fetchTitlte();
-  }, []);
+    const fetchData = async () => {
+      setLoading(true);
+      await Promise.all([fetchTitleList(), fetchTitleDetails()]);
+      setLoading(false);
+    };
+
+    fetchData();
+  }, [titleId]);
+
+  // if (!titleDetails) {
+  //   window.location.href = "/browse";
+  // }
 
   return (
     <div className="pt-18  flex max-w-11/12 mx-auto">
@@ -148,12 +101,10 @@ export default function TitleDetailPage({ params }: PageProps) {
         <>
           <div className="w-2/3 ">
             <img
-             src={"https://projectcontrolstv.com/" + titleDetails.poster}
+              src={"https://projectcontrolstv.com/" + titleDetails.poster}
               className="w-full  rounded-lg"
             />
-            <h1 className="text-xl text-white py-4">
-             {titleDetails.name}
-            </h1>
+            <h1 className="text-xl text-white py-4">{titleDetails.name}</h1>
             <div className="flex gap-2">
               <button className="flex rounded-full bg-[#707070]  px-2 gap-1 py-1 items-center text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20 cursor-pointer">
                 <PlusIcon className="h-4 w-4 text-white" />
@@ -178,9 +129,7 @@ export default function TitleDetailPage({ params }: PageProps) {
               </div>
             </div>
             <div className="py-4">
-              <p className="text-gray-400">
-               {titleDetails.description}
-              </p>
+              <p className="text-gray-400">{titleDetails.description}</p>
             </div>
 
             <div className="border-t border-b border-[#37454D] py-3 mr-5">
@@ -233,7 +182,11 @@ export default function TitleDetailPage({ params }: PageProps) {
             <h2 className="text-white px-4">Recommended Videos for you </h2>
             <div className="flex flex-col gap-1 px-2">
               {title.map((data, index) => (
-                <Link  href={`/titles/${data.slug}`} key={index} className="flex items-center gap-4 px-2 py-1 ">
+                <Link
+                  href={`/titles/${data._id}/${data.slug}`}
+                  key={data._id}
+                  className="flex items-center gap-4 px-2 py-1 "
+                >
                   <img
                     src={"https://projectcontrolstv.com/" + data.poster}
                     className="w-2/5  rounded-lg"
