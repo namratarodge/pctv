@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import { navigationTitleSubMenu } from "@/constants/Menu";
 import { useSearchParams } from "next/navigation";
+import Video from "@/components/pages/video";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -18,7 +19,10 @@ export default function Subscription() {
   return (
     <div className="flex gap-4">
       <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md w-4/5">
-        {active}
+        {active === "videos" && (
+          <Video />
+        )}
+      
       </div>
       <div className=" bg-white rounded-md w-1/5 border border-gray-200 ">
         <h2 className="bg-gray-600 text-white p-4 rounded-t-md text-sm/6 font-semibold">
