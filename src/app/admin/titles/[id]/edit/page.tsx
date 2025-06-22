@@ -10,6 +10,9 @@ import Cast from "@/components/pages/cast";
 import axios from "axios";
 import Keywords from "@/components/pages/keywords";
 import Country from "@/components/pages/country";
+import Review from "@/components/pages/review";
+
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -71,6 +74,7 @@ export default function EditTitles() {
 
   useEffect(() => {
     fetchTitleDetails();
+    console.log("titles");
   }, []);
 
   return (
@@ -92,10 +96,16 @@ export default function EditTitles() {
             onSubmit={handleSubmitted}
           />
         )}
-         {active === "countries" && (
+        {active === "countries" && (
           <Country
             titleId={titleId}
-            data={titleDetails?.keywords}
+            data={titleDetails?.country}
+            onSubmit={handleSubmitted}
+          />
+        )}
+        {active === "reviews" && (
+          <Review
+            titleId={titleId}
             onSubmit={handleSubmitted}
           />
         )}

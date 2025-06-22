@@ -183,7 +183,7 @@ export default function Genre({
           <ModelForm
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
-            title="Add Categories"
+            title="Select Categories"
             onSubmit={handleSubmit(handleFormSubmit)}
           >
             <div className="flex flex-col h-30">

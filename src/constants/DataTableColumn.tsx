@@ -14,7 +14,6 @@ export const CategoriesColumn: {
   { key: "display_name", label: "Display Name" },
 ];
 
-
 // Plans Column
 type typeOfPlans = {
   name: "string";
@@ -282,7 +281,11 @@ export const pagesColumn: {
 // review Column
 type reviewOfPages = {
   score: "string";
-  user_id: "string";
+  user_id: {
+    username: string;
+    email: string;
+    _id?: string;
+  };
   reviewable: "string";
   reviewable_type: "string";
   updated_at: "string";
@@ -320,8 +323,8 @@ export const reviewColumn: {
           }}
         />
         <span className="flex flex-col text-md">
-          Sandesh Mankar
-          <small className="text-gray-400">sandesh@gmail.com</small>
+          {row.user_id.username}
+          <small className="text-gray-400"> {row.user_id.email}</small>
         </span>
       </div>
     ),
@@ -341,6 +344,44 @@ export const reviewColumn: {
             target.src = "/default-image.jpg";
           }}
         />
+        <span className="flex flex-col">Project communications</span>
+      </div>
+    ),
+  },
+  { key: "reviewable_type", label: "Type" },
+  { key: "updated_at", label: "Last Updated" },
+];
+
+// review Column title
+type reviewOfTitles = {
+  score: number;
+  reviewable_id: string;
+  reviewable_type: string;
+  updated_at: string;
+};
+
+export const reviewTitleColumn: {
+  key: keyof reviewOfTitles;
+  label: string;
+  render?: (row: reviewOfTitles) => React.ReactNode;
+}[] = [
+  {
+    key: "score",
+    label: "Score",
+    render: (row) => (
+      <div className="flex items-center flex-col space-x-2">
+        <StarIcon className="h-5 w-5 text-yellow-400" />
+        {row.score} / 10
+      </div>
+    ),
+  },
+  {
+    key: "reviewable_id",
+    label: "Reviewable",
+
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        dsdsds dsds
         <span className="flex flex-col">Project communications</span>
       </div>
     ),

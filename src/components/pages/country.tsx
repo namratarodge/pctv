@@ -11,8 +11,6 @@ import axios from "axios";
 import Loading from "@/components/layout/Loading";
 import { CategoriesColumn } from "@/constants/DataTableColumn";
 import { useForm } from "react-hook-form";
-import currencies from "@/constants/currencies.json"; // adjust path as needed
-import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
 import AutoCompletePersonList from "@/components/forms/AutoCompletePersonList";
 import { on } from "events";
@@ -25,14 +23,14 @@ type FormValues = {
   interval_count: number;
 };
 
-export default function   Keywords({
+export default function Country({
   titleId,
   data,
-  onSubmit
+  onSubmit,
 }: {
   titleId: string;
   data: any;
-  onSubmit: () => void; 
+  onSubmit: () => void;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -50,11 +48,11 @@ export default function   Keywords({
     formState: { errors },
   } = useForm<FormValues>();
 
-  const fetchCategories = async () => {
+  const fetch = async () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/tags?type=keyword`,
+        `${process.env.NEXT_PUBLIC_API_URL}/tags?type=production_country`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -82,7 +80,7 @@ export default function   Keywords({
   const handleFormSubmit = async (data: Record<string, string>) => {
     const payload = {
       taggable_id: titleId,
-      taggable_type: "keyword",
+      taggable_type: "production_country",
       tag_id: selectedUsers.map((user) => user.id),
     };
 
@@ -137,17 +135,17 @@ export default function   Keywords({
     } catch (error) {
       toast("Error deleting keyword:", error);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchCategories();
+    fetch();
   }, []);
 
   return (
     <div className=" bg-white rounded-md ">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold text-gray-900">TV Topics</h1>
+          <h1 className="text-base font-semibold text-gray-900">Country</h1>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <button
@@ -155,7 +153,7 @@ export default function   Keywords({
             onClick={() => setIsModalOpen(true)}
             className="cursor-pointer flex items-center gap-2 rounded-md bg-red-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            <PlusCircleIcon className="w-6 h-6" /> Add New TV Topic
+            <PlusCircleIcon className="w-6 h-6" /> Add new Country
           </button>
         </div>
       </div>
@@ -182,7 +180,7 @@ export default function   Keywords({
           <ModelForm
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
-            title="Add TV Topics"
+            title="Select countries"
             onSubmit={handleSubmit(handleFormSubmit)}
           >
             <div className="flex flex-col h-30">
