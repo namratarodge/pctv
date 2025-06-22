@@ -54,11 +54,11 @@ export default function Header() {
   const pageName = usePathname();
 
   const [navigation, setNavigation] = useState(baseNavigation);
-  const token = localStorage.getItem("token"); // Or from cookie if accessible
 
   useEffect(() => {
+    const token = localStorage.getItem("token"); // Or from cookie if accessible
     if (token) {
-      const decoded = jwtDecode(token);
+      const decoded = jwtDecode(token); 
       setUser(decoded);
     }
     const merged = baseNavigation.map((item) => {

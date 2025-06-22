@@ -25,14 +25,14 @@ type FormValues = {
   interval_count: number;
 };
 
-export default function Genre({
+export default function   Keywords({
   titleId,
   data,
-  onSubmit,
+  onSubmit
 }: {
   titleId: string;
   data: any;
-  onSubmit: () => void;
+  onSubmit: () => void; 
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -54,7 +54,7 @@ export default function Genre({
     setLoading(true);
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/tags?type=genre`,
+        `${process.env.NEXT_PUBLIC_API_URL}/tags?type=keyword`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -82,7 +82,7 @@ export default function Genre({
   const handleFormSubmit = async (data: Record<string, string>) => {
     const payload = {
       taggable_id: titleId,
-      taggable_type: "genre",
+      taggable_type: "keyword",
       tag_id: selectedUsers.map((user) => user.id),
     };
 
@@ -139,7 +139,6 @@ export default function Genre({
     }
   }
 
-
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -148,7 +147,7 @@ export default function Genre({
     <div className=" bg-white rounded-md ">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold text-gray-900">Categories</h1>
+          <h1 className="text-base font-semibold text-gray-900">TV Topics</h1>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <button
@@ -156,7 +155,7 @@ export default function Genre({
             onClick={() => setIsModalOpen(true)}
             className="cursor-pointer flex items-center gap-2 rounded-md bg-red-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            <PlusCircleIcon className="w-6 h-6" /> Add New Categories
+            <PlusCircleIcon className="w-6 h-6" /> Add New TV Topic
           </button>
         </div>
       </div>
@@ -183,7 +182,7 @@ export default function Genre({
           <ModelForm
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
-            title="Add Categories"
+            title="Add TV Topics"
             onSubmit={handleSubmit(handleFormSubmit)}
           >
             <div className="flex flex-col h-30">

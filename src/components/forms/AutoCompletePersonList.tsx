@@ -13,12 +13,14 @@ function slugify(text: string): string {
 
 type AutoCompletePersonListProps = {
   users: UserTag[];
+    placeholder?: string;
   onSelect: (selected: UserTag[]) => void;
   onAddUser?: (newUser: UserTag) => void;
 };
 
 export default function AutoCompletePersonList({
   users = [],
+  placeholder = "Search or add new...",
   onSelect,
   onAddUser,
 }: AutoCompletePersonListProps) {
@@ -143,7 +145,7 @@ export default function AutoCompletePersonList({
         type="text"
         value={query}
         onChange={handleChange}
-        placeholder="Search Categories or add new..."
+        placeholder={placeholder}
         className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
 

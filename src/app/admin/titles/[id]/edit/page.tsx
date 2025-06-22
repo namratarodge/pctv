@@ -8,7 +8,8 @@ import Video from "@/components/pages/video";
 import Genre from "@/components/pages/genre";
 import Cast from "@/components/pages/cast";
 import axios from "axios";
-import { set } from "zod";
+import Keywords from "@/components/pages/keywords";
+import Country from "@/components/pages/country";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -81,6 +82,20 @@ export default function EditTitles() {
           <Genre
             titleId={titleId}
             data={titleDetails?.genres}
+            onSubmit={handleSubmitted}
+          />
+        )}
+        {active === "keywords" && (
+          <Keywords
+            titleId={titleId}
+            data={titleDetails?.keywords}
+            onSubmit={handleSubmitted}
+          />
+        )}
+         {active === "countries" && (
+          <Country
+            titleId={titleId}
+            data={titleDetails?.keywords}
             onSubmit={handleSubmitted}
           />
         )}
