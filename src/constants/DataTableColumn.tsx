@@ -1,6 +1,21 @@
 import { StarIcon } from "@heroicons/react/24/solid";
 
 // Plans Column
+type typeOfCategories = {
+  name: "string";
+  display_name: "string";
+};
+
+export const CategoriesColumn: {
+  key: keyof typeOfCategories;
+  label: string;
+}[] = [
+  { key: "name", label: "Name" },
+  { key: "display_name", label: "Display Name" },
+];
+
+
+// Plans Column
 type typeOfPlans = {
   name: "string";
   amount: "number";

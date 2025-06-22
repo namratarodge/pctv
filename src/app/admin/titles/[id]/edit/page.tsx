@@ -3,26 +3,87 @@
 import { useEffect, useState } from "react";
 
 import { navigationTitleSubMenu } from "@/constants/Menu";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useParams } from "next/navigation";
 import Video from "@/components/pages/video";
+import Genre from "@/components/pages/genre";
+import Cast from "@/components/pages/cast";
+import axios from "axios";
+import { set } from "zod";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Subscription() {
-  const [data, setData] = useState([]);
+interface PageProps {
+  params: {
+    id: number;
+  };
+}
+
+interface Title {
+  _id: string;
+  name: string;
+  slug: string;
+  poster: string;
+  language: string;
+  description: string;
+  created_at: string;
+}
+
+export default function EditTitles() {
+  const params = useParams();
+  const titleId = params.id;
+  const [titleDetails, setTitleDetails] = useState<Title | null>(null);
   const [loading, setLoading] = useState(true);
   const searchParams = useSearchParams();
   const active = searchParams.get("active"); // "videos"
 
+  const fetchTitleDetails = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/titles`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          params: {
+            _id: titleId,
+          },
+        }
+      );
+      if (response.data.status) {
+        console.log("Title details:", response.data.data);
+        setTitleDetails(response.data.data);
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const handleSubmitted = () => {
+    console.log("Genre form was submitted.");
+    fetchTitleDetails(); // or any other action
+  };
+
+  useEffect(() => {
+    fetchTitleDetails();
+  }, []);
+
   return (
     <div className="flex gap-4">
       <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md w-4/5">
-        {active === "videos" && (
-          <Video />
+        {active === "videos" && <Video />}
+        {active === "cast" && <Cast />}
+        {active === "genres" && (
+          <Genre
+            titleId={titleId}
+            data={titleDetails?.genres}
+            onSubmit={handleSubmitted}
+          />
         )}
-      
       </div>
       <div className=" bg-white rounded-md w-1/5 border border-gray-200 ">
         <h2 className="bg-gray-600 text-white p-4 rounded-t-md text-sm/6 font-semibold">

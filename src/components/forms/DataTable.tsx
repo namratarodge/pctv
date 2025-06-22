@@ -21,7 +21,7 @@ export default function DataTable<T extends { [key: string]: any }>({
   return (
     <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
       <table className="min-w-full divide-y divide-gray-200 bg-white">
-        <thead >
+        <thead>
           <tr>
             {columns.map((col) => (
               <th
@@ -39,22 +39,38 @@ export default function DataTable<T extends { [key: string]: any }>({
             )}
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200 bg-white">
-          {data.map((row, index) => (
-            <tr key={index} className="hover:bg-gray-50">
-              {columns.map((col) => (
-                <td key={String(col.key)}  className="py-4 pr-3  text-sm font-medium whitespace-nowrap text-gray-700 ">
-                  {row[col.key]}
-                </td>
-              ))}
-              {renderActions && (
-                <td className="px-4 py-3 text-sm text-right text-gray-500">
-                  {renderActions(row)}
-                </td>
-              )}
+        {data.length === 0 ? (
+          <tbody>
+            <tr>
+              <td
+                colSpan={columns.length + (renderActions ? 1 : 0)}
+                className="py-4 text-center text-gray-500"
+              >
+                No data available
+              </td>
             </tr>
-          ))}
-        </tbody>
+          </tbody>
+        ) : (
+          <tbody className="divide-y divide-gray-200 bg-white">
+            {data.map((row, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                {columns.map((col) => (
+                  <td
+                    key={String(col.key)}
+                    className="py-4 pr-3  text-sm font-medium whitespace-nowrap text-gray-700 "
+                  >
+                    {row[col.key]}
+                  </td>
+                ))}
+                {renderActions && (
+                  <td className="px-4 py-3 text-sm text-right text-gray-500">
+                    {renderActions(row)}
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        )}
       </table>
     </div>
   );
