@@ -79,3 +79,28 @@ export const pageSchema = z.object({
   body: z.string().min(1, "body is required"),
 });
 export type PageFormData = z.infer<typeof pageSchema>;
+
+// Title Forms Data
+
+export const titleSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+
+  original_title: z.string().min(1, "original_title is required"),
+  type: z.enum(["Tv_topic", "Categories"], {
+    errorMap: () => ({ message: "type is required" }),
+  }),
+  allow_update: z.string().optional(),
+  poster: z.any().nullable(),
+  backdrop: z.any().nullable(),
+  release_date: z.string().min(1, "release_date is required"),
+  tagline: z.string().optional(),
+  overview: z.string().optional(),
+  runtime: z.string().optional(),
+  certification: z.string().optional(),
+  budget: z.number().optional(),
+  revenue: z.string().optional(),
+  popularity: z.string().optional(),
+  language: z.string().min(1, "language is required"),
+  free: z.string().min(1, "free is required"),
+});
+export type TitleFormData = z.infer<typeof titleSchema>;

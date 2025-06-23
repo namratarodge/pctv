@@ -55,7 +55,7 @@ import {
   ];
 
   export const navigationTitleSubMenu = [
-    { name: "Primary Facts", href: "primaryFacts" },
+    { name: "Primary Facts", href: "general" },
     { name: "Seasons", href: "seasons" },
     { name: "Images", href: "images" },
     { name: "Videos", href: "videos" },

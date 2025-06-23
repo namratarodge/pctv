@@ -11,6 +11,7 @@ import axios from "axios";
 import Keywords from "@/components/pages/keywords";
 import Country from "@/components/pages/country";
 import Review from "@/components/pages/review";
+import General from "@/components/pages/general";
 
 
 
@@ -75,6 +76,7 @@ export default function EditTitles() {
   useEffect(() => {
     fetchTitleDetails();
     console.log("titles");
+    console.log(active)
   }, []);
 
   return (
@@ -82,6 +84,7 @@ export default function EditTitles() {
       <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md w-4/5">
         {active === "videos" && <Video />}
         {active === "cast" && <Cast />}
+        {active === "crew" && <Cast />}
         {active === "genres" && (
           <Genre
             titleId={titleId}
@@ -109,8 +112,15 @@ export default function EditTitles() {
             onSubmit={handleSubmitted}
           />
         )}
+        {active === 'general' && (
+          <General
+            titleId={titleId}
+            data={titleDetails}
+            onSubmit={handleSubmitted}
+          />
+        )}
       </div>
-      <div className=" bg-white rounded-md w-1/5 border border-gray-200 ">
+      <div className=" bg-white rounded-md w-1/5 border border-gray-200 h-full   ">
         <h2 className="bg-gray-600 text-white p-4 rounded-t-md text-sm/6 font-semibold">
           Edit
         </h2>

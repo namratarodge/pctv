@@ -39,7 +39,7 @@ export default function Genre({
   const [loading, setLoading] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
 
-  const handleSelect = (users) => {
+  const handleSelect = (users: any) => {
     setSelectedUsers(users);
   };
 
