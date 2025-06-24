@@ -1,5 +1,88 @@
 import { StarIcon } from "@heroicons/react/24/solid";
 
+// Crew Column
+type typeOfCrew = {
+  person_id: {
+    name: string;
+    poster: string;
+  };
+  job: string;
+  department: string;
+};
+
+export const CrewColumn: {
+  key: keyof typeOfCrew;
+  label: string;
+  render?: (row: typeOfCrew) => React.ReactNode;
+}[] = [
+  {
+    key: "person_id",
+    label: "Name",
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        <img
+          src={
+            row.person_id.poster
+              ? `${process.env.NEXT_PUBLIC_WEBSITE}/${row.person_id.poster}`
+              : "/default-image.jpg"
+          }
+          alt={row.person_id.name}
+          className="w-8 h-8 rounded-sm object-cover"
+          onError={(e) => {
+            const target = e.currentTarget;
+            target.onerror = null; // prevent infinite loop
+            target.src = "/default-image.jpg";
+          }}
+        />
+        <span className="flex flex-col">{row.person_id.name} </span> 
+      </div>
+    ),
+  },
+  { key: "job", label: "Job" },
+  { key: "department", label: "Department" },
+];
+
+
+// Cast Column
+type typeOfCast = {
+  person_id: {
+    name: string;
+    poster: string;
+  };
+  character: string;
+};
+
+export const CastColumn: {
+  key: keyof typeOfCast;
+  label: string;
+  render?: (row: typeOfCast) => React.ReactNode;
+}[] = [
+  {
+    key: "person_id",
+    label: "Name",
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        <img
+          src={
+            row.person_id.poster
+              ? `${process.env.NEXT_PUBLIC_WEBSITE}/${row.person_id.poster}`
+              : "/default-image.jpg"
+          }
+          alt={row.person_id.name}
+          className="w-8 h-8 rounded-sm object-cover"
+          onError={(e) => {
+            const target = e.currentTarget;
+            target.onerror = null; // prevent infinite loop
+            target.src = "/default-image.jpg";
+          }}
+        />
+        <span className="flex flex-col">{row.person_id.name} </span> 
+      </div>
+    ),
+  },
+  { key: "character", label: "Character" },
+];
+
 // Plans Column
 type typeOfCategories = {
   name: "string";

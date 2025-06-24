@@ -7,6 +7,7 @@ import { useSearchParams, useParams } from "next/navigation";
 import Video from "@/components/pages/video";
 import Genre from "@/components/pages/genre";
 import Cast from "@/components/pages/cast";
+import Crew from "@/components/pages/crew";
 import axios from "axios";
 import Keywords from "@/components/pages/keywords";
 import Country from "@/components/pages/country";
@@ -83,8 +84,8 @@ export default function EditTitles() {
     <div className="flex gap-4">
       <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md w-4/5">
         {active === "videos" && <Video />}
-        {active === "cast" && <Cast />}
-        {active === "crew" && <Cast />}
+        {active === "cast" && <Cast  titleId={titleId} />}
+        {active === "crew" && <Crew  titleId={titleId} /> }
         {active === "genres" && (
           <Genre
             titleId={titleId}

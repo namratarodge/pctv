@@ -13,7 +13,7 @@ function slugify(text: string): string {
 
 type AutoCompletePersonListProps = {
   users: UserTag[];
-    placeholder?: string;
+  placeholder?: string;
   onSelect: (selected: UserTag[]) => void;
   onAddUser?: (newUser: UserTag) => void;
 };
@@ -121,7 +121,7 @@ export default function AutoCompletePersonList({
     query.trim() === "";
 
   return (
-    <div className="relative w-full max-w-md mx-auto">
+    <div className="relative w-full max-w-md mx-auto ">
       {/* Selected users */}
       <div className="flex flex-wrap gap-2 mb-2">
         {selected.map((item, i) => (

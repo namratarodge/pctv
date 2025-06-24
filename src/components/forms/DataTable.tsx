@@ -59,7 +59,9 @@ export default function DataTable<T extends { [key: string]: any }>({
                     key={String(col.key)}
                     className="py-4 pr-3  text-sm font-medium whitespace-nowrap text-gray-700 "
                   >
-                    {row[col.key]}
+                    {col.render
+                      ? col.render(row)
+                      : (row[col.key] as string | number)}
                   </td>
                 ))}
                 {renderActions && (

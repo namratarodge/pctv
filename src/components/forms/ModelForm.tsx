@@ -27,9 +27,6 @@ export default function ModelForm({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // const handleSubmit = () => {
-  //   onSubmit(formData);
-  // };
 
   if (!isOpen) return null;
 

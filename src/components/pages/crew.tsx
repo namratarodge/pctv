@@ -11,20 +11,17 @@ import { Error } from "../layout";
 import { formatDate } from "@/utils/common";
 import axios from "axios";
 import Loading from "@/components/layout/Loading";
-import { CastColumn } from "@/constants/DataTableColumn";
+import { CrewColumn } from "@/constants/DataTableColumn";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 type FormValues = {
   name: string;
-  character: string;
+  job: string;
+  department : string;
 };
 
-export default function Genre({
-  titleId,
-}: {
-  titleId: string;
-}) {
+export default function Crew({ titleId }: { titleId: string }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -59,7 +56,7 @@ export default function Genre({
       );
       if (response.data.status) {
         const modifiedData = response.data.data.data
-        .filter((item: any) => item.character != null)
+        .filter((item: any) => item.character === null)
         .map((item: any) => ({
           ...item,
           updated_at: `${formatDate(item.updatedAt)} `,
@@ -79,10 +76,9 @@ export default function Genre({
     const payload = {
       person_id: selectedUsers._id,
       creditable_id: titleId,
-      character: data.character,
-      order: 1,
-      department: "cast",
-      job: "cast",
+      order: 0,
+      department: data.department,
+      job: data.job,
     };
     try {
       const token = localStorage.getItem("token");
@@ -145,7 +141,7 @@ export default function Genre({
     <div className=" bg-white rounded-md ">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold text-gray-900">Cast</h1>
+          <h1 className="text-base font-semibold text-gray-900">Crew</h1>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <button
@@ -164,7 +160,7 @@ export default function Genre({
             <Loading />
           ) : (
             <DataTable
-              columns={CastColumn}
+              columns={CrewColumn}
               data={categories || []}
               renderActions={(person) => (
                 <div className="flex gap-3 justify-center">
@@ -193,18 +189,34 @@ export default function Genre({
               </div>
               <div className="pl-2  pb-4">
                 <label className="block text-sm text-gray-600 mb-1 font-semibold">
-                  Character
+                  Job
                 </label>
                 <input
                   type="text"
-                  {...register("character", {
-                    required: "character is required",
+                  {...register("job", {
+                    required: "job is required",
                   })}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
 
-                {errors.character && (
-                  <Error message={errors.character.message} />
+                {errors.job && (
+                  <Error message={errors.job.message} />
+                )}
+              </div>
+              <div className="pl-2  pb-4">
+                <label className="block text-sm text-gray-600 mb-1 font-semibold">
+                  Department
+                </label>
+                <input
+                  type="text"
+                  {...register("department", {
+                    required: "department is required",
+                  })}
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+
+                {errors.department && (
+                  <Error message={errors.department.message} />
                 )}
               </div>
             </div>

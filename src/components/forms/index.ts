@@ -8,6 +8,8 @@ export { default as SectorMultiSelect } from "./SectorMultiSelect";
 export { default as Toggle } from "./Toggle";
 export { default as EditorInput } from "./EditorInput";
 
+export { default as AutoCompeleteList } from "./AutoCompeleteList"
+
 export { default as TenStarRating } from "./TenStarRating"
 
 export { default as NewTable } from "./NewTable";
