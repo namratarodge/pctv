@@ -1,9 +1,5 @@
 "use client";
-import {
-  Filter,
-  Paginations,
-  ModelForm,
-} from "@/components/forms";
+import { Filter, Paginations, ModelForm } from "@/components/forms";
 import {
   PencilIcon,
   PlusCircleIcon,
@@ -85,7 +81,7 @@ export default function Tags() {
     }
   };
 
-  const handleEdit = (tag: any) => {
+  const handleEdit = (tag: tagmValues) => {
     setIsEditing(true);
     setEditingTagId(tag._id);
     setIsModalOpen(true);

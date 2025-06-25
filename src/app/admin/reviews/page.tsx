@@ -21,6 +21,21 @@ type reviewValues = {
   review: string;
 };
 
+type ReviewType = {
+  _id: string;
+  id: number;
+  score: number;
+  reviewable_id: string;
+  user_id: {
+    _id: string;
+    username: string;
+    email: string;
+  };
+  created_at: string;
+  updated_at: string;
+  reviewableId: number;
+};
+
 export default function People() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [review, setReview] = useState<object | null>(null);
@@ -63,7 +78,7 @@ export default function People() {
         }
       );
       if (response.data.status) {
-        const modifiedData = response.data.data.data.map((item: any) => ({
+        const modifiedData = response.data.data.data.map((item: ReviewType) => ({
           ...item,
           updated_at: `${formatDate(item.updated_at)} `,
         }));

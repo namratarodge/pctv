@@ -177,7 +177,7 @@ export default function TitleDetailPage({ params }: PageProps) {
           <div className="w-1/3 ">
             <h2 className="text-white px-4">Recommended Videos for you </h2>
             <div className="flex flex-col gap-1 px-2">
-              {title.map((data, index) => (
+              {title.map((data) => (
                 <Link
                   href={`/titles/${data._id}/${data.slug}`}
                   key={data._id}

@@ -10,6 +10,30 @@ import { formatDate } from "@/utils/common";
 import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
 import { PeopleColumn } from "@/constants/DataTableColumn";
 import Loading from "@/components/layout/Loading";
+import { toast } from "react-toastify";
+
+
+type PersonType = {
+  _id: string;
+  id: number;
+  name: string;
+  description: string;
+  gender: string | null;
+  birth_date: string | null;
+  birth_place: string | null;
+  poster: string;
+  imdb_id: string | null;
+  views: number;
+  tmdb_id: string | null;
+  allow_update: boolean;
+  created_at: string;
+  updated_at: string;
+  fully_synced: boolean;
+  known_for: string;
+  popularity: number;
+  death_date: string | null;
+  adult: boolean;
+};
 
 export default function People() {
   const [data, setData] = useState([]);
@@ -42,7 +66,7 @@ export default function People() {
         }
       );
       if (response.data.status) {
-        const modifiedData = response.data.data.data.map((item: any) => ({
+        const modifiedData = response.data.data.data.map((item: PersonType) => ({
           ...item,
           updated_at: `${formatDate(item.updated_at)} `,
         }));
@@ -63,6 +87,31 @@ export default function People() {
 
   const setLimit = (value: number) => {
     setLimits(value);
+  };
+
+  const handleDelete = async (id: string) => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/people/${id}`,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data.status) {
+        toast("People deleted successfully");
+        fetch(); // Refresh the plans list
+      } else {
+        toast("Delete failed:", response.data.message);
+      }
+    } catch (error) {
+      toast("Error deleting People:", error);
+    }
   };
 
   useEffect(() => {
@@ -102,7 +151,7 @@ export default function People() {
                         <PencilIcon className="w-5 h-5" />
                       </button>
                       <button
-                        onClick={() => console.log("Delete", person)}
+                        onClick={() => handleDelete(person._id)}
                         className="text-red-600 hover:text-red-800 cursor-pointer"
                       >
                         <TrashIcon className="w-5 h-5" />

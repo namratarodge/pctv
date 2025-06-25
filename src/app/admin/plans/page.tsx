@@ -23,6 +23,31 @@ type FormValues = {
   interval_count: number;
 };
 
+
+ type SubscriptionPlan = {
+  _id: string;
+  id: string;
+  name: string;
+  amount: string;
+  currency: string;
+  currency_symbol: string;
+  interval: string;
+  interval_count: string;
+  parent_id: string | null;
+  legacy_permissions: string | null;
+  uuid: string;
+  paypal_id: string | null;
+  recommended: boolean;
+  free: boolean;
+  show_permissions: boolean;
+  features: string[]; // cleaned below
+  position: string;
+  created_at: string;
+  updated_at: string;
+  available_space: string | null;
+  hidden: boolean;
+};
+
 export default function Plans() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
@@ -53,7 +78,7 @@ export default function Plans() {
         }
       );
       if (response.data.status) {
-        const modifiedData = response.data.data.data.map((item: any) => ({
+        const modifiedData = response.data.data.data.map((item: SubscriptionPlan) => ({
           ...item,
           amount: `${item.currency} ${item.amount}`,
           updated_at: `${formatDate(item.updated_at)} `,

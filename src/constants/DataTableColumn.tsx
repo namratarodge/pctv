@@ -175,7 +175,7 @@ type PeopleItem = {
   birthdate: string;
   views: number;
   popularity: number;
-  last_update: number;
+  updated_at: number;
 };
 
 export const PeopleColumn: {
@@ -186,7 +186,7 @@ export const PeopleColumn: {
   { key: "birthdate", label: "Birth Date" },
   { key: "views", label: "Local View" },
   { key: "popularity", label: "Popularity" },
-  { key: "last_update", label: "Last Update" },
+  { key: "updated_at", label: "Last Update" },
 ];
 
 // Video  Column

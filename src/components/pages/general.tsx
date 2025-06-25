@@ -77,11 +77,9 @@ type Title = {
 export default function General({
   titleId,
   data,
-  onSubmit,
 }: {
   titleId: string;
   data: Title;
-  onSubmit: () => void;
 }) {
   const isNew = titleId === "new";
   const router = useRouter();

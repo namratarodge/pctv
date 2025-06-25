@@ -107,7 +107,6 @@ export default function EditTitles() {
           <General
             titleId={titleId}
             data={titleDetails}
-            onSubmit={handleSubmitted}
           />
         )}
       </div>
