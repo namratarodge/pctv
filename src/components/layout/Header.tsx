@@ -1,5 +1,7 @@
 "use client";
-import { use, useEffect, useState } from "react";
+
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogPanel,
@@ -58,7 +60,7 @@ export default function Header() {
   useEffect(() => {
     const token = localStorage.getItem("token"); // Or from cookie if accessible
     if (token) {
-      const decoded = jwtDecode(token); 
+      const decoded = jwtDecode(token);
       setUser(decoded);
     }
     const merged = baseNavigation.map((item) => {
@@ -106,16 +108,19 @@ export default function Header() {
           <div className="p-1.5">
             <span className="sr-only">Project Control TV</span>
             <Link href="/">
-              <img
-                alt=""
-                src="https://projectcontrolstv.com/storage/branding_media/5lbRjBu1jH2A3Q61DkPaPLVxw3fidK9SlSwU8PAU.png"
-                className="h-8 w-auto"
-              />
+            <Image
+              alt="Your Company"
+              src="https://projectcontrolstv.com/storage/branding_media/5lbRjBu1jH2A3Q61DkPaPLVxw3fidK9SlSwU8PAU.png"
+              width={600} // Replace with the actual width of the image or layout container
+              height={200} // Replace with the actual height
+              className="w-full p-4"
+              unoptimized // required for external images unless configured in next.config.js
+            />
             </Link>
           </div>
           <div className="hidden sm:ml-6 sm:block">
             <div className="flex space-x-4">
-              {navigation.map((item, index) => (
+              {navigation.map((item) => (
                 <div key={item.key} className="relative group">
                   {/* Main menu link */}
                   <a
@@ -169,11 +174,6 @@ export default function Header() {
             <Menu as="div" className="relative">
               <MenuButton className="-m-1.5 flex items-center p-1.5">
                 <span className="sr-only">Open user menu</span>
-                <img
-                  alt=""
-                  src="default-front.jpg"
-                  className="size-8 rounded-full bg-gray-50"
-                />
                 <span className="hidden lg:flex lg:items-center cursor-pointer">
                   <span
                     aria-hidden="true"
@@ -243,10 +243,13 @@ export default function Header() {
             <div className="-m-1.5 p-1.5">
               <span className="sr-only">Project Control TV</span>
               <Link href="/">
-                <img
-                  alt=""
+                <Image
+                  alt="Your Company"
                   src="https://projectcontrolstv.com/storage/branding_media/5lbRjBu1jH2A3Q61DkPaPLVxw3fidK9SlSwU8PAU.png"
-                  className="h-8 w-auto"
+                  width={600} // Replace with the actual width of the image or layout container
+                  height={200} // Replace with the actual height
+                  className="w-full p-4"
+                  unoptimized // required for external images unless configured in next.config.js
                 />
               </Link>
             </div>

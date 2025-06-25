@@ -70,8 +70,6 @@ export default function EditTitles() {
 
   useEffect(() => {
     fetchTitleDetails();
-    console.log("titles");
-    console.log(active)
   }, []);
 
   return (

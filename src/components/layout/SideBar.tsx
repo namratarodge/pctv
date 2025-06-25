@@ -1,13 +1,15 @@
 "use client";
+
+import Image from "next/image";
 import {
   Dialog,
   DialogBackdrop,
   DialogPanel,
   TransitionChild,
 } from "@headlessui/react";
-import { Cog6ToothIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
-import { navigation, teams } from "@/constants/Menu";
+import { navigation } from "@/constants/Menu";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -18,12 +20,9 @@ type SideBarProps = {
   setSideBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
 
 export default function SideBar({ sideBarOpen, setSideBarOpen }: SideBarProps) {
   const pageName = usePathname();
-
-
 
   return (
     <>
@@ -57,10 +56,13 @@ export default function SideBar({ sideBarOpen, setSideBarOpen }: SideBarProps) {
             {/* Sidebar component, swap this element with another sidebar if you like */}
             <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-600 px-6 pb-4">
               <div className="flex h-16 shrink-0 items-center">
-                <img
+                <Image
                   alt="Your Company"
                   src="https://projectcontrolstv.com/storage/branding_media/5lbRjBu1jH2A3Q61DkPaPLVxw3fidK9SlSwU8PAU.png"
+                  width={600} // Replace with the actual width of the image or layout container
+                  height={200} // Replace with the actual height
                   className="w-full p-4"
+                  unoptimized // required for external images unless configured in next.config.js
                 />
               </div>
               <nav className="flex flex-1 flex-col">
@@ -105,10 +107,13 @@ export default function SideBar({ sideBarOpen, setSideBarOpen }: SideBarProps) {
         {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-700 px-4 pb-4">
           <div className="flex h-16 shrink-0 items-center">
-            <img
+            <Image
               alt="Your Company"
               src="https://projectcontrolstv.com/storage/branding_media/5lbRjBu1jH2A3Q61DkPaPLVxw3fidK9SlSwU8PAU.png"
+              width={600} // Replace with the actual width of the image or layout container
+              height={200} // Replace with the actual height
               className="w-full p-4"
+              unoptimized // required for external images unless configured in next.config.js
             />
           </div>
           <nav className="flex flex-1 flex-col">

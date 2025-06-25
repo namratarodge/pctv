@@ -1,8 +1,5 @@
 "use client";
-import {
-  PlusCircleIcon,
-  TrashIcon,
-} from "@heroicons/react/24/outline";
+import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { DataTable, ModelForm } from "@/components/forms";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -10,14 +7,12 @@ import Loading from "@/components/layout/Loading";
 import { CategoriesColumn } from "@/constants/DataTableColumn";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { Controller } from "react-hook-form";
 import AutoCompletePersonList from "@/components/forms/AutoCompletePersonList";
+import { Error } from "../layout";
 
 type FormValues = {
-  name: string;
-  amount: number;
-  currency: string;
-  interval: string;
-  interval_count: number;
+  person: string;
 };
 
 export default function Genre({
@@ -34,12 +29,9 @@ export default function Genre({
   const [loading, setLoading] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
 
-  const handleSelect = (users: any) => {
-    setSelectedUsers(users);
-  };
-
   const {
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<FormValues>();
 
@@ -130,8 +122,7 @@ export default function Genre({
     } catch (error) {
       toast("Error deleting keyword:", error);
     }
-  }
-
+  };
 
   useEffect(() => {
     fetchCategories();
@@ -180,10 +171,22 @@ export default function Genre({
             onSubmit={handleSubmit(handleFormSubmit)}
           >
             <div className="flex flex-col h-30">
-              <AutoCompletePersonList
-                users={categories}
-                onSelect={handleSelect}
+              <Controller
+                name="person"
+                control={control}
+                rules={{ required: "Person is required" }}
+                render={({ field }) => (
+                  <AutoCompletePersonList
+                    users={categories}
+                    onSelect={(user: any) => {
+                      field.onChange(user); // updates form value
+                      setSelectedUsers(user); // your local logic
+                    }}
+                    value={field.value} // keeps form in sync
+                  />
+                )}
               />
+              {errors.person && <Error message={errors.person.message} />}
             </div>
           </ModelForm>
         </div>
