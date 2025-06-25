@@ -42,7 +42,7 @@ export default function EditTitles() {
   const [titleDetails, setTitleDetails] = useState<Title | null>(null);
   const [loading, setLoading] = useState(true);
   const searchParams = useSearchParams();
-  const active = searchParams.get("active"); // "videos"
+  const active = searchParams.get("active") || "general"; // "videos"
 
   const fetchTitleDetails = async () => {
     setLoading(true);
@@ -132,7 +132,7 @@ export default function EditTitles() {
                 href={"edit?active=" + item.href}
                 className={classNames(
                   item.href === active
-                    ? " text-gray-800 "
+                    ? " text-red-500 "
                     : "text-gray-400  hover:text-gray-800",
                   "group flex gap-x-3 rounded-md px-4  py-2 text-sm/6 font-semibold cursor-pointer"
                 )}

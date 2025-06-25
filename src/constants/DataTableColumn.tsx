@@ -22,11 +22,11 @@ export const CrewColumn: {
       <div className="flex items-center space-x-2">
         <img
           src={
-            row.person_id.poster
-              ? `${process.env.NEXT_PUBLIC_WEBSITE}/${row.person_id.poster}`
+            row.person_id?.poster
+              ? `${process.env.NEXT_PUBLIC_WEBSITE}/${row.person_id?.poster}`
               : "/default-image.jpg"
           }
-          alt={row.person_id.name}
+          alt={row.person_id?.name}
           className="w-8 h-8 rounded-sm object-cover"
           onError={(e) => {
             const target = e.currentTarget;
@@ -34,7 +34,7 @@ export const CrewColumn: {
             target.src = "/default-image.jpg";
           }}
         />
-        <span className="flex flex-col">{row.person_id.name} </span> 
+        <span className="flex flex-col">{row.person_id?.name} </span> 
       </div>
     ),
   },
@@ -64,11 +64,11 @@ export const CastColumn: {
       <div className="flex items-center space-x-2">
         <img
           src={
-            row.person_id.poster
-              ? `${process.env.NEXT_PUBLIC_WEBSITE}/${row.person_id.poster}`
+            row.person_id?.poster
+              ? `${process.env.NEXT_PUBLIC_WEBSITE}/${row.person_id?.poster}`
               : "/default-image.jpg"
           }
-          alt={row.person_id.name}
+          alt={row.person_id?.name}
           className="w-8 h-8 rounded-sm object-cover"
           onError={(e) => {
             const target = e.currentTarget;
@@ -76,7 +76,7 @@ export const CastColumn: {
             target.src = "/default-image.jpg";
           }}
         />
-        <span className="flex flex-col">{row.person_id.name} </span> 
+        <span className="flex flex-col">{row.person_id?.name} </span> 
       </div>
     ),
   },

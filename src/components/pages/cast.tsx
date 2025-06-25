@@ -7,7 +7,7 @@ import {
 import { AutoCompeleteList, DataTable, ModelForm } from "@/components/forms";
 import { useEffect, useState } from "react";
 import { Error } from "../layout";
-
+import { Controller } from "react-hook-form";
 import { formatDate } from "@/utils/common";
 import axios from "axios";
 import Loading from "@/components/layout/Loading";
@@ -16,7 +16,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 type FormValues = {
-  name: string;
+  person: string;
   character: string;
 };
 
@@ -37,7 +37,7 @@ export default function Genre({
   const {
     register,
     handleSubmit,
-    reset,
+    control,
     formState: { errors },
   } = useForm<FormValues>();
 
@@ -189,7 +189,21 @@ export default function Genre({
                 <label className="font-semibold pl-2 text-gray-600">
                   Person
                 </label>
-                <AutoCompeleteList onSelect={handleSelect} />
+                <Controller
+                  name="person"
+                  control={control}
+                  rules={{ required: "Person is required" }}
+                  render={({ field }) => (
+                    <AutoCompeleteList
+                      onSelect={(user: any) => {
+                        field.onChange(user); // updates form value
+                        setSelectedUsers(user); // your local logic
+                      }}
+                      value={field.value} // keeps form in sync
+                    />
+                  )}
+                />
+                {errors.person && <Error message={errors.person.message} />}
               </div>
               <div className="pl-2  pb-4">
                 <label className="block text-sm text-gray-600 mb-1 font-semibold">

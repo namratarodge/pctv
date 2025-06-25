@@ -68,7 +68,7 @@ export default function UserAutoComplete({
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="w-full max-w-md mx-auto mt-1">
       <input
         type="text"
         value={query}
