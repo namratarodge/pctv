@@ -1,4 +1,26 @@
+
 import { StarIcon } from "@heroicons/react/24/solid";
+import Image from "next/image";
+import { useState } from "react";
+
+const PersonImage = ({ poster, name }: { poster?: string; name?: string }) => {
+  const [imgSrc, setImgSrc] = useState(
+    poster
+      ? `${process.env.NEXT_PUBLIC_WEBSITE}/${poster}`
+      : "/default-image.jpg"
+  );
+
+  return (
+    <Image
+      src={imgSrc}
+      alt={name || "Person"}
+      width={32}
+      height={32}
+      className="w-8 h-8 rounded-sm object-cover"
+      onError={() => setImgSrc("/default-image.jpg")}
+    />
+  );
+};
 
 // Crew Column
 type typeOfCrew = {
@@ -20,20 +42,7 @@ export const CrewColumn: {
     label: "Name",
     render: (row) => (
       <div className="flex items-center space-x-2">
-        <img
-          src={
-            row.person_id?.poster
-              ? `${process.env.NEXT_PUBLIC_WEBSITE}/${row.person_id?.poster}`
-              : "/default-image.jpg"
-          }
-          alt={row.person_id?.name}
-          className="w-8 h-8 rounded-sm object-cover"
-          onError={(e) => {
-            const target = e.currentTarget;
-            target.onerror = null; // prevent infinite loop
-            target.src = "/default-image.jpg";
-          }}
-        />
+        <PersonImage poster={row.person_id?.poster} name={row.person_id?.name} />
         <span className="flex flex-col">{row.person_id?.name} </span> 
       </div>
     ),
@@ -62,20 +71,7 @@ export const CastColumn: {
     label: "Name",
     render: (row) => (
       <div className="flex items-center space-x-2">
-        <img
-          src={
-            row.person_id?.poster
-              ? `${process.env.NEXT_PUBLIC_WEBSITE}/${row.person_id?.poster}`
-              : "/default-image.jpg"
-          }
-          alt={row.person_id?.name}
-          className="w-8 h-8 rounded-sm object-cover"
-          onError={(e) => {
-            const target = e.currentTarget;
-            target.onerror = null; // prevent infinite loop
-            target.src = "/default-image.jpg";
-          }}
-        />
+        <PersonImage poster={row.person_id?.poster} name={row.person_id?.name} />
         <span className="flex flex-col">{row.person_id?.name} </span> 
       </div>
     ),
@@ -161,20 +157,7 @@ export const TitleColumn: {
     label: "Name",
     render: (row) => (
       <div className="flex items-center space-x-2">
-        <img
-          src={
-            row.poster
-              ? `${process.env.NEXT_PUBLIC_WEBSITE}/${row.poster}`
-              : "/default-image.jpg"
-          }
-          alt={row.poster}
-          className="w-8 h-8 rounded-sm object-cover"
-          onError={(e) => {
-            const target = e.currentTarget;
-            target.onerror = null; // prevent infinite loop
-            target.src = "/default-image.jpg";
-          }}
-        />
+        {/* <PersonImage poster={row.person_id?.poster} name={row.person_id?.name} /> */}
         <span className="flex flex-col">{row.name}</span>
       </div>
     ),
@@ -341,7 +324,7 @@ export const pagesColumn: {
 
     render: (row) => (
       <div className="flex items-center space-x-2">
-        <img
+        {/* <img
           src={"/default-user.jpg"}
           className="w-8 h-8 rounded-full object-cover"
           onError={(e) => {
@@ -349,7 +332,7 @@ export const pagesColumn: {
             target.onerror = null; // prevent infinite loop
             target.src = "/default-image.jpg";
           }}
-        />
+        /> */}
         <span className="flex flex-col">
           Sandesh Mankar
           <small>sandesh@gmail.com</small>
@@ -416,9 +399,9 @@ export const reviewColumn: {
     key: "reviewable",
     label: "Reviewable",
 
-    render: (row) => (
+    render: () => (
       <div className="flex items-center space-x-2">
-        <img
+        {/* <img
           src={"/default-user.jpg"}
           className="w-8 h-8 rounded-full object-cover"
           onError={(e) => {
@@ -426,7 +409,7 @@ export const reviewColumn: {
             target.onerror = null; // prevent infinite loop
             target.src = "/default-image.jpg";
           }}
-        />
+        /> */}
         <span className="flex flex-col">Project communications</span>
       </div>
     ),
@@ -462,9 +445,8 @@ export const reviewTitleColumn: {
     key: "reviewable_id",
     label: "Reviewable",
 
-    render: (row) => (
+    render: () => (
       <div className="flex items-center space-x-2">
-        dsdsds dsds
         <span className="flex flex-col">Project communications</span>
       </div>
     ),

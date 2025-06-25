@@ -63,7 +63,7 @@ export default function Plans() {
         setPlans(modifiedData);
       }
     } catch (error) {
-      toast("Error fetching data:");
+      toast("Error fetching data:",error);
     } finally {
       setLoading(false); // Always stop loading, whether success or failure
     }

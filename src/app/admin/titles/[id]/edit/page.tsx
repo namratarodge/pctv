@@ -20,12 +20,6 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-interface PageProps {
-  params: {
-    id: number;
-  };
-}
-
 interface Title {
   _id: string;
   name: string;
@@ -110,7 +104,6 @@ export default function EditTitles() {
         {active === "reviews" && (
           <Review
             titleId={titleId}
-            onSubmit={handleSubmitted}
           />
         )}
         {active === 'general' && (

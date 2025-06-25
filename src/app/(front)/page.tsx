@@ -1,5 +1,4 @@
-import { Footer } from "@/components/layout";
-
+import Image from "next/image";
 const joinPCTV = [
   {
     title: "We'll always let you know about important changes, bu",
@@ -34,10 +33,11 @@ export default function Home() {
   return (
     <>
       <div className="relative isolate overflow-hidden pt-14 ">
-        <img
+        <Image
           alt=""
           src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
-          className="absolute inset-0 -z-10 size-full object-cover"
+          fill
+          className="absolute inset-0 -z-10 object-cover"
         />
         <div
           aria-hidden="true"
@@ -119,6 +119,7 @@ export default function Home() {
             <div key={index} className="relative">
               <img
                 src="https://picsum.photos/300/200/"
+                alt="test"
                 className="w-full h-auto"
               />
               <div className="absolute top-6 left-2 uppercase font-bold bg-opacity-50 text-shadow-lg/30 text-white px-2 py-1 text-xl w-30">

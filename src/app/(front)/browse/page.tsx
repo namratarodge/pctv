@@ -3,7 +3,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { usePublicData } from "@/components/context/PublicDataContext";
-
+import Image from "next/image";
 const country = [
   { id: 1, name: "United States" },
   { id: 2, name: "Canada" },
@@ -31,6 +31,12 @@ const Levels = [
   { id: 3, name: "Expert" },
 ];
 
+type TvTopicType = {
+  name: string;
+  display_name: string;
+};
+
+
 import Loading from "@/components/layout/Loading";
 import {
   ListBulletIcon,
@@ -55,7 +61,7 @@ export default function Browser() {
   );
   const genreList = genreParam ? genreParam.split(",") : [];
 
-  const handleChangeKeyword = (e: any) => {
+  const handleChangeKeyword = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
     const params = new URLSearchParams(window.location.search);
     if (selectedValue === "all") {
@@ -100,8 +106,8 @@ export default function Browser() {
             "Content-Type": "application/json",
           },
           params: {
-            limit : 20
-          }
+            limit: 20,
+          },
         }
       );
       if (response.data.status) {
@@ -116,14 +122,7 @@ export default function Browser() {
     }
   };
 
-  const slugify = (text: string) =>
-    text
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "");
-
   useEffect(() => {
-    console.log(keyword);
     fetchTitlte();
   }, []);
 
@@ -137,13 +136,12 @@ export default function Browser() {
         <div className="w-full border-b border-gray-500 pb-4">
           <div className="text-gray-300 text-lg">TV Topic</div>
           <div className="relative inline-block mt-4 w-full text-white">
-         
             <select
               className="block appearance-none w-full border border-gray-500  text-gray-300 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2"
               onChange={handleChangeKeyword}
             >
               <option value="all">All</option>
-              {tvtopic.map((data: any, index : number) => (
+              {tvtopic.map((data: TvTopicType, index: number) => (
                 <option
                   key={index}
                   value={data.name}
@@ -279,20 +277,21 @@ export default function Browser() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
           {title.map((title) => (
-           
-            <div className=" text-white gap-4" key={title._id}> 
+            <div className=" text-white gap-4" key={title._id}>
               <Link href={`/titles/${title._id}/${title.slug}`}>
-              <img
-                src={`${process.env.NEXT_PUBLIC_WEBSITE}/${title.poster} `}
-                className="rounded-lg"
-              />
-              <div className="mt-4">
-                <a href="#" className="text-sm">
-                  {title.name.slice(0, 34)}
-                </a>
-              </div>
-
-            </Link>
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_WEBSITE}/${title.poster}`}
+                  alt={title.name || "Poster"}
+                  width={300} // or any appropriate width
+                  height={450} // adjust height as needed
+                  className="rounded-lg"
+                />
+                <div className="mt-4">
+                  <a href="#" className="text-sm">
+                    {title?.name.slice(0, 34)}
+                  </a>
+                </div>
+              </Link>
             </div>
           ))}
         </div>

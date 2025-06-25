@@ -1,16 +1,13 @@
 "use client"; // ✅ client component, hooks allowed
 
-import { Footer, Slider, SliderNumber, TopicSlider } from "@/components/layout";
 import Loading from "@/components/layout/Loading";
 import {
   PlusIcon,
   ShareIcon,
-  SpeakerXMarkIcon,
 } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { StringValidation } from "zod";
 import Link from "next/link";
 
 interface Title {
@@ -87,9 +84,6 @@ export default function TitleDetailPage({ params }: PageProps) {
     fetchData();
   }, [titleId]);
 
-  // if (!titleDetails) {
-  //   window.location.href = "/browse";
-  // }
 
   return (
     <div className="pt-18  flex max-w-11/12 mx-auto">
@@ -102,6 +96,7 @@ export default function TitleDetailPage({ params }: PageProps) {
           <div className="w-2/3 ">
             <img
               src={"https://projectcontrolstv.com/" + titleDetails.poster}
+              alt="poster"
               className="w-full  rounded-lg"
             />
             <h1 className="text-xl text-white py-4">{titleDetails.name}</h1>
@@ -137,6 +132,7 @@ export default function TitleDetailPage({ params }: PageProps) {
               <div className="flex gap-3 py-2 items-center">
                 <img
                   src="https://picsum.photos/300/200/"
+                  alt="poster"
                   className="w-15 h-15 rounded-full"
                 />
                 <div className="items-center justify-center">
@@ -189,6 +185,7 @@ export default function TitleDetailPage({ params }: PageProps) {
                 >
                   <img
                     src={"https://projectcontrolstv.com/" + data.poster}
+                    alt={data.poster}
                     className="w-2/5  rounded-lg"
                   />
                   <div>

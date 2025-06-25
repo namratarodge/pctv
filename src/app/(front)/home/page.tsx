@@ -1,45 +1,18 @@
-import { Footer, Slider, SliderNumber, TopicSlider } from "@/components/layout";
+import { Slider, SliderNumber, TopicSlider } from "@/components/layout";
 import { SpeakerXMarkIcon } from "@heroicons/react/24/outline";
 import { PlayCircleIcon } from "@heroicons/react/24/solid";
-
-const joinPCTV = [
-  {
-    title: "We'll always let you know about important changes, bu",
-    description: "We'll always let you know about important changes, bu hds",
-  },
-  {
-    title: "We'll always let you know about important changes, bu",
-    description: "We'll always let you know about important changes, bu hds",
-  },
-  {
-    title: "We'll always let you know about important changes, bu",
-    description: "We'll always let you know about important changes, bu hds",
-  },
-  {
-    title: "We'll always let you know about important changes, bu",
-    description: "We'll always let you know about important changes, bu hds",
-  },
-];
-
-const people = [
-  { name: "Greg Lawton", image: "/people/greg_lawton.png" },
-  { name: "Michael Armes", image: "/people/michael_armes.png" },
-  { name: "Sadia Janjua", image: "/people/sadia_janjua.png" },
-  { name: "Dr. Alexia Nalewaik", image: "/people/dr._alexia_nalewaik.png" },
-  { name: "Hatem Elbanna", image: "/people/hatem_elbanna.png" },
-  { name: "Karen Mislick", image: "/people/karen_mislick.png" },
-  { name: "Greg Lawton", image: "/people/greg_lawton.png" },
-  { name: "Michael Armes", image: "/people/michael_armes.png" },
-];
+import Image from "next/image";
 
 export default function Home() {
   return (
     <>
       <div className="relative isolate overflow-hidden pt-14">
-        <img
+        <Image
           alt=""
           src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
-          className="absolute inset-0 -z-10 size-full object-cover"
+          fill
+          className="absolute inset-0 -z-10 object-cover"
+          priority // optional, if it's above-the-fold
         />
         <div
           aria-hidden="true"
@@ -57,7 +30,7 @@ export default function Home() {
           <div className="mx-auto max-w-11/12  py-32 sm:py-48 lg:py-56 ">
             <div className="text-left">
               <h1 className="text-3xl font-semibold tracking-tight text-balance text-white sm:text-5xl w-1/2">
-                Delivering the UK's most complex projects and programmes
+                Delivering the UKs most complex projects and programmes
               </h1>
               <p className="mt-8 text-sm text-pretty text-white sm:text-md">
                 Mathew Vickerstaff
@@ -94,11 +67,11 @@ export default function Home() {
         </div>
       </div>
       <div className="p-6 lg:px-8 mx-auto max-w-11/12">
-        <Slider title="End Client and Govt. Voices" progress/>
+        <Slider title="End Client and Govt. Voices" progress />
         <Slider title="Continue Watching" progress />
-        <Slider title="PCTv Regions" speakers  />
-        <SliderNumber title="PCTv Top 10 Sessions"   />
-        <TopicSlider title="PCTv Topic"   />
+        <Slider title="PCTv Regions" speakers />
+        <SliderNumber title="PCTv Top 10 Sessions" />
+        <TopicSlider title="PCTv Topic" />
       </div>
     </>
   );

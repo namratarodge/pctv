@@ -1,6 +1,4 @@
 "use client";
-import { BackwardIcon } from "@heroicons/react/24/outline";
-// pages/create-profile.tsx
 import React, { useState } from "react";
 
 export default function CreateProfile() {

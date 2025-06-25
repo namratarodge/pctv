@@ -13,8 +13,6 @@ import {
     UserGroupIcon,           // Users
     KeyIcon,                 // Roles
     DocumentTextIcon,        // Pages
-    FolderIcon,              // You already used this
-    DocumentDuplicateIcon,   // Already used
     ChartPieIcon,            // Title (or Analytics)
   } from "@heroicons/react/24/outline";
   

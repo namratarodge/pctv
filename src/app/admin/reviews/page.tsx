@@ -8,7 +8,7 @@ import {
 import { ReviewfilterType } from "@/constants/Filter";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { PencilIcon, TrashIcon, UserIcon } from "@heroicons/react/24/outline";
+import { PencilIcon } from "@heroicons/react/24/outline";
 import { formatDate } from "@/utils/common";
 import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
 import { reviewColumn } from "@/constants/DataTableColumn";
@@ -39,7 +39,7 @@ export default function People() {
     handleSubmit,
     reset,
     control,
-    formState: { errors },
+    formState: {  },
   } = useForm<reviewValues>();
 
   const [pages, setPages] = useState(1);

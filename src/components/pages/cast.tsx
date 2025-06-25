@@ -1,6 +1,5 @@
 "use client";
 import {
-  PencilIcon,
   PlusCircleIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
@@ -29,10 +28,6 @@ export default function Genre({
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
-
-  const handleSelect = (users: any) => {
-    setSelectedUsers(users);
-  };
 
   const {
     register,

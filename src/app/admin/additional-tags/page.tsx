@@ -1,5 +1,5 @@
 "use client";
-import { Filter, Paginations, Model } from "@/components/forms";
+import { Filter, Paginations } from "@/components/forms";
 import {
   PencilIcon,
   PlusCircleIcon,

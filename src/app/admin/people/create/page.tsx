@@ -1,8 +1,6 @@
 "use client";
 import { ProfileFormData, profileSchema } from "@/constants/Validation";
-import { BackwardIcon } from "@heroicons/react/24/outline";
 import { useSearchParams } from "next/navigation";
-// pages/create-profile.tsx
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,7 +15,6 @@ export default function CreateProfile() {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
     reset,
   } = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
@@ -27,18 +24,6 @@ export default function CreateProfile() {
     },
   });
 
-  const [formData, setFormData] = useState({
-    name: "",
-    knownFor: known_for,
-    bio: "",
-    gender: "",
-    birthDate: "",
-    deathDate: "",
-    popularity: "",
-    birthPlace: "",
-    allowAutoUpdate: false,
-    image: null,
-  });
 
 
   const onSubmit = async (data: ProfileFormData) => {

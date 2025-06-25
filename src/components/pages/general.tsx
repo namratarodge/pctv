@@ -6,24 +6,7 @@ import { Error } from "../layout";
 import { titleSchema, TitleFormData } from "@/constants/Validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-type FormValues = {
-  name: string;
-  original_title: string;
-  type: string;
-  allow_update: string;
-  poster: string;
-  backdrop: string;
-  release_date: string;
-  tagline: string;
-  overview: string;
-  runtime: string;
-  certification: string;
-  budget: string;
-  revenue: string;
-  popularity: string;
-  language: string;
-  free: string;
-};
+
 
 export default function General({
   titleId,
@@ -46,7 +29,6 @@ export default function General({
   });
 
   const addNewTitle = async (data: any) => {
-    console.log(data)
     const token = localStorage.getItem("token");
     setLoading(true);
     try {
@@ -62,7 +44,6 @@ export default function General({
       );
       if (response.data.status) {
         setLoading(false);
-        console.log(response.data);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -97,7 +78,8 @@ export default function General({
     <div className=" bg-white rounded-md ">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold text-gray-900">General</h1>
+          <h1 className="text-base font-semibold text-gray-900">General </h1>
+          { loading && 'Loading...'}
         </div>
       </div>
       <div className="mt-8 flow-root">

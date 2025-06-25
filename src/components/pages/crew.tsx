@@ -1,6 +1,5 @@
 "use client";
 import {
-  PencilIcon,
   PlusCircleIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
@@ -27,14 +26,10 @@ export default function Crew({ titleId }: { titleId: string }) {
   const [loading, setLoading] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
 
-  const handleSelect = (users: any) => {
-    setSelectedUsers(users);
-  };
-
+ 
   const {
     register,
     handleSubmit,
-    reset,
     control,
     formState: { errors },
   } = useForm<FormValues>();

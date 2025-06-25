@@ -1,15 +1,18 @@
 import "@/app/globals.css";
 import Link from "next/link";
-
+import Image from "next/image";
 export default function Example() {
   return (
     <>
       <main className="grid min-h-full place-items-center bg-gray-300 h-screen px-6 py-24 sm:py-32 lg:px-8">
         <div className="text-center">
-          <img
-            alt="Your Company"
+          <Image
             src="https://projectcontrolstv.com/storage/branding_media/5lbRjBu1jH2A3Q61DkPaPLVxw3fidK9SlSwU8PAU.png"
-            className="w-100 mx-auto"
+            alt="Your Company"
+            width={500} // specify the desired width
+            height={150} // specify the desired height
+            className="mx-auto w-full h-auto" // tailwind classes
+            unoptimized // needed for external URLs unless you configure domains
           />
           <p className="text-base font-semibold text-red-600">404</p>
           <h1 className="mt-4 text-5xl font-semibold tracking-tight text-balance text-gray-900 sm:text-7xl">

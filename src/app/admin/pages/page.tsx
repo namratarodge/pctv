@@ -1,11 +1,10 @@
 "use client";
-import { Filter, Paginations, Model } from "@/components/forms";
+import {  Paginations } from "@/components/forms";
 import { PlusCircleIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
-import { PeopleFilter } from "@/constants/Filter";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { PencilIcon, TrashIcon, UserIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { formatDate } from "@/utils/common";
 import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
 import { pagesColumn } from "@/constants/DataTableColumn";

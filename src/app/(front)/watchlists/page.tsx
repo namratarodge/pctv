@@ -1,11 +1,3 @@
-import { Footer, Slider, SliderNumber, TopicSlider } from "@/components/layout";
-import {
-  PlusIcon,
-  ShareIcon,
-  SpeakerXMarkIcon,
-} from "@heroicons/react/24/outline";
-import { StarIcon } from "@heroicons/react/24/solid";
-
 const people = [
   {
     title: "Global Transforms of Projects Control within Worlds",
@@ -68,6 +60,7 @@ export default function Home() {
           <div key={index} className="flex items-center gap-4 py-2 ">
             <img
               src="https://picsum.photos/300/200/"
+              alt="test"
               className="w-2/5  rounded-lg"
             />
             <div>

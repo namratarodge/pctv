@@ -1,19 +1,16 @@
 "use client";
 import {
-  PencilIcon,
   PlusCircleIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
 import { DataTable, ModelForm } from "@/components/forms";
 import { useEffect, useState } from "react";
-import { formatDate } from "@/utils/common";
 import axios from "axios";
 import Loading from "@/components/layout/Loading";
 import { CategoriesColumn } from "@/constants/DataTableColumn";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import AutoCompletePersonList from "@/components/forms/AutoCompletePersonList";
-import { on } from "events";
 
 type FormValues = {
   name: string;
@@ -42,9 +39,7 @@ export default function Country({
   };
 
   const {
-    register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<FormValues>();
 

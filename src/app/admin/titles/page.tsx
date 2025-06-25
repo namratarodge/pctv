@@ -1,12 +1,11 @@
 "use client";
-import { Filter, Paginations, ModelForm } from "@/components/forms";
+import { Filter, Paginations } from "@/components/forms";
 import {
   PencilIcon,
   PlusCircleIcon,
   TrashIcon,
 } from "@heroicons/react/16/solid";
 import { useEffect, useState } from "react";
-import { fields } from "@/constants/Form";
 import { TitleFilter } from "@/constants/Filter";
 import axios from "axios";
 import { formatDate } from "@/utils/common";
@@ -22,14 +21,6 @@ type FormValues = {
 };
 
 export default function Subscription() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormValues>();
-
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({
@@ -42,9 +33,7 @@ export default function Subscription() {
   const [pages, setPages] = useState(1);
   const [limits, setLimits] = useState(10);
 
-  const handleFormSubmit = (data: Record<string, string>) => {
-    console.log("Form submitted:", data);
-  };
+
 
   const fetch = async () => {
     const token = localStorage.getItem("token");
@@ -103,7 +92,6 @@ export default function Subscription() {
             <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none ">
               <button
                 type="button"
-                onClick={() => setIsModalOpen(true)}
                 className="flex items-center cursor-pointer gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 <PlusCircleIcon className="w-6 h-6" /> New Title
@@ -119,7 +107,7 @@ export default function Subscription() {
                   renderActions={(person) => (
                     <div className="flex gap-3 justify-end">
                       <Link
-                      href={`titles/${person._id}/edit/ `}
+                        href={`titles/${person._id}/edit/ `}
                         onClick={() => console.log("Edit", person)}
                         className="text-blue-600 hover:text-blue-800 cursor-pointer"
                       >
@@ -145,7 +133,6 @@ export default function Subscription() {
           </div>
         </>
       )}
-      
     </div>
   );
 }

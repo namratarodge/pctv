@@ -1,5 +1,3 @@
-import { SectorMultiSelect } from "@/components/forms";
-import { UserCircleIcon } from "@heroicons/react/16/solid";
 import { ArrowUpTrayIcon } from "@heroicons/react/24/outline";
 
 export default function Content() {

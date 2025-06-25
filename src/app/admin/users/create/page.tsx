@@ -1,6 +1,5 @@
 "use client";
 import { UserFormData, userSchema } from "@/constants/Validation";
-import { BackwardIcon } from "@heroicons/react/24/outline";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";

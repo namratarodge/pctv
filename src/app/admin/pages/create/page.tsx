@@ -25,7 +25,6 @@ export default function CreateOrEditPage() {
     register,
     handleSubmit,
     control,
-    setValue,
     reset,
     formState: { errors },
   } = useForm<PageFormData>({

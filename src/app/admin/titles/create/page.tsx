@@ -6,12 +6,8 @@ import axios from "axios";
 import { useSearchParams } from "next/navigation";
 
 export default function CreateProfile() {
-  const [loading, setLoading] = useState(true);
   const [searchParams] = useSearchParams();
-  console.log('tes')
-  console.log(searchParams)
   const knownFor = searchParams.get('known_for'); 
-  console.log(knownFor)
 
   const {
     register,
@@ -24,9 +20,7 @@ export default function CreateProfile() {
   });
   
   const addNewPeople = async (data: any) => {
-    console.log(data);
     const token = localStorage.getItem("token");
-    setLoading(true);
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/createPeople`,
@@ -39,7 +33,6 @@ export default function CreateProfile() {
         }
       );
       if (response.data.status) {
-        setLoading(false);
         console.log(response.data);
       }
     } catch (error) {
