@@ -82,7 +82,6 @@ export default function AutoCompletePersonList({
           },
         }
       );
-      console.log("Response:", response.data);
       if (response.data.status) {
         toast("Tags created successfully:", response.data.data);
 
@@ -110,7 +109,7 @@ export default function AutoCompletePersonList({
   };
 
   // Remove selected user
-  const handleRemove = (id) => {
+  const handleRemove = (id: string) => {
     const newSelection = selected.filter((item) => item.id !== id);
     setSelected(newSelection);
     onSelect(newSelection);

@@ -20,6 +20,25 @@ type FormValues = {
   department: string;
 };
 
+type CastCredit = {
+  _id: string;
+  person_id: {
+    _id: string;
+    name: string;
+    poster: string;
+    known_for: string;
+  };
+  creditable_id: string;
+  character: string;
+  order: number;
+  department: string;
+  job: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
+
+
 export default function Crew({ titleId }: { titleId: string }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -52,8 +71,8 @@ export default function Crew({ titleId }: { titleId: string }) {
       );
       if (response.data.status) {
         const modifiedData = response.data.data.data
-          .filter((item: any) => item.character === null)
-          .map((item: any) => ({
+          .filter((item: CastCredit) => item.character === null)
+          .map((item: CastCredit) => ({
             ...item,
             updated_at: `${formatDate(item.updatedAt)} `,
           }));

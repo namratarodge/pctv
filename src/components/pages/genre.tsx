@@ -15,19 +15,29 @@ type FormValues = {
   person: string;
 };
 
+type GenreType = {
+  _id: string;
+  id?: number;
+  name: string;
+  display_name: string;
+  type: string;
+  created_at: string;
+  updated_at: string;
+  __v?: number;
+};
+
 export default function Genre({
   titleId,
   data,
   onSubmit,
 }: {
   titleId: string;
-  data: any;
+  data: GenreType;
   onSubmit: () => void;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedUsers, setSelectedUsers] = useState([]);
 
   const {
     handleSubmit,
@@ -68,7 +78,7 @@ export default function Genre({
     const payload = {
       taggable_id: titleId,
       taggable_type: "genre",
-      tag_id: selectedUsers.map((user) => user.id),
+      tag_id: data.person.map((user) => user.id),
     };
 
     try {
@@ -180,7 +190,6 @@ export default function Genre({
                     users={categories}
                     onSelect={(user: any) => {
                       field.onChange(user); // updates form value
-                      setSelectedUsers(user); // your local logic
                     }}
                     value={field.value} // keeps form in sync
                   />

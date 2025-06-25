@@ -7,6 +7,21 @@ import Loading from "@/components/layout/Loading";
 import { reviewColumn } from "@/constants/DataTableColumn";
 import { formatDate } from "@/utils/common";
 
+type ReviewItem = {
+  _id: string;
+  id: number;
+  score: number;
+  reviewable_id: string;
+  user_id: {
+    _id: string;
+    username: string;
+    email: string;
+  };
+  created_at: string;
+  updated_at: string;
+  reviewableId: number;
+};
+
 export default function Review({ titleId }: { titleId: string }) {
   const [review, setReview] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -29,7 +44,7 @@ export default function Review({ titleId }: { titleId: string }) {
           }
         );
         if (response.data.status) {
-          const modifiedData = response.data.data.data.map((item: any) => ({
+          const modifiedData = response.data.data.data.map((item: ReviewItem) => ({
             ...item,
             updated_at: `${formatDate(item.updated_at)} `,
           }));
@@ -44,7 +59,7 @@ export default function Review({ titleId }: { titleId: string }) {
     };
 
     fetch();
-  }, []);
+  }, [titleId]);
 
   return (
     <div className=" bg-white rounded-md ">

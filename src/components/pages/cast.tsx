@@ -19,6 +19,24 @@ type FormValues = {
   character: string;
 };
 
+type CastCredit = {
+  _id: string;
+  person_id: {
+    _id: string;
+    name: string;
+    poster: string;
+    known_for: string;
+  };
+  creditable_id: string;
+  character: string;
+  order: number;
+  department: string;
+  job: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
+
 export default function Genre({
   titleId,
 }: {
@@ -54,8 +72,8 @@ export default function Genre({
       );
       if (response.data.status) {
         const modifiedData = response.data.data.data
-        .filter((item: any) => item.character != null)
-        .map((item: any) => ({
+        .filter((item: CastCredit) => item.character != null)
+        .map((item: CastCredit) => ({
           ...item,
           updated_at: `${formatDate(item.updatedAt)} `,
         }));
