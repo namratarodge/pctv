@@ -14,8 +14,6 @@ import Country from "@/components/pages/country";
 import Review from "@/components/pages/review";
 import General from "@/components/pages/general";
 
-
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -34,7 +32,7 @@ export default function EditTitles() {
   const params = useParams();
   const titleId = params.id;
   const [titleDetails, setTitleDetails] = useState<Title | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
   const active = searchParams.get("active") || "general"; // "videos"
 
@@ -70,14 +68,14 @@ export default function EditTitles() {
 
   useEffect(() => {
     fetchTitleDetails();
-  }, []);
+  }, [titleId]);
 
   return (
     <div className="flex gap-4">
       <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md w-4/5">
         {active === "videos" && <Video />}
-        {active === "cast" && <Cast  titleId={titleId} />}
-        {active === "crew" && <Crew  titleId={titleId} /> }
+        {active === "cast" && <Cast titleId={titleId} />}
+        {active === "crew" && <Crew titleId={titleId} />}
         {active === "genres" && (
           <Genre
             titleId={titleId}
@@ -99,12 +97,8 @@ export default function EditTitles() {
             onSubmit={handleSubmitted}
           />
         )}
-        {active === "reviews" && (
-          <Review
-            titleId={titleId}
-          />
-        )}
-        {active === 'general' && (
+        {active === "reviews" && <Review titleId={titleId} />}
+        {active === "general" && (
           <General
             titleId={titleId}
             data={titleDetails}
@@ -114,7 +108,7 @@ export default function EditTitles() {
       </div>
       <div className=" bg-white rounded-md w-1/5 border border-gray-200 h-full   ">
         <h2 className="bg-gray-600 text-white p-4 rounded-t-md text-sm/6 font-semibold">
-          Edit
+          {loading ? "Edit Loading..." : "Edit"}
         </h2>
         <ul role="list" className="space-y-1">
           {navigationTitleSubMenu.map((item) => (

@@ -1,8 +1,5 @@
 "use client";
-import {
-  PlusCircleIcon,
-  TrashIcon,
-} from "@heroicons/react/24/outline";
+import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { AutoCompeleteList, DataTable, ModelForm } from "@/components/forms";
 import { useEffect, useState } from "react";
 import { Error } from "../layout";
@@ -17,6 +14,10 @@ import { toast } from "react-toastify";
 type FormValues = {
   person: string;
   character: string;
+};
+type UserTag = {
+  id: string;
+  name: string;
 };
 
 type CastCredit = {
@@ -37,11 +38,7 @@ type CastCredit = {
   __v: number;
 };
 
-export default function Genre({
-  titleId,
-}: {
-  titleId: string;
-}) {
+export default function Genre({ titleId }: { titleId: string }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -53,40 +50,6 @@ export default function Genre({
     control,
     formState: { errors },
   } = useForm<FormValues>();
-
-  const fetch = async () => {
-    setLoading(true);
-    const token = localStorage.getItem("token");
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/creditables?`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-          params: {
-            creditable_id: titleId,
-          },
-        }
-      );
-      if (response.data.status) {
-        const modifiedData = response.data.data.data
-        .filter((item: CastCredit) => item.character != null)
-        .map((item: CastCredit) => ({
-          ...item,
-          updated_at: `${formatDate(item.updatedAt)} `,
-        }));
-        console.log("Fetched categories:", modifiedData);
-        setLoading(false);
-        setCategories(modifiedData);
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false); // Always stop loading, whether success or failure
-    }
-  };
 
   const handleFormSubmit = async (data: Record<string, string>) => {
     const payload = {
@@ -151,6 +114,40 @@ export default function Genre({
   };
 
   useEffect(() => {
+    const fetch = async () => {
+      setLoading(true);
+      const token = localStorage.getItem("token");
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/creditables?`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+            params: {
+              creditable_id: titleId,
+            },
+          }
+        );
+        if (response.data.status) {
+          const modifiedData = response.data.data.data
+            .filter((item: CastCredit) => item.character != null)
+            .map((item: CastCredit) => ({
+              ...item,
+              updated_at: `${formatDate(item.updatedAt)} `,
+            }));
+          console.log("Fetched categories:", modifiedData);
+          setLoading(false);
+          setCategories(modifiedData);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false); // Always stop loading, whether success or failure
+      }
+    };
+
     fetch();
   }, [titleId]);
 
@@ -208,7 +205,7 @@ export default function Genre({
                   rules={{ required: "Person is required" }}
                   render={({ field }) => (
                     <AutoCompeleteList
-                      onSelect={(user: any) => {
+                      onSelect={(user: UserTag) => {
                         field.onChange(user); // updates form value
                         setSelectedUsers(user); // your local logic
                       }}

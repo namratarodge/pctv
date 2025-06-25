@@ -12,6 +12,34 @@ import { usersColumn } from "@/constants/DataTableColumn";
 import Loading from "@/components/layout/Loading";
 import { toast } from "react-toastify";
 
+
+type UserType = {
+  userType: "user";
+  _id: string;
+  id: number;
+  username: string | null;
+  first_name: string | null;
+  last_name: string | null;
+  avatar_url: string | null;
+  gender: string | null;
+  legacy_permissions: unknown | null;
+  email: string;
+  password: string;
+  card_brand: string | null;
+  card_last_four: string | null;
+  remember_token: string | null;
+  created_at: string; // ISO date string
+  updated_at: string; // ISO date string
+  background: string | null;
+  language: string;
+  country: string;
+  timezone: string | null;
+  avatar: string | null;
+  stripe_id: string | null;
+  available_space: number | null;
+  email_verified_at: string | null;
+};
+
 export default function People() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -77,7 +105,7 @@ export default function People() {
           }
         );
         if (response.data.status) {
-          const modifiedData = response.data.data.data.map((item: any) => ({
+          const modifiedData = response.data.data.data.map((item: UserType) => ({
             ...item,
             updated_at: `${formatDate(item.updated_at)} `,
           }));

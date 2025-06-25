@@ -38,10 +38,7 @@ export default function Country({
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const handleSelect = (users) => {
-    setSelectedUsers(users);
-  };
-
+ 
   const {
     handleSubmit,
     control,

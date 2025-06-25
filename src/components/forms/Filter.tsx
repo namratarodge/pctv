@@ -7,7 +7,26 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
-export default function Filter({ filterType }: { filterType: any[] }) {
+type FilterOption = {
+  name: string;
+  value: string;
+};
+
+type FilterField = {
+  type: "text" | "number" | "date";
+  placeholder: string;
+};
+
+type FilterItem = {
+  name: string;
+  key?: string; // Some have `key`, others use `value`
+  value?: string;
+  option?: FilterOption[];
+  field?: FilterField;
+  search?: string;
+};
+
+export default function Filter({ filterType }: { filterType: FilterItem }) {
   const [showFilter, setShowFilter] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState([]);
   const [filterValues, setFilterValues] = useState({});
