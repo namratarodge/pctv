@@ -5,7 +5,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useCallback } from "react";
 
-import { useState } from "react";
+
 interface PaginationData {
   total: number;
   page: number;
@@ -23,7 +23,7 @@ export default function Paginations({
   onPageChange,
   onLimitChange,
 }: PaginationProps) {
-  const { total, page, limit, totalPages } = pagination;
+  const {  page, limit, totalPages } = pagination;
 
   const handlePrev = useCallback(() => {
     if (page > 1) onPageChange(page - 1);

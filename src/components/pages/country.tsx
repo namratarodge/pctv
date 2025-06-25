@@ -1,8 +1,5 @@
 "use client";
-import {
-  PlusCircleIcon,
-  TrashIcon,
-} from "@heroicons/react/24/outline";
+import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { DataTable, ModelForm } from "@/components/forms";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -10,14 +7,22 @@ import Loading from "@/components/layout/Loading";
 import { CategoriesColumn } from "@/constants/DataTableColumn";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { Controller } from "react-hook-form";
 import AutoCompletePersonList from "@/components/forms/AutoCompletePersonList";
+import { Error } from "../layout";
 
 type FormValues = {
+  person: string;
+};
+
+type ProductionCountry = {
+  _id: string;
+  id: number;
   name: string;
-  amount: number;
-  currency: string;
-  interval: string;
-  interval_count: number;
+  display_name: string;
+  type: "production_country";
+  created_at: string; // ISO date string
+  updated_at: string; // ISO date string
 };
 
 export default function Country({
@@ -26,13 +31,12 @@ export default function Country({
   onSubmit,
 }: {
   titleId: string;
-  data: any;
+  data: ProductionCountry;
   onSubmit: () => void;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedUsers, setSelectedUsers] = useState([]);
 
   const handleSelect = (users) => {
     setSelectedUsers(users);
@@ -40,6 +44,7 @@ export default function Country({
 
   const {
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<FormValues>();
 
@@ -76,7 +81,7 @@ export default function Country({
     const payload = {
       taggable_id: titleId,
       taggable_type: "production_country",
-      tag_id: selectedUsers.map((user) => user.id),
+      tag_id: data.person.map((user) => user.id),
     };
 
     try {
@@ -179,10 +184,21 @@ export default function Country({
             onSubmit={handleSubmit(handleFormSubmit)}
           >
             <div className="flex flex-col h-30">
-              <AutoCompletePersonList
-                users={categories}
-                onSelect={handleSelect}
+              <Controller
+                name="person"
+                control={control}
+                rules={{ required: "Person is required" }}
+                render={({ field }) => (
+                  <AutoCompletePersonList
+                    users={categories}
+                    onSelect={(user: UserTag) => {
+                      field.onChange(user); // updates form value
+                    }}
+                    value={field.value} // keeps form in sync
+                  />
+                )}
               />
+              {errors.person && <Error message={errors.person.message} />}
             </div>
           </ModelForm>
         </div>

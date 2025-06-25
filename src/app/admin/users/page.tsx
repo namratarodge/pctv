@@ -1,11 +1,11 @@
 "use client";
-import { Filter, Paginations, Model } from "@/components/forms";
+import { Filter, Paginations } from "@/components/forms";
 import { PlusCircleIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
 import { PeopleFilter } from "@/constants/Filter";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { PencilIcon, TrashIcon, UserIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { formatDate } from "@/utils/common";
 import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
 import { usersColumn } from "@/constants/DataTableColumn";
@@ -24,39 +24,6 @@ export default function People() {
 
   const [pages, setPages] = useState(1);
   const [limits, setLimits] = useState(10);
-
-  const fetch = async () => {
-    const token = localStorage.getItem("token");
-    setLoading(true);
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/users`,
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-          params: {
-            limit: limits,
-            page: pages,
-          },
-        }
-      );
-      if (response.data.status) {
-        const modifiedData = response.data.data.data.map((item: any) => ({
-          ...item,
-          updated_at: `${formatDate(item.updated_at)} `,
-        }));
-        setData(modifiedData);
-        setPagination(response.data.data.pagination);
-        setLoading(false);
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false); // Always stop loading, whether success or failure
-    }
-  };
 
   const handleDelete = async (id: string) => {
     const token = localStorage.getItem("token");
@@ -92,6 +59,39 @@ export default function People() {
   };
 
   useEffect(() => {
+    const fetch = async () => {
+      const token = localStorage.getItem("token");
+      setLoading(true);
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/users`,
+          {
+            headers: {
+              Authorization: token,
+              "Content-Type": "application/json",
+            },
+            params: {
+              limit: limits,
+              page: pages,
+            },
+          }
+        );
+        if (response.data.status) {
+          const modifiedData = response.data.data.data.map((item: any) => ({
+            ...item,
+            updated_at: `${formatDate(item.updated_at)} `,
+          }));
+          setData(modifiedData);
+          setPagination(response.data.data.pagination);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false); // Always stop loading, whether success or failure
+      }
+    };
+
     fetch();
   }, [pages, limits]);
 

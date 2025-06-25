@@ -45,11 +45,11 @@ function classNames(...classes) {
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { tvtopic, categories, loading } = usePublicData();
+  const { tvtopic, categories } = usePublicData();
   const [user, setUser] = useState({});
   const [openIndex, setOpenIndex] = useState(null);
 
-  const toggleSubmenu = (index) => {
+  const toggleSubmenu = (index : number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
@@ -107,13 +107,13 @@ export default function Header() {
         <div className="flex lg:flex-1  items-center ">
           <div className="p-1.5">
             <span className="sr-only">Project Control TV</span>
-            <Link href="/">
+            <Link href="/"> 
             <Image
               alt="Your Company"
               src="https://projectcontrolstv.com/storage/branding_media/5lbRjBu1jH2A3Q61DkPaPLVxw3fidK9SlSwU8PAU.png"
-              width={600} // Replace with the actual width of the image or layout container
-              height={200} // Replace with the actual height
-              className="w-full p-4"
+              width={120} // Replace with the actual width of the image or layout container
+              height={20} // Replace with the actual height
+              className="w-50"
               unoptimized // required for external images unless configured in next.config.js
             />
             </Link>
@@ -246,9 +246,9 @@ export default function Header() {
                 <Image
                   alt="Your Company"
                   src="https://projectcontrolstv.com/storage/branding_media/5lbRjBu1jH2A3Q61DkPaPLVxw3fidK9SlSwU8PAU.png"
-                  width={600} // Replace with the actual width of the image or layout container
-                  height={200} // Replace with the actual height
-                  className="w-full p-4"
+                  width={400} // Replace with the actual width of the image or layout container
+                  height={120} // Replace with the actual height
+                  className="w-50 p-4"
                   unoptimized // required for external images unless configured in next.config.js
                 />
               </Link>

@@ -150,7 +150,7 @@ export default function Crew({ titleId }: { titleId: string }) {
 
   useEffect(() => {
     fetch();
-  }, []);
+  }, [titleId]);
 
   return (
     <div className=" bg-white rounded-md ">

@@ -1,8 +1,6 @@
 "use client";
 import { ProfileFormData, profileSchema } from "@/constants/Validation";
-import { BackwardIcon } from "@heroicons/react/24/outline";
 import { useSearchParams } from "next/navigation";
-// pages/create-profile.tsx
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,7 +15,6 @@ export default function CreateProfile() {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
     reset,
   } = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
@@ -26,20 +23,6 @@ export default function CreateProfile() {
       allow_update: false,
     },
   });
-
-  const [formData, setFormData] = useState({
-    name: "",
-    knownFor: known_for,
-    bio: "",
-    gender: "",
-    birthDate: "",
-    deathDate: "",
-    popularity: "",
-    birthPlace: "",
-    allowAutoUpdate: false,
-    image: null,
-  });
-
 
   const onSubmit = async (data: ProfileFormData) => {
     const token = localStorage.getItem("token");
@@ -69,7 +52,6 @@ export default function CreateProfile() {
           description: "",
           allow_update: false,
         });
-      
       }
       // Optionally reset form or give user feedback here
     } catch (error) {
@@ -169,7 +151,6 @@ export default function CreateProfile() {
               <select
                 {...register("gender")}
                 className="col-start-1 row-start-1 w-1/6 appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-        
               >
                 <option value="">Select gender</option>
                 <option value="male">Male</option>

@@ -152,7 +152,7 @@ export default function Genre({
 
   useEffect(() => {
     fetch();
-  }, []);
+  }, [titleId]);
 
   return (
     <div className=" bg-white rounded-md ">

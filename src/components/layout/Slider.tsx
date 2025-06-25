@@ -1,12 +1,13 @@
 // components/VoicesSlider.js
 "use client";
 
+import Image from "next/image";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
 const slides = [
   {
@@ -83,10 +84,18 @@ export default function VoicesSlider({
               <div className="absolute -left-4 top-1/2 transform -translate-y-1/2 text-[120px] text-white/10 font-extrabold select-none pointer-events-none">
                 1
               </div>
-              <img
+              {/* <img
                 src="https://picsum.photos/300/200/"
                 className="w-full h-auto rounded-sm"
-              />
+              /> */}
+               <Image
+                  width={100}
+                  height={100}
+                  alt="Masterclass Card"
+                  src="https://picsum.photos/300/200/"
+                className="w-full h-auto rounded-sm"
+                />
+
               {progress && (
                 <div className="mt-2 h-0.5 bg-gray-200 rounded overflow-hidden relative w-full">
                   <div

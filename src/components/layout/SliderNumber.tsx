@@ -1,6 +1,7 @@
 // components/VoicesSlider.js
 "use client";
 
+import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
@@ -77,7 +78,14 @@ export default function SliderNumber({ title }: VoicesSliderProps) {
               </div>
 
               <div className="relative z-10 max-w-4xl w-full ml-11 ">
-                <img
+                {/* <img
+                  src="https://picsum.photos/300/200"
+                  alt="Masterclass Card"
+                  className="w-full rounded-md shadow-2xl "
+                /> */}
+                <Image
+                  width={100}
+                  height={100}
                   src="https://picsum.photos/300/200"
                   alt="Masterclass Card"
                   className="w-full rounded-md shadow-2xl "

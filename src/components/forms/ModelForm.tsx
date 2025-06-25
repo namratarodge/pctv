@@ -21,13 +21,6 @@ export default function ModelForm({
   onSubmit,
   children,
 }: ModalProps) {
-  const [formData, setFormData] = React.useState<Record<string, string>>({});
-
-  const handleChange = (name: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-
   if (!isOpen) return null;
 
   return (
@@ -46,10 +39,7 @@ export default function ModelForm({
               </button>
             </div>
 
-            <form
-              onSubmit={onSubmit}
-              className="space-y-4"
-            >
+            <form onSubmit={onSubmit} className="space-y-4">
               {children}
 
               <div className="flex justify-end gap-2 pt-4">

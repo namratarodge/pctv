@@ -15,6 +15,12 @@ type FormValues = {
   person: string;
 };
 
+
+type UserTag = {
+  id: string;
+  name: string;
+};
+
 export default function Keywords({
   titleId,
   data,
@@ -27,7 +33,6 @@ export default function Keywords({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedUsers, setSelectedUsers] = useState([]);
 
   const {
     handleSubmit,
@@ -68,7 +73,7 @@ export default function Keywords({
     const payload = {
       taggable_id: titleId,
       taggable_type: "keyword",
-      tag_id: selectedUsers.map((user) => user.id),
+      tag_id: data.person.map((user) => user.id),
     };
 
     try {
@@ -178,9 +183,8 @@ export default function Keywords({
                 render={({ field }) => (
                   <AutoCompletePersonList
                     users={categories}
-                    onSelect={(user: any) => {
+                    onSelect={(user: UserTag) => {
                       field.onChange(user); // updates form value
-                      setSelectedUsers(user); // your local logic
                     }}
                     value={field.value} // keeps form in sync
                   />

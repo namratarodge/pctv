@@ -21,9 +21,9 @@ export default function SectorMultiSelect({title}: { title: string }) {
     if (!trimmed) return;
 
     // Add to sectors list if it's new
-    // if (!sectors.includes(trimmed)) {
-    //   setSectors((prev) => [...prev, trimmed]);
-    // }
+    if (!sectors.includes(trimmed)) {
+      setSectors((prev) => [...prev, trimmed]);
+    }
 
     // Add to selected
     if (!selectedSectors.includes(trimmed)) {

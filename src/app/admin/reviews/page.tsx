@@ -125,6 +125,39 @@ export default function People() {
   };
 
   useEffect(() => {
+    const fetch = async () => {
+      const token = localStorage.getItem("token");
+      setLoading(true);
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/reviews`,
+          {
+            headers: {
+              Authorization: token,
+              "Content-Type": "application/json",
+            },
+            params: {
+              limit: limits,
+              page: pages,
+            },
+          }
+        );
+        if (response.data.status) {
+          const modifiedData = response.data.data.data.map((item: any) => ({
+            ...item,
+            updated_at: `${formatDate(item.updated_at)} `,
+          }));
+          setData(modifiedData);
+          setPagination(response.data.data.pagination);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false); // Always stop loading, whether success or failure
+      }
+    };
+    
     fetch();
   }, [pages, limits]);
 

@@ -15,6 +15,11 @@ type FormValues = {
   person: string;
 };
 
+type UserTag = {
+  id: string;
+  name: string;
+};
+
 type GenreType = {
   _id: string;
   id?: number;
@@ -188,7 +193,7 @@ export default function Genre({
                 render={({ field }) => (
                   <AutoCompletePersonList
                     users={categories}
-                    onSelect={(user: any) => {
+                    onSelect={(user: UserTag) => {
                       field.onChange(user); // updates form value
                     }}
                     value={field.value} // keeps form in sync
