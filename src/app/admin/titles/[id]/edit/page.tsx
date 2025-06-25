@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 import { navigationTitleSubMenu } from "@/constants/Menu";
 import { useSearchParams, useParams } from "next/navigation";
@@ -31,12 +31,14 @@ interface Title {
 export default function EditTitles() {
   const params = useParams();
   const titleId = params.id;
+  const isNew = titleId === "new";
   const [titleDetails, setTitleDetails] = useState<Title | null>(null);
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
-  const active = searchParams.get("active") || "general"; // "videos"
+  const active = searchParams.get("active") || "general"; 
 
-  const fetchTitleDetails = async () => {
+  const fetchTitleDetails = useCallback(async () => {
+    if (isNew) return;
     setLoading(true);
     try {
       const response = await axios.get(
@@ -53,22 +55,25 @@ export default function EditTitles() {
       if (response.data.status) {
         console.log("Title details:", response.data.data);
         setTitleDetails(response.data.data);
-        setLoading(false);
       }
     } catch (error) {
-      setLoading(false);
       console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [titleId, isNew]); // 👈 dependencies that affect the callback
+
+  const handleSubmitted = () => {
+    if (!isNew) {
+      fetchTitleDetails();
     }
   };
 
-  const handleSubmitted = () => {
-    console.log("Genre form was submitted.");
-    fetchTitleDetails(); // or any other action
-  };
-
   useEffect(() => {
-    fetchTitleDetails();
-  }, [titleId]);
+    if (!isNew) {
+      fetchTitleDetails();
+    }
+  }, [fetchTitleDetails, isNew]);
 
   return (
     <div className="flex gap-4">
@@ -111,21 +116,30 @@ export default function EditTitles() {
           {loading ? "Edit Loading..." : "Edit"}
         </h2>
         <ul role="list" className="space-y-1">
-          {navigationTitleSubMenu.map((item) => (
-            <li key={item.name}>
-              <a
-                href={"edit?active=" + item.href}
-                className={classNames(
-                  item.href === active
-                    ? " text-red-500 "
-                    : "text-gray-400  hover:text-gray-800",
-                  "group flex gap-x-3 rounded-md px-4  py-2 text-sm/6 font-semibold cursor-pointer"
-                )}
-              >
-                {item.name}
-              </a>
-            </li>
-          ))}
+          {navigationTitleSubMenu.map((item, index) => {
+            const isDisabled = isNew && index !== 0;
+            return (
+              <li key={item.name}>
+                <a
+                  href={isDisabled ? "#" : "edit?active=" + item.href}
+                  onClick={(e) => {
+                    if (isDisabled) e.preventDefault();
+                  }}
+                  className={classNames(
+                    isDisabled
+                      ? "text-gray-300 cursor-not-allowed"
+                      : item.href === active
+                      ? "text-red-500"
+                      : "text-gray-400 hover:text-gray-800",
+                    `group flex gap-x-3 rounded-md px-4 py-2 text-sm/6 font-semibold`
+                  )}
+                  aria-disabled={isDisabled}
+                >
+                  {item.name}
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>

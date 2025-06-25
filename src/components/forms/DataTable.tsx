@@ -13,7 +13,7 @@ type DataTableProps<T> = {
   renderActions?: (row: T) => React.ReactNode;
 };
 
-export default function DataTable<T extends { [key: string]: any }>({
+export default function DataTable<T extends { [key: string]: string }>({
   columns,
   data,
   renderActions,

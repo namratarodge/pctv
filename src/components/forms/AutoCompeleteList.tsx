@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
+import UserAvatar from "./UserAvatar";
 
 type User = {
   _id: string;
@@ -90,16 +91,7 @@ export default function UserAutoComplete({
               onClick={() => handleSelect(user)}
               className="flex items-center gap-2 px-2 py-2 cursor-pointer hover:bg-blue-50"
             >
-              <img
-                src={`${process.env.NEXT_PUBLIC_WEBSITE}/${user.poster} `}
-                alt={user.name}
-                className="w-10 h-10 rounded-full object-cover"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.onerror = null; // prevent infinite loop if default image also fails
-                  target.src = "/default-user.jpg";
-                }}
-              />
+              <UserAvatar user={user} />
               <div className="flex flex-col">
                 <span>{user.name}</span>
                 <small>{user.known_for}</small>
@@ -113,16 +105,7 @@ export default function UserAutoComplete({
         <div className="mt-4 p-4 border rounded-md bg-green-50">
           <h3 className="font-bold">Selected User</h3>
           <div className="flex items-center gap-2 mt-2">
-            <img
-              src={`${process.env.NEXT_PUBLIC_WEBSITE}/${selectedUser.poster} `}
-              alt={selectedUser.name}
-              className="w-10 h-10 rounded-full"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.onerror = null; // prevent infinite loop if default image also fails
-                target.src = "/default-user.jpg";
-              }}
-            />
+            <UserAvatar user={selectedUser} />
             <div className="flex flex-col">
               <span>{selectedUser.name}</span>
               <small>{selectedUser.known_for}</small>

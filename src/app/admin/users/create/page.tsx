@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import Image from "next/image";
 
 export default function CreateProfile() {
   const searchParams = useSearchParams();
@@ -58,8 +59,6 @@ export default function CreateProfile() {
 
   const onSubmit = async (data: UserFormData) => {
     const token = localStorage.getItem("token");
-    console.log(data)
-    // write post request to
     try {
       const response = await axios.post(
         process.env.NEXT_PUBLIC_API_URL + "/user",
@@ -204,11 +203,14 @@ export default function CreateProfile() {
           <div>
             <label className="block text-gray-600 mb-1">Upload Image</label>
             {previewUrl && (
-              <img
-                src={previewUrl}
-                alt="Preview"
-                className="w-48 h-48 object-cover rounded shadow"
-              />
+              <div className="w-48 h-48 relative shadow rounded overflow-hidden">
+                <Image
+                  src={previewUrl}
+                  alt="Preview"
+                  fill
+                  className="object-cover"
+                />
+              </div>
             )}
             <div className="mt-2">
               <input

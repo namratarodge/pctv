@@ -100,10 +100,10 @@ export default function Home() {
               className="w-1/4 text-white bg-[#1f3844] px-4 py-6"
             >
               <h2 className="text-xl">
-                We'll always let you know about important changes, bu
+                We will always let you know about important changes, bu
               </h2>
               <h4 className="text-sm mt-4">
-                We'll always let you know about important changes, bu hds
+                We will always let you know about important changes, bu hds
               </h4>
               <div className="mt-3 text-right">
                 <h3>TV</h3>

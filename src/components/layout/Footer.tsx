@@ -1,4 +1,5 @@
-'use client'
+"use client";
+import Image from "next/image";
 
 const navigation = {
   solutions: [
@@ -89,21 +90,23 @@ const navigation = {
   ],
 };
 
-
 import { usePublicData } from "@/components/context/PublicDataContext";
 
 export default function Footer() {
   const { tvtopic, pages } = usePublicData();
-  
+
   return (
     <footer className="border-t border-gray-700">
       <div className="mx-auto max-w-11/12 px-6  pb-8 sm:pt-10 lg:px-2 ">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
-            <img
-              alt=""
+            <Image
+              alt="Your Company"
               src="https://projectcontrolstv.com/storage/branding_media/5lbRjBu1jH2A3Q61DkPaPLVxw3fidK9SlSwU8PAU.png"
-              className="h-8 w-auto"
+              width={200} // Replace with the actual width of the image or layout container
+              height={200} // Replace with the actual height
+              className="w-50"
+              unoptimized // required for external images unless configured in next.config.js
             />
             <p className="text-sm/6 text-balance text-gray-300">
               Making the world a better place through constructing elegant
@@ -140,7 +143,9 @@ export default function Footer() {
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <h3 className="text-sm/6 font-semibold text-white">Project Controls Expo</h3>
+                <h3 className="text-sm/6 font-semibold text-white">
+                  Project Controls Expo
+                </h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.support.map((item) => (
                     <li key={item.name}>

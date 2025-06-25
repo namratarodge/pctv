@@ -13,8 +13,52 @@ import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
 import { TitleColumn } from "@/constants/DataTableColumn";
 import Loading from "@/components/layout/Loading";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
-export default function Subscription() {
+type TitleDetails = {
+  _id: string;
+  id: number;
+  name: string;
+  type: "movie" | "series" | string;
+  tmdb_vote_average: number | null;
+  release_date: string;
+  year: number;
+  description: string;
+  genre: string | null;
+  tagline: string | null;
+  poster: string;
+  backdrop: string;
+  runtime: number | null;
+  trailer: string | null;
+  budget: number | null;
+  revenue: number | null;
+  views: number;
+  popularity: number;
+  imdb_id: string | null;
+  tmdb_id: string | null;
+  season_count: number | null;
+  fully_synced: boolean;
+  allow_update: boolean;
+  created_at: string;
+  updated_at: string;
+  language: string;
+  country: string | null;
+  original_title: string;
+  affiliate_link: string | null;
+  tmdb_vote_count: number | null;
+  certification: string | null;
+  episode_count: number | null;
+  series_ended: boolean;
+  is_series: boolean;
+  local_vote_average: number | null;
+  show_videos: boolean;
+  adult: boolean;
+  local_vote_count: number;
+  is_free: boolean;
+  slug: string;
+};
+
+export default function Title() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({
@@ -34,40 +78,67 @@ export default function Subscription() {
   const setLimit = (value: number) => {
     setLimits(value);
   };
+  const fetch = async () => {
+    const token = localStorage.getItem("token");
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/titles`,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+          params: {
+            limit: limits,
+            page: pages,
+          },
+        }
+      );
+      if (response.data.status) {
+        const modifiedData = response.data.data.data.map((item: TitleDetails) => ({
+          ...item,
+          updated_at: `${formatDate(item.updated_at)} `,
+        }));
+        setData(modifiedData);
+        setPagination(response.data.data.pagination);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false); // Always stop loading, whether success or failure
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/title/${id}`,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data.status) {
+        toast("Titles deleted successfully");
+        fetch(); // Refresh the plans list
+      } else {
+        toast("Delete failed:", response.data.message);
+      }
+    } catch (error) {
+      toast("Error deleting plan:", error);
+    }
+  };
+
 
   useEffect(() => {
-    const fetch = async () => {
-      const token = localStorage.getItem("token");
-      setLoading(true);
-      try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/titles`,
-          {
-            headers: {
-              Authorization: token,
-              "Content-Type": "application/json",
-            },
-            params: {
-              limit: limits,
-              page: pages,
-            },
-          }
-        );
-        if (response.data.status) {
-          const modifiedData = response.data.data.data.map((item: any) => ({
-            ...item,
-            updated_at: `${formatDate(item.updated_at)} `,
-          }));
-          setData(modifiedData);
-          setPagination(response.data.data.pagination);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false); // Always stop loading, whether success or failure
-      }
-    };
+    
     fetch();
   }, [pages, limits]);
 
@@ -81,12 +152,12 @@ export default function Subscription() {
           <div className="sm:flex sm:items-center mt-4  h-auto ">
             <Filter filterType={TitleFilter} />
             <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none ">
-              <button
-                type="button"
+              <Link
+                href="titles/new/edit"
                 className="flex items-center cursor-pointer gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 <PlusCircleIcon className="w-6 h-6" /> New Title
-              </button>
+              </Link>
             </div>
           </div>
           <div className="mt-8 flow-root">
@@ -105,7 +176,7 @@ export default function Subscription() {
                         <PencilIcon className="w-5 h-5" />
                       </Link>
                       <button
-                        onClick={() => console.log("Delete", person)}
+                         onClick={() => handleDelete(person._id)}
                         className="text-red-600 hover:text-red-800 cursor-pointer"
                       >
                         <TrashIcon className="w-5 h-5" />

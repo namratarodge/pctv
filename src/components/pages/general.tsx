@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { Error } from "../layout";
 import { titleSchema, TitleFormData } from "@/constants/Validation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 type Genre = {
   _id: string;
@@ -81,7 +83,9 @@ export default function General({
   data: Title;
   onSubmit: () => void;
 }) {
-  const [loading,setLoading] = useState(false)
+  const isNew = titleId === "new";
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -93,21 +97,31 @@ export default function General({
 
   const addNewTitle = async (data: TitleFormData) => {
     const token = localStorage.getItem("token");
+
     setLoading(true);
     try {
-      const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/title/${titleId}`,
+      const url = isNew
+        ? `${process.env.NEXT_PUBLIC_API_URL}/title`
+        : `${process.env.NEXT_PUBLIC_API_URL}/title/${titleId}`;
+
+      const method = isNew ? "post" : "put";
+
+      const response = await axios({
+        method,
+        url,
         data,
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      });
       if (response.data.status) {
         setLoading(false);
-        onSubmit();
+        if (titleId === "new") {
+          const newId = isNew ? response.data.data._id : titleId;
+          toast("Sucessfully Title Created.");
+          router.push(`/admin/titles/${newId}/edit?active=general`);
+        }
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -117,6 +131,9 @@ export default function General({
   };
 
   useEffect(() => {
+    console.log("nwwwqwq");
+    console.log(titleId);
+    console.log(data);
     if (data) {
       reset({
         name: data.name || "",
@@ -130,7 +147,7 @@ export default function General({
         overview: data.description || "",
         runtime: data.runtime?.toString() || "",
         certification: data.certification || "",
-        budget: data.budget|| 0,
+        budget: data.budget || 0,
         revenue: data.revenue?.toString() || "",
         popularity: data.popularity?.toString() || "",
         language: data.language || "",
@@ -142,8 +159,10 @@ export default function General({
     <div className=" bg-white rounded-md ">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold text-gray-900">General </h1>
-          { loading && 'Loading...'}
+          <h1 className="text-base font-semibold text-gray-900">
+            {isNew ? "Create New title" : "General"}{" "}
+          </h1>
+          {loading && "Loading..."}
         </div>
       </div>
       <div className="mt-8 flow-root">
@@ -398,8 +417,7 @@ export default function General({
                   className="w-full file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200"
                 />
               </div>
-              <div className="border rounded-md border-gray-300">
-              </div>
+              <div className="border rounded-md border-gray-300"></div>
             </div>
 
             <div className="flex justify-end gap-4">
