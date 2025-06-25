@@ -6,44 +6,43 @@ import axios from "axios";
 import Loading from "@/components/layout/Loading";
 import { reviewColumn } from "@/constants/DataTableColumn";
 import { formatDate } from "@/utils/common";
-import { TrashIcon } from "@heroicons/react/24/outline";
 
 export default function Review({ titleId }: { titleId: string }) {
   const [review, setReview] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const fetch = async () => {
-    const token = localStorage.getItem("token");
-    setLoading(true);
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/reviews?reviewable_id=${titleId}`,
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-          params: {
-            limit: 1000,
-          },
-        }
-      );
-      if (response.data.status) {
-        const modifiedData = response.data.data.data.map((item: any) => ({
-          ...item,
-          updated_at: `${formatDate(item.updated_at)} `,
-        }));
-        setReview(modifiedData);
-        setLoading(false);
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false); // Always stop loading, whether success or failure
-    }
-  };
-
   useEffect(() => {
+    const fetch = async () => {
+      const token = localStorage.getItem("token");
+      setLoading(true);
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/reviews?reviewable_id=${titleId}`,
+          {
+            headers: {
+              Authorization: token,
+              "Content-Type": "application/json",
+            },
+            params: {
+              limit: 1000,
+            },
+          }
+        );
+        if (response.data.status) {
+          const modifiedData = response.data.data.data.map((item: any) => ({
+            ...item,
+            updated_at: `${formatDate(item.updated_at)} `,
+          }));
+          setReview(modifiedData);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false); // Always stop loading, whether success or failure
+      }
+    };
+
     fetch();
   }, []);
 

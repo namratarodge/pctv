@@ -17,7 +17,6 @@ export default function General({
   data: any;
   onSubmit: () => void;
 }) {
-  const [posterPreview, setPosterPreview] = useState<string | null>(null);
   const [loading,setLoading] = useState(false)
   const {
     register,
@@ -28,7 +27,7 @@ export default function General({
     resolver: zodResolver(titleSchema),
   });
 
-  const addNewTitle = async (data: any) => {
+  const addNewTitle = async (data: TitleFormData) => {
     const token = localStorage.getItem("token");
     setLoading(true);
     try {
@@ -335,13 +334,6 @@ export default function General({
                 />
               </div>
               <div className="border rounded-md border-gray-300">
-                {posterPreview && (
-                  <img
-                    src={posterPreview}
-                    alt="Poster Preview"
-                    className="mt-2 rounded shadow w-full h-auto object-cover"
-                  />
-                )}
               </div>
             </div>
 

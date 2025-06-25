@@ -280,19 +280,9 @@ export const usersColumn: {
     label: "User",
     render: (row) => (
       <div className="flex items-center space-x-2">
-        <img
-          src={row.avatar || "/default-image.jpg"}
-          alt={row.first_name}
-          className="w-8 h-8 rounded-full object-cover"
-          onError={(e) => {
-            const target = e.currentTarget;
-            target.onerror = null; // prevent infinite loop
-            target.src = "/default-image.jpg";
-          }}
-        />
+        <PersonImage poster={row.avatar} name={row.first_name} />
         <span className="flex flex-col">
           {row.first_name} {row.last_name}
-          <small>{row.email}</small>
         </span>
       </div>
     ),
@@ -379,7 +369,7 @@ export const reviewColumn: {
 
     render: (row) => (
       <div className="flex items-center space-x-2">
-        <img
+        {/* <img
           src={"/default-user.jpg"}
           className="w-10 h-10 rounded-full object-cover"
           onError={(e) => {
@@ -387,10 +377,10 @@ export const reviewColumn: {
             target.onerror = null; // prevent infinite loop
             target.src = "/default-image.jpg";
           }}
-        />
+        /> */}
         <span className="flex flex-col text-md">
-          {row.user_id.username}
-          <small className="text-gray-400"> {row.user_id.email}</small>
+          {row?.user_id?.username}
+          <small className="text-gray-400"> {row?.user_id?.email}</small>
         </span>
       </div>
     ),

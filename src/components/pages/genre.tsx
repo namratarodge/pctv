@@ -39,9 +39,7 @@ export default function Genre({
   };
 
   const {
-    register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<FormValues>();
 
