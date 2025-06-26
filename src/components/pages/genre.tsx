@@ -11,17 +11,14 @@ import { Controller } from "react-hook-form";
 import AutoCompletePersonList from "@/components/forms/AutoCompletePersonList";
 import { Error } from "../layout";
 
-import { CountryFormType, UserTag, GenreType } from "@/constants/Type";
-
-export default function Genre({
-  titleId,
-  data,
-  onSubmit,
-}: {
+import { CountryFormType, UserTag, TagType } from "@/constants/Type";
+type PageProps = {
   titleId: string;
-  data: GenreType;
+  data?: TagType[];
   onSubmit: () => void;
-}) {
+};
+
+export default function Genre({ titleId, data, onSubmit }: PageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);

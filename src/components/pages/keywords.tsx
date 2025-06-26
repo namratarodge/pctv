@@ -10,17 +10,15 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Error } from "../layout";
 import AutoCompletePersonList from "@/components/forms/AutoCompletePersonList";
-import { CountryFormType, UserTag } from "@/constants/Type";
+import { CountryFormType, TagType, UserTag } from "@/constants/Type";
 
-export default function Keywords({
-  titleId,
-  data,
-  onSubmit,
-}: {
+type PageProps = {
   titleId: string;
-  data: [];
+  data?: TagType[];
   onSubmit: () => void;
-}) {
+};
+
+export default function Keywords({ titleId, data, onSubmit }: PageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -87,7 +85,7 @@ export default function Keywords({
         toast("Taggable creation failed:", response.data.message);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast("Error creating plan:");
     }
   };
@@ -116,7 +114,7 @@ export default function Keywords({
         toast("Failed to delete keyword:", response.data.message);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast("Error deleting keyword:");
     }
   };

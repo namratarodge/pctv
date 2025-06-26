@@ -11,7 +11,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 
 import { navigation } from "@/constants/Menu";
 
-function classNames(...classes) {
+function classNames(...classes: (string | false | null | undefined)[]): string {
   return classes.filter(Boolean).join(" ");
 }
 

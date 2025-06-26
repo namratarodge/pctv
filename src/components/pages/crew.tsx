@@ -10,13 +10,12 @@ import Loading from "@/components/layout/Loading";
 import { CrewColumn } from "@/constants/DataTableColumn";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { CrewFormType, CrewTypes } from "@/constants/Type";
+import { CrewFormType, CrewTypes, UserTag } from "@/constants/Type";
 
 export default function Crew({ titleId }: { titleId: string }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedUsers, setSelectedUsers] = useState([]);
 
   const {
     register,
@@ -27,7 +26,7 @@ export default function Crew({ titleId }: { titleId: string }) {
 
   const handleFormSubmit = async (data: Record<string, string>) => {
     const payload = {
-      person_id: selectedUsers._id,
+      person_id: data.person._id,
       creditable_id: titleId,
       order: 0,
       department: data.department,
@@ -114,7 +113,7 @@ export default function Crew({ titleId }: { titleId: string }) {
         setCategories(modifiedData);
       }
     } catch (error) {
-      console.error("Error fetching data:");
+      console.error("Error fetching data:",error);
     } finally {
       setLoading(false); // Always stop loading, whether success or failure
     }
@@ -180,7 +179,6 @@ export default function Crew({ titleId }: { titleId: string }) {
                     <AutoCompeleteList
                       onSelect={(user: UserTag) => {
                         field.onChange(user); // updates form value
-                        setSelectedUsers(user); // your local logic
                       }}
                       value={field.value} // keeps form in sync
                     />

@@ -17,8 +17,6 @@ export default function Genre({ titleId }: { titleId: string }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedUsers, setSelectedUsers] = useState([]);
-
   const {
     register,
     handleSubmit,
@@ -28,7 +26,7 @@ export default function Genre({ titleId }: { titleId: string }) {
 
   const handleFormSubmit = async (data: Record<string, string>) => {
     const payload = {
-      person_id: selectedUsers._id,
+      person_id: data.person._id,
       creditable_id: titleId,
       character: data.character,
       order: 1,
@@ -184,7 +182,6 @@ export default function Genre({ titleId }: { titleId: string }) {
                     <AutoCompeleteList
                       onSelect={(user: UserTag) => {
                         field.onChange(user); // updates form value
-                        setSelectedUsers(user); // your local logic
                       }}
                       value={field.value} // keeps form in sync
                     />

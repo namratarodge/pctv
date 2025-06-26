@@ -1,5 +1,5 @@
 "use client";
-import { Filter, Paginations } from "@/components/forms";
+import { Filter } from "@/components/forms";
 import {
   PencilIcon,
   PlusCircleIcon,
@@ -74,7 +74,6 @@ export default function Subscription() {
                 </div>
               )}
             />
-            <Paginations />
           </div>
         </div>
       </div>

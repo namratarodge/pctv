@@ -101,12 +101,12 @@ export default function Tags() {
     setIsModalOpen(true);
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (tag: TagFormValue) => {
     const token = localStorage.getItem("token");
 
     try {
       const response = await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/tag/${id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/tag/${tag._id}`,
         {
           headers: {
             Authorization: token,
@@ -122,7 +122,8 @@ export default function Tags() {
         toast("Delete failed:", response.data.message);
       }
     } catch (error) {
-      toast("Error deleting plan:", error);
+      console.log(error)
+      toast("Error deleting plan:");
     }
   };
 
@@ -204,7 +205,7 @@ export default function Tags() {
                       <PencilIcon className="w-5 h-5" />
                     </button>
                     <button
-                      onClick={() => handleDelete(person._id)}
+                      onClick={() => handleDelete(person)}
                       className="text-red-600 hover:text-red-800 cursor-pointer"
                     >
                       <TrashIcon className="w-5 h-5" />

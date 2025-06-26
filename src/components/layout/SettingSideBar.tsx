@@ -2,7 +2,7 @@
 import { navigationSettings } from "@/constants/Menu";
 import { usePathname } from "next/navigation";
 
-function classNames(...classes) {
+function classNames(...classes: (string | false | null | undefined)[]): string {
   return classes.filter(Boolean).join(" ");
 }
 

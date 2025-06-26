@@ -14,12 +14,12 @@ import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
 import { reviewColumn } from "@/constants/DataTableColumn";
 import Loading from "@/components/layout/Loading";
 import { toast } from "react-toastify";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { ReviewType, reviewFormType } from "@/constants/Type";
 
 export default function People() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [review, setReview] = useState<object | null>(null);
+  const [review, setReview] = useState<ReviewType | null>(null);
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -76,13 +76,12 @@ export default function People() {
     }
   };
 
-  const handleFormSubmit = async (data: Record<string, string>) => {
-    console.log(data);
-    console.log("Form submitted:", data);
+  const handleFormSubmit: SubmitHandler<reviewFormType> = async (data) => {
     const token = localStorage.getItem("token");
+    const reviewID = review?._id;
 
     try {
-      const url = `${process.env.NEXT_PUBLIC_API_URL}/review/${review?._id}`;
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/review/${reviewID}`;
 
       const method = "put";
 
@@ -105,11 +104,12 @@ export default function People() {
         toast("Review Update failed:", response.data.message);
       }
     } catch (error) {
-      toast("Error Update review:", error);
+      console.log(error);
+      toast("Error Update review:");
     }
   };
 
-  const handleEdit = async (data: object) => {
+  const handleEdit = async (data: ReviewType) => {
     setIsModalOpen(true);
     setReview(data);
   };

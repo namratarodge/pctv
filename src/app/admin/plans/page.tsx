@@ -10,19 +10,15 @@ import { formatDate } from "@/utils/common";
 import axios from "axios";
 import Loading from "@/components/layout/Loading";
 import { planColumn } from "@/constants/DataTableColumn";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import currencies from "@/constants/currencies.json"; // adjust path as needed
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
-import { PersonType, SubscriptionPlanType } from "@/constants/Type";
-
-type FormValues = {
-  name: string;
-  amount: number;
-  currency: string;
-  interval: string;
-  interval_count: number;
-};
+import {
+  PlanFormValues,
+  PersonType,
+  SubscriptionPlanType,
+} from "@/constants/Type";
 
 type CurrencyCode = keyof typeof currencies;
 
@@ -37,7 +33,7 @@ export default function Plans() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormValues>();
+  } = useForm<PlanFormValues>();
 
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -75,7 +71,7 @@ export default function Plans() {
     }
   };
 
-  const handleFormSubmit = async (data: Record<string, string>) => {
+  const handleFormSubmit : SubmitHandler<PlanFormValues> = async (data) => {
     const selectedCurrencyCode = data.currency as CurrencyCode;
 
     // Optionally, validate it:

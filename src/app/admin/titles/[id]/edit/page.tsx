@@ -13,17 +13,17 @@ import Keywords from "@/components/pages/keywords";
 import Country from "@/components/pages/country";
 import Review from "@/components/pages/review";
 import General from "@/components/pages/general";
-import { TitleType } from "@/constants/Type";
+import { TitleDetailsType } from "@/constants/Type";
 
-function classNames(...classes) {
+function classNames(...classes: (string | false | null | undefined)[]): string {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function EditTitles() {
   const params = useParams();
-  const titleId = params.id;
+  const titleId = params.id as string;
   const isNew = titleId === "new";
-  const [titleDetails, setTitleDetails] = useState<TitleType | null>(null);
+  const [titleDetails, setTitleDetails] = useState<TitleDetailsType | null>(null);
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
   const active = searchParams.get("active") || "general";
@@ -89,7 +89,7 @@ export default function EditTitles() {
         {active === "countries" && (
           <Country
             titleId={titleId}
-            data={titleDetails?.country}
+            data={titleDetails?.country ?? []}
             onSubmit={handleSubmitted}
           />
         )}

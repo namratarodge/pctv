@@ -15,27 +15,6 @@ export type TitleType = {
   created_at: string;
 };
 
-export type GenreType = {
-  _id: string;
-  id?: number;
-  name: string;
-  display_name: string;
-  type: string;
-  created_at: string;
-  updated_at: string;
-  __v?: number;
-};
-
-export type KeywordType = {
-  _id: string;
-  id: number;
-  name: string;
-  display_name: string;
-  type: string;
-  created_at: string;
-  updated_at: string;
-};
-
 export type TitleDetailsType = {
   _id: string;
   id: number;
@@ -137,6 +116,13 @@ export type PageType = {
   hide_nav: boolean;
   workspace_id: string | null;
 };
+export type PlanFormValues = {
+  name: string;
+  amount: number;
+  currency: string;
+  interval: string;
+  interval_count: number;
+};
 
 export type SubscriptionPlanType = {
   _id: string;
@@ -188,6 +174,7 @@ export type reviewFormType = {
 
 export type TagType = {
   _id: string;
+  id: string;
   name: string;
   display_name: string;
   type: string;
@@ -197,6 +184,7 @@ export type TagType = {
 };
 
 export type TagFormValue = {
+  _id: string;
   name: string;
   display_name: string;
   type: string;

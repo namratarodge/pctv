@@ -11,17 +11,15 @@ import { Controller } from "react-hook-form";
 import AutoCompletePersonList from "@/components/forms/AutoCompletePersonList";
 import { Error } from "../layout";
 
-import { CountryFormType, CountryType } from "@/constants/Type";
+import { CountryFormType, UserTag, TagType } from "@/constants/Type";
 
-export default function Country({
-  titleId,
-  data,
-  onSubmit,
-}: {
+type PageProps = {
   titleId: string;
-  data: CountryType;
+  data: TagType[];
   onSubmit: () => void;
-}) {
+};
+
+export default function Country({ titleId, data, onSubmit }: PageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
