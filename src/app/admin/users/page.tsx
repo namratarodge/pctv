@@ -3,7 +3,7 @@ import { Filter, Paginations } from "@/components/forms";
 import { PlusCircleIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
 import { PeopleFilter } from "@/constants/Filter";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { formatDate } from "@/utils/common";
@@ -11,34 +11,7 @@ import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
 import { usersColumn } from "@/constants/DataTableColumn";
 import Loading from "@/components/layout/Loading";
 import { toast } from "react-toastify";
-
-
-type UserType = {
-  userType: "user";
-  _id: string;
-  id: number;
-  username: string | null;
-  first_name: string | null;
-  last_name: string | null;
-  avatar_url: string | null;
-  gender: string | null;
-  legacy_permissions: unknown | null;
-  email: string;
-  password: string;
-  card_brand: string | null;
-  card_last_four: string | null;
-  remember_token: string | null;
-  created_at: string; // ISO date string
-  updated_at: string; // ISO date string
-  background: string | null;
-  language: string;
-  country: string;
-  timezone: string | null;
-  avatar: string | null;
-  stripe_id: string | null;
-  available_space: number | null;
-  email_verified_at: string | null;
-};
+import { UserType } from "@/constants/Type";
 
 export default function People() {
   const [data, setData] = useState([]);
@@ -86,42 +59,42 @@ export default function People() {
     setLimits(value);
   };
 
-  useEffect(() => {
-    const fetch = async () => {
-      const token = localStorage.getItem("token");
-      setLoading(true);
-      try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/users`,
-          {
-            headers: {
-              Authorization: token,
-              "Content-Type": "application/json",
-            },
-            params: {
-              limit: limits,
-              page: pages,
-            },
-          }
-        );
-        if (response.data.status) {
-          const modifiedData = response.data.data.data.map((item: UserType) => ({
-            ...item,
-            updated_at: `${formatDate(item.updated_at)} `,
-          }));
-          setData(modifiedData);
-          setPagination(response.data.data.pagination);
-          setLoading(false);
+  const fetch = useCallback(async () => {
+    const token = localStorage.getItem("token");
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/users`,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+          params: {
+            limit: limits,
+            page: pages,
+          },
         }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false); // Always stop loading, whether success or failure
+      );
+      if (response.data.status) {
+        const modifiedData = response.data.data.data.map((item: UserType) => ({
+          ...item,
+          updated_at: `${formatDate(item.updated_at)} `,
+        }));
+        setData(modifiedData);
+        setPagination(response.data.data.pagination);
+        setLoading(false);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false); // Always stop loading, whether success or failure
+    }
+  }, [limits, pages]);
 
+  useEffect(() => {
     fetch();
-  }, [pages, limits]);
+  }, [fetch]);
 
   return (
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">

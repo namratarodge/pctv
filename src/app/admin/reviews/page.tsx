@@ -15,26 +15,7 @@ import { reviewColumn } from "@/constants/DataTableColumn";
 import Loading from "@/components/layout/Loading";
 import { toast } from "react-toastify";
 import { useForm, Controller } from "react-hook-form";
-
-type reviewValues = {
-  score: number;
-  review: string;
-};
-
-type ReviewType = {
-  _id: string;
-  id: number;
-  score: number;
-  reviewable_id: string;
-  user_id: {
-    _id: string;
-    username: string;
-    email: string;
-  };
-  created_at: string;
-  updated_at: string;
-  reviewableId: number;
-};
+import { ReviewType, reviewFormType } from "@/constants/Type";
 
 export default function People() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -54,8 +35,8 @@ export default function People() {
     handleSubmit,
     reset,
     control,
-    formState: {  },
-  } = useForm<reviewValues>();
+    formState: {},
+  } = useForm<reviewFormType>();
 
   const [pages, setPages] = useState(1);
   const [limits, setLimits] = useState(10);
@@ -78,10 +59,12 @@ export default function People() {
         }
       );
       if (response.data.status) {
-        const modifiedData = response.data.data.data.map((item: ReviewType) => ({
-          ...item,
-          updated_at: `${formatDate(item.updated_at)} `,
-        }));
+        const modifiedData = response.data.data.data.map(
+          (item: ReviewType) => ({
+            ...item,
+            updated_at: `${formatDate(item.updated_at)} `,
+          })
+        );
         setData(modifiedData);
         setPagination(response.data.data.pagination);
         setLoading(false);
@@ -158,10 +141,12 @@ export default function People() {
           }
         );
         if (response.data.status) {
-          const modifiedData = response.data.data.data.map((item: ReviewType) => ({
-            ...item,
-            updated_at: `${formatDate(item.updated_at)} `,
-          }));
+          const modifiedData = response.data.data.data.map(
+            (item: ReviewType) => ({
+              ...item,
+              updated_at: `${formatDate(item.updated_at)} `,
+            })
+          );
           setData(modifiedData);
           setPagination(response.data.data.pagination);
           setLoading(false);
@@ -172,7 +157,7 @@ export default function People() {
         setLoading(false); // Always stop loading, whether success or failure
       }
     };
-    
+
     fetch();
   }, [pages, limits]);
 

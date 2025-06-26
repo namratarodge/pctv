@@ -13,29 +13,20 @@ import Keywords from "@/components/pages/keywords";
 import Country from "@/components/pages/country";
 import Review from "@/components/pages/review";
 import General from "@/components/pages/general";
+import { TitleType } from "@/constants/Type";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
-}
-
-interface Title {
-  _id: string;
-  name: string;
-  slug: string;
-  poster: string;
-  language: string;
-  description: string;
-  created_at: string;
 }
 
 export default function EditTitles() {
   const params = useParams();
   const titleId = params.id;
   const isNew = titleId === "new";
-  const [titleDetails, setTitleDetails] = useState<Title | null>(null);
+  const [titleDetails, setTitleDetails] = useState<TitleType | null>(null);
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
-  const active = searchParams.get("active") || "general"; 
+  const active = searchParams.get("active") || "general";
 
   const fetchTitleDetails = useCallback(async () => {
     if (isNew) return;
@@ -104,10 +95,7 @@ export default function EditTitles() {
         )}
         {active === "reviews" && <Review titleId={titleId} />}
         {active === "general" && (
-          <General
-            titleId={titleId}
-            data={titleDetails}
-          />
+          <General titleId={titleId} data={titleDetails} />
         )}
       </div>
       <div className=" bg-white rounded-md w-1/5 border border-gray-200 h-full   ">

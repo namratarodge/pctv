@@ -8,22 +8,13 @@ import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-
-interface Title {
-  _id: string;
-  name: string;
-  slug: string;
-  poster: string;
-  language: string;
-  description: string;
-  created_at: string;
-}
+import { TitleType } from "@/constants/Type"
 
 export default function TitleDetailPage() {
   const params = useParams();
   const titleId = params?.titleId as string;
-  const [title, setTitle] = useState<Title[]>([]);
-  const [titleDetails, setTitleDetails] = useState<Title | null>(null);
+  const [title, setTitle] = useState<TitleType[]>([]);
+  const [titleDetails, setTitleDetails] = useState<TitleType | null>(null);
   const [loading, setLoading] = useState(true);
 
   const fetchTitleList = async () => {

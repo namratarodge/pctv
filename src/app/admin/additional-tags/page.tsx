@@ -13,28 +13,7 @@ import { useCallback, useEffect, useState } from "react";
 import Loading from "@/components/layout/Loading";
 import { AdditionalTagColumn } from "@/constants/DataTableColumn";
 import { formatDate } from "@/utils/common";
-
-type PersonType = {
-  _id: string;
-  id: number;
-  name: string;
-  description: string;
-  gender: string | null;
-  birth_date: string | null;
-  birth_place: string | null;
-  poster: string;
-  imdb_id: string | null;
-  views: number;
-  tmdb_id: string | null;
-  allow_update: boolean;
-  created_at: string;
-  updated_at: string;
-  fully_synced: boolean;
-  known_for: string;
-  popularity: number;
-  death_date: string | null;
-  adult: boolean;
-};
+import { PersonType } from "@/constants/Type";
 
 export default function Subscription() {
   const [additionalTags, setAdditionalTags] = useState([]);

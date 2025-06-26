@@ -11,32 +11,7 @@ import { formatDate } from "@/utils/common";
 import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
 import { VideoColumn } from "@/constants/DataTableColumn";
 import Loading from "@/components/layout/Loading";
-
-type VideoItem = {
-  _id: string;
-  id: number;
-  name: string;
-  thumbnail: string | null;
-  url: string;
-  type: string;
-  quality: string | null;
-  title_id: number;
-  season_num: number | null;
-  episode_num: number | null;
-  source: string;
-  negative_votes: number;
-  positive_votes: number;
-  reports: number;
-  approved: number;
-  order: number;
-  created_at: string;
-  updated_at: string;
-  user_id: string;
-  language: string;
-  category: string;
-  episode_id: number | null;
-  userId: number;
-};
+import { VideoType } from "@/constants/Type";
 
 export default function Videos() {
   const [data, setData] = useState([]);
@@ -78,10 +53,12 @@ export default function Videos() {
           }
         );
         if (response.data.status) {
-          const modifiedData = response.data.data.data.map((item: VideoItem) => ({
-            ...item,
-            updated_at: `${formatDate(item.updated_at)} `,
-          }));
+          const modifiedData = response.data.data.data.map(
+            (item: VideoType) => ({
+              ...item,
+              updated_at: `${formatDate(item.updated_at)} `,
+            })
+          );
           setData(modifiedData);
           setPagination(response.data.data.pagination);
           setLoading(false);

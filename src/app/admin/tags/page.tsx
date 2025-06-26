@@ -15,21 +15,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Loading from "@/components/layout/Loading";
 
-type tagmValues = {
-  name: string;
-  display_name: string;
-  type: string;
-};
-
-type TagType = {
-  _id: string;
-  name: string;
-  display_name: string;
-  type: string;
-  created_at: string;
-  updated_at: string;
-  __v: number;
-};
+import { TagType, TagFormValue } from "@/constants/Type";
 
 export default function Tags() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -42,7 +28,7 @@ export default function Tags() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<tagmValues>();
+  } = useForm<TagFormValue>();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({
@@ -91,7 +77,7 @@ export default function Tags() {
     }
   };
 
-  const handleEdit = (tag: tagmValues) => {
+  const handleEdit = (tag: TagFormValue) => {
     setIsEditing(true);
     setEditingTagId(tag._id);
     setIsModalOpen(true);

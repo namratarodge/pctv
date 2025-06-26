@@ -10,21 +10,7 @@ import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
 import { pagesColumn } from "@/constants/DataTableColumn";
 import Loading from "@/components/layout/Loading";
 import { toast } from "react-toastify";
-
-type PageType = {
-  _id: string;
-  id: number;
-  title: string;
-  body: string;
-  slug: string;
-  meta: string | null;
-  type: string;
-  created_at: string;
-  updated_at: string;
-  user_id: number;
-  hide_nav: boolean;
-  workspace_id: string | null;
-};
+import { PageType } from "@/constants/Type"
 
 export default function People() {
   const [data, setData] = useState([]);

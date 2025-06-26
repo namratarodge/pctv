@@ -14,49 +14,7 @@ import { TitleColumn } from "@/constants/DataTableColumn";
 import Loading from "@/components/layout/Loading";
 import Link from "next/link";
 import { toast } from "react-toastify";
-
-type TitleDetails = {
-  _id: string;
-  id: number;
-  name: string;
-  type: "movie" | "series" | string;
-  tmdb_vote_average: number | null;
-  release_date: string;
-  year: number;
-  description: string;
-  genre: string | null;
-  tagline: string | null;
-  poster: string;
-  backdrop: string;
-  runtime: number | null;
-  trailer: string | null;
-  budget: number | null;
-  revenue: number | null;
-  views: number;
-  popularity: number;
-  imdb_id: string | null;
-  tmdb_id: string | null;
-  season_count: number | null;
-  fully_synced: boolean;
-  allow_update: boolean;
-  created_at: string;
-  updated_at: string;
-  language: string;
-  country: string | null;
-  original_title: string;
-  affiliate_link: string | null;
-  tmdb_vote_count: number | null;
-  certification: string | null;
-  episode_count: number | null;
-  series_ended: boolean;
-  is_series: boolean;
-  local_vote_average: number | null;
-  show_videos: boolean;
-  adult: boolean;
-  local_vote_count: number;
-  is_free: boolean;
-  slug: string;
-};
+import { TitleDetailsType } from "@/constants/Type"
 
 export default function Title() {
   const [data, setData] = useState([]);
@@ -98,7 +56,7 @@ export default function Title() {
       );
       if (response.data.status) {
         const modifiedData = response.data.data.data.map(
-          (item: TitleDetails) => ({
+          (item: TitleDetailsType) => ({
             ...item,
             updated_at: `${formatDate(item.updated_at)} `,
           })

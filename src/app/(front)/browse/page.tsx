@@ -4,6 +4,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { usePublicData } from "@/components/context/PublicDataContext";
 import Image from "next/image";
+
+import { TvTopicType } from "@/constants/Type"
+
 const country = [
   { id: 1, name: "United States" },
   { id: 2, name: "Canada" },
@@ -31,10 +34,10 @@ const Levels = [
   { id: 3, name: "Expert" },
 ];
 
-type TvTopicType = {
-  name: string;
-  display_name: string;
-};
+// type TvTopicType = {
+//   name: string;
+//   display_name: string;
+// };
 
 
 import Loading from "@/components/layout/Loading";
