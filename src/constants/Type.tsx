@@ -236,6 +236,33 @@ export type UserType = {
     episode_id: number | null;
     userId: number;
   };
-  
+
+// Filter Types
+
+export type FilterOption = {
+  name: string;
+  value: string;
+};
+
+export type FilterField = {
+  type: string;
+  placeholder: string;
+};
+
+export type FilterItem = {
+  name: string;
+  key?: string; // Some have `key`, others use `value`
+  value?: string;
+  option?: FilterOption[];
+  field?: FilterField;
+  search?: string;
+};
+
+export type FilterValues = {
+  [key: string]: {
+    value?: string;
+    value1?: string;
+  };
+};
 
 // import { TvTopicType } from "@/constants/Type"

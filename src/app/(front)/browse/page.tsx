@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { usePublicData } from "@/components/context/PublicDataContext";
 import Image from "next/image";
 
-import { TvTopicType } from "@/constants/Type"
+import { TitleType, TvTopicType } from "@/constants/Type"
 
 const country = [
   { id: 1, name: "United States" },
@@ -289,7 +289,7 @@ export default function Browser() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-          {title.map((title) => (
+          {title.map((title : TitleType) => (
             <div className=" text-white gap-4" key={title._id}>
               <Link href={`/titles/${title._id}/${title.slug}`}>
                 <Image

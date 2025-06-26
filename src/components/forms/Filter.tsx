@@ -7,33 +7,16 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
-type FilterOption = {
-  name: string;
-  value: string;
-};
+import { FilterItem, FilterValues } from "@/constants/Type";
 
-type FilterField = {
-  type: "text" | "number" | "date";
-  placeholder: string;
-};
-
-type FilterItem = {
-  name: string;
-  key?: string; // Some have `key`, others use `value`
-  value?: string;
-  option?: FilterOption[];
-  field?: FilterField;
-  search?: string;
-};
-
-export default function Filter({ filterType }: { filterType: FilterItem }) {
+export default function Filter({ filterType }: { filterType: FilterItem[] }) {
   const [showFilter, setShowFilter] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState([]);
-  const [filterValues, setFilterValues] = useState({});
+  const [filterValues, setFilterValues] = useState<FilterValues>({});
 
   const toggleFilter = () => setShowFilter((prev) => !prev);
 
-  const handleInputSearch = (value) => {
+  const handleInputSearch = (value: string) => {
     const name = filterType[0].search;
     setFilterValues((prev) => ({
       ...prev,
@@ -43,7 +26,7 @@ export default function Filter({ filterType }: { filterType: FilterItem }) {
       },
     }));
   };
-  const handleInputChange = (name, inputValue) => {
+  const handleInputChange = (name: string, inputValue: string) => {
     setFilterValues((prev) => ({
       ...prev,
       [name]: {
@@ -60,7 +43,7 @@ export default function Filter({ filterType }: { filterType: FilterItem }) {
       [filter.key]: {
         ...prev[filter.key],
         value, // directly set the new value
-        ...(filter?.field?.type === 'date' ? { value1: currentDate } : {}), 
+        ...(filter?.field?.type === "date" ? { value1: currentDate } : {}),
       },
     }));
   };
@@ -89,8 +72,8 @@ export default function Filter({ filterType }: { filterType: FilterItem }) {
       });
     } else {
       const filterObj = filterType.find((f) => f.name === filterName);
-      const value =  filterObj.option ? filterObj?.option[0]?.value : '';
-      handleSelectChange(filterObj,value);
+      const value = filterObj.option ? filterObj?.option[0]?.value : "";
+      handleSelectChange(filterObj, value);
       if (filterObj) {
         setSelectedFilter([...selectedFilter, filterObj]);
       }
@@ -180,9 +163,7 @@ export default function Filter({ filterType }: { filterType: FilterItem }) {
                 {filter?.option && (
                   <select
                     className=" w-20"
-                    onChange={(e) =>
-                      handleSelectChange(filter, e.target.value)
-                    }
+                    onChange={(e) => handleSelectChange(filter, e.target.value)}
                   >
                     {filter.option.map((option) => (
                       <option

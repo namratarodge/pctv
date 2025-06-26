@@ -14,8 +14,7 @@ import { useForm } from "react-hook-form";
 import currencies from "@/constants/currencies.json"; // adjust path as needed
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
-import { SubscriptionPlanType } from "@/constants/Type"
-
+import { PersonType, SubscriptionPlanType } from "@/constants/Type";
 
 type FormValues = {
   name: string;
@@ -25,11 +24,11 @@ type FormValues = {
   interval_count: number;
 };
 
-
+type CurrencyCode = keyof typeof currencies;
 
 export default function Plans() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const [selectedCurrency, setSelectedCurrency] = useState<CurrencyCode>("USD");
 
   const currencyDetails = currencies[selectedCurrency];
 
@@ -57,24 +56,32 @@ export default function Plans() {
         }
       );
       if (response.data.status) {
-        const modifiedData = response.data.data.data.map((item: SubscriptionPlanType) => ({
-          ...item,
-          amount: `${item.currency} ${item.amount}`,
-          updated_at: `${formatDate(item.updated_at)} `,
-        }));
+        const modifiedData = response.data.data.data.map(
+          (item: SubscriptionPlanType) => ({
+            ...item,
+            amount: `${item.currency} ${item.amount}`,
+            updated_at: `${formatDate(item.updated_at)} `,
+          })
+        );
 
         setLoading(false);
         setPlans(modifiedData);
       }
     } catch (error) {
-      toast("Error fetching data:",error);
+      console.log(error);
+      toast("Error fetching data:");
     } finally {
       setLoading(false); // Always stop loading, whether success or failure
     }
   };
 
   const handleFormSubmit = async (data: Record<string, string>) => {
-    const selectedCurrencyCode = data.currency;
+    const selectedCurrencyCode = data.currency as CurrencyCode;
+
+    // Optionally, validate it:
+    if (!(selectedCurrencyCode in currencies)) {
+      throw new Error("Invalid currency code");
+    }
     const currencyInfo = currencies[selectedCurrencyCode];
 
     const payload = {
@@ -106,7 +113,8 @@ export default function Plans() {
         toast("Plan creation failed:", response.data.message);
       }
     } catch (error) {
-      toast("Error creating plan:", error);
+      console.log(error)
+      toast("Error creating plan:");
     }
   };
 
@@ -131,7 +139,8 @@ export default function Plans() {
         toast("Delete failed:", response.data.message);
       }
     } catch (error) {
-      toast("Error deleting plan:", error);
+      console.log(error)
+      toast("Error deleting plan:");
     }
   };
 
@@ -170,7 +179,7 @@ export default function Plans() {
             <DataTable
               columns={planColumn}
               data={plans}
-              renderActions={(person) => (
+              renderActions={(person : PersonType) => (
                 <div className="flex gap-3 justify-end">
                   <button
                     onClick={() => console.log("Edit", person)}

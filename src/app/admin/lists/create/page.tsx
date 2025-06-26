@@ -1,36 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 
 export default function CreateProfile() {
-  const [formData, setFormData] = useState({
-    name: "",
-    knownFor: "",
-    bio: "",
-    gender: "",
-    birthDate: "",
-    deathDate: "",
-    popularity: "",
-    birthPlace: "",
-    allowAutoUpdate: false,
-    image: null,
-  });
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value, type, checked, files } = e.target;
-    if (type === "checkbox") {
-      setFormData({ ...formData, [name]: checked });
-    } else if (type === "file") {
-      setFormData({ ...formData, image: files?.[0] || null });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
   };
 
   return (
@@ -48,7 +21,6 @@ export default function CreateProfile() {
               <input
                 type="text"
                 name="name"
-                onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
@@ -59,7 +31,6 @@ export default function CreateProfile() {
             <textarea
               name="bio"
               rows={4}
-              onChange={handleChange}
               className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             ></textarea>
           </div>

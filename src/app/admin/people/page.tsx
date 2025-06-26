@@ -90,7 +90,8 @@ export default function People() {
         toast("Delete failed:", response.data.message);
       }
     } catch (error) {
-      toast("Error deleting People:", error);
+      console.log(error)
+      toast.error("Error deleting People:");
     }
   };
 
@@ -122,7 +123,7 @@ export default function People() {
                 <AdvanceDataTable
                   columns={PeopleColumn}
                   data={data}
-                  renderActions={(person) => (
+                  renderActions={(person : PersonType) => (
                     <div className="flex gap-3 justify-end">
                       <button
                         onClick={() => console.log("Edit", person)}

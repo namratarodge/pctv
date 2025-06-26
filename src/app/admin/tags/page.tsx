@@ -73,7 +73,8 @@ export default function Tags() {
         toast("Tags creation failed:", response.data.message);
       }
     } catch (error) {
-      toast("Error creating plan:", error);
+      console.log(error)
+      toast("Error creating plan:");
     }
   };
 

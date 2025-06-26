@@ -58,7 +58,8 @@ export default function CreateProfile() {
       }
       // Optionally reset form or give user feedback here
     } catch (error) {
-      toast("Failed to create person:", error);
+      console.log(error)
+      toast.error("Failed to create person:");
       // Optionally show error message to user
     }
   };
@@ -90,7 +91,7 @@ export default function CreateProfile() {
               <input
                 type="text"
                 {...register("knownFor")}
-                disabled={known_for && true}
+                disabled={!!known_for}
                 value={known_for}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />

@@ -2,7 +2,7 @@
 import { Paginations } from "@/components/forms";
 import { PlusCircleIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { formatDate } from "@/utils/common";
@@ -79,7 +79,8 @@ export default function People() {
         toast("Delete failed:", response.data.message);
       }
     } catch (error) {
-      toast("Error deleting plan:", error);
+      console.log(error)
+      toast("Error deleting plan:");
     }
   };
 
@@ -124,7 +125,7 @@ export default function People() {
               <AdvanceDataTable
                 columns={pagesColumn}
                 data={data}
-                renderActions={(person) => (
+                renderActions={(person : PageType) => (
                   <div className="flex gap-3 justify-end">
                     <Link
                       href={"pages/create?id=" + person._id}
