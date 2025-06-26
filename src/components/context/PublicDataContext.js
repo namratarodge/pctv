@@ -48,7 +48,6 @@ export function PublicDataProvider({ children }) {
       );
       if (response.data.status) {
         const modifiedData = response.data.data.data;
-        console.log(modifiedData);
         setLoading(false);
         setCategories(modifiedData);
       }

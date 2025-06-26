@@ -9,11 +9,10 @@ import axios from "axios";
 import { AdditionalTagFilter } from "@/constants/Filter";
 import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Loading from "@/components/layout/Loading";
 import { AdditionalTagColumn } from "@/constants/DataTableColumn";
 import { formatDate } from "@/utils/common";
-
 
 type PersonType = {
   _id: string;
@@ -50,7 +49,7 @@ export default function Subscription() {
   const [pages, setPages] = useState(1);
   const [limits, setLimits] = useState(10);
 
-  const fetchAdditionalTag = async () => {
+  const fetch = useCallback(async () => {
     const token = localStorage.getItem("token");
     setLoading(true);
     try {
@@ -69,10 +68,12 @@ export default function Subscription() {
         }
       );
       if (response.data.status) {
-        const modifiedData = response.data.data.data.map((item: PersonType) => ({
-          ...item,
-          updated_at: `${formatDate(item.updated_at)} `,
-        }));
+        const modifiedData = response.data.data.data.map(
+          (item: PersonType) => ({
+            ...item,
+            updated_at: `${formatDate(item.updated_at)} `,
+          })
+        );
         setAdditionalTags(modifiedData);
         setPagination(response.data.data.pagination);
         setLoading(false);
@@ -82,7 +83,7 @@ export default function Subscription() {
     } finally {
       setLoading(false); // Always stop loading, whether success or failure
     }
-  };
+  }, [pages, limits]);
 
   const setPage = (value: number) => {
     setPages(value);
@@ -93,8 +94,8 @@ export default function Subscription() {
   };
 
   useEffect(() => {
-    fetchAdditionalTag();
-  }, [pages, limits]);
+    fetch();
+  }, [fetch]);
 
   return (
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">

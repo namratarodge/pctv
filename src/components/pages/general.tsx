@@ -129,9 +129,6 @@ export default function General({
   };
 
   useEffect(() => {
-    console.log("nwwwqwq");
-    console.log(titleId);
-    console.log(data);
     if (data) {
       reset({
         name: data.name || "",
@@ -152,7 +149,7 @@ export default function General({
         free: data.is_free ? "Free" : "Premium",
       });
     }
-  }, [data, reset]);
+  }, [titleId, data, reset]);
   return (
     <div className=" bg-white rounded-md ">
       <div className="sm:flex sm:items-center">

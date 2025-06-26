@@ -5,7 +5,7 @@ import {
   PlusCircleIcon,
   TrashIcon,
 } from "@heroicons/react/16/solid";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { TitleFilter } from "@/constants/Filter";
 import axios from "axios";
 import { formatDate } from "@/utils/common";
@@ -78,7 +78,8 @@ export default function Title() {
   const setLimit = (value: number) => {
     setLimits(value);
   };
-  const fetch = async () => {
+
+  const fetch = useCallback(async () => {
     const token = localStorage.getItem("token");
     setLoading(true);
     try {
@@ -96,10 +97,12 @@ export default function Title() {
         }
       );
       if (response.data.status) {
-        const modifiedData = response.data.data.data.map((item: TitleDetails) => ({
-          ...item,
-          updated_at: `${formatDate(item.updated_at)} `,
-        }));
+        const modifiedData = response.data.data.data.map(
+          (item: TitleDetails) => ({
+            ...item,
+            updated_at: `${formatDate(item.updated_at)} `,
+          })
+        );
         setData(modifiedData);
         setPagination(response.data.data.pagination);
         setLoading(false);
@@ -107,9 +110,9 @@ export default function Title() {
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
-      setLoading(false); // Always stop loading, whether success or failure
+      setLoading(false);
     }
-  };
+  }, [limits, pages]); // dependencies used inside fetch
 
   const handleDelete = async (id: string) => {
     const token = localStorage.getItem("token");
@@ -136,11 +139,9 @@ export default function Title() {
     }
   };
 
-
   useEffect(() => {
-    
     fetch();
-  }, [pages, limits]);
+  }, [fetch]);
 
   return (
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
@@ -176,7 +177,7 @@ export default function Title() {
                         <PencilIcon className="w-5 h-5" />
                       </Link>
                       <button
-                         onClick={() => handleDelete(person._id)}
+                        onClick={() => handleDelete(person._id)}
                         className="text-red-600 hover:text-red-800 cursor-pointer"
                       >
                         <TrashIcon className="w-5 h-5" />

@@ -117,10 +117,12 @@ export default function Home() {
         <div className="mt-4 grid grid-cols-4 gap-4">
           {people.map((item, index) => (
             <div key={index} className="relative">
-              <img
+              <Image
                 src="https://picsum.photos/300/200/"
                 alt="test"
-                className="w-full h-auto"
+                width={300}
+                height={200}
+                className="w-full h-auto object-cover rounded-md"
               />
               <div className="absolute top-6 left-2 uppercase font-bold bg-opacity-50 text-shadow-lg/30 text-white px-2 py-1 text-xl w-30">
                 {item.name}

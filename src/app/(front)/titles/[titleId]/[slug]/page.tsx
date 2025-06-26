@@ -1,14 +1,13 @@
 "use client"; // ✅ client component, hooks allowed
 
 import Loading from "@/components/layout/Loading";
-import {
-  PlusIcon,
-  ShareIcon,
-} from "@heroicons/react/24/outline";
+import Image from "next/image";
+import { PlusIcon, ShareIcon } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 interface Title {
   _id: string;
@@ -20,14 +19,9 @@ interface Title {
   created_at: string;
 }
 
-interface PageProps {
-  params: {
-    titleId: string;
-  };
-}
-
-export default function TitleDetailPage({ params }: PageProps) {
-  const { titleId } = params;
+export default function TitleDetailPage() {
+  const params = useParams();
+  const titleId = params?.titleId as string;
   const [title, setTitle] = useState<Title[]>([]);
   const [titleDetails, setTitleDetails] = useState<Title | null>(null);
   const [loading, setLoading] = useState(true);
@@ -53,7 +47,7 @@ export default function TitleDetailPage({ params }: PageProps) {
     }
   };
 
-  const fetchTitleDetails = async () => {
+  const fetchTitleDetails = useCallback(async () => {
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/titles`,
@@ -67,12 +61,13 @@ export default function TitleDetailPage({ params }: PageProps) {
         }
       );
       if (response.data.status) {
-        setTitleDetails(response.data.data.data[0]);
+        console.log(response.data.data);
+        setTitleDetails(response.data.data);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
+  },[titleId]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,8 +77,7 @@ export default function TitleDetailPage({ params }: PageProps) {
     };
 
     fetchData();
-  }, [titleId]);
-
+  }, [titleId, fetchTitleDetails]);
 
   return (
     <div className="pt-18  flex max-w-11/12 mx-auto">
@@ -94,11 +88,14 @@ export default function TitleDetailPage({ params }: PageProps) {
       ) : (
         <>
           <div className="w-2/3 ">
-            <img
-              src={"https://projectcontrolstv.com/" + titleDetails.poster}
+            <Image
+              src={`${process.env.NEXT_PUBLIC_WEBSITE}/${titleDetails?.poster}`}
               alt="poster"
-              className="w-full  rounded-lg"
+              width={800} // You can adjust this
+              height={500} // Adjust as needed for layout
+              className="w-full rounded-lg object-cover"
             />
+
             <h1 className="text-xl text-white py-4">{titleDetails.name}</h1>
             <div className="flex gap-2">
               <button className="flex rounded-full bg-[#707070]  px-2 gap-1 py-1 items-center text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20 cursor-pointer">
@@ -130,9 +127,11 @@ export default function TitleDetailPage({ params }: PageProps) {
             <div className="border-t border-b border-[#37454D] py-3 mr-5">
               <h2 className="text-white">About Speaker</h2>
               <div className="flex gap-3 py-2 items-center">
-                <img
-                  src="https://picsum.photos/300/200/"
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_WEBSITE}/${titleDetails?.poster}`}
                   alt="poster"
+                  width={800} // You can adjust this
+                  height={500} // Adjust as needed for layout
                   className="w-15 h-15 rounded-full"
                 />
                 <div className="items-center justify-center">
@@ -183,9 +182,11 @@ export default function TitleDetailPage({ params }: PageProps) {
                   key={data._id}
                   className="flex items-center gap-4 px-2 py-1 "
                 >
-                  <img
-                    src={"https://projectcontrolstv.com/" + data.poster}
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_WEBSITE}/${data?.poster}`}
                     alt={data.poster}
+                    width={800} // You can adjust this
+                    height={500} // Adjust as needed for layout
                     className="w-2/5  rounded-lg"
                   />
                   <div>

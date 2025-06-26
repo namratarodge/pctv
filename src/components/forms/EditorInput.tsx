@@ -11,7 +11,7 @@ type EditorInputProps = {
 };
 
 const EditorInput: React.FC<EditorInputProps> = ({ name, value, onChange, label }) => {
-  const editorRef = useRef<any>(null);
+  const editorRef = useRef<HTMLTextAreaElement | null>(null);
 
   return (
     <div className="flex flex-col gap-2 mb-4">

@@ -47,6 +47,16 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
+type GenreType = {
+  _id: string;
+  name: string;
+  display_name: string;
+  type: "genre";
+  created_at: string;
+  updated_at: string;
+  __v: number;
+};
+
 export default function Browser() {
   const router = useRouter();
   const [title, setTitle] = useState([]);
@@ -162,7 +172,7 @@ export default function Browser() {
           <h2 className="text-gray-400">Categories</h2>
           <div className="mt-2">
             <ul className="list-none">
-              {categories.map((category) => (
+              {categories.map((category : GenreType) => (
                 <li
                   className="text-gray-300 py-1 cursor-pointer"
                   key={category._id}

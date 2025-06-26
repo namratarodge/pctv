@@ -3,7 +3,7 @@ import { Filter, Paginations } from "@/components/forms";
 import { PlusCircleIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
 import { PeopleFilter } from "@/constants/Filter";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { formatDate } from "@/utils/common";
@@ -11,7 +11,6 @@ import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
 import { PeopleColumn } from "@/constants/DataTableColumn";
 import Loading from "@/components/layout/Loading";
 import { toast } from "react-toastify";
-
 
 type PersonType = {
   _id: string;
@@ -48,7 +47,7 @@ export default function People() {
   const [pages, setPages] = useState(1);
   const [limits, setLimits] = useState(10);
 
-  const fetch = async () => {
+  const fetch = useCallback(async () => {
     const token = localStorage.getItem("token");
     setLoading(true);
     try {
@@ -66,10 +65,12 @@ export default function People() {
         }
       );
       if (response.data.status) {
-        const modifiedData = response.data.data.data.map((item: PersonType) => ({
-          ...item,
-          updated_at: `${formatDate(item.updated_at)} `,
-        }));
+        const modifiedData = response.data.data.data.map(
+          (item: PersonType) => ({
+            ...item,
+            updated_at: `${formatDate(item.updated_at)} `,
+          })
+        );
         setData(modifiedData);
         setPagination(response.data.data.pagination);
         setLoading(false);
@@ -79,7 +80,7 @@ export default function People() {
     } finally {
       setLoading(false); // Always stop loading, whether success or failure
     }
-  };
+  }, [limits, pages]);
 
   const setPage = (value: number) => {
     setPages(value);
@@ -116,7 +117,7 @@ export default function People() {
 
   useEffect(() => {
     fetch();
-  }, [pages, limits]);
+  }, [fetch]);
 
   return (
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">

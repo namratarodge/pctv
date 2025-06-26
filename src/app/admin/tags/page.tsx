@@ -5,7 +5,7 @@ import {
   PlusCircleIcon,
   TrashIcon,
 } from "@heroicons/react/16/solid";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { TagsfilterType } from "@/constants/Filter";
 import axios from "axios";
 import { formatDate } from "@/utils/common";
@@ -139,7 +139,7 @@ export default function Tags() {
     }
   };
 
-  const fetch = async () => {
+  const fetch = useCallback(async () => {
     const token = localStorage.getItem("token");
     setLoading(true);
     try {
@@ -170,7 +170,7 @@ export default function Tags() {
     } finally {
       setLoading(false); // Always stop loading, whether success or failure
     }
-  };
+  }, [limits, pages]);
 
   const setPage = (value: number) => {
     setPages(value);
@@ -182,7 +182,7 @@ export default function Tags() {
 
   useEffect(() => {
     fetch();
-  }, [pages, limits]);
+  }, [fetch]);
 
   return (
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">

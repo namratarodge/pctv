@@ -1,5 +1,5 @@
 "use client";
-import {  Paginations } from "@/components/forms";
+import { Paginations } from "@/components/forms";
 import { PlusCircleIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -26,7 +26,6 @@ type PageType = {
   workspace_id: string | null;
 };
 
-
 export default function People() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -40,7 +39,7 @@ export default function People() {
   const [pages, setPages] = useState(1);
   const [limits, setLimits] = useState(10);
 
-  const fetch = async () => {
+  const fetch = useCallback(async () => {
     const token = localStorage.getItem("token");
     setLoading(true);
     try {
@@ -71,7 +70,7 @@ export default function People() {
     } finally {
       setLoading(false); // Always stop loading, whether success or failure
     }
-  };
+  }, [limits, pages]);
 
   const handleDelete = async (id: string) => {
     const token = localStorage.getItem("token");
@@ -108,7 +107,7 @@ export default function People() {
 
   useEffect(() => {
     fetch();
-  }, [pages, limits]);
+  }, [fetch]);
 
   return (
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">

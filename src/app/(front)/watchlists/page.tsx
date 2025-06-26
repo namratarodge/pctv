@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const people = [
   {
     title: "Global Transforms of Projects Control within Worlds",
@@ -58,10 +60,12 @@ export default function Home() {
       <div className="grid grid-cols-3  gap-4 py-6  ">
         {people.map((person, index) => (
           <div key={index} className="flex items-center gap-4 py-2 ">
-            <img
+            <Image
               src="https://picsum.photos/300/200/"
               alt="test"
-              className="w-2/5  rounded-lg"
+              width={300}
+              height={200}
+              className="w-2/5 rounded-lg object-cover"
             />
             <div>
               <h2 className="text-sm font-semibold text-gray-300 mb-2">
