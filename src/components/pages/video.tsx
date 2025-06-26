@@ -4,7 +4,7 @@ import { Filter, Paginations } from "@/components/forms";
 import { PlusCircleIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
 import { VideoFilter } from "@/constants/Filter";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { formatDate } from "@/utils/common";
@@ -34,44 +34,42 @@ export default function Videos() {
     setLimits(value);
   };
 
-  useEffect(() => {
-    const fetch = async () => {
-      const token = localStorage.getItem("token");
-      setLoading(true);
-      try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/videos`,
-          {
-            headers: {
-              Authorization: token,
-              "Content-Type": "application/json",
-            },
-            params: {
-              limit: limits,
-              page: pages,
-            },
-          }
-        );
-        if (response.data.status) {
-          const modifiedData = response.data.data.data.map(
-            (item: VideoType) => ({
-              ...item,
-              updated_at: `${formatDate(item.updated_at)} `,
-            })
-          );
-          setData(modifiedData);
-          setPagination(response.data.data.pagination);
-          setLoading(false);
+  const fetch = useCallback(async () => {
+    const token = localStorage.getItem("token");
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/videos`,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+          params: {
+            limit: limits,
+            page: pages,
+          },
         }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false); // Always stop loading, whether success or failure
+      );
+      if (response.data.status) {
+        const modifiedData = response.data.data.data.map((item: VideoType) => ({
+          ...item,
+          updated_at: `${formatDate(item.updated_at)} `,
+        }));
+        setData(modifiedData);
+        setPagination(response.data.data.pagination);
+        setLoading(false);
       }
-    };
-
-    fetch();
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false); // Always stop loading, whether success or failure
+    }
   }, [pages, limits]);
+
+  useEffect(() => {
+    fetch();
+  }, [fetch]);
 
   return (
     <>

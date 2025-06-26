@@ -162,7 +162,7 @@ export type SubscriptionPlanType = {
   hidden: boolean;
 };
 
-// Review
+// Review type
 
 export type ReviewType = {
   _id: string;
