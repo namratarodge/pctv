@@ -38,7 +38,7 @@ export default function AutoCompletePersonList({
     );
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setQuery(value);
     if (value.trim().length > 0) {
@@ -91,7 +91,7 @@ export default function AutoCompletePersonList({
         };
 
         // Optionally notify parent about new user addition
-        if (onAddUser) onAddUser(newTag);
+        if (onAddUser) onAddUser(newUser);
 
         // Select the newly added user
         const newSelection = [...selected, newUser];
@@ -104,7 +104,8 @@ export default function AutoCompletePersonList({
         toast("Tags creation failed:", response.data.message);
       }
     } catch (error) {
-      toast("Error creating plan:", error);
+      console.log(error)
+      toast("Error creating plan:");
     }
   };
 

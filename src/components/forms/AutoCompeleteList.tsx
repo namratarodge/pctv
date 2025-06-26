@@ -8,10 +8,11 @@ type User = {
   _id: string;
   name: string;
   poster: string; // URL to image
+  known_for : string;
 };
 
 type AutoCompletePersonListProps = {
-  onSelect: (selected: User[]) => void;
+  onSelect: (selected: User) => void;
 };
 
 export default function UserAutoComplete({

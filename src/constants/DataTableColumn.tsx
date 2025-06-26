@@ -143,6 +143,7 @@ export const AdditionalTagColumn: {
 
 // Title  Column
 type TitleType = {
+  _id : string;
   name: string;
   type: string;
   release_date: number;

@@ -126,7 +126,7 @@ export default function Title() {
                 <AdvanceDataTable
                   columns={TitleColumn}
                   data={data}
-                  renderActions={(person: TitleType) => (
+                  renderActions={(person) => (
                     <div className="flex gap-3 justify-end">
                       <Link
                         href={`titles/${person._id}/edit `}

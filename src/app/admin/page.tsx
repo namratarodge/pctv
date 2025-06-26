@@ -86,17 +86,23 @@ export default function Example() {
       </dl>
       <div className="flex gap-2 py-4">
         <div className="border w-1/2 border-gray-400 rounded-sm">
-          <h3 className="py-2 px-2 border-b border-gray-400 text-sm bg-gray-700 text-white">This Week vs Last Week</h3>
+          <h3 className="py-2 px-2 border-b border-gray-400 text-sm bg-gray-700 text-white">
+            This Week vs Last Week
+          </h3>
           <div className="p-4 bg-white">Demo</div>
         </div>
         <div className="border w-1/2 border-gray-400 rounded-sm">
-        <h3 className="py-2 px-2 border-b border-gray-400 text-sm bg-gray-700 text-white">This Week vs Last Week</h3>
+          <h3 className="py-2 px-2 border-b border-gray-400 text-sm bg-gray-700 text-white">
+            This Week vs Last Week
+          </h3>
           <div className="p-4">Demo</div>
         </div>
       </div>
       <div className="flex gap-2 py-4">
         <div className="border w-full border-gray-400 rounded-sm">
-        <h3 className="py-2 px-2 border-b border-gray-400 text-sm bg-gray-700 text-white">This Week vs Last Week</h3>
+          <h3 className="py-2 px-2 border-b border-gray-400 text-sm bg-gray-700 text-white">
+            This Week vs Last Week
+          </h3>
           <div className="p-4">Demo</div>
         </div>
       </div>

@@ -11,13 +11,13 @@ import { FilterItem, FilterValues } from "@/constants/Type";
 
 export default function Filter({ filterType }: { filterType: FilterItem[] }) {
   const [showFilter, setShowFilter] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState<FilterItem[]>([]);
   const [filterValues, setFilterValues] = useState<FilterValues>({});
 
   const toggleFilter = () => setShowFilter((prev) => !prev);
 
   const handleInputSearch = (value: string) => {
-    const name = filterType[0].search;
+    const name = filterType[0].search as string;
     setFilterValues((prev) => ({
       ...prev,
       [name]: {
@@ -36,14 +36,14 @@ export default function Filter({ filterType }: { filterType: FilterItem[] }) {
     }));
   };
 
-  const handleSelectChange = (filter, value) => {
-    const currentDate = new Date().toISOString().split("T")[0]; // format: YYYY-MM-DD
+  const handleSelectChange = (filter: FilterItem, value: string) => {
+    const currentDate = new Date().toISOString().split("T")[0];
     setFilterValues((prev) => ({
       ...prev,
-      [filter.key]: {
-        ...prev[filter.key],
-        value, // directly set the new value
-        ...(filter?.field?.type === "date" ? { value1: currentDate } : {}),
+      [filter.key as string]: {
+        ...prev[filter.key as string],
+        value,
+        ...(filter.field?.type === "date" ? { value1: currentDate } : {}),
       },
     }));
   };
@@ -61,22 +61,23 @@ export default function Filter({ filterType }: { filterType: FilterItem[] }) {
     .join("&");
 
   const handleFilterSelect = (filterName: string) => {
-    const existing = selectedFilter.find((f) => f.name === filterName);
-    console.log(existing);
-    if (existing) {
+    const existing = selectedFilter.find(
+      (f): f is FilterItem => f.name === filterName
+    );
+    if (existing) { 
+      const key = existing.key as string;
       setSelectedFilter(selectedFilter.filter((f) => f.name !== filterName));
       setFilterValues((prev) => {
         const newValues = { ...prev };
-        delete newValues[existing.key];
+        delete newValues[key];
         return newValues;
       });
     } else {
       const filterObj = filterType.find((f) => f.name === filterName);
-      const value = filterObj.option ? filterObj?.option[0]?.value : "";
+      if (!filterObj) return;
+      const value = filterObj.option?.[0]?.value ?? "";
       handleSelectChange(filterObj, value);
-      if (filterObj) {
-        setSelectedFilter([...selectedFilter, filterObj]);
-      }
+      setSelectedFilter([...selectedFilter, filterObj]);
     }
   };
 
@@ -180,7 +181,7 @@ export default function Filter({ filterType }: { filterType: FilterItem[] }) {
                   <input
                     type={filter.field.type}
                     onChange={(e) =>
-                      handleInputChange(filter.key, e.target.value)
+                      handleInputChange(filter.key as string, e.target.value)
                     }
                     placeholder={filter.field.placeholder}
                     className="px-4 py-2 w-40 text-md cursor-pointer hover:bg-gray-200"

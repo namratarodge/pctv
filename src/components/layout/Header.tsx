@@ -21,13 +21,14 @@ import { usePublicData } from "@/components/context/PublicDataContext";
 
 import { usePathname } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
+import { TagType, DecodedUser } from "@/constants/Type";
 
 const baseNavigation = [
   { name: "Home", key: "home", href: "/" },
   {
     name: "TV Topics",
     key: "tv_topics",
-    href: "/browse ",
+    href: "/browse",
     children: [],
   },
   { name: "Course/Zones", key: "categories", href: "#", children: [] },
@@ -46,10 +47,10 @@ function classNames(...classes: (string | false | null | undefined)[]): string {
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { tvtopic, categories } = usePublicData();
-  const [user, setUser] = useState({});
-  const [openIndex, setOpenIndex] = useState(null);
+  const [user, setUser] = useState<DecodedUser | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const toggleSubmenu = (index : number) => {
+  const toggleSubmenu = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
@@ -60,14 +61,14 @@ export default function Header() {
   useEffect(() => {
     const token = localStorage.getItem("token"); // Or from cookie if accessible
     if (token) {
-      const decoded = jwtDecode(token);
+      const decoded = jwtDecode<DecodedUser>(token);
       setUser(decoded);
     }
     const merged = baseNavigation.map((item) => {
       if (item.key === "tv_topics") {
         return {
           ...item,
-          children: (tvtopic || []).map((topic) => ({
+          children: (tvtopic || []).map((topic: TagType) => ({
             name: topic.display_name,
             href: `/browse?keyword=${encodeURIComponent(topic.name)}`,
           })),
@@ -77,7 +78,7 @@ export default function Header() {
       if (item.key === "categories") {
         return {
           ...item,
-          children: (categories || []).map((category) => ({
+          children: (categories || []).map((category: TagType) => ({
             name: category.display_name,
             href: `/browse?genre=${encodeURIComponent(category.name)}`,
           })),
@@ -107,15 +108,15 @@ export default function Header() {
         <div className="flex lg:flex-1  items-center ">
           <div className="p-1.5">
             <span className="sr-only">Project Control TV</span>
-            <Link href="/"> 
-            <Image
-              alt="Your Company"
-              src="https://projectcontrolstv.com/storage/branding_media/5lbRjBu1jH2A3Q61DkPaPLVxw3fidK9SlSwU8PAU.png"
-              width={120} // Replace with the actual width of the image or layout container
-              height={20} // Replace with the actual height
-              className="w-50"
-              unoptimized // required for external images unless configured in next.config.js
-            />
+            <Link href="/">
+              <Image
+                alt="Your Company"
+                src="https://projectcontrolstv.com/storage/branding_media/5lbRjBu1jH2A3Q61DkPaPLVxw3fidK9SlSwU8PAU.png"
+                width={120} // Replace with the actual width of the image or layout container
+                height={20} // Replace with the actual height
+                className="w-50"
+                unoptimized // required for external images unless configured in next.config.js
+              />
             </Link>
           </div>
           <div className="hidden sm:ml-6 sm:block">
@@ -140,7 +141,9 @@ export default function Header() {
                      left-0 mt-2 w-60 cursor-pointer rounded-md  bg-gray-800  ring-opacity-5 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-opacity duration-200 z-50"
                     >
                       <div className="py-1">
-                        {item.children.map((subItem, index) => (
+                        {(
+                          item.children as { name: string; href: string }[]
+                        ).map((subItem, index) => (
                           <a
                             key={index}
                             href={subItem.href}
@@ -170,7 +173,7 @@ export default function Header() {
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-6 items-center">
           <MagnifyingGlassIcon className="w-5 h-5 text-white cursor-pointer" />
-          {Object.keys(user).length > 0 ? (
+          {user && Object.keys(user).length > 0 ? (
             <Menu as="div" className="relative">
               <MenuButton className="-m-1.5 flex items-center p-1.5">
                 <span className="sr-only">Open user menu</span>
@@ -276,7 +279,9 @@ export default function Header() {
                     {/* Submenu */}
                     {item.children && openIndex === index && (
                       <div className=" space-y-1">
-                        {item.children.map((child, childIndex) => (
+                        {(
+                          item.children as { name: string; href: string }[]
+                        ).map((child, childIndex) => (
                           <a
                             key={childIndex}
                             href={child.href}

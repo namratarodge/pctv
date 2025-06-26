@@ -24,9 +24,9 @@ export default function Genre({ titleId }: { titleId: string }) {
     formState: { errors },
   } = useForm<CastFormType>();
 
-  const handleFormSubmit = async (data: Record<string, string>) => {
+  const handleFormSubmit  = async (data: CastCreditType ) => {
     const payload = {
-      person_id: data.person._id,
+      person_id: data.person_id._id,
       creditable_id: titleId,
       character: data.character,
       order: 1,
@@ -151,7 +151,7 @@ export default function Genre({ titleId }: { titleId: string }) {
             <DataTable
               columns={CastColumn}
               data={categories || []}
-              renderActions={(person) => (
+              renderActions={(person : CastCreditType) => (
                 <div className="flex gap-3 justify-center">
                   <button
                     onClick={() => handleDelete(person._id)}
@@ -175,7 +175,7 @@ export default function Genre({ titleId }: { titleId: string }) {
                   Person
                 </label>
                 <Controller
-                  name="person"
+                  name="person_id"
                   control={control}
                   rules={{ required: "Person is required" }}
                   render={({ field }) => (
@@ -187,7 +187,7 @@ export default function Genre({ titleId }: { titleId: string }) {
                     />
                   )}
                 />
-                {errors.person && <Error message={errors.person.message} />}
+                {errors.person_id && <Error message={errors.person_id.message} />}
               </div>
               <div className="pl-2  pb-4">
                 <label className="block text-sm text-gray-600 mb-1 font-semibold">

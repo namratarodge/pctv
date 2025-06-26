@@ -10,6 +10,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import { DecodedUser } from "@/constants/Type";
 
 const userNavigation = [
   { name: "Your profile", href: "#" },
@@ -31,12 +32,12 @@ export default function TopHeader({
   sideBarOpen,
   setSideBarOpen,
 }: SideBarProps) {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<DecodedUser | null>(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token"); // Or from cookie if accessible
     if (token) {
-      const decoded = jwtDecode(token);
+      const decoded = jwtDecode<DecodedUser>(token);
       setUser(decoded);
       console.log("User info:", decoded);
     }
@@ -102,7 +103,7 @@ export default function TopHeader({
                   aria-hidden="true"
                   className="ml-4 text-sm/6 font-semibold text-gray-900"
                 >
-                  {user.username}
+                  {user?.username}
                 </span>
                 <ChevronDownIcon
                   aria-hidden="true"
@@ -117,7 +118,7 @@ export default function TopHeader({
               <div className="px-4 py-3">
                 <p className="text-sm">Signed in as</p>
                 <p className="truncate text-sm font-medium text-gray-900">
-                  {user.email}
+                  {user?.email}
                 </p>
               </div>
               {userNavigation.map((item) =>

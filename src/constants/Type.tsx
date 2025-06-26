@@ -191,6 +191,13 @@ export type TagFormValue = {
 
 // User Type
 
+export type DecodedUser = {
+  id: string;
+  email: string;
+  userType: "user" | "admin" | string; // adjust as needed
+  full_name: string;
+  username: string;
+};
 export type UserType = {
   userType: "user";
   _id: string;
@@ -295,7 +302,7 @@ export type CastCreditType = {
 };
 
 export type CastFormType = {
-  person: string;
+  person_id: string;
   character: string;
 };
 export type UserTag = {
