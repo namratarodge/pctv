@@ -11,25 +11,7 @@ import { Controller } from "react-hook-form";
 import AutoCompletePersonList from "@/components/forms/AutoCompletePersonList";
 import { Error } from "../layout";
 
-type FormValues = {
-  person: string;
-};
-
-type UserTag = {
-  id: string;
-  name: string;
-};
-
-type GenreType = {
-  _id: string;
-  id?: number;
-  name: string;
-  display_name: string;
-  type: string;
-  created_at: string;
-  updated_at: string;
-  __v?: number;
-};
+import { CountryFormType, UserTag, GenreType } from "@/constants/Type";
 
 export default function Genre({
   titleId,
@@ -48,7 +30,7 @@ export default function Genre({
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<FormValues>();
+  } = useForm<CountryFormType>();
 
   const fetchCategories = async () => {
     setLoading(true);

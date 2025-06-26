@@ -15,6 +15,27 @@ export type TitleType = {
   created_at: string;
 };
 
+export type GenreType = {
+  _id: string;
+  id?: number;
+  name: string;
+  display_name: string;
+  type: string;
+  created_at: string;
+  updated_at: string;
+  __v?: number;
+};
+
+export type KeywordType = {
+  _id: string;
+  id: number;
+  name: string;
+  display_name: string;
+  type: string;
+  created_at: string;
+  updated_at: string;
+};
+
 export type TitleDetailsType = {
   _id: string;
   id: number;
@@ -56,6 +77,8 @@ export type TitleDetailsType = {
   local_vote_count: number;
   is_free: boolean;
   slug: string;
+  genres: GenreType[];
+  keywords: KeywordType[];
 };
 
 // Person for Additional Tags
@@ -284,13 +307,55 @@ export type CastCreditType = {
   __v: number;
 };
 
-export type FormValues = {
+export type CastFormType = {
   person: string;
   character: string;
 };
 export type UserTag = {
   id: string;
   name: string;
+};
+
+// Country
+
+export type CountryFormType = {
+  person: string;
+};
+
+export type CountryType = {
+  _id: string;
+  id: number;
+  name: string;
+  display_name: string;
+  type: "production_country";
+  created_at: string; // ISO date string
+  updated_at: string; // ISO date string
+};
+
+// Crew Types
+
+export type CrewFormType = {
+  person: string;
+  job: string;
+  department: string;
+};
+
+export type CrewTypes = {
+  _id: string;
+  person_id: {
+    _id: string;
+    name: string;
+    poster: string;
+    known_for: string;
+  };
+  creditable_id: string;
+  character: string;
+  order: number;
+  department: string;
+  job: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 };
 
 // import { TvTopicType } from "@/constants/Type"

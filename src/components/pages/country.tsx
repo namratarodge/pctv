@@ -11,19 +11,7 @@ import { Controller } from "react-hook-form";
 import AutoCompletePersonList from "@/components/forms/AutoCompletePersonList";
 import { Error } from "../layout";
 
-type FormValues = {
-  person: string;
-};
-
-type ProductionCountry = {
-  _id: string;
-  id: number;
-  name: string;
-  display_name: string;
-  type: "production_country";
-  created_at: string; // ISO date string
-  updated_at: string; // ISO date string
-};
+import { CountryFormType, CountryType } from "@/constants/Type";
 
 export default function Country({
   titleId,
@@ -31,19 +19,18 @@ export default function Country({
   onSubmit,
 }: {
   titleId: string;
-  data: ProductionCountry;
+  data: CountryType;
   onSubmit: () => void;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
 
- 
   const {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<FormValues>();
+  } = useForm<CountryFormType>();
 
   const fetch = async () => {
     setLoading(true);

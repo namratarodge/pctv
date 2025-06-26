@@ -7,79 +7,14 @@ import { titleSchema, TitleFormData } from "@/constants/Validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-
-type Genre = {
-  _id: string;
-  id?: number;
-  name: string;
-  display_name: string;
-  type: string;
-  created_at: string;
-  updated_at: string;
-  __v?: number;
-};
-
-type Keyword = {
-  _id: string;
-  id: number;
-  name: string;
-  display_name: string;
-  type: string;
-  created_at: string;
-  updated_at: string;
-};
-
-type Title = {
-  _id: string;
-  id: number;
-  name: string;
-  type: string;
-  tmdb_vote_average: number | null;
-  release_date: string;
-  year: number;
-  description: string;
-  genre: string | null;
-  tagline: string | null;
-  poster: string;
-  backdrop: string;
-  runtime: number | null;
-  trailer: string | null;
-  budget: number | null;
-  revenue: number | null;
-  views: number;
-  popularity: number;
-  imdb_id: string | null;
-  tmdb_id: string | null;
-  season_count: number | null;
-  fully_synced: boolean;
-  allow_update: boolean;
-  created_at: string;
-  updated_at: string;
-  language: string;
-  country: string[];
-  original_title: string;
-  affiliate_link: string | null;
-  tmdb_vote_count: number | null;
-  certification: string;
-  episode_count: number | null;
-  series_ended: boolean;
-  is_series: boolean;
-  local_vote_average: number | null;
-  show_videos: boolean;
-  adult: boolean;
-  local_vote_count: number;
-  is_free: boolean;
-  slug: string;
-  genres: Genre[];
-  keywords: Keyword[];
-};
+import { TitleDetailsType } from "@/constants/Type";
 
 export default function General({
   titleId,
   data,
 }: {
   titleId: string;
-  data: Title;
+  data: TitleDetailsType;
 }) {
   const isNew = titleId === "new";
   const router = useRouter();

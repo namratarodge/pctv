@@ -6,21 +6,7 @@ import axios from "axios";
 import Loading from "@/components/layout/Loading";
 import { reviewColumn } from "@/constants/DataTableColumn";
 import { formatDate } from "@/utils/common";
-
-type ReviewItem = {
-  _id: string;
-  id: number;
-  score: number;
-  reviewable_id: string;
-  user_id: {
-    _id: string;
-    username: string;
-    email: string;
-  };
-  created_at: string;
-  updated_at: string;
-  reviewableId: number;
-};
+import { ReviewType } from "@/constants/Type";
 
 export default function Review({ titleId }: { titleId: string }) {
   const [review, setReview] = useState([]);
@@ -44,10 +30,12 @@ export default function Review({ titleId }: { titleId: string }) {
           }
         );
         if (response.data.status) {
-          const modifiedData = response.data.data.data.map((item: ReviewItem) => ({
-            ...item,
-            updated_at: `${formatDate(item.updated_at)} `,
-          }));
+          const modifiedData = response.data.data.data.map(
+            (item: ReviewType) => ({
+              ...item,
+              updated_at: `${formatDate(item.updated_at)} `,
+            })
+          );
           setReview(modifiedData);
           setLoading(false);
         }
