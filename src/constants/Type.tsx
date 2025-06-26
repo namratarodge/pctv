@@ -179,63 +179,62 @@ export type TagFormValue = {
   type: string;
 };
 
-// User Type 
+// User Type
 
 export type UserType = {
-    userType: "user";
-    _id: string;
-    id: number;
-    username: string | null;
-    first_name: string | null;
-    last_name: string | null;
-    avatar_url: string | null;
-    gender: string | null;
-    legacy_permissions: unknown | null;
-    email: string;
-    password: string;
-    card_brand: string | null;
-    card_last_four: string | null;
-    remember_token: string | null;
-    created_at: string; // ISO date string
-    updated_at: string; // ISO date string
-    background: string | null;
-    language: string;
-    country: string;
-    timezone: string | null;
-    avatar: string | null;
-    stripe_id: string | null;
-    available_space: number | null;
-    email_verified_at: string | null;
-  };
+  userType: "user";
+  _id: string;
+  id: number;
+  username: string | null;
+  first_name: string | null;
+  last_name: string | null;
+  avatar_url: string | null;
+  gender: string | null;
+  legacy_permissions: unknown | null;
+  email: string;
+  password: string;
+  card_brand: string | null;
+  card_last_four: string | null;
+  remember_token: string | null;
+  created_at: string; // ISO date string
+  updated_at: string; // ISO date string
+  background: string | null;
+  language: string;
+  country: string;
+  timezone: string | null;
+  avatar: string | null;
+  stripe_id: string | null;
+  available_space: number | null;
+  email_verified_at: string | null;
+};
 
+// Video Type
 
-  // Video Type 
-
- export type VideoType = {
-    _id: string;
-    id: number;
-    name: string;
-    thumbnail: string | null;
-    url: string;
-    type: string;
-    quality: string | null;
-    title_id: number;
-    season_num: number | null;
-    episode_num: number | null;
-    source: string;
-    negative_votes: number;
-    positive_votes: number;
-    reports: number;
-    approved: number;
-    order: number;
-    created_at: string;
-    updated_at: string;
-    user_id: string;
-    language: string;
-    category: string;
-    episode_id: number | null;
-    userId: number;
-  };
+export type VideoType = {
+  _id: string;
+  id: number;
+  name: string;
+  thumbnail: string | null;
+  url: string;
+  type: string;
+  quality: string | null;
+  title_id: number;
+  season_num: number | null;
+  episode_num: number | null;
+  source: string;
+  negative_votes: number;
+  positive_votes: number;
+  reports: number;
+  approved: number;
+  order: number;
+  created_at: string;
+  updated_at: string;
+  user_id: string;
+  language: string;
+  category: string;
+  episode_id: number | null;
+  userId: number;
+};
 
 // Filter Types
 
@@ -263,6 +262,35 @@ export type FilterValues = {
     value?: string;
     value1?: string;
   };
+};
+
+// cast Type
+
+export type CastCreditType = {
+  _id: string;
+  person_id: {
+    _id: string;
+    name: string;
+    poster: string;
+    known_for: string;
+  };
+  creditable_id: string;
+  character: string;
+  order: number;
+  department: string;
+  job: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
+
+export type FormValues = {
+  person: string;
+  character: string;
+};
+export type UserTag = {
+  id: string;
+  name: string;
 };
 
 // import { TvTopicType } from "@/constants/Type"

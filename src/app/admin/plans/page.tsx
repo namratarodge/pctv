@@ -113,7 +113,7 @@ export default function Plans() {
         toast("Plan creation failed:", response.data.message);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast("Error creating plan:");
     }
   };
@@ -139,7 +139,7 @@ export default function Plans() {
         toast("Delete failed:", response.data.message);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast("Error deleting plan:");
     }
   };
@@ -179,7 +179,7 @@ export default function Plans() {
             <DataTable
               columns={planColumn}
               data={plans}
-              renderActions={(person : PersonType) => (
+              renderActions={(person: PersonType) => (
                 <div className="flex gap-3 justify-end">
                   <button
                     onClick={() => console.log("Edit", person)}
@@ -219,7 +219,9 @@ export default function Plans() {
               <select
                 {...register("currency", { required: "currency is required" })}
                 value={selectedCurrency}
-                onChange={(e) => setSelectedCurrency(e.target.value)}
+                onChange={(e) =>
+                  setSelectedCurrency(e.target.value as CurrencyCode)
+                }
                 className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               >
                 {Object.entries(currencies).map(([code, details]) => (
@@ -253,6 +255,9 @@ export default function Plans() {
                   {selectedCurrency}
                 </div>
               </div>
+              {errors.amount && (
+                <p className="text-red-500">{errors.amount.message}</p>
+              )}
             </div>
 
             <div className="flex flex-col">
