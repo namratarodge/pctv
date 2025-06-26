@@ -87,7 +87,8 @@ export default function Country({ titleId, data, onSubmit }: PageProps) {
         toast("Taggable creation failed:", response.data.message);
       }
     } catch (error) {
-      toast("Error creating plan:", error);
+      console.log(error);
+      toast("Error creating plan:");
     }
   };
 
@@ -115,13 +116,14 @@ export default function Country({ titleId, data, onSubmit }: PageProps) {
         toast("Failed to delete keyword:", response.data.message);
       }
     } catch (error) {
-      toast("Error deleting keyword:", error);
+      console.log(error);
+      toast("Error deleting keyword:");
     }
   };
 
   useEffect(() => {
     fetch();
-  }, []);
+  }, [titleId]);
 
   return (
     <div className=" bg-white rounded-md ">

@@ -42,7 +42,6 @@ export type TitleDetailsType = {
   created_at: string;
   updated_at: string;
   language: string;
-  country: string | null;
   original_title: string;
   affiliate_link: string | null;
   tmdb_vote_count: number | null;
@@ -56,8 +55,9 @@ export type TitleDetailsType = {
   local_vote_count: number;
   is_free: boolean;
   slug: string;
-  genres: GenreType[];
-  keywords: KeywordType[];
+  genres: TagType[];
+  keywords: TagType[];
+  country?: TagType[];
 };
 
 // Person for Additional Tags
@@ -180,7 +180,6 @@ export type TagType = {
   type: string;
   created_at: string;
   updated_at: string;
-  __v: number;
 };
 
 export type TagFormValue = {

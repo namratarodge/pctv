@@ -23,7 +23,9 @@ export default function EditTitles() {
   const params = useParams();
   const titleId = params.id as string;
   const isNew = titleId === "new";
-  const [titleDetails, setTitleDetails] = useState<TitleDetailsType | null>(null);
+  const [titleDetails, setTitleDetails] = useState<TitleDetailsType | null>(
+    null
+  );
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
   const active = searchParams.get("active") || "general";
@@ -95,7 +97,10 @@ export default function EditTitles() {
         )}
         {active === "reviews" && <Review titleId={titleId} />}
         {active === "general" && (
-          <General titleId={titleId} data={titleDetails} />
+          <General
+            titleId={titleId}
+            data={titleDetails}
+          />
         )}
       </div>
       <div className=" bg-white rounded-md w-1/5 border border-gray-200 h-full   ">

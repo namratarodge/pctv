@@ -9,13 +9,15 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { TitleDetailsType } from "@/constants/Type";
 
+type PageProps = {
+  titleId: string;
+  data: TitleDetailsType | null;
+};
+
 export default function General({
   titleId,
   data,
-}: {
-  titleId: string;
-  data: TitleDetailsType;
-}) {
+}: PageProps) {
   const isNew = titleId === "new";
   const router = useRouter();
   const [loading, setLoading] = useState(false);

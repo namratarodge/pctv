@@ -14,7 +14,7 @@ import { TitleColumn } from "@/constants/DataTableColumn";
 import Loading from "@/components/layout/Loading";
 import Link from "next/link";
 import { toast } from "react-toastify";
-import { TitleDetailsType } from "@/constants/Type"
+import { TitleDetailsType, TitleType } from "@/constants/Type";
 
 export default function Title() {
   const [data, setData] = useState([]);
@@ -93,7 +93,8 @@ export default function Title() {
         toast("Delete failed:", response.data.message);
       }
     } catch (error) {
-      toast("Error deleting plan:", error);
+      console.log(error);
+      toast("Error deleting plan:");
     }
   };
 
@@ -125,11 +126,10 @@ export default function Title() {
                 <AdvanceDataTable
                   columns={TitleColumn}
                   data={data}
-                  renderActions={(person) => (
+                  renderActions={(person: TitleType) => (
                     <div className="flex gap-3 justify-end">
                       <Link
-                        href={`titles/${person._id}/edit/ `}
-                        onClick={() => console.log("Edit", person)}
+                        href={`titles/${person._id}/edit `}
                         className="text-blue-600 hover:text-blue-800 cursor-pointer"
                       >
                         <PencilIcon className="w-5 h-5" />
