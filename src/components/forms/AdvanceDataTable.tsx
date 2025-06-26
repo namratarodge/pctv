@@ -14,7 +14,7 @@ type DataTableProps<T> = {
   renderActions?: (row: T) => React.ReactNode;
 };
 
-export default function AdvanceDataTable<T extends Record<string, string>>({
+export default function AdvanceDataTable<T extends Record<string, any>>({
   columns,
   data,
   renderActions,

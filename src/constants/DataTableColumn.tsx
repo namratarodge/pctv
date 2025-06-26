@@ -174,6 +174,7 @@ export const TitleColumn: {
 
 // People  Column
 type PeopleItem = {
+  _id : string;
   name: string;
   birthdate: string;
   views: number;
@@ -324,15 +325,17 @@ export const pagesColumn: {
 // review Column
 type reviewOfPages = {
   _id: string;
-  score: string;
+  id: number;
+  score: number;
+  reviewable_id: string;
   user_id: {
+    _id: string;
     username: string;
     email: string;
-    _id?: string;
   };
-  reviewable: string;
-  reviewable_type: string;
+  created_at: string;
   updated_at: string;
+  reviewableId: number;
 };
 
 export const reviewColumn: {
@@ -365,7 +368,7 @@ export const reviewColumn: {
     ),
   },
   {
-    key: "reviewable",
+    key: "reviewable_id",
     label: "Reviewable",
 
     render: () => (
@@ -374,7 +377,6 @@ export const reviewColumn: {
       </div>
     ),
   },
-  { key: "reviewable_type", label: "Type" },
   { key: "updated_at", label: "Last Updated" },
 ];
 

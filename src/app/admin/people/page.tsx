@@ -69,12 +69,12 @@ export default function People() {
     setLimits(value);
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (data: PersonType) => {
     const token = localStorage.getItem("token");
 
     try {
       const response = await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/people/${id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/people/${data._id}`,
         {
           headers: {
             Authorization: token,
@@ -123,16 +123,16 @@ export default function People() {
                 <AdvanceDataTable
                   columns={PeopleColumn}
                   data={data}
-                  renderActions={(person : PersonType) => (
+                  renderActions={(person) => (
                     <div className="flex gap-3 justify-end">
                       <button
-                        onClick={() => console.log("Edit", person)}
+                        onClick={() => console.log("Edit")}
                         className="text-blue-600 hover:text-blue-800 cursor-pointer"
                       >
                         <PencilIcon className="w-5 h-5" />
                       </button>
                       <button
-                        onClick={() => handleDelete(person._id)}
+                        onClick={() => handleDelete(person)}
                         className="text-red-600 hover:text-red-800 cursor-pointer"
                       >
                         <TrashIcon className="w-5 h-5" />
