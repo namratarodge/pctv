@@ -1,4 +1,3 @@
-
 import { StarIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { useState } from "react";
@@ -42,15 +41,17 @@ export const CrewColumn: {
     label: "Name",
     render: (row) => (
       <div className="flex items-center space-x-2">
-        <PersonImage poster={row.person_id?.poster} name={row.person_id?.name} />
-        <span className="flex flex-col">{row.person_id?.name} </span> 
+        <PersonImage
+          poster={row.person_id?.poster}
+          name={row.person_id?.name}
+        />
+        <span className="flex flex-col">{row.person_id?.name} </span>
       </div>
     ),
   },
   { key: "job", label: "Job" },
   { key: "department", label: "Department" },
 ];
-
 
 // Cast Column
 type typeOfCast = {
@@ -71,8 +72,11 @@ export const CastColumn: {
     label: "Name",
     render: (row) => (
       <div className="flex items-center space-x-2">
-        <PersonImage poster={row.person_id?.poster} name={row.person_id?.name} />
-        <span className="flex flex-col">{row.person_id?.name} </span> 
+        <PersonImage
+          poster={row.person_id?.poster}
+          name={row.person_id?.name}
+        />
+        <span className="flex flex-col">{row.person_id?.name} </span>
       </div>
     ),
   },
@@ -138,7 +142,7 @@ export const AdditionalTagColumn: {
 ];
 
 // Title  Column
-type TitleItem = {
+type TitleType = {
   name: string;
   type: string;
   release_date: number;
@@ -148,16 +152,15 @@ type TitleItem = {
 };
 
 export const TitleColumn: {
-  key: keyof TitleItem;
+  key: keyof TitleType;
   label: string;
-  render?: (row: TitleItem) => React.ReactNode;
+  render?: (row: TitleType) => React.ReactNode;
 }[] = [
   {
     key: "name",
     label: "Name",
     render: (row) => (
       <div className="flex items-center space-x-2">
-        {/* <PersonImage poster={row.person_id?.poster} name={row.person_id?.name} /> */}
         <span className="flex flex-col">{row.name}</span>
       </div>
     ),
@@ -261,13 +264,14 @@ export const tagsColumn: {
 
 // users Column
 type typeOfUsers = {
-  user: "string";
-  subscribed: "number";
-  userType: "string";
-  first_name: "string";
-  last_name: "string";
-  updated_at: "string";
-  avatar?: string; // Optional avatar URL
+  _id : string;
+  user: string;
+  subscribed: number;
+  userType: string;
+  first_name: string;
+  last_name: string;
+  updated_at: string;
+  avatar?: string;
 };
 
 export const usersColumn: {
@@ -295,11 +299,12 @@ export const usersColumn: {
 ];
 
 // pages Column
-type typeOfPages = {
-  slug: "string";
-  user_id: "number";
-  type: "string";
-  updated_at: "string";
+export type typeOfPages = {
+  _id: string;
+  slug: string;
+  user_id: string;
+  type: string;
+  updated_at: string;
 };
 
 export const pagesColumn: {
@@ -311,24 +316,6 @@ export const pagesColumn: {
   {
     key: "user_id",
     label: "Owner",
-
-    render: (row) => (
-      <div className="flex items-center space-x-2">
-        {/* <img
-          src={"/default-user.jpg"}
-          className="w-8 h-8 rounded-full object-cover"
-          onError={(e) => {
-            const target = e.currentTarget;
-            target.onerror = null; // prevent infinite loop
-            target.src = "/default-image.jpg";
-          }}
-        /> */}
-        <span className="flex flex-col" data={row.user_id}>
-          Sandesh Mankar
-          <small>sandesh@gmail.com</small>
-        </span>
-      </div>
-    ),
   },
   { key: "type", label: "Type" },
   { key: "updated_at", label: "Last Updated" },
@@ -336,21 +323,22 @@ export const pagesColumn: {
 
 // review Column
 type reviewOfPages = {
-  score: "string";
+  _id: string;
+  score: string;
   user_id: {
     username: string;
     email: string;
     _id?: string;
   };
-  reviewable: "string";
-  reviewable_type: "string";
-  updated_at: "string";
+  reviewable: string;
+  reviewable_type: string;
+  updated_at: string;
 };
 
 export const reviewColumn: {
   key: keyof reviewOfPages;
   label: string;
-  render?: (row: typeOfPages) => React.ReactNode;
+  render?: (row: reviewOfPages) => React.ReactNode;
 }[] = [
   {
     key: "score",
@@ -369,15 +357,6 @@ export const reviewColumn: {
 
     render: (row) => (
       <div className="flex items-center space-x-2">
-        {/* <img
-          src={"/default-user.jpg"}
-          className="w-10 h-10 rounded-full object-cover"
-          onError={(e) => {
-            const target = e.currentTarget;
-            target.onerror = null; // prevent infinite loop
-            target.src = "/default-image.jpg";
-          }}
-        /> */}
         <span className="flex flex-col text-md">
           {row?.user_id?.username}
           <small className="text-gray-400"> {row?.user_id?.email}</small>
@@ -391,15 +370,6 @@ export const reviewColumn: {
 
     render: () => (
       <div className="flex items-center space-x-2">
-        {/* <img
-          src={"/default-user.jpg"}
-          className="w-8 h-8 rounded-full object-cover"
-          onError={(e) => {
-            const target = e.currentTarget;
-            target.onerror = null; // prevent infinite loop
-            target.src = "/default-image.jpg";
-          }}
-        /> */}
         <span className="flex flex-col">Project communications</span>
       </div>
     ),

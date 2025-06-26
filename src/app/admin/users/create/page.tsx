@@ -22,14 +22,14 @@ export default function CreateProfile() {
     resolver: zodResolver(userSchema),
   });
 
-  const [previewUrl, setPreviewUrl] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   // Fetch user details if in edit mode
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (id) {
       axios
-        .get(`${process.env.NEXT_PUBLIC_API_URL}/user?_id=${id}`, {
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/users?_id=${id}`, {
           headers: {
             Authorization: token,
             "Content-Type": "application/json",
@@ -50,8 +50,8 @@ export default function CreateProfile() {
     }
   }, [id, setValue]);
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
       setPreviewUrl(URL.createObjectURL(file));
     }
@@ -61,7 +61,7 @@ export default function CreateProfile() {
     const token = localStorage.getItem("token");
     try {
       const response = await axios.post(
-        process.env.NEXT_PUBLIC_API_URL + "/user",
+        process.env.NEXT_PUBLIC_API_URL + "/users",
         data,
         {
           headers: {
@@ -77,7 +77,8 @@ export default function CreateProfile() {
       }
       // Optionally reset form or give user feedback here
     } catch (error) {
-      toast("Failed to create person:", error);
+      console.log(error)
+      toast("Failed to create person:");
       // Optionally show error message to user
     }
   };

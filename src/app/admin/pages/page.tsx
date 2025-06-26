@@ -10,7 +10,7 @@ import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
 import { pagesColumn } from "@/constants/DataTableColumn";
 import Loading from "@/components/layout/Loading";
 import { toast } from "react-toastify";
-import { PageType } from "@/constants/Type"
+import {  PageType } from "@/constants/Type"
 
 export default function People() {
   const [data, setData] = useState([]);
@@ -125,7 +125,7 @@ export default function People() {
               <AdvanceDataTable
                 columns={pagesColumn}
                 data={data}
-                renderActions={(person : PageType) => (
+                renderActions={(person) => (
                   <div className="flex gap-3 justify-end">
                     <Link
                       href={"pages/create?id=" + person._id}

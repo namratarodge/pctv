@@ -5,6 +5,7 @@ import React from "react";
 type Column<T> = {
   key: keyof T;
   label: string;
+  render?: (row: T) => React.ReactNode;
 };
 
 type DataTableProps<T> = {

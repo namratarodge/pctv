@@ -47,7 +47,8 @@ export default function People() {
         toast("Delete failed:", response.data.message);
       }
     } catch (error) {
-      toast("Error deleting plan:", error);
+      console.log(error);
+      toast("Error deleting plan:");
     }
   };
 
