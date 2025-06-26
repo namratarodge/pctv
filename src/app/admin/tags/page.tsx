@@ -21,6 +21,16 @@ type tagmValues = {
   type: string;
 };
 
+type TagType = {
+  _id: string;
+  name: string;
+  display_name: string;
+  type: string;
+  created_at: string;
+  updated_at: string;
+  __v: number;
+};
+
 export default function Tags() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -147,7 +157,7 @@ export default function Tags() {
         }
       );
       if (response.data.status) {
-        const modifiedData = response.data.data.data.map((item: any) => ({
+        const modifiedData = response.data.data.data.map((item: TagType) => ({
           ...item,
           updated_at: `${formatDate(item.updated_at)} `,
         }));

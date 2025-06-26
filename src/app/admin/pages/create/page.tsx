@@ -99,7 +99,7 @@ export default function CreateOrEditPage() {
       }
       router.push("/admin/pages"); // redirect after save
     } catch (error) {
-      toast.error("Failed to save page");
+      toast.error("Failed to save page", error);
     }
   };
 

@@ -1,5 +1,5 @@
 "use client";
-import { Filter, Paginations, Model, DataTable } from "@/components/forms";
+import { Filter, DataTable } from "@/components/forms";
 import {
   PencilIcon,
   PlusCircleIcon,
@@ -12,6 +12,23 @@ import { formatDate } from "@/utils/common";
 import axios from "axios";
 import Loading from "@/components/layout/Loading";
 import { listColumn } from "@/constants/DataTableColumn";
+
+
+type ListType = {
+  _id: string;
+  id: number;
+  name: string;
+  description: string | null;
+  user_id: string;
+  system: boolean;
+  public: boolean;
+  auto_update: string | null;
+  created_at: string;
+  updated_at: string;
+  style: string | null;
+  image: string | null;
+  userId: number;
+};
 
 export default function Lists() {
   const [data, setData] = useState([]);
@@ -31,7 +48,7 @@ export default function Lists() {
         }
       );
       if (response.data.status) {
-        const modifiedData = response.data.data.data.map((item: any) => ({
+        const modifiedData = response.data.data.data.map((item: ListType) => ({
           ...item,
           updated_at: `${formatDate(item.updated_at)} `,
         }));

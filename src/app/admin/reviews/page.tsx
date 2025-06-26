@@ -158,7 +158,7 @@ export default function People() {
           }
         );
         if (response.data.status) {
-          const modifiedData = response.data.data.data.map((item: any) => ({
+          const modifiedData = response.data.data.data.map((item: ReviewType) => ({
             ...item,
             updated_at: `${formatDate(item.updated_at)} `,
           }));

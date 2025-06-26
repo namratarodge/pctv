@@ -323,8 +323,8 @@ export const pagesColumn: {
             target.src = "/default-image.jpg";
           }}
         /> */}
-        <span className="flex flex-col">
-          Sandesh Mankar 
+        <span className="flex flex-col" data={row.user_id}>
+          Sandesh Mankar
           <small>sandesh@gmail.com</small>
         </span>
       </div>
