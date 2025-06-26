@@ -324,7 +324,7 @@ export const pagesColumn: {
           }}
         /> */}
         <span className="flex flex-col">
-          Sandesh Mankar {row}
+          Sandesh Mankar 
           <small>sandesh@gmail.com</small>
         </span>
       </div>
