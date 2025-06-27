@@ -5,6 +5,7 @@ import axios from "axios";
 import UserAvatar from "./UserAvatar";
 
 type User = {
+  id : string;
   _id: string;
   name: string;
   poster: string; // URL to image

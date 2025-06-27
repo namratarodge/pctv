@@ -302,18 +302,37 @@ export type CastCreditType = {
 };
 
 export type CastFormType = {
+  _id: string;
+  creditable_id: string;
   person_id: string;
   character: string;
+  order: number;
+  department: string;
+  job: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 };
 export type UserTag = {
   id: string;
+  _id?: string;
   name: string;
+  poster?: string; // URL to image
+  known_for?: string;
+};
+
+export type ApiUserTag = {
+  _id: string;
+  display_name: string;
 };
 
 // Country
 
 export type CountryFormType = {
-  person: string;
+  person_id : UserTag[];
+  taggable_id: string;
+  taggable_type: string;
+  tag_id: string[];
 };
 
 export type CountryType = {
@@ -329,7 +348,7 @@ export type CountryType = {
 // Crew Types
 
 export type CrewFormType = {
-  person: string;
+  person_id: string[];
   job: string;
   department: string;
 };

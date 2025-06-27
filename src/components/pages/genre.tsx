@@ -11,7 +11,7 @@ import { Controller } from "react-hook-form";
 import AutoCompletePersonList from "@/components/forms/AutoCompletePersonList";
 import { Error } from "../layout";
 
-import { CountryFormType, UserTag, TagType } from "@/constants/Type";
+import { CountryFormType, UserTag, TagType,ApiUserTag } from "@/constants/Type";
 type PageProps = {
   titleId: string;
   data?: TagType[];
@@ -20,7 +20,8 @@ type PageProps = {
 
 export default function Genre({ titleId, data, onSubmit }: PageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<UserTag[]>([]);
+
   const [loading, setLoading] = useState(false);
 
   const {
@@ -44,10 +45,10 @@ export default function Genre({ titleId, data, onSubmit }: PageProps) {
         }
       );
       if (response.data.status) {
-        const transformed = response.data.data.data.map(
-          ({ _id, display_name }) => ({ id: _id, name: display_name })
-        );
-        console.log("Fetched categories:", transformed);
+        const transformed = response.data.data.data.map((item: TagType) => ({
+          id: item._id,
+          name: item.display_name,
+        }));
         setLoading(false);
         setCategories(transformed);
       }
@@ -58,11 +59,11 @@ export default function Genre({ titleId, data, onSubmit }: PageProps) {
     }
   };
 
-  const handleFormSubmit = async (data: Record<string, string>) => {
+  const handleFormSubmit = async (data: CountryFormType) => {
     const payload = {
       taggable_id: titleId,
       taggable_type: "genre",
-      tag_id: data.person.map((user) => user.id),
+      tag_id: data.person_id.map((user: UserTag) => user.id),
     };
 
     try {
@@ -86,7 +87,8 @@ export default function Genre({ titleId, data, onSubmit }: PageProps) {
         toast("Taggable creation failed:", response.data.message);
       }
     } catch (error) {
-      toast("Error creating plan:", error);
+      console.log(error);
+      toast("Error creating plan:");
     }
   };
 
@@ -114,7 +116,8 @@ export default function Genre({ titleId, data, onSubmit }: PageProps) {
         toast("Failed to delete keyword:", response.data.message);
       }
     } catch (error) {
-      toast("Error deleting keyword:", error);
+      console.log(error);
+      toast("Error deleting keyword:");
     }
   };
 
@@ -166,20 +169,19 @@ export default function Genre({ titleId, data, onSubmit }: PageProps) {
           >
             <div className="flex flex-col h-30">
               <Controller
-                name="person"
+                name="person_id"
                 control={control}
                 rules={{ required: "Person is required" }}
                 render={({ field }) => (
                   <AutoCompletePersonList
                     users={categories}
-                    onSelect={(user: UserTag) => {
+                    onSelect={(user: UserTag[]) => {
                       field.onChange(user); // updates form value
                     }}
-                    value={field.value} // keeps form in sync
                   />
                 )}
               />
-              {errors.person && <Error message={errors.person.message} />}
+              {errors.person_id && <Error message={errors.person_id.message} />}
             </div>
           </ModelForm>
         </div>

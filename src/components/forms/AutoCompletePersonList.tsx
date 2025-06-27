@@ -3,8 +3,11 @@ import React, {  useState } from "react";
 import { toast } from "react-toastify";
 
 type UserTag = {
-  id: string;
+  id : string;
+  _id ?: string;
   name: string;
+  poster?: string; // URL to image
+  known_for?: string;
 };
 
 function slugify(text: string): string {

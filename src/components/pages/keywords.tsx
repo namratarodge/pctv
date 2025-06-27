@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Error } from "../layout";
 import AutoCompletePersonList from "@/components/forms/AutoCompletePersonList";
-import { CountryFormType, TagType, UserTag } from "@/constants/Type";
+import { CountryFormType, TagType, UserTag, ApiUserTag } from "@/constants/Type";
 
 type PageProps = {
   titleId: string;
@@ -18,9 +18,11 @@ type PageProps = {
   onSubmit: () => void;
 };
 
+
+
 export default function Keywords({ titleId, data, onSubmit }: PageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<UserTag[]>([]);
   const [loading, setLoading] = useState(false);
 
   const {
@@ -44,9 +46,10 @@ export default function Keywords({ titleId, data, onSubmit }: PageProps) {
         }
       );
       if (response.data.status) {
-        const transformed = response.data.data.data.map(
-          ({ _id, display_name }) => ({ id: _id, name: display_name })
-        );
+        const transformed = response.data.data.data.map((item: TagType) => ({
+          id: item._id,
+          name: item.display_name,
+        }));
         setLoading(false);
         setCategories(transformed);
       }
@@ -57,11 +60,11 @@ export default function Keywords({ titleId, data, onSubmit }: PageProps) {
     }
   };
 
-  const handleFormSubmit = async (data: Record<string, string>) => {
+  const handleFormSubmit = async (data: CountryFormType) => {
     const payload = {
       taggable_id: titleId,
       taggable_type: "keyword",
-      tag_id: data.person.map((user) => user.id),
+      tag_id: data.person_id.map((user : UserTag) => user.id),
     };
 
     try {
@@ -167,20 +170,19 @@ export default function Keywords({ titleId, data, onSubmit }: PageProps) {
           >
             <div className="flex flex-col h-30">
               <Controller
-                name="person"
+                name="person_id"
                 control={control}
                 rules={{ required: "Person is required" }}
                 render={({ field }) => (
                   <AutoCompletePersonList
                     users={categories}
-                    onSelect={(user: UserTag) => {
+                    onSelect={(user: UserTag[]) => {
                       field.onChange(user); // updates form value
                     }}
-                    value={field.value} // keeps form in sync
                   />
                 )}
               />
-              {errors.person && <Error message={errors.person.message} />}
+              {errors.person_id && <Error message={errors.person_id.message} />}
             </div>
           </ModelForm>
         </div>

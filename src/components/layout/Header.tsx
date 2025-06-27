@@ -59,10 +59,14 @@ export default function Header() {
   const [navigation, setNavigation] = useState(baseNavigation);
 
   useEffect(() => {
-    const token = localStorage.getItem("token"); // Or from cookie if accessible
-    if (token) {
-      const decoded = jwtDecode<DecodedUser>(token);
-      setUser(decoded);
+    try {
+      const token = localStorage.getItem("token");
+      if (token && token.split('.').length === 3) {
+        const decoded = jwtDecode<DecodedUser>(token);
+        setUser(decoded);
+      }
+    } catch (e) {
+      console.error("Failed to decode token", e);
     }
     const merged = baseNavigation.map((item) => {
       if (item.key === "tv_topics") {

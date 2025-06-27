@@ -79,7 +79,7 @@ export default function General({
         overview: data.description || "",
         runtime: data.runtime?.toString() || "",
         certification: data.certification || "",
-        budget: data.budget || 0,
+        budget: data.budget?.toString() || "",
         revenue: data.revenue?.toString() || "",
         popularity: data.popularity?.toString() || "",
         language: data.language || "",
@@ -330,9 +330,6 @@ export default function General({
                   accept="image/*"
                   onChange={(e) => {
                     const file = e.target.files?.[0];
-                    if (file) {
-                      setPosterPreview(URL.createObjectURL(file));
-                    }
                   }}
                   name="image"
                   className="w-full file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200"

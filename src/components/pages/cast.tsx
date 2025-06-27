@@ -11,7 +11,7 @@ import { CastColumn } from "@/constants/DataTableColumn";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-import { CastCreditType, CastFormType, UserTag } from "@/constants/Type";
+import { CastCreditType, UserTag } from "@/constants/Type";
 
 export default function Genre({ titleId }: { titleId: string }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,7 +22,7 @@ export default function Genre({ titleId }: { titleId: string }) {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<CastFormType>();
+  } = useForm<CastCreditType>();
 
   const handleFormSubmit  = async (data: CastCreditType ) => {
     const payload = {
@@ -183,7 +183,6 @@ export default function Genre({ titleId }: { titleId: string }) {
                       onSelect={(user: UserTag) => {
                         field.onChange(user); // updates form value
                       }}
-                      value={field.value} // keeps form in sync
                     />
                   )}
                 />

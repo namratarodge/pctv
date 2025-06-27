@@ -10,7 +10,7 @@ import Loading from "@/components/layout/Loading";
 import { CrewColumn } from "@/constants/DataTableColumn";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { CrewFormType, CrewTypes, UserTag } from "@/constants/Type";
+import { CastCreditType, CrewFormType, CrewTypes, UserTag } from "@/constants/Type";
 
 export default function Crew({ titleId }: { titleId: string }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,11 +22,12 @@ export default function Crew({ titleId }: { titleId: string }) {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<CrewFormType>();
+  } = useForm<CastCreditType>();
 
-  const handleFormSubmit = async (data: Record<string, string>) => {
+  const handleFormSubmit = async (data: CastCreditType) => {
+    console.log(data)
     const payload = {
-      person_id: data.person._id,
+      person_id: data.person_id._id,
       creditable_id: titleId,
       order: 0,
       department: data.department,
@@ -82,7 +83,8 @@ export default function Crew({ titleId }: { titleId: string }) {
         toast("Failed to delete creditable:", response.data.message);
       }
     } catch (error) {
-      toast("Error deleting creditable:", error);
+      console.log(error)
+      toast("Error deleting creditable:");
     }
   };
 
@@ -148,7 +150,7 @@ export default function Crew({ titleId }: { titleId: string }) {
             <DataTable
               columns={CrewColumn}
               data={categories || []}
-              renderActions={(person) => (
+              renderActions={(person : CastCreditType) => (
                 <div className="flex gap-3 justify-center">
                   <button
                     onClick={() => handleDelete(person._id)}
@@ -172,7 +174,7 @@ export default function Crew({ titleId }: { titleId: string }) {
                   Person{" "}
                 </label>
                 <Controller
-                  name="person"
+                  name="person_id"
                   control={control}
                   rules={{ required: "Person is required" }}
                   render={({ field }) => (
@@ -180,11 +182,10 @@ export default function Crew({ titleId }: { titleId: string }) {
                       onSelect={(user: UserTag) => {
                         field.onChange(user); // updates form value
                       }}
-                      value={field.value} // keeps form in sync
                     />
                   )}
                 />
-                {errors.person && <Error message={errors.person.message} />}
+                {errors.person_id && <Error message={errors.person_id.message} />}
               </div>
               <div className="pl-2  pb-4">
                 <label className="block text-sm text-gray-600 mb-1 font-semibold">
