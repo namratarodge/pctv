@@ -10,7 +10,7 @@ import Loading from "@/components/layout/Loading";
 import { CrewColumn } from "@/constants/DataTableColumn";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { CastCreditType, CrewFormType, CrewTypes, UserTag } from "@/constants/Type";
+import { CastCreditType, CrewTypes, UserTag } from "@/constants/Type";
 
 export default function Crew({ titleId }: { titleId: string }) {
   const [isModalOpen, setIsModalOpen] = useState(false);

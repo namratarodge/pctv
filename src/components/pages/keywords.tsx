@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Error } from "../layout";
 import AutoCompletePersonList from "@/components/forms/AutoCompletePersonList";
-import { CountryFormType, TagType, UserTag, ApiUserTag } from "@/constants/Type";
+import { CountryFormType, TagType, UserTag } from "@/constants/Type";
 
 type PageProps = {
   titleId: string;

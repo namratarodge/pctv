@@ -11,7 +11,7 @@ import { Controller } from "react-hook-form";
 import AutoCompletePersonList from "@/components/forms/AutoCompletePersonList";
 import { Error } from "../layout";
 
-import { CountryFormType, UserTag, TagType,ApiUserTag } from "@/constants/Type";
+import { CountryFormType, UserTag, TagType } from "@/constants/Type";
 type PageProps = {
   titleId: string;
   data?: TagType[];
