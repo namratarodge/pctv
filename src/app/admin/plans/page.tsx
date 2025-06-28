@@ -26,6 +26,9 @@ export default function Plans() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState<CurrencyCode>("USD");
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+
   const currencyDetails = currencies[selectedCurrency];
 
   const {
@@ -71,7 +74,7 @@ export default function Plans() {
     }
   };
 
-  const handleFormSubmit : SubmitHandler<PlanFormValues> = async (data) => {
+  const handleFormSubmit: SubmitHandler<PlanFormValues> = async (data) => {
     const selectedCurrencyCode = data.currency as CurrencyCode;
 
     // Optionally, validate it:
@@ -89,21 +92,29 @@ export default function Plans() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/billing-plan`,
-        payload,
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const url = isEditing
+        ? `${process.env.NEXT_PUBLIC_API_URL}/billing-plan/${editingId}`
+        : `${process.env.NEXT_PUBLIC_API_URL}/billing-plan`;
+
+      const method = isEditing ? "put" : "post";
+
+      const response = await axios({
+        url,
+        method,
+        data,
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      });
 
       if (response.data.status) {
         toast("Plan created successfully:", response.data);
         setIsModalOpen(false); // Close modal
         fetchGetPlans(); // Refresh list
+
+        setIsEditing(false);
+        setEditingId(null);
         reset();
       } else {
         toast("Plan creation failed:", response.data.message);
@@ -112,6 +123,22 @@ export default function Plans() {
       console.log(error);
       toast("Error creating plan:");
     }
+  };
+
+  const handleEdit = (data: PlanFormValues) => {
+    console.log(data);
+    setIsEditing(true);
+    setEditingId(data._id);
+    setIsModalOpen(true);
+
+    // Populate form with existing data
+    reset({
+      name: data.name,
+      amount: data.amount,
+      currency: data.currency,
+      interval: data.interval,
+      interval_count: data.interval_count,
+    });
   };
 
   const handleDeletePlan = async (id: string) => {
@@ -178,7 +205,7 @@ export default function Plans() {
               renderActions={(person: PersonType) => (
                 <div className="flex gap-3 justify-end">
                   <button
-                    onClick={() => console.log("Edit", person)}
+                    onClick={() => handleEdit(person)}
                     className="text-gray-600 hover:text-gray-800 cursor-pointer"
                   >
                     <PencilIcon className="w-5 h-5" />

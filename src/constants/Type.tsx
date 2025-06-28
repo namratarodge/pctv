@@ -117,6 +117,7 @@ export type PageType = {
   workspace_id: string | null;
 };
 export type PlanFormValues = {
+  _id : string;
   name: string;
   amount: number;
   currency: string;

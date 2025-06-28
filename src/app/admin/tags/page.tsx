@@ -42,7 +42,6 @@ export default function Tags() {
   const [limits, setLimits] = useState(10);
 
   const handleFormSubmit = async (data: Record<string, string>) => {
-    console.log("Form submitted:", data);
     const token = localStorage.getItem("token");
 
     try {
