@@ -3,6 +3,24 @@ export type TvTopicType = {
   display_name: string;
 };
 
+// Subscription Type
+
+export type SubscriptionType = {
+  _id: string;
+  id: number;
+  user_id: string;
+  plan_id: string;
+  gateway_name: string;
+  gateway_id: string;
+  quantity: number;
+  description: string | null;
+  trial_ends_at: string | null;
+  ends_at: string | null;
+  renews_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
 // Titles Types
 
 export type TitleType = {
@@ -144,6 +162,7 @@ export type SubscriptionPlanType = {
   features: string[]; // cleaned below
   position: string;
   created_at: string;
+  ends_at: string;
   updated_at: string;
   available_space: string | null;
   hidden: boolean;

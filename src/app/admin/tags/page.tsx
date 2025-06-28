@@ -29,6 +29,7 @@ export default function Tags() {
     reset,
     formState: { errors },
   } = useForm<TagFormValue>();
+    
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({

@@ -1,4 +1,5 @@
-export const formatDate = (isoDateStr, showTime = false) => {
+export const formatDate = (isoDateStr, showTime = false , defaultText = "-") => {
+  if (!isoDateStr) return defaultText;
   const date = new Date(isoDateStr);
 
   const options = {

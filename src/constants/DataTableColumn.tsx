@@ -21,6 +21,44 @@ const PersonImage = ({ poster, name }: { poster?: string; name?: string }) => {
   );
 };
 
+// Crew subscriptions
+type typeOfSubscriptions = {
+  person_id: {
+    name: string;
+    poster: string;
+  };
+  gateway_id: string;
+  cancelled: string;
+  renews_at: string;
+  ends_at: string;
+  created_at: string;
+};
+
+export const SubscriptionsColumn: {
+  key: keyof typeOfSubscriptions;
+  label: string;
+  render?: (row: typeOfSubscriptions) => React.ReactNode;
+}[] = [
+  {
+    key: "person_id",
+    label: "User",
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        <PersonImage
+          poster={row.person_id?.poster}
+          name={row.person_id?.name}
+        />
+        <span className="flex flex-col">{row.person_id?.name} </span>
+      </div>
+    ),
+  },
+  { key: "gateway_id", label: "Gateway" },
+  { key: "cancelled", label: "Cancelled" },
+  { key: "renews_at", label: "Renews At" },
+  { key: "ends_at", label: "Ends At" },
+  { key: "created_at", label: "Created At" },
+];
+
 // Crew Column
 type typeOfCrew = {
   person_id: {
