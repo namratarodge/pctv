@@ -19,3 +19,7 @@ export const formatNormal = (date, defaultText = "-") => {
   if (!date) return defaultText;
   return date.slice(0, 10);
 };
+
+export const truncateToWords = (text, number) => {
+  return text.split(/\s+/).slice(0, number).join(" ");
+};

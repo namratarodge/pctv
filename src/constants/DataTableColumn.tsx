@@ -1,40 +1,7 @@
 import { StarIcon } from "@heroicons/react/24/solid";
-import Image from "next/image";
-import { useState } from "react";
 
-type PersonImageProps = {
-  poster?: string;
-  name?: string;
-  direct?: boolean;
-  rounded?: boolean;
-};
-
-const PersonImage = ({
-  direct = false,
-  poster,
-  name,
-  rounded = false,
-}: PersonImageProps) => {
-  const initialSrc = !poster
-    ? "/default-image.jpg"
-    : direct
-    ? poster
-    : `${process.env.NEXT_PUBLIC_WEBSITE}/${poster}`;
-  const [imgSrc, setImgSrc] = useState(initialSrc);
-
-  return (
-    <Image
-      src={imgSrc}
-      alt={name || "Person"}
-      width={32}
-      height={32}
-      className={`${
-        rounded ? "rounded-full" : "rounded-sm"
-      } w-10 h-10  object-cover`}
-      onError={() => setImgSrc("/default-image.jpg")}
-    />
-  );
-};
+import UserAvatar from "@/components/forms/UserAvatar";
+import { truncateToWords } from "@/utils/common";
 
 // Crew subscriptions
 type typeOfSubscriptions = {
@@ -62,7 +29,7 @@ export const SubscriptionsColumn: {
     label: "User",
     render: (row) => (
       <div className="flex items-center space-x-4">
-        <PersonImage
+        <UserAvatar
           direct={true}
           poster={row.user_id?.avatar}
           name={row.user_id?.first_name}
@@ -103,10 +70,7 @@ export const CrewColumn: {
     label: "Name",
     render: (row) => (
       <div className="flex items-center space-x-2">
-        <PersonImage
-          poster={row.person_id?.poster}
-          name={row.person_id?.name}
-        />
+        <UserAvatar poster={row.person_id?.poster} name={row.person_id?.name} />
         <span className="flex flex-col">{row.person_id?.name} </span>
       </div>
     ),
@@ -134,10 +98,7 @@ export const CastColumn: {
     label: "Name",
     render: (row) => (
       <div className="flex items-center space-x-2">
-        <PersonImage
-          poster={row.person_id?.poster}
-          name={row.person_id?.name}
-        />
+        <UserAvatar poster={row.person_id?.poster} name={row.person_id?.name} />
         <span className="flex flex-col">{row.person_id?.name} </span>
       </div>
     ),
@@ -348,7 +309,7 @@ export const usersColumn: {
     label: "User",
     render: (row) => (
       <div className="flex items-center space-x-2">
-        <PersonImage poster={row.avatar} name={row.first_name} />
+        <UserAvatar poster={row.avatar} name={row.first_name} />
         <span className="flex flex-col">
           {row.first_name} {row.last_name}
         </span>
@@ -390,13 +351,18 @@ type reviewOfPages = {
   _id: string;
   id: number;
   score: number;
-  reviewable_id: string;
+  reviewable_id: {
+    name: string;
+    backdrop: string;
+    description: string;
+  };
   user_id: {
     _id: string;
     username: string;
     email: string;
   };
   created_at: string;
+  rating_type: string;
   updated_at: string;
   reviewableId: number;
 };
@@ -434,10 +400,23 @@ export const reviewColumn: {
     key: "reviewable_id",
     label: "Reviewable",
 
-    render: () => (
+    render: (row) => (
       <div className="flex items-center space-x-2">
-        <span className="flex flex-col">Project communications</span>
+        <UserAvatar
+          poster={row.reviewable_id?.backdrop}
+          name={row.reviewable_id?.name}
+        />
+        <span className="w-64 h-10 ">
+          {truncateToWords(row.reviewable_id?.name, 7)}...{" "}
+        </span>
       </div>
+    ),
+  },
+  {
+    key: "rating_type",
+    label: "Type",
+    render: () => (
+      <div>Rating</div>
     ),
   },
   { key: "updated_at", label: "Last Updated" },

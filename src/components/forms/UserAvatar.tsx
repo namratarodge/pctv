@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 type PersonImageProps = {
-  poster: string;
+  poster?: string;
   name?: string;
   direct?: boolean;
   rounded?: boolean;
