@@ -5,18 +5,29 @@ import axios from "axios";
 import UserAvatar from "./UserAvatar";
 import { UserTagForUser } from "@/constants/Type";
 
-
 type AutoCompletePersonListProps = {
+  value?: UserTagForUser | null;
   onSelect: (selected: UserTagForUser) => void;
 };
 
 export default function AutoCompeleteListUser({
+  value,
   onSelect,
 }: AutoCompletePersonListProps) {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<UserTagForUser[]>([]);
   const [selectedUser, setSelectedUser] = useState<UserTagForUser | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (value) {
+      setSelectedUser(value);
+      setQuery(value.email);
+    } else {
+      setSelectedUser(null);
+      setQuery("");
+    }
+  }, [value]);
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
@@ -65,7 +76,7 @@ export default function AutoCompeleteListUser({
   };
 
   return (
-    <div className="w-full max-w-md mx-auto mt-1">
+    <div className="w-full mt-2">
       <input
         type="text"
         value={query}
@@ -74,7 +85,7 @@ export default function AutoCompeleteListUser({
           setSelectedUser(null);
         }}
         placeholder="Search user by name..."
-        className="w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+        className=" w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
       />
 
       {loading && <p className="text-sm mt-1">Loading...</p>}
@@ -85,29 +96,16 @@ export default function AutoCompeleteListUser({
             <li
               key={user._id}
               onClick={() => handleSelect(user)}
-              className="flex items-center gap-2 px-2 py-2 cursor-pointer hover:bg-blue-50"
+              className="flex items-center gap-1 px-2 py-2 cursor-pointer hover:bg-blue-50"
             >
-              <UserAvatar poster={user?.avatar} />
+              <UserAvatar direct={true} poster={user?.avatar} />
               <div className="flex flex-col">
-                <span>{user?.username}</span>
+                <span>{user?.first_name}</span>
                 <small>{user.email}</small>
               </div>
             </li>
           ))}
         </ul>
-      )}
-
-      {selectedUser && (
-        <div className="mt-4 p-4 border rounded-md bg-green-50">
-          <h3 className="font-bold">Selected User</h3>
-          <div className="flex items-center gap-2 mt-2">
-            <UserAvatar poster={selectedUser?.avatar} />
-            <div className="flex flex-col">
-              <span>{selectedUser?.username}</span>
-              <small>{selectedUser.email}</small>
-            </div>
-          </div>
-        </div>
       )}
     </div>
   );

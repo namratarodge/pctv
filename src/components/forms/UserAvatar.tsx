@@ -2,16 +2,25 @@
 
 import Image from "next/image";
 import { useState } from "react";
-
-type UserAvatarProps = {
+type PersonImageProps = {
   poster: string;
   name?: string;
+  direct?: boolean;
+  rounded?: boolean;
 };
 
-const UserAvatar: React.FC<UserAvatarProps> = ({ name = 'default', poster }) => {
-  const [imgSrc, setImgSrc] = useState(
-    `${process.env.NEXT_PUBLIC_WEBSITE}/${poster}`
-  );
+const UserAvatar: React.FC<PersonImageProps> = ({
+  direct = false,
+  name = "default",
+  poster,
+  rounded = false,
+}) => {
+  const initialSrc = !poster
+    ? "/default-image.jpg"
+    : direct
+    ? poster
+    : `${process.env.NEXT_PUBLIC_WEBSITE}/${poster}`;
+  const [imgSrc, setImgSrc] = useState(initialSrc);
 
   return (
     <Image
@@ -19,7 +28,9 @@ const UserAvatar: React.FC<UserAvatarProps> = ({ name = 'default', poster }) => 
       alt={name}
       width={40}
       height={40}
-      className="w-10 h-10 rounded-full object-cover"
+      className={`${
+        rounded ? "rounded-full" : "rounded-sm"
+      } w-10 h-10  object-cover`}
       onError={() => setImgSrc("/default-user.jpg")}
     />
   );

@@ -1,4 +1,4 @@
-export const formatDate = (isoDateStr, showTime = false , defaultText = "-") => {
+export const formatDate = (isoDateStr, showTime = false, defaultText = "-") => {
   if (!isoDateStr) return defaultText;
   const date = new Date(isoDateStr);
 
@@ -14,4 +14,8 @@ export const formatDate = (isoDateStr, showTime = false , defaultText = "-") => 
   };
 
   return date.toLocaleString("en-US", options);
+};
+export const formatNormal = (date, defaultText = "-") => {
+  if (!date) return defaultText;
+  return date.slice(0, 10);
 };
