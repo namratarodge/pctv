@@ -11,9 +11,15 @@ import {
   MenuItems,
 } from "@headlessui/react";
 import {
+  ArrowRightCircleIcon,
   Bars3Icon,
   ChevronDownIcon,
+  ClipboardIcon,
+  Cog6ToothIcon,
+  EyeIcon,
   MagnifyingGlassIcon,
+  UserCircleIcon,
+  UserIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
@@ -36,8 +42,16 @@ const baseNavigation = [
 ];
 
 const userNavigation = [
-  { name: "Your profile", key: "profile", href: "#" },
-  { name: "Sign out", key: "sign_out", href: "#" },
+  { name: "Profile", key: "profile", href: "#", icon: UserIcon },
+  { name: "Watchlist", key: "profile", href: "#", icon: EyeIcon },
+  { name: "Your List", key: "profile", href: "#", icon: ClipboardIcon },
+  { name: "Account Settings", key: "profile", href: "#", icon: Cog6ToothIcon },
+  {
+    name: "Log out",
+    key: "sign_out",
+    href: "#",
+    icon: ArrowRightCircleIcon,
+  },
 ];
 
 function classNames(...classes: (string | false | null | undefined)[]): string {
@@ -61,7 +75,7 @@ export default function Header() {
   useEffect(() => {
     try {
       const token = localStorage.getItem("token");
-      if (token && token.split('.').length === 3) {
+      if (token && token.split(".").length === 3) {
         const decoded = jwtDecode<DecodedUser>(token);
         setUser(decoded);
       }
@@ -178,49 +192,54 @@ export default function Header() {
         <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-6 items-center">
           <MagnifyingGlassIcon className="w-5 h-5 text-white cursor-pointer" />
           {user && Object.keys(user).length > 0 ? (
-            <Menu as="div" className="relative">
-              <MenuButton className="-m-1.5 flex items-center p-1.5">
-                <span className="sr-only">Open user menu</span>
-                <span className="hidden lg:flex lg:items-center cursor-pointer">
-                  <span
-                    aria-hidden="true"
-                    className="ml-4 text-sm/6 font-semibold text-white"
-                  >
-                    {user.username}
+            <>
+              <Menu as="div" className="relative">
+                <MenuButton className="-m-1.5 flex items-center p-1.5">
+                  <span className="sr-only">Open user menu</span>
+                  <span className="hidden lg:flex lg:items-center cursor-pointer">
+                    <UserCircleIcon className="w-6 h-6 text-gray-300 " />
+                    <span
+                      aria-hidden="true"
+                      className="ml-4 text-sm font-semibold text-white"
+                    >
+                      {user.username}
+                    </span>
+                    <ChevronDownIcon
+                      aria-hidden="true"
+                      className="ml-2 size-5 text-gray-400"
+                    />
                   </span>
-                  <ChevronDownIcon
-                    aria-hidden="true"
-                    className="ml-2 size-5 text-gray-400"
-                  />
-                </span>
-              </MenuButton>
-              <MenuItems
-                transition
-                className="absolute right-0 z-10 mt-2.5 w-56 origin-top-right rounded-md bg-gray-800 py-2 ring-1 shadow-lg  transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
-              >
-                {userNavigation.map((item, index) =>
-                  item.name === "Sign out" ? (
-                    <MenuItem key={index}>
-                      <button
-                        onClick={() => singOut()}
-                        className="cursor-pointer block w-full text-left px-3 py-1 text-sm/6 text-gray-400 hover:text-gray-200 data-focus:outline-hidden"
-                      >
-                        {item.name}
-                      </button>
-                    </MenuItem>
-                  ) : (
-                    <MenuItem key={index}>
-                      <a
-                        href={item.href}
-                        className="block px-3 py-1 text-sm/6 text-gray-400  data-focus:outline-hidden hover:text-gray-200"
-                      >
-                        {item.name}
-                      </a>
-                    </MenuItem>
-                  )
-                )}
-              </MenuItems>
-            </Menu>
+                </MenuButton>
+                <MenuItems
+                  transition
+                  className="absolute right-0 z-10 mt-2.5 w-56 origin-top-right rounded-md text-gray-400  bg-gray-800 py-2  shadow-lg  transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+                >
+                  {userNavigation.map((item, index) =>
+                    item.name === "Sign out" ? (
+                      <MenuItem key={index}>
+                        <button
+                          onClick={() => singOut()}
+                          className="cursor-pointer block w-full text-left px-3 py-1 text-sm/6 text-gray-400 hover:text-gray-200 data-focus:outline-hidden"
+                        >
+                           <item.icon className="w-5 h-5 text-gray-600" />
+                          {item.name}
+                        </button>
+                      </MenuItem>
+                    ) : (
+                      <MenuItem key={index}>
+                        <a
+                          href={item.href}
+                          className="flex items-center gap-3 w-full text-left px-3 py-2 rounded hover:text-gray-100 transition text-sm"
+                          >
+                           <item.icon className="w-5 h-5 text-gray-300" />
+                          {item.name}
+                        </a>
+                      </MenuItem>
+                    )
+                  )}
+                </MenuItems>
+              </Menu>
+            </>
           ) : (
             <div className="flex gap-2">
               <Link
