@@ -3,25 +3,19 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import UserAvatar from "./UserAvatar";
+import { UserTagForUser } from "@/constants/Type";
 
-type User = {
-  id : string;
-  _id: string;
-  name: string;
-  poster: string; // URL to image
-  known_for : string;
-};
 
 type AutoCompletePersonListProps = {
-  onSelect: (selected: User) => void;
+  onSelect: (selected: UserTagForUser) => void;
 };
 
-export default function UserAutoComplete({
+export default function AutoCompeleteListUser({
   onSelect,
 }: AutoCompletePersonListProps) {
   const [query, setQuery] = useState("");
-  const [suggestions, setSuggestions] = useState<User[]>([]);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [suggestions, setSuggestions] = useState<UserTagForUser[]>([]);
+  const [selectedUser, setSelectedUser] = useState<UserTagForUser | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -41,14 +35,14 @@ export default function UserAutoComplete({
       const token = localStorage.getItem("token");
       setLoading(true);
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/peoples`,
+        `${process.env.NEXT_PUBLIC_API_URL}/users`,
         {
           headers: {
             Authorization: token,
             "Content-Type": "application/json",
           },
           params: {
-            name: searchText,
+            email: searchText,
           },
         }
       );
@@ -63,9 +57,9 @@ export default function UserAutoComplete({
     }
   };
 
-  const handleSelect = (user: User) => {
+  const handleSelect = (user: UserTagForUser) => {
     setSelectedUser(user);
-    setQuery(user.name);
+    setQuery(user.email);
     setSuggestions([]);
     onSelect(user);
   };
@@ -93,10 +87,10 @@ export default function UserAutoComplete({
               onClick={() => handleSelect(user)}
               className="flex items-center gap-2 px-2 py-2 cursor-pointer hover:bg-blue-50"
             >
-              <UserAvatar poster={user.poster} />
+              <UserAvatar poster={user?.avatar} />
               <div className="flex flex-col">
-                <span>{user.name}</span>
-                <small>{user.known_for}</small>
+                <span>{user?.username}</span>
+                <small>{user.email}</small>
               </div>
             </li>
           ))}
@@ -107,10 +101,10 @@ export default function UserAutoComplete({
         <div className="mt-4 p-4 border rounded-md bg-green-50">
           <h3 className="font-bold">Selected User</h3>
           <div className="flex items-center gap-2 mt-2">
-            <UserAvatar poster={selectedUser.poster} />
+            <UserAvatar poster={selectedUser?.avatar} />
             <div className="flex flex-col">
-              <span>{selectedUser.name}</span>
-              <small>{selectedUser.known_for}</small>
+              <span>{selectedUser?.username}</span>
+              <small>{selectedUser.email}</small>
             </div>
           </div>
         </div>

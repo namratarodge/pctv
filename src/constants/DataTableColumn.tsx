@@ -2,12 +2,25 @@ import { StarIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { useState } from "react";
 
-const PersonImage = ({ poster, name }: { poster?: string; name?: string }) => {
-  const [imgSrc, setImgSrc] = useState(
-    poster
-      ? `${process.env.NEXT_PUBLIC_WEBSITE}/${poster}`
-      : "/default-image.jpg"
-  );
+type PersonImageProps = {
+  poster?: string;
+  name?: string;
+  direct?: boolean;
+  rounded?: boolean;
+};
+
+const PersonImage = ({
+  direct = false,
+  poster,
+  name,
+  rounded = false,
+}: PersonImageProps) => {
+  const initialSrc = !poster
+    ? "/default-image.jpg"
+    : direct
+    ? poster
+    : `${process.env.NEXT_PUBLIC_WEBSITE}/${poster}`;
+  const [imgSrc, setImgSrc] = useState(initialSrc);
 
   return (
     <Image
@@ -15,7 +28,9 @@ const PersonImage = ({ poster, name }: { poster?: string; name?: string }) => {
       alt={name || "Person"}
       width={32}
       height={32}
-      className="w-8 h-8 rounded-sm object-cover"
+      className={`${
+        rounded ? "rounded-full" : "rounded-sm"
+      } w-10 h-10  object-cover`}
       onError={() => setImgSrc("/default-image.jpg")}
     />
   );
@@ -23,9 +38,12 @@ const PersonImage = ({ poster, name }: { poster?: string; name?: string }) => {
 
 // Crew subscriptions
 type typeOfSubscriptions = {
-  person_id: {
-    name: string;
-    poster: string;
+  user_id: {
+    first_name: string;
+    last_name: string;
+    email: string;
+    userType: string;
+    avatar: string;
   };
   gateway_id: string;
   cancelled: string;
@@ -40,15 +58,21 @@ export const SubscriptionsColumn: {
   render?: (row: typeOfSubscriptions) => React.ReactNode;
 }[] = [
   {
-    key: "person_id",
+    key: "user_id",
     label: "User",
     render: (row) => (
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-4">
         <PersonImage
-          poster={row.person_id?.poster}
-          name={row.person_id?.name}
+          direct={true}
+          poster={row.user_id?.avatar}
+          name={row.user_id?.first_name}
         />
-        <span className="flex flex-col">{row.person_id?.name} </span>
+        <div>
+          <span className="flex flex-col text-xs">
+            {row.user_id?.first_name} {row.user_id?.last_name}{" "}
+          </span>
+          <span className="text-xs">{row.user_id?.email} </span>
+        </div>
       </div>
     ),
   },
@@ -181,7 +205,7 @@ export const AdditionalTagColumn: {
 
 // Title  Column
 type TitleType = {
-  _id : string;
+  _id: string;
   name: string;
   type: string;
   release_date: number;
@@ -213,7 +237,7 @@ export const TitleColumn: {
 
 // People  Column
 type PeopleItem = {
-  _id : string;
+  _id: string;
   name: string;
   birthdate: string;
   views: number;
@@ -304,7 +328,7 @@ export const tagsColumn: {
 
 // users Column
 type typeOfUsers = {
-  _id : string;
+  _id: string;
   user: string;
   subscribed: number;
   userType: string;

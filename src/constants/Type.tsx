@@ -5,6 +5,22 @@ export type TvTopicType = {
 
 // Subscription Type
 
+export type SubscriptionFormValue = {
+  _id: string;
+  user_id : string;
+  person_id: {
+    _id: string;
+    name: string;
+    poster: string;
+    known_for: string;
+  };
+  plan_id : string;
+  description : string;
+  renews_at: string | null;
+  ends_at: string | null;
+};
+
+
 export type SubscriptionType = {
   _id: string;
   id: number;
@@ -20,6 +36,16 @@ export type SubscriptionType = {
   created_at: string;
   updated_at: string;
 };
+
+
+export type UserTagForUser = {
+  id : string;
+  _id: string;
+  username: string;
+  email : string;
+  avatar: string; // URL to image
+};
+
 
 // Titles Types
 

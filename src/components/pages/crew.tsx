@@ -25,7 +25,6 @@ export default function Crew({ titleId }: { titleId: string }) {
   } = useForm<CastCreditType>();
 
   const handleFormSubmit = async (data: CastCreditType) => {
-    console.log(data)
     const payload = {
       person_id: data.person_id._id,
       creditable_id: titleId,
