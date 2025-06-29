@@ -20,15 +20,17 @@ export default function DataTable<T extends { [key: string]: string }>({
   renderActions,
 }: DataTableProps<T>) {
   return (
-    <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+    <div className="overflow-x-auto rounded shadow-md border border-gray-200">
       <table className="min-w-full divide-y divide-gray-200 bg-white">
-        <thead>
+        <thead className="bg-gray-50">
           <tr>
-            {columns.map((col) => (
+            {columns.map((col, index) => (
               <th
                 key={String(col.key)}
                 scope="col"
-                className="sticky top-0 z-10 py-4 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                className={`px-4 py-4 text-sm font-semibold text-gray-700  ${
+                  index === 0 ? "text-left" : "text-left"
+                }`}
               >
                 {col.label}
               </th>
@@ -54,11 +56,16 @@ export default function DataTable<T extends { [key: string]: string }>({
         ) : (
           <tbody className="divide-y divide-gray-200 bg-white">
             {data.map((row, index) => (
-              <tr key={index} className="hover:bg-gray-50">
-                {columns.map((col) => (
+              <tr
+                key={index}
+                className="hover:bg-gray-50 transition-colors duration-200"
+              >
+                {columns.map((col, colIndex) => (
                   <td
                     key={String(col.key)}
-                    className="py-4 pr-3  text-sm font-medium whitespace-nowrap text-gray-700 "
+                    className={`px-4 py-4 text-sm text-gray-600 whitespace-nowrap ${
+                      colIndex === 0 ? "text-left" : "text-left"
+                    }`}
                   >
                     {col.render
                       ? col.render(row)
