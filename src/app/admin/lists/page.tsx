@@ -12,8 +12,8 @@ import { formatDate } from "@/utils/common";
 import axios from "axios";
 import Loading from "@/components/layout/Loading";
 import { listColumn } from "@/constants/DataTableColumn";
-import { ListType } from "@/constants/Type"
-
+import { ListType } from "@/constants/Type";
+import { toast } from "react-toastify";
 
 export default function Lists() {
   const [data, setData] = useState([]);
@@ -30,6 +30,9 @@ export default function Lists() {
             Authorization: token,
             "Content-Type": "application/json",
           },
+          params : {
+            public : 1
+          }
         }
       );
       if (response.data.status) {
@@ -50,6 +53,32 @@ export default function Lists() {
     }
   };
 
+  const handleDelete = async (id: string) => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/list/${id}`,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          }
+        }
+      );
+
+      if (response.data.status) {
+        toast("List deleted successfully");
+        fetch(); // Refresh the plans list
+      } else {
+        toast("Delete failed:", response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast("Error deleting list:");
+    }
+  };
+
   useEffect(() => {
     fetch();
   }, []);
@@ -64,7 +93,7 @@ export default function Lists() {
             <Filter filterType={filterType} />
             <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none flex gap-2">
               <Link
-                href="pages/create"
+                href="/list/create"
                 className="flex items-center  gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 <PlusCircleIcon className="w-6 h-6" /> Add New Lists
@@ -84,12 +113,6 @@ export default function Lists() {
                         className="text-gray-600 hover:text-gray-800 cursor-pointer"
                       >
                         <PencilIcon className="w-5 h-5" />
-                      </button>
-                      <button
-                        onClick={() => console.log("Delete", person)}
-                        className="text-red-600 hover:text-red-800 cursor-pointer"
-                      >
-                        <TrashIcon className="w-5 h-5" />
                       </button>
                     </div>
                   )}

@@ -254,23 +254,49 @@ type typeOfList = {
   name: "string";
   owner: "number";
   item_count: "string";
-  public: boolean;
+  user_id: {
+    first_name: string;
+    last_name: string;
+    email: string;
+    userType: string;
+    avatar: string;
+  };
+  public: number;
   updated_at: "string";
 };
 
 export const listColumn: {
   key: keyof typeOfList;
   label: string;
+  render?: (row: typeOfList) => React.ReactNode;
 }[] = [
   { key: "name", label: "Name" },
-  { key: "owner", label: "Owner" },
+  {
+    key: "owner",
+    label: "Owner",
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        <UserAvatar
+          poster={row.user_id?.avatar}
+          name={row.user_id?.first_name}
+        />
+        <span className="flex flex-col text-sm">
+          {row.user_id?.first_name} {row.user_id?.last_name}
+        </span>
+      </div>
+    ),
+  },
   { key: "item_count", label: "Item Count" },
-  { key: "public", label: "Public" },
+  {
+    key: "public",
+    label: "Public",
+    render: (row) => <div>{row.public == 1 ? "True" : "False"}</div>,
+  },
   { key: "updated_at", label: "Last Updated" },
 ];
 
 // tags Column
-type typeOTags = {
+type typeOTags = {  
   name: "string";
   type: "number";
   display_name: "string";
