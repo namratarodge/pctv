@@ -415,9 +415,7 @@ export const reviewColumn: {
   {
     key: "rating_type",
     label: "Type",
-    render: () => (
-      <div>Rating</div>
-    ),
+    render: () => <div>Rating</div>,
   },
   { key: "updated_at", label: "Last Updated" },
 ];
