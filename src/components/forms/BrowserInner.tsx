@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { usePublicData } from "@/components/context/PublicDataContext";
 import Image from "next/image";
 
-import { TitleType, TvTopicType } from "@/constants/Type";
+import { TagType, TitleType, TvTopicType } from "@/constants/Type";
 
 const country = [
   { id: 1, name: "United States" },
@@ -44,15 +44,6 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-type GenreType = {
-  _id: string;
-  name: string;
-  display_name: string;
-  type: "genre";
-  created_at: string;
-  updated_at: string;
-  __v: number;
-};
 
 export default function BrowserInner() {
   const router = useRouter();
@@ -152,7 +143,6 @@ export default function BrowserInner() {
                 <option
                   key={index}
                   value={data.name}
-                  selected={data.name === keyword}
                 >
                   {data.display_name}
                 </option>
@@ -169,7 +159,7 @@ export default function BrowserInner() {
           <h2 className="text-gray-400">Categories</h2>
           <div className="mt-2">
             <ul className="list-none">
-              {categories.map((category: GenreType) => (
+              {categories.map((category: TagType) => (
                 <li
                   className="text-gray-300 py-1 cursor-pointer"
                   key={category._id}
@@ -294,9 +284,9 @@ export default function BrowserInner() {
                   className="rounded-lg"
                 />
                 <div className="mt-4">
-                  <a href="#" className="text-sm">
+                  <span  className="text-sm">
                     {title?.name.slice(0, 34)}
-                  </a>
+                  </span>
                 </div>
               </Link>
             </div>
