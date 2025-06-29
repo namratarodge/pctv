@@ -197,6 +197,14 @@ export default function Header() {
                 <MenuButton className="-m-1.5 flex items-center p-1.5">
                   <span className="sr-only">Open user menu</span>
                   <span className="hidden lg:flex lg:items-center cursor-pointer">
+                   
+                    <Image
+                src="default-front.jpg"
+                alt="test"
+                width={300}
+                height={200}
+                className="w-full h-auto object-cover rounded-md"
+              />
                     <UserCircleIcon className="w-6 h-6 text-gray-300 " />
                     <span
                       aria-hidden="true"

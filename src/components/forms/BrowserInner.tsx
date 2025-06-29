@@ -44,7 +44,6 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-
 export default function BrowserInner() {
   const router = useRouter();
   const [title, setTitle] = useState([]);
@@ -140,10 +139,7 @@ export default function BrowserInner() {
             >
               <option value="all">All</option>
               {tvtopic.map((data: TvTopicType, index: number) => (
-                <option
-                  key={index}
-                  value={data.name}
-                >
+                <option key={index} value={data.name}>
                   {data.display_name}
                 </option>
               ))}
@@ -256,14 +252,12 @@ export default function BrowserInner() {
         <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
           <div className="flex gap-4 items-center ">
             <h1 className="text-3xl text-white">PCE Brazil</h1>
-
-            {selectedGenres ||
-              (genreParam && (
-                <div className="flex px-4 py-2  text-sm rounded-full bg-gray-700 text-gray-400 items-center cursor-pointer">
+            {selectedGenres.length > 0 && (
+                <Link href="/browse" className="flex px-3 py-1.5  text-sm rounded-full bg-gray-700 text-gray-400 items-center cursor-pointer">
                   Reset Filter
                   <XMarkIcon className="w-6 h-6 cursor-pointer text-red-400" />
-                </div>
-              ))}
+                </Link>
+              )}
           </div>
 
           <div className="flex items-center gap-4    px-3 py-1 text-white">
@@ -284,9 +278,7 @@ export default function BrowserInner() {
                   className="rounded-lg"
                 />
                 <div className="mt-4">
-                  <span  className="text-sm">
-                    {title?.name.slice(0, 34)}
-                  </span>
+                  <span className="text-sm">{title?.name.slice(0, 34)}</span>
                 </div>
               </Link>
             </div>

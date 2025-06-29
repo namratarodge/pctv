@@ -84,26 +84,14 @@ export default function VoicesSlider({
               <div className="absolute -left-4 top-1/2 transform -translate-y-1/2 text-[120px] text-white/10 font-extrabold select-none pointer-events-none">
                 1
               </div>
-              {/* <img
+              <Image
+                width={100}
+                height={100}
+                alt="Masterclass Card"
                 src="https://picsum.photos/300/200/"
                 className="w-full h-auto rounded-sm"
-              /> */}
-               <Image
-                  width={100}
-                  height={100}
-                  alt="Masterclass Card"
-                  src="https://picsum.photos/300/200/"
-                className="w-full h-auto rounded-sm"
-                />
+              />
 
-              {progress && (
-                <div className="mt-2 h-0.5 bg-gray-200 rounded overflow-hidden relative w-full">
-                  <div
-                    className="bg-red-500 h-full transition-all duration-300"
-                    style={{ width: `${(Math.random() * 100).toFixed(2)}%` }}
-                  ></div>
-                </div>
-              )}
               {speakers && (
                 <div className=" text-white py-2 ">{slide.category}</div>
               )}
@@ -111,11 +99,6 @@ export default function VoicesSlider({
           </SwiperSlide>
         ))}
       </Swiper>
-
-      {/* Small line at top-right */}
-      {/* <div className=" border-red-800 swiper-progressbar absolute top-2 right-4 w-28 h-1 bg-red-500 rounded overflow-hidden">
-        <div className="swiper-pagination-progressbar-fill bg-red-500 h-full transition-all duration-300"></div>
-      </div> */}
     </div>
   );
 }
