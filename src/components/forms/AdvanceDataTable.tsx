@@ -45,7 +45,7 @@ export default function AdvanceDataTable<T extends Record<string, string>>({
             )}
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-100">
+        <tbody className="divide-y divide-gray-200 bg-white">
           {data.map((row, rowIndex) => (
             <tr
               key={rowIndex}
