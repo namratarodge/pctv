@@ -187,6 +187,32 @@ export default function Subscription() {
     }
   };
 
+  const handleDelete = async (id: string) => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/subscription/${id}`,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data.status) {
+        toast("Subscription deleted successfully");
+        fetch(); // Refresh the plans list
+      } else {
+        toast("Delete failed:", response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast("Error deleting plan:");
+    }
+  };
+
   useEffect(() => {
     fetchGetPlans();
     fetch();
@@ -216,7 +242,7 @@ export default function Subscription() {
               <AdvanceDataTable
                 columns={SubscriptionsColumn}
                 data={data}
-                renderActions={(person) => (
+                renderActions={(person : SubscriptionType) => (
                   <div className="flex gap-3 justify-end">
                     <button
                       onClick={() => console.log("Edit", person)}
@@ -225,7 +251,7 @@ export default function Subscription() {
                       <PencilIcon className="w-5 h-5" />
                     </button>
                     <button
-                      onClick={() => console.log("Delete", person)}
+                       onClick={() => handleDelete(person._id)}
                       className="text-red-600 hover:text-red-800 cursor-pointer"
                     >
                       <TrashIcon className="w-5 h-5" />
