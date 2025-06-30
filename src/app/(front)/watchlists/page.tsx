@@ -55,8 +55,8 @@ const people = [
 
 export default function Home() {
   return (
-    <div className="pt-18  max-w-7xl mx-auto">
-      <h2 className="text-white text-4xl ">WhatchList</h2>
+    <div className="pt-25  max-w-11/12  mx-auto">
+      <h2 className="text-white text-4xl font-semibold">WhatchList</h2>
       <div className="grid grid-cols-3  gap-4 py-6  ">
         {people.map((person, index) => (
           <div key={index} className="flex items-center gap-4 py-2 ">

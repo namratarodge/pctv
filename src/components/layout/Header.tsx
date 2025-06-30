@@ -30,7 +30,7 @@ import { jwtDecode } from "jwt-decode";
 import { TagType, DecodedUser } from "@/constants/Type";
 
 const baseNavigation = [
-  { name: "Home", key: "home", href: "/" },
+  { name: "Home", key: "home", href: "/home" },
   {
     name: "TV Topics",
     key: "tv_topics",
@@ -43,12 +43,12 @@ const baseNavigation = [
 
 const userNavigation = [
   { name: "Profile", key: "profile", href: "#", icon: UserIcon },
-  { name: "Watchlist", key: "profile", href: "#", icon: EyeIcon },
+  { name: "Watchlist", key: "watchlists", href: "/watchlists", icon: EyeIcon },
   { name: "Your List", key: "profile", href: "#", icon: ClipboardIcon },
   { name: "Account Settings", key: "profile", href: "#", icon: Cog6ToothIcon },
   {
     name: "Log out",
-    key: "sign_out",
+    key: "logout",
     href: "#",
     icon: ArrowRightCircleIcon,
   },
@@ -222,13 +222,13 @@ export default function Header() {
                   className="absolute right-0 z-10 mt-2.5 w-56 origin-top-right rounded-md text-gray-400  bg-gray-800 py-2  shadow-lg  transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
                 >
                   {userNavigation.map((item, index) =>
-                    item.name === "Sign out" ? (
+                    item.key === "logout" ? (
                       <MenuItem key={index}>
                         <button
                           onClick={() => singOut()}
-                          className="cursor-pointer block w-full text-left px-3 py-1 text-sm/6 text-gray-400 hover:text-gray-200 data-focus:outline-hidden"
+                          className="cursor-pointer flex items-center gap-3 w-full text-left px-3 py-2 rounded hover:text-gray-100 transition text-sm"
                         >
-                          <item.icon className="w-5 h-5 text-gray-600" />
+                          <item.icon className="w-5 h-5 text-gray-300" />
                           {item.name}
                         </button>
                       </MenuItem>
@@ -236,7 +236,7 @@ export default function Header() {
                       <MenuItem key={index}>
                         <a
                           href={item.href}
-                          className="flex items-center gap-3 w-full text-left px-3 py-2 rounded hover:text-gray-100 transition text-sm"
+                          className="flex  items-center gap-3 w-full text-left px-3 py-2 rounded hover:text-gray-100 transition text-sm"
                         >
                           <item.icon className="w-5 h-5 text-gray-300" />
                           {item.name}
