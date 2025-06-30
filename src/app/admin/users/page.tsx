@@ -80,7 +80,7 @@ export default function People() {
       if (response.data.status) {
         const modifiedData = response.data.data.data.map((item: UserType) => ({
           ...item,
-          updated_at: `${formatDate(item.updated_at)} `,
+          created_at: `${formatDate(item.created_at)} `,
         }));
         setData(modifiedData);
         setPagination(response.data.data.pagination);

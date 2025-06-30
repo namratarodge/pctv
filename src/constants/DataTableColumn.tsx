@@ -222,10 +222,7 @@ export const PeopleColumn: {
       </div>
     ),
   },
-  { key: "birthdate", label: "Birth Date",  
-  render: (row) => (
-    <div>-</div>
-  ) },
+  { key: "birthdate", label: "Birth Date", render: (row) => <div>-</div> },
   { key: "views", label: "Local View" },
   { key: "popularity", label: "Popularity" },
   { key: "updated_at", label: "Last Update" },
@@ -335,7 +332,9 @@ type typeOfUsers = {
   userType: string;
   first_name: string;
   last_name: string;
-  updated_at: string;
+  email: string;
+  username: string;
+  created_at: string;
   avatar?: string;
 };
 
@@ -349,18 +348,31 @@ export const usersColumn: {
     label: "User",
     render: (row) => (
       <div className="flex items-center space-x-2">
-        <UserAvatar poster={row.avatar} name={row.first_name} />
+        <UserAvatar poster={row.avatar} name={row.email} />
         <span className="flex flex-col">
           {row.first_name} {row.last_name}
+          <small>{row.email}</small>
         </span>
       </div>
     ),
   },
-  { key: "subscribed", label: "Subscribed" },
+  {
+    key: "subscribed",
+    label: "Subscribed",
+    render: () => <div>No</div>,
+  },
   { key: "userType", label: "Roles" },
-  { key: "first_name", label: "First Name" },
-  { key: "last_name", label: "Last Name" },
-  { key: "updated_at", label: "Last Updated" },
+  {
+    key: "first_name",
+    label: "First Name",
+    render: (row) => <div>{row.first_name ? row.first_name : "-"}</div>,
+  },
+  {
+    key: "last_name",
+    label: "Last Name",
+    render: (row) => <div>{row.last_name ? row.last_name : "-"}</div>,
+  },
+  { key: "created_at", label: "Created Updated" },
 ];
 
 // pages Column
@@ -399,6 +411,9 @@ type reviewOfPages = {
   user_id: {
     _id: string;
     username: string;
+    first_name: string;
+    last_name: string;
+    avatar: string;
     email: string;
   };
   created_at: string;
@@ -429,8 +444,13 @@ export const reviewColumn: {
 
     render: (row) => (
       <div className="flex items-center space-x-2">
+        <UserAvatar
+          rounded={true}
+          poster={row.user_id?.avatar}
+          name={row.user_id?.email}
+        />
         <span className="flex flex-col text-md">
-          {row?.user_id?.username}
+          {row?.user_id?.first_name} {row?.user_id?.last_name}
           <small className="text-gray-400"> {row?.user_id?.email}</small>
         </span>
       </div>
@@ -441,14 +461,14 @@ export const reviewColumn: {
     label: "Reviewable",
 
     render: (row) => (
-      <div className="flex items-center space-x-2">
+      <div className="flex space-x-3 items-center">
         <UserAvatar
           poster={row.reviewable_id?.backdrop}
           name={row.reviewable_id?.name}
         />
-        <span className="w-64 h-10 ">
-          {truncateToWords(row.reviewable_id?.name, 7)}...{" "}
-        </span>
+        <p className="line-clamp-2 flex ">
+          {truncateToWords(row.reviewable_id?.name, 5)}...{" "}
+        </p>
       </div>
     ),
   },

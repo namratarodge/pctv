@@ -9,6 +9,8 @@ type PersonImageProps = {
   rounded?: boolean;
 };
 
+const avatar = "/default-front.jpg";
+
 const UserAvatar: React.FC<PersonImageProps> = ({
   direct = false,
   name = "default",
@@ -16,7 +18,7 @@ const UserAvatar: React.FC<PersonImageProps> = ({
   rounded = false,
 }) => {
   const initialSrc = !poster
-    ? "/default-image.jpg"
+    ? avatar
     : direct
     ? poster
     : `${process.env.NEXT_PUBLIC_WEBSITE}/${poster}`;
@@ -31,7 +33,7 @@ const UserAvatar: React.FC<PersonImageProps> = ({
       className={`${
         rounded ? "rounded-full" : "rounded-sm"
       } w-10 h-10  object-cover`}
-      onError={() => setImgSrc("/default-user.jpg")}
+      onError={() => setImgSrc(avatar)}
     />
   );
 };
