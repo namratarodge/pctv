@@ -200,6 +200,7 @@ export const TitleColumn: {
 type PeopleItem = {
   _id: string;
   name: string;
+  poster: string;
   birthdate: string;
   views: number;
   popularity: number;
@@ -209,9 +210,22 @@ type PeopleItem = {
 export const PeopleColumn: {
   key: keyof PeopleItem;
   label: string;
+  render?: (row: PeopleItem) => React.ReactNode;
 }[] = [
-  { key: "name", label: "Name" },
-  { key: "birthdate", label: "Birth Date" },
+  {
+    key: "name",
+    label: "Name",
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        <UserAvatar poster={row.poster} name={row.name} />
+        <span className="flex flex-col text-sm">{row.name}</span>
+      </div>
+    ),
+  },
+  { key: "birthdate", label: "Birth Date",  
+  render: (row) => (
+    <div>-</div>
+  ) },
   { key: "views", label: "Local View" },
   { key: "popularity", label: "Popularity" },
   { key: "updated_at", label: "Last Update" },
@@ -296,7 +310,7 @@ export const listColumn: {
 ];
 
 // tags Column
-type typeOTags = {  
+type typeOTags = {
   name: "string";
   type: "number";
   display_name: "string";

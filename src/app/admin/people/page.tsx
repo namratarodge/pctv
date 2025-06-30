@@ -38,6 +38,7 @@ export default function People() {
             "Content-Type": "application/json",
           },
           params: {
+            known_for : 'sub-tv-topic',
             limit: limits,
             page: pages,
           },
