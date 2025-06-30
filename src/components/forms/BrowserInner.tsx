@@ -52,7 +52,7 @@ export default function BrowserInner() {
 
   const searchParams = useSearchParams();
   const keyword = searchParams.get("keyword");
-  const genreParam = searchParams.get("genre");
+  const genreParam = searchParams.get("genre"); 
   const [selectedGenres, setSelectedGenres] = useState(
     genreParam ? genreParam.split(",") : []
   );

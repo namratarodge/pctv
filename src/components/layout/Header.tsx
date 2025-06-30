@@ -130,10 +130,10 @@ export default function Header() {
               <Image
                 alt="Your Company"
                 src="https://projectcontrolstv.com/storage/branding_media/5lbRjBu1jH2A3Q61DkPaPLVxw3fidK9SlSwU8PAU.png"
-                width={120} // Replace with the actual width of the image or layout container
-                height={20} // Replace with the actual height
-                className="w-50"
-                unoptimized // required for external images unless configured in next.config.js
+                width={100}
+                height={10}
+                className="w-40"
+                unoptimized
               />
             </Link>
           </div>
@@ -197,15 +197,14 @@ export default function Header() {
                 <MenuButton className="-m-1.5 flex items-center p-1.5">
                   <span className="sr-only">Open user menu</span>
                   <span className="hidden lg:flex lg:items-center cursor-pointer">
-                   
                     <Image
-                src="default-front.jpg"
-                alt="test"
-                width={300}
-                height={200}
-                className="w-full h-auto object-cover rounded-md"
-              />
-                    <UserCircleIcon className="w-6 h-6 text-gray-300 " />
+                      src="/default-front.jpg"
+                      alt="test"
+                      width={0}
+                      height={0}
+                      className="w-full h-auto object-cover rounded-full"
+                    />
+                    {/* <UserCircleIcon className="w-6 h-6 text-gray-300 " /> */}
                     <span
                       aria-hidden="true"
                       className="ml-4 text-sm font-semibold text-white"
@@ -229,7 +228,7 @@ export default function Header() {
                           onClick={() => singOut()}
                           className="cursor-pointer block w-full text-left px-3 py-1 text-sm/6 text-gray-400 hover:text-gray-200 data-focus:outline-hidden"
                         >
-                           <item.icon className="w-5 h-5 text-gray-600" />
+                          <item.icon className="w-5 h-5 text-gray-600" />
                           {item.name}
                         </button>
                       </MenuItem>
@@ -238,8 +237,8 @@ export default function Header() {
                         <a
                           href={item.href}
                           className="flex items-center gap-3 w-full text-left px-3 py-2 rounded hover:text-gray-100 transition text-sm"
-                          >
-                           <item.icon className="w-5 h-5 text-gray-300" />
+                        >
+                          <item.icon className="w-5 h-5 text-gray-300" />
                           {item.name}
                         </a>
                       </MenuItem>

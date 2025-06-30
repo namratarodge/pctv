@@ -51,21 +51,16 @@ export default function TopicSlider({ title }: VoicesSliderProps) {
           return (
           <SwiperSlide key={index}>
             <div
-              className={`rounded-xl p-3 gap-2 shadow-lg flex flex-col bg-gray-900 h-40 `}
+              className={`rounded-xl p-3 gap-2 shadow-lg flex flex-col bg-gray-900 h-45 `}
             >
               <div className="bg-gray-800 p-4 rounded-xl items-center text-center">
                 <FaceSmileIcon className="h-20 w-20 text-white mx-auto" />
               </div>
-              <h2 className="text-center text-sm">{item.display_name}</h2>
+              <h2 className="text-center text-xs">{item.display_name}</h2>
             </div>
           </SwiperSlide> );
         })}
       </Swiper>
-
-      {/* Small line at top-right */}
-      {/* <div className=" border-red-800 swiper-progressbar absolute top-2 right-4 w-28 h-1 bg-red-500 rounded overflow-hidden">
-        <div className="swiper-pagination-progressbar-fill bg-red-500 h-full transition-all duration-300"></div>
-      </div> */}
     </div>
   );
 }
