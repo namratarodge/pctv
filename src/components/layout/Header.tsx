@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import {
+  Button,
   Dialog,
   DialogPanel,
   Menu,
@@ -18,14 +19,13 @@ import {
   Cog6ToothIcon,
   EyeIcon,
   MagnifyingGlassIcon,
-  UserCircleIcon,
   UserIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { usePublicData } from "@/components/context/PublicDataContext";
 
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 import { TagType, DecodedUser } from "@/constants/Type";
 
@@ -66,6 +66,16 @@ export default function Header() {
 
   const toggleSubmenu = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
+  };
+
+  const loginButton = (type: string) => {
+    setMobileMenuOpen(false);
+    if (type == "login") {
+      redirect("/login");
+    }
+    if (type == "register") {
+      redirect("/register");
+    }
   };
 
   const pageName = usePathname();
@@ -135,7 +145,7 @@ export default function Header() {
                 className="w-40"
                 unoptimized
               />
-            </Link> 
+            </Link>
           </div>
           <div className="hidden sm:ml-6 sm:block">
             <div className="flex space-x-4">
@@ -299,16 +309,16 @@ export default function Header() {
             <div className="-my-6 divide-y divide-gray-500/25">
               <div className="space-y-2 py-6">
                 {navigation.map((item, index) => (
-                  <a
+                  <div
                     key={index}
-                    className=" block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800"
+                    className=" block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800 cursor-pointer"
                     onClick={() => toggleSubmenu(index)}
                   >
                     {item.name}
 
                     {/* Submenu */}
                     {item.children && openIndex === index && (
-                      <div className=" space-y-1">
+                      <div className=" space-y-1 mt-4">
                         {(
                           item.children as { name: string; href: string }[]
                         ).map((child, childIndex) => (
@@ -322,16 +332,48 @@ export default function Header() {
                         ))}
                       </div>
                     )}
-                  </a>
+                  </div>
                 ))}
               </div>
               <div className="py-6">
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-gray-800"
-                >
-                  Log in
-                </a>
+                {user && Object.keys(user).length > 0 ? (
+                  <div className="flex items-center">
+                    <Image
+                      src="/default-front.jpg"
+                      alt="test"
+                      width={10}
+                      height={10}
+                      className="w-10 h-auto object-cover rounded-full"
+                    />
+                    {/* <UserCircleIcon className="w-6 h-6 text-gray-300 " /> */}
+                    <span
+                      aria-hidden="true"
+                      className="ml-4 text-sm font-semibold text-white"
+                    >
+                      {user.username}
+                    </span>
+                    <ChevronDownIcon
+                      aria-hidden="true"
+                      className="ml-2 size-5 text-gray-400"
+                    />
+                  </div>
+                ) : (
+                  <>
+                    <Button
+                      onClick={() => loginButton("login")}
+                      className="-mx-3 block w-full rounded-lg px-3 py-2.5 text-left text-base/7 font-semibold text-white hover:bg-gray-800 cursor-pointer"
+                    >
+                      Log in
+                    </Button>
+                    <Button
+                      onClick={() => loginButton("register")}
+                      className="-mx-3 block w-full rounded-lg px-3 text-left py-2.5 text-base/7 font-semibold text-white hover:bg-gray-800 cursor-pointer"
+                    >
+                      Sign Up
+                    </Button>
+                  </>
+                )}
+                ;
               </div>
             </div>
           </div>
