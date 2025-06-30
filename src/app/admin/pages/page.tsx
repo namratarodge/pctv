@@ -10,7 +10,7 @@ import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
 import { pagesColumn } from "@/constants/DataTableColumn";
 import Loading from "@/components/layout/Loading";
 import { toast } from "react-toastify";
-import {  PageType } from "@/constants/Type"
+import { PageType } from "@/constants/Type";
 
 export default function People() {
   const [data, setData] = useState([]);
@@ -79,7 +79,7 @@ export default function People() {
         toast("Delete failed:", response.data.message);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast("Error deleting plan:");
     }
   };
@@ -100,12 +100,9 @@ export default function People() {
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold text-gray-900">Pages</h1>
-          <p className="mt-2 text-sm text-gray-700">
-            Your team is on the{" "}
-            <strong className="font-semibold text-gray-900">Startup</strong>{" "}
-            plan. The next payment of $80 will be due on August 4, 2022.
-          </p>
+          <h1 className="text-2xl font-semibold text-gray-600 ">
+            Custom Pages
+          </h1>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <Link

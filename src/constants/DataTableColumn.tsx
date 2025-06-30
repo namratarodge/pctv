@@ -348,7 +348,7 @@ export const usersColumn: {
     label: "User",
     render: (row) => (
       <div className="flex items-center space-x-2">
-        <UserAvatar poster={row.avatar} name={row.email} />
+        <UserAvatar poster={row.avatar} name={row.email} rounded/>
         <span className="flex flex-col">
           {row.first_name} {row.last_name}
           <small>{row.email}</small>
@@ -379,7 +379,13 @@ export const usersColumn: {
 export type typeOfPages = {
   _id: string;
   slug: string;
-  user_id: string;
+  user_id: {
+    _id: string;
+    username: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+  };
   type: string;
   updated_at: string;
 };
@@ -393,6 +399,14 @@ export const pagesColumn: {
   {
     key: "user_id",
     label: "Owner",
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        <span className="flex flex-col text-md">
+          {row?.user_id?.first_name} {row?.user_id?.last_name}
+          <small className="text-gray-400"> {row?.user_id?.email}</small>
+        </span>
+      </div>
+    ),
   },
   { key: "type", label: "Type" },
   { key: "updated_at", label: "Last Updated" },
