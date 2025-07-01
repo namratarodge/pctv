@@ -81,12 +81,12 @@ export const navigationSettings = [
 ];
 
 export const navigationAccount = [
-  { name: "Overview", href: "/admin/settings", icon: HomeIcon },
-  { name: "Membership", href: "/admin/settings/content", icon: UserCircleIcon },
-  { name: "Security", href: "/", icon: LockClosedIcon },
+  { name: "Overview", href: "/account", icon: HomeIcon },
+  { name: "Membership", href: "/account?name=membership", icon: UserCircleIcon },
+  { name: "Security", href: "/account?name=security", icon: LockClosedIcon },
   {
     name: "Watchlist",
-    href: "/admin/settings/authentication",
+    href: "/wachlist",
     icon: BookmarkIcon,
   },
 ];
