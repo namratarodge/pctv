@@ -20,7 +20,7 @@ export default function RootLayout({
         <title> Project Controls TV </title>
         <body
           className={`${
-            pageName === "/register" ? "bg-white" : "bg-[#161f27]"
+            pageName === "/account" ? "bg-white" : "bg-[#161f27]"
           } `}
         >
           <PublicDataProvider>
