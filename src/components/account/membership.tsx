@@ -7,6 +7,7 @@ import {
   UserCircleIcon,
   CreditCardIcon,
 } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 import { useSearchParams } from "next/navigation";
 
@@ -18,15 +19,12 @@ export const accountSettingsLinks = [
   },
   {
     name: "Manage Payment Methods",
-    href: "/account/payment-methods",
+    href: "/account?name=manage_payment",
     icon: CreditCardIcon,
   },
 ];
 
 export default function Membership() {
-  const searchParams = useSearchParams();
-  const name = searchParams.get("name");
-
   return (
     <>
       <div className="h-100 text-black">
@@ -54,7 +52,8 @@ export default function Membership() {
         <p className="my-4">Payment Info </p>
         <div className="bg-gray-100 mt-4 py-2 px-6 rounded-sm">
           {accountSettingsLinks.map((item) => (
-            <div
+            <Link
+              href={item.href}
               className=" py-3 flex justify-between border-b border-gray-300 cursor-pointer"
               key={item.name}
             >
@@ -64,12 +63,13 @@ export default function Membership() {
               </div>
 
               <ChevronRightIcon className="w-5" />
-            </div>
+            </Link>
           ))}
         </div>
-        <button className="rounded-full text-red-400 border border-red-400 px-4 py-1 mt-4 text-sm cursor-pointer">Cancel Membership</button>
+        <button className="rounded-full text-red-400 border border-red-400 px-4 py-1 mt-4 text-sm cursor-pointer">
+          Cancel Membership
+        </button>
       </div>
-      
     </>
   );
 }
