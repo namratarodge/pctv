@@ -7,28 +7,30 @@ import {
   UserCircleIcon,
   CreditCardIcon,
 } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 import { useSearchParams } from "next/navigation";
+import ListButton from "./ListButton";
 
 export const accountSettingsLinks = [
   {
     name: "Change plan",
-    href: "/account/plan",
+    href: "/account?",
     icon: AdjustmentsHorizontalIcon,
   },
   {
     name: "Update password",
-    href: "/account/password",
+    href: "/account?name=change_password",
     icon: LockClosedIcon,
   },
   {
     name: "Update profile",
-    href: "/account/profile",
+    href: "/account?name=update_profile",
     icon: UserCircleIcon,
   },
   {
     name: "Manage Payment Methods",
-    href: "/account/payment-methods",
+    href: "/account?name=manage_payment",
     icon: CreditCardIcon,
   },
 ];
@@ -64,17 +66,7 @@ export default function General() {
         <p className="my-4">Quick List</p>
         <div className="bg-gray-100 mt-4 py-2 px-6 rounded-sm">
           {accountSettingsLinks.map((item) => (
-            <div
-              className=" py-3 flex justify-between border-b border-gray-300 cursor-pointer"
-              key={item.name}
-            >
-              <div className="flex gap-2 text-sm">
-                <item.icon className="h-5 w-5 text-gray-500" />
-                {item.name}
-              </div>
-
-              <ChevronRightIcon className="w-5" />
-            </div>
+            <ListButton item={item} key={item.name} />
           ))}
         </div>
       </div>
