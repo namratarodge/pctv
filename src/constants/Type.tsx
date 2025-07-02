@@ -241,7 +241,7 @@ export type TagFormValue = {
 // User Type
 
 export type DecodedUser = {
-  id: string;
+  _id: string;
   email: string;
   userType: "user" | "admin" | string; // adjust as needed
   full_name: string;

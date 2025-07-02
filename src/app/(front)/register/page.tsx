@@ -4,7 +4,7 @@ import Step2 from "@/components/register/Step2";
 import Step3 from "@/components/register/Step3";
 import { useSearchParams } from "next/navigation";
 
-export default function Account() {
+export default function Register() {
   const searchParams = useSearchParams();
   const step = searchParams.get("step");
 

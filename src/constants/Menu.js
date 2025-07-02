@@ -86,7 +86,7 @@ export const navigationAccount = [
   { name: "Security", href: "/account?name=security", icon: LockClosedIcon },
   {
     name: "Watchlist",
-    href: "/wachlist",
+    href: "/watchlists",
     icon: BookmarkIcon,
   },
 ];

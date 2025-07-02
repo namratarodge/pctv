@@ -28,9 +28,7 @@ export default function Login() {
       }
 
       const data = await response.json();
-      console.log("Login successful:", data);
       localStorage.setItem("token", data.token);
-      // You can redirect the user or store the token here
       if(data.user.userType === 'admin'){
          window.location.href = "/admin";
       }else{

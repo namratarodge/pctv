@@ -42,10 +42,10 @@ const baseNavigation = [
 ];
 
 const userNavigation = [
-  { name: "Profile", key: "profile", href: "#", icon: UserIcon },
+  { name: "Profile", key: "profile", href: "/account", icon: UserIcon },
   { name: "Watchlist", key: "watchlists", href: "/watchlists", icon: EyeIcon },
   { name: "Your List", key: "profile", href: "#", icon: ClipboardIcon },
-  { name: "Account Settings", key: "profile", href: "#", icon: Cog6ToothIcon },
+  { name: "Account Settings", key: "security", href: "/account?name=security", icon: Cog6ToothIcon },
   {
     name: "Log out",
     key: "logout",
@@ -210,16 +210,16 @@ export default function Header() {
                     <Image
                       src="/default-front.jpg"
                       alt="test"
-                      width={0}
-                      height={0}
-                      className="w-full h-auto object-cover rounded-full"
+                      width={5}
+                      height={5}
+                      className="w-10 h-auto object-cover rounded-full"
                     />
                     {/* <UserCircleIcon className="w-6 h-6 text-gray-300 " /> */}
                     <span
                       aria-hidden="true"
                       className="ml-4 text-sm font-semibold text-white"
                     >
-                      {user.username}
+                      {user.full_name}
                     </span>
                     <ChevronDownIcon
                       aria-hidden="true"

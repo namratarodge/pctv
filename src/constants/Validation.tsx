@@ -1,5 +1,19 @@
-
 import { z } from "zod";
+
+// user sign  up
+
+export const userSignUpSchema = z.object({
+  first_name: z.string().min(1, "First Name is required"),
+  last_name: z.string().min(1, "Last Name is required"),
+
+  email: z.string().min(1, "Email is required").email("Invalid email address"),
+  phone: z
+    .string()
+    .min(1, "Phone is required")
+    .regex(/^[0-9+\-\s()]{7,20}$/, "Invalid phone number"),
+  password: z.string().min(1, "Password is required"),
+});
+export type UserSignUpFormData = z.infer<typeof userSignUpSchema>;
 
 export const profileSchema = z.object({
   name: z.string().min(1, "Name is required"),

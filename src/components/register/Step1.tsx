@@ -1,8 +1,57 @@
+"use client";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { UserSignUpFormData, userSignUpSchema } from "@/constants/Validation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 
 export default function Step1() {
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm<UserSignUpFormData>({
+    resolver: zodResolver(userSignUpSchema),
+  });
+
+  // ✅ Create or Update
+  const onSubmit = async (data: UserSignUpFormData) => {
+    const token = localStorage.getItem("token");
+    const requestData = {
+      ...data,
+      cpassword: data.password,
+    };
+
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/signup`,
+        requestData,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const responseNew = response.data;
+      if (responseNew.status) {
+        localStorage.setItem("token", responseNew.data.token);
+        toast.success("User created successfully");
+        window.location.href = "/register?step=two";
+      }
+    } catch (error) {
+      toast("Error during login:" + error);
+    }
+  };
+
   return (
     <div className=" px-6 py-12  sm:rounded-lg sm:px-12">
-      <form action="#" method="POST" className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <small className="text-sm font-extralight">Step 1 OF 3</small>
         <h2 className="mt-3 text-left text-5xl font-bold tracking-tight text-gray-800">
           Welcome to PCTV! <br />
@@ -14,60 +63,75 @@ export default function Step1() {
         <div className="w-3/5 space-y-4 ">
           <div>
             <input
-              id="name"
-              name="email"
               type="text"
-              required
+              {...register("email")}
               placeholder="Your email"
               autoComplete="email"
               className="block w-full rounded-full bg-white px-4 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-400 sm:text-sm/6"
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-2 px-2">
+                {errors.email.message}
+              </p>
+            )}
           </div>
           <div className=" flex gap-4">
             <div className="w-1/2">
               <input
-                id="name"
-                name="first_name"
                 type="text"
-                required
+                {...register("first_name")}
                 placeholder="First Name"
-                autoComplete="email"
+                autoComplete="first_name"
                 className="block w-full rounded-full bg-white px-4 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-400 sm:text-sm/6"
               />
+              {errors.first_name && (
+                <p className="text-red-500 text-sm mt-2 px-2">
+                  {errors.first_name.message}
+                </p>
+              )}
             </div>
             <div className="w-1/2">
               <input
-                id="name"
-                name="last_name"
                 type="text"
-                required
+                {...register("last_name")}
                 placeholder="Last Name"
-                autoComplete="email"
+                autoComplete="last_name"
                 className="block w-full rounded-full bg-white px-4 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-400 sm:text-sm/6"
               />
+              {errors.last_name && (
+                <p className="text-red-500 text-sm mt-2 px-2">
+                  {errors.last_name.message}
+                </p>
+              )}
             </div>
           </div>
           <div>
             <input
-              id="name"
-              name="email"
               type="text"
-              required
+              {...register("phone")}
               placeholder="Contact Number"
-              autoComplete="email"
+              autoComplete="phone"
               className="block w-full rounded-full bg-white px-4 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-400 sm:text-sm/6"
             />
+            {errors.phone && (
+              <p className="text-red-500 text-sm mt-2 px-2">
+                {errors.phone.message}
+              </p>
+            )}
           </div>
           <div>
             <input
-              id="name"
-              name="email"
-              type="text"
-              required
+              type="password"
+              {...register("password")}
               placeholder="Enter your password"
-              autoComplete="email"
+              autoComplete="password"
               className="block w-full rounded-full bg-white px-4 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-400 sm:text-sm/6"
             />
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-2 px-2">
+                {errors.password.message}
+              </p>
+            )}
           </div>
         </div>
         <div>
