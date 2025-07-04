@@ -1,6 +1,27 @@
 import { z } from "zod";
 
-// user sign  up
+export const userUpdateSchema = z.object({
+  first_name: z.string().min(1, "First Name is required"),
+  last_name: z.string().min(1, "Last Name is required"),
+  gender: z.string().min(1, "Gender is required"),
+  country: z.string().min(1, "Country is required"),
+  phone: z
+    .string()
+    .min(1, "Phone is required")
+    .regex(/^[0-9+\-\s()]{7,20}$/, "Invalid phone number"),
+});
+export type UserUpdateFormData = z.infer<typeof userUpdateSchema>;
+
+
+// change password
+export const userChangePasswordSchema = z.object({
+  old_password: z.string().min(1, "Old Password is required"),
+  new_password: z.string().min(1, "New Password is required"),
+  new_enter_password: z.string().min(1, "New Enter Password is required"),
+});
+export type UserChangePasswordFormData = z.infer<
+  typeof userChangePasswordSchema
+>;
 
 export const userSignUpSchema = z.object({
   first_name: z.string().min(1, "First Name is required"),

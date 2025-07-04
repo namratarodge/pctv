@@ -3,7 +3,7 @@
 import General from "@/components/account/general";
 import Membership from "@/components/account/membership";
 import Security from "@/components/account/security";
-import ChangePassword from "@/components/account/changePassword";
+import ChangePassword from "@/components/account/change_password";
 import UpdateProfile from "@/components/account/updateProfile";
 import ManagePayment from "@/components/account/managePayment";
 
