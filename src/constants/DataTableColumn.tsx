@@ -32,7 +32,7 @@ export const SubscriptionsColumn: {
         <UserAvatar
           direct={true}
           poster={row.user_id?.avatar}
-          name={row.user_id?.first_name}
+          name={row.user_id?.email}
         />
         <div>
           <span className="flex flex-col text-xs">

@@ -251,6 +251,8 @@ export default function Plans() {
           {loading ? (
             <Loading />
           ) : (
+            <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+             
             <DataTable
               columns={planColumn}
               data={plans}
@@ -271,6 +273,7 @@ export default function Plans() {
                 </div>
               )}
             />
+            </div>
           )}
           <ModelForm
             isOpen={isModalOpen}
