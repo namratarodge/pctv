@@ -13,10 +13,8 @@ import { jwtDecode } from "jwt-decode";
 import { DecodedUser } from "@/constants/Type";
 
 const userNavigation = [
-  { name: "Your profile", href: "#" },
+  { name: "Your profile", href: "/account" },
   { name: "Account settings", href: "#" },
-  { name: "Support", href: "#" },
-  { name: "License", href: "#" },
   { name: "Sign out", href: "#" },
 ];
 type SideBarProps = {
@@ -39,7 +37,6 @@ export default function TopHeader({
     if (token) {
       const decoded = jwtDecode<DecodedUser>(token);
       setUser(decoded);
-      console.log("User info:", decoded);
     }
   }, []);
 

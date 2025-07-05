@@ -1,3 +1,4 @@
+import HomeCharts from "@/components/forms/HomeChart";
 import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/react/20/solid";
 
 const stats = [
@@ -38,7 +39,7 @@ function classNames(...classes: (string | false | null | undefined)[]): string {
 export default function Example() {
   return (
     <div>
-      <h3 className="text-base font-semibold text-gray-900">Last 30 days</h3>
+      <h3 className="text-base font-semibold text-gray-900">Welcome, ADMIN Back!</h3>
       <dl className="mt-5 grid grid-cols-1 gap-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow-sm md:grid-cols-4 md:divide-x md:divide-y-0">
         {stats.map((item) => (
           <div key={item.name} className="px-4 py-5 sm:p-6">
@@ -84,27 +85,8 @@ export default function Example() {
           </div>
         ))}
       </dl>
-      <div className="flex gap-2 py-4">
-        <div className="border w-1/2 border-gray-400 rounded-sm">
-          <h3 className="py-2 px-2 border-b border-gray-400 text-sm bg-gray-700 text-white">
-            This Week vs Last Week
-          </h3>
-          <div className="p-4 bg-white">Demo</div>
-        </div>
-        <div className="border w-1/2 border-gray-400 rounded-sm">
-          <h3 className="py-2 px-2 border-b border-gray-400 text-sm bg-gray-700 text-white">
-            This Week vs Last Week
-          </h3>
-          <div className="p-4">Demo</div>
-        </div>
-      </div>
-      <div className="flex gap-2 py-4">
-        <div className="border w-full border-gray-400 rounded-sm">
-          <h3 className="py-2 px-2 border-b border-gray-400 text-sm bg-gray-700 text-white">
-            This Week vs Last Week
-          </h3>
-          <div className="p-4">Demo</div>
-        </div>
+      <div className="mt-4">
+        <HomeCharts />
       </div>
     </div>
   );
