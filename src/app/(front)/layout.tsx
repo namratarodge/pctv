@@ -13,14 +13,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const pageName = usePathname();
-
+  const WhitePages = ["/account", "/register"];
   return (
     <>
       <html lang="en">
         <title> Project Controls TV </title>
         <body
           className={`${
-            pageName === "/account" ? "bg-white" : "bg-[#161f27]"
+            WhitePages.includes(pageName) ? "bg-white" : "bg-[#161f27]"
           } `}
         >
           <PublicDataProvider>

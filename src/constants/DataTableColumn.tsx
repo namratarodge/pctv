@@ -126,7 +126,6 @@ type typeOfPlans = {
   amount: "number";
   currency: "string";
   interval: "string";
-  recommended: "boolean";
   position: "number";
   updated_at: "string";
 };
@@ -139,7 +138,6 @@ export const planColumn: {
   { key: "amount", label: "Amount" },
   { key: "currency", label: "Currency" },
   { key: "interval", label: "Interval" },
-  { key: "recommended", label: "Recommended" },
   { key: "position", label: "position" },
   { key: "updated_at", label: "Last Updated" },
 ];

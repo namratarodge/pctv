@@ -42,6 +42,7 @@ const baseNavigation = [
 ];
 
 const userNavigation = [
+  { name: "Admin Home", key: "admin_home", href: "/admin", icon: UserIcon },
   { name: "Profile", key: "profile", href: "/account", icon: UserIcon },
   { name: "Watchlist", key: "watchlists", href: "/watchlists", icon: EyeIcon },
   { name: "Your List", key: "profile", href: "#", icon: ClipboardIcon },

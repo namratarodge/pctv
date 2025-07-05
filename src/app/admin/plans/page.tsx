@@ -307,6 +307,20 @@ export default function Plans() {
                 <p className="text-red-500">{errors.interval_count.message}</p>
               )}
             </div>
+
+            <div className="flex flex-col">
+              <label className="mb-1 text-gray-800">Features</label>
+              <input
+                {...register("interval_count", {
+                  required: "interval Count is required",
+                })}
+                className="px-4 py-2 rounded-md border border-gray-300 text-gray-700"
+              />
+              {errors.interval_count && (
+                <p className="text-red-500">{errors.interval_count.message}</p>
+              )}
+            </div>
+
           </ModelForm>
         </div>
       </div>
