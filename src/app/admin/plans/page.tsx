@@ -42,7 +42,7 @@ export default function Plans() {
     formState: { errors },
   } = useForm<PlanFormValues>();
 
-  const { fields, append, remove, replace } = useFieldArray({
+  const { fields, append, remove, replace } = useFieldArray<PlanFormValues>({
     control,
     name: "features",
   });

@@ -122,7 +122,7 @@ export default function People() {
               <AdvanceDataTable
                 columns={pagesColumn}
                 data={data}
-                renderActions={(person) => (
+                renderActions={(person : PageType) => (
                   <div className="flex gap-3 justify-end">
                     <Link
                       href={"pages/create?id=" + person._id}
