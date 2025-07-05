@@ -170,6 +170,7 @@ export type PlanFormValues = {
   currency: string;
   interval: string;
   interval_count: number;
+  features? : string[];
 };
 
 export type SubscriptionPlanType = {

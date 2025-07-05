@@ -122,20 +122,31 @@ export const CategoriesColumn: {
 
 // Plans Column
 type typeOfPlans = {
-  name: "string";
-  amount: "number";
-  currency: "string";
-  interval: "string";
-  position: "number";
-  updated_at: "string";
+  name: string;
+  amount: number;
+  currency: string;
+  currency_symbol: string;
+  interval: string;
+  position: number;
+  updated_at: string;
 };
 
 export const planColumn: {
   key: keyof typeOfPlans;
   label: string;
+  render?: (row: typeOfPlans) => React.ReactNode;
 }[] = [
   { key: "name", label: "Name" },
-  { key: "amount", label: "Amount" },
+  {
+    key: "amount",
+    label: "Amount",
+    render: (row) => (
+      <div>
+        <span>{row.currency_symbol}</span>
+        <span>{row.amount}</span>
+      </div>
+    ),
+  },
   { key: "currency", label: "Currency" },
   { key: "interval", label: "Interval" },
   { key: "position", label: "position" },
@@ -346,7 +357,7 @@ export const usersColumn: {
     label: "User",
     render: (row) => (
       <div className="flex items-center space-x-2">
-        <UserAvatar poster={row.avatar} name={row.email} rounded/>
+        <UserAvatar poster={row.avatar} name={row.email} rounded />
         <span className="flex flex-col">
           {row.first_name} {row.last_name}
           <small>{row.email}</small>

@@ -3,6 +3,7 @@ import {
   PencilIcon,
   PlusCircleIcon,
   TrashIcon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { DataTable, ModelForm } from "@/components/forms";
 import { useEffect, useState } from "react";
@@ -10,7 +11,7 @@ import { formatDate } from "@/utils/common";
 import axios from "axios";
 import Loading from "@/components/layout/Loading";
 import { planColumn } from "@/constants/DataTableColumn";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm, useFieldArray } from "react-hook-form";
 import currencies from "@/constants/currencies.json"; // adjust path as needed
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
@@ -19,6 +20,8 @@ import {
   PersonType,
   SubscriptionPlanType,
 } from "@/constants/Type";
+import { json } from "stream/consumers";
+import { XCircleIcon } from "@heroicons/react/20/solid";
 
 type CurrencyCode = keyof typeof currencies;
 
@@ -33,10 +36,16 @@ export default function Plans() {
 
   const {
     register,
+    control,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm<PlanFormValues>();
+
+  const { fields, append, remove, replace } = useFieldArray({
+    control,
+    name: "features",
+  });
 
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -58,7 +67,7 @@ export default function Plans() {
         const modifiedData = response.data.data.data.map(
           (item: SubscriptionPlanType) => ({
             ...item,
-            amount: `${item.currency} ${item.amount}`,
+            amount: `${item.amount}`,
             updated_at: `${formatDate(item.updated_at)} `,
           })
         );
@@ -75,6 +84,7 @@ export default function Plans() {
   };
 
   const handleFormSubmit: SubmitHandler<PlanFormValues> = async (data) => {
+    console.log(data);
     const selectedCurrencyCode = data.currency as CurrencyCode;
 
     // Optionally, validate it:
@@ -87,6 +97,7 @@ export default function Plans() {
       ...data,
       currency_symbol: currencyInfo?.symbol || "",
       uuid: uuidv4(),
+      free: data.amount === 0,
     };
 
     const token = localStorage.getItem("token");
@@ -101,7 +112,7 @@ export default function Plans() {
       const response = await axios({
         url,
         method,
-        data,
+        data: payload,
         headers: {
           Authorization: token,
           "Content-Type": "application/json",
@@ -125,20 +136,40 @@ export default function Plans() {
     }
   };
 
+  const handleAddNew = () => {
+    setIsEditing(false);
+    setEditingId(null);
+    setIsModalOpen(true);
+    reset({
+      name: "",
+      amount: 0,
+      currency: selectedCurrency,
+      interval: "Month",
+      interval_count: 1,
+      features: [],
+    });
+    replace([]);
+  };
+
   const handleEdit = (data: PlanFormValues) => {
     console.log(data);
     setIsEditing(true);
     setEditingId(data._id);
     setIsModalOpen(true);
-
     // Populate form with existing data
+    // const featuresArray = parseBrokenFeatures(data.features);
+
+    // console.log(JSON.parse(data.features[0]));
+
     reset({
       name: data.name,
       amount: data.amount,
       currency: data.currency,
       interval: data.interval,
-      interval_count: data.interval_count,
+      interval_count: Number(data.interval_count),
+      features: [],
     });
+    replace(data.features || []);
   };
 
   const handleDeletePlan = async (id: string) => {
@@ -167,6 +198,27 @@ export default function Plans() {
     }
   };
 
+  const parseBrokenFeatures = (features: any) => {
+    if (
+      Array.isArray(features) &&
+      features.length === 1 &&
+      typeof features[0] === "string"
+    ) {
+      try {
+        const once = JSON.parse(features[0]);
+        if (typeof once === "string") {
+          return JSON.parse(once);
+        }
+        if (Array.isArray(once)) {
+          return once;
+        }
+      } catch (e) {
+        console.error("Failed to parse features JSON:", e);
+      }
+    }
+    return Array.isArray(features) ? features : [];
+  };
+
   useEffect(() => {
     fetchGetPlans();
   }, []);
@@ -187,7 +239,7 @@ export default function Plans() {
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <button
             type="button"
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => handleAddNew()}
             className="flex items-center gap-2 rounded-md bg-red-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             <PlusCircleIcon className="w-6 h-6" /> Add New Plan
@@ -290,9 +342,9 @@ export default function Plans() {
                 className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               >
                 <option value="day">Day</option>
-                <option value="Week">Week</option>
-                <option value="Month">Month</option>
-                <option value="Year">Year</option>
+                <option value="week">Week</option>
+                <option value="month">Month</option>
+                <option value="year">Year</option>
               </select>
             </div>
             <div className="flex flex-col">
@@ -300,6 +352,7 @@ export default function Plans() {
               <input
                 {...register("interval_count", {
                   required: "interval Count is required",
+                  setValueAs: (v) => Number(v) || 0,
                 })}
                 className="px-4 py-2 rounded-md border border-gray-300 text-gray-700"
               />
@@ -307,20 +360,40 @@ export default function Plans() {
                 <p className="text-red-500">{errors.interval_count.message}</p>
               )}
             </div>
-
             <div className="flex flex-col">
               <label className="mb-1 text-gray-800">Features</label>
-              <input
-                {...register("interval_count", {
-                  required: "interval Count is required",
-                })}
-                className="px-4 py-2 rounded-md border border-gray-300 text-gray-700"
-              />
-              {errors.interval_count && (
-                <p className="text-red-500">{errors.interval_count.message}</p>
+              {fields.map((field, index) => (
+                <div key={field.id} className="flex items-center gap-2 mb-2">
+                  <input
+                    {...register(`features.${index}`, {
+                      required: "Feature is required",
+                    })}
+                    className="px-4 py-2 rounded-md border border-gray-300 text-gray-700 flex-1"
+                    placeholder={`Feature ${index + 1}`}
+                    defaultValue={field || ""}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => remove(index)}
+                    className="text-red-500 "
+                  >
+                    <XCircleIcon className="w-5 h-5" />
+                  </button>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => append("")}
+                className="mt-2 px-4 py-1 bg-red-500 text-white rounded-md"
+              >
+                Add Feature
+              </button>
+              {errors.features && (
+                <p className="text-red-500">
+                  {errors.features.message as string}
+                </p>
               )}
             </div>
-
           </ModelForm>
         </div>
       </div>
