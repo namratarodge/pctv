@@ -163,14 +163,20 @@ export type PageType = {
   hide_nav: boolean;
   workspace_id: string | null;
 };
+
+interface Feature {
+  title: string;
+  description: string;
+}
+
 export type PlanFormValues = {
-  _id : string;
+  _id?: string;
   name: string;
   amount: number;
   currency: string;
   interval: string;
   interval_count: number;
-  features? : string[];
+  features: string[];
 };
 
 export type SubscriptionPlanType = {

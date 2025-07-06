@@ -1,9 +1,15 @@
-// context/PublicDataContext.js
+// context/PublicDataContext.jsa
+
+'use client'
 import { createContext, useContext, useEffect, useState } from "react";
+
+import { DecodedUser } from "@/constants/Type";
 import axios from "axios";
 const PublicDataContext = createContext();
+import { jwtDecode } from "jwt-decode";
 
 export function PublicDataProvider({ children }) {
+  const [user, setUser] = useState([]);
   const [categories, setCategories] = useState([]);
   const [tvtopic, setTvtopic] = useState([]);
   const [pages, setPages] = useState([]);
@@ -20,8 +26,6 @@ export function PublicDataProvider({ children }) {
           },
         }
       );
-      console.log("test");
-      console.log(response.data);
       if (response.data.status) {
         const modifiedData = response.data.data.data;
         // console.log(modifiedData);
@@ -67,9 +71,9 @@ export function PublicDataProvider({ children }) {
           headers: {
             "Content-Type": "application/json",
           },
-          params : {
-            limit : 5
-          }
+          params: {
+            limit: 5,
+          },
         }
       );
       if (response.data.status) {
@@ -84,7 +88,46 @@ export function PublicDataProvider({ children }) {
     }
   };
 
+  const fetchUser = async () => {
+    const token = localStorage.getItem("token");
+    const decoded = jwtDecode(token);
+    // setUser(decoded);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/users`,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+          params: {
+            _id: decoded.id,
+          },
+        }
+      );
+      if (response.data.status) {
+        const modifiedData = response.data.data.data;
+        const userData = {
+          id : modifiedData._id,
+          first_name : modifiedData.first_name,
+          last_name : modifiedData.last_name,
+          email : modifiedData.email,
+          gender : modifiedData.gender,
+          phone : modifiedData.phone,
+          country : modifiedData.country,
+          avatar_url : modifiedData.avatar_url
+        }
+        setUser(userData);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setLoading(false);
+    }
+
+  };
+
   useEffect(() => {
+    fetchUser();
     fetchTVTopic();
     fetchCategories();
     fetchPages();
@@ -96,6 +139,7 @@ export function PublicDataProvider({ children }) {
         tvtopic,
         categories,
         pages,
+        user,
         loading,
       }}
     >

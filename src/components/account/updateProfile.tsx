@@ -6,8 +6,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { usePublicData } from "@/components/context/PublicDataContext";
+import { useEffect } from "react";
 
 export default function updateProfile() {
+  const { user } = usePublicData();
+
   const {
     register,
     handleSubmit,
@@ -16,6 +20,7 @@ export default function updateProfile() {
     formState: { errors },
   } = useForm<UserUpdateFormData>({
     resolver: zodResolver(userUpdateSchema),
+    
   });
 
   const notificationMethods = [
@@ -26,12 +31,10 @@ export default function updateProfile() {
 
   // ✅ Create or Update
   const onSubmit = async (data: UserUpdateFormData) => {
-    console.log("test");
-    console.log(data)
     const token = localStorage.getItem("token");
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/change_password`,
+      const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/user/${user?.id}`,
         data,
         {
           headers: {
@@ -50,6 +53,18 @@ export default function updateProfile() {
       toast("Error during login:" + error);
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      reset({
+        first_name: user.first_name || "",
+        last_name: user.last_name || "",
+        phone: user.phone || "",
+        gender: user.gender || "Male",
+        country: user.country || "Canada",
+      });
+    }
+  }, [user, reset]);
 
   return (
     <>
@@ -85,6 +100,7 @@ export default function updateProfile() {
                 </p>
               )}
             </div>
+            
             <div className="mt-4 w-2/3 space-y-3">
               <input
                 type="text"
@@ -105,7 +121,7 @@ export default function updateProfile() {
                     className="flex items-center"
                   >
                     <input
-                    {...register("gender")}
+                      {...register("gender")}
                       value={notificationMethod.value}
                       defaultChecked={notificationMethod.label === "male"}
                       type="radio"
@@ -123,7 +139,7 @@ export default function updateProfile() {
 
               <div className="mt-2 grid grid-cols-1">
                 <select
-                {...register("country")}
+                  {...register("country")}
                   defaultValue="Canada"
                   className="col-start-1 row-start-1 w-full appearance-none rounded-full bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-red-600 sm:text-sm/6"
                 >
