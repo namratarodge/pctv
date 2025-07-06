@@ -22,7 +22,7 @@ export default function Register() {
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center py-4 sm:px-6 lg:px-8 ">
-        <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-3/5">
+        <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-4/5">
           {!step && <Step1 />}
           {step === "two" && <Step2 />}
           {step === "three" && <Step3 />}

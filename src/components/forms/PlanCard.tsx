@@ -1,64 +1,73 @@
 type PlanCardProps = {
-    label: string;
-    price: string;
-    type: string;
-    isHighlighted?: boolean;
-    onSelect?: () => void;
-    features: { label: string; value?: string }[];
-  };
-  
-  export default function PlanCard({
-    label,
-    price,
-    type,
-    isHighlighted = false,
-    onSelect,
-    features,
-  }: PlanCardProps) {
-    return (
+  label: string;
+  price: string;
+  type: string;
+  isHighlighted?: boolean;
+  onSelect?: () => void;
+  features: { label: string; value?: string }[];
+};
+
+export default function PlanCard({
+  label,
+  price,
+  type,
+  isHighlighted = false,
+  onSelect,
+  features,
+}: PlanCardProps) {
+  return (
+    <div
+      className={`relative rounded-xl w-full max-w-xs py-10 h-auto shadow-lg ${
+        isHighlighted ? "bg-red-500 text-white" : "border border-red-500"
+      }`}
+    >
+      {/* Best Value badge */}
+      {isHighlighted && (
+        <div className="absolute top-2 right-2 flex items-center gap-1 bg-gray-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+          Best Value
+        </div>
+      )}
+
+      {/* Header */}
+      <div className={`text-center space-y-3 ${isHighlighted ? "text-white" : "text-gray-600"}`}>
+        <small className="uppercase tracking-wider">{label}</small>
+        <h3 className="text-5xl font-bold">{price}</h3>
+        <button
+          onClick={onSelect}
+          className={`px-4 py-1.5 w-3/4 rounded-full mt-2 ${
+            isHighlighted ? "bg-white text-red-500" : "bg-red-500 text-white"
+          } cursor-pointer hover:opacity-90 transition`}
+        >
+          Select
+        </button>
+      </div>
+
+      {/* Features */}
       <div
-        className={`relative rounded-xl w-1/2 pt-5 h-auto ${
-          isHighlighted ? "bg-red-500 text-white" : "border border-red-500"
+        className={`mt-10 text-xs px-4 space-y-4 ${
+          isHighlighted ? "text-white" : "text-gray-700"
         }`}
       >
-        {isHighlighted && (
-          <div className="absolute top-2 right-2 flex items-center gap-1 bg-gray-600 text-white text-xs font-bold px-2 py-1 rounded-full">
-            Best Value
-          </div>
-        )}
-        <div className={`text-center space-y-3 ${isHighlighted ? "text-white" : "text-black"}`}>
-          <small>{label}</small>
-          <h3 className="text-5xl">{price}</h3>
-          <button
-            onClick={onSelect}
-            className={`px-4 py-1.5 w-3/4 rounded-full ${
-              isHighlighted ? "bg-white text-red-400" : "bg-red-500 text-white"
-            } cursor-pointer`}
+        {features.map((f, i) => (
+          <p
+            key={i}
+            className={`border-b pb-2 text-sm border-gray-300 ${
+              i === features.length - 1 ? "border-none" : ""
+            }`}
           >
-            Select
-          </button>
-        </div>
-        <div
-          className={`px-4 py-6 space-y-4 ${
-            isHighlighted ? "text-white" : "text-gray-500"
-          }`}
-        >
-          {features.map((f, i) => (
-            <p
-              key={i}
-              className={`border-b text-sm pb-2 flex flex-col ${
-                i === features.length - 1 ? "border-none" : ""
-              }`}
-            >
-              {f.label}
-              {f.value && (
-                <span className={`font-semibold ${!isHighlighted && "text-gray-800"}`}>
-                  {f.value}
-                </span>
-              )}
-            </p>
-          ))}
-        </div>
+            {f.label}
+            {f.value && (
+              <span
+                className={`font-semibold block ${
+                  !isHighlighted && "text-gray-700"
+                }`}
+              >
+                {f.value}
+              </span>
+            )}
+          </p>
+        ))}
       </div>
-    );
-  }
+    </div>
+  );
+}
