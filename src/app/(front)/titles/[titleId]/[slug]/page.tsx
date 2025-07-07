@@ -9,6 +9,7 @@ import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { TitleType } from "@/constants/Type";
+import { formatDate } from "@/utils/common";
 
 export default function TitleDetailPage() {
   const params = useParams();
@@ -101,7 +102,8 @@ export default function TitleDetailPage() {
               </div>
               <div className="flex justify-between py-2 border-t mt-4 border-b border-[#37454D]  mr-5">
                 <p className="text-gray-400 text-sm">
-                  {titleDetails?.created_at}
+                  {formatDate(titleDetails?.created_at, true)} -{" "}
+                  {titleDetails?.views} views
                 </p>
                 <div className="flex gap-2">
                   <span className="text-gray-400">Rate us</span>
@@ -139,16 +141,15 @@ export default function TitleDetailPage() {
 
               <div className="py-4">
                 <h2 className="text-white">Related Tags</h2>
-                <div className="flex py-2 gap-3">
-                  <span className="rounded-full bg-gray-700 text-gray-200 px-3 py-1 text-sm">
-                    BIM
-                  </span>
-                  <span className="rounded-full bg-gray-700 text-gray-200 px-3 py-1 text-sm">
-                    General Project Controls
-                  </span>
-                  <span className="rounded-full bg-gray-700 text-gray-200 px-3 py-1 text-sm">
-                    Innovation Zone
-                  </span>
+                <div className="flex  flex-wrap  py-2 gap-3">
+                  {titleDetails.genres.map((item) => (
+                    <span
+                      key={item._id}
+                      className="rounded-full bg-gray-700 text-gray-200 px-3 py-1 text-sm"
+                    >
+                      {item.display_name} dsds
+                    </span>
+                  ))}
                 </div>
               </div>
 
