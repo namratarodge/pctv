@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const pageName = usePathname();
-  const WhitePages = ["/account", "/register"];
+  const WhitePages = ["/account", "/register",'/pricing'];
   return (
     <>
       <html lang="en">

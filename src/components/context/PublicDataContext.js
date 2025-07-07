@@ -89,7 +89,7 @@ export function PublicDataProvider({ children }) {
 
   const fetchUser = async () => {
     const token = localStorage.getItem("token");
-    if (token) {
+    if (token && token.split(".").length === 3) {
       const decoded = jwtDecode(token);
       // setUser(decoded);
       try {

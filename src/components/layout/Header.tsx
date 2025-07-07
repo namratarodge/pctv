@@ -38,7 +38,7 @@ const baseNavigation = [
     children: [],
   },
   { name: "Course/Zones", key: "categories", href: "#", children: [] },
-  { name: "Pricing", key: "price", href: "#" },
+  { name: "Pricing", key: "price", href: "/pricing" },
 ];
 
 const userNavigation = [

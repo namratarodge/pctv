@@ -11,6 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { DecodedUser } from "@/constants/Type";
+import { usePublicData } from "../context/PublicDataContext";
 
 const userNavigation = [
   { name: "Your profile", href: "/account" },
@@ -23,22 +24,15 @@ type SideBarProps = {
 };
 
 const singOut = async () => {
-  localStorage.clear(); // or remove specific keys
-  window.location.href = "/login"; // or use router.push('/login') if using Next.js router
+  localStorage.clear();
+  window.location.href = "/login";
 };
+
 export default function TopHeader({
   sideBarOpen,
   setSideBarOpen,
 }: SideBarProps) {
-  const [user, setUser] = useState<DecodedUser | null>(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token"); // Or from cookie if accessible
-    if (token) {
-      const decoded = jwtDecode<DecodedUser>(token);
-      setUser(decoded);
-    }
-  }, []);
+  const { user } = usePublicData();
 
   return (
     <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-xs sm:gap-x-6 sm:px-6 lg:px-8">
@@ -91,16 +85,16 @@ export default function TopHeader({
               <Image
                 src="/default-front.jpg"
                 alt="test"
-                width={30}
-                height={30}
-                className="w-full h-auto object-cover rounded-full"
+                width={10}
+                height={10}
+                className="w-10 h-auto object-cover rounded-full"
               />
               <span className="hidden lg:flex lg:items-center ">
                 <span
                   aria-hidden="true"
                   className="ml-4 text-sm/6 font-semibold text-gray-900"
                 >
-                  {user?.username}
+                  {user?.first_name} {user?.last_name}
                 </span>
                 <ChevronDownIcon
                   aria-hidden="true"

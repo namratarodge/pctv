@@ -60,8 +60,8 @@ export default function General() {
 
         <p className="my-4">Quick List</p>
         <div className="bg-gray-100 mt-4 py-2 px-6 rounded-sm">
-          {accountSettingsLinks.map((item) => (
-            <ListButton item={item} key={item.name} />
+          {accountSettingsLinks.map((item,index) => (
+            <ListButton item={item} key={index} />
           ))}
         </div>
       </div>

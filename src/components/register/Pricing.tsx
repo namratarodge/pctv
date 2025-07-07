@@ -1,11 +1,18 @@
+"use client";
+
 import PlanCard from "@/components/forms/PlanCard";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Loading from "../layout/Loading";
 import { PlanFormValues } from "@/constants/Type";
+type PricingProps = {
+  step?: string;
+  title: string;
+  description?: string;
+};
 
-export default function Step2() {
+export default function Pricing({ step, title, description }: PricingProps) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -38,7 +45,7 @@ export default function Step2() {
     fetch();
   }, []);
 
-  const mapPlanToPlanCardProps = (plan : PlanFormValues) => {
+  const mapPlanToPlanCardProps = (plan: PlanFormValues) => {
     const parsedFeatures: string[] = [];
 
     if (Array.isArray(plan.features)) {
@@ -59,7 +66,7 @@ export default function Step2() {
         }
       });
     }
-  
+
     return {
       label: plan.name,
       price: `${plan.currency_symbol}${plan.amount}`,
@@ -73,23 +80,22 @@ export default function Step2() {
   return (
     <div className="px-6 py-12 sm:rounded-lg sm:px-12">
       <form action="#" method="POST" className="space-y-6">
-        <small className="text-sm font-extralight">Step 2 OF 3</small>
-        <h2 className="mt-3 text-left text-5xl font-bold tracking-tight text-gray-800">
-          Choose the plan That! <br />
-          Matches Your Ambition
+        {step && <small className="text-sm font-extralight">{step}</small>}
+        <h2 className="mt-3 text-left text-5xl font-bold tracking-tight text-gray-800 w-2/3">
+          {title}
         </h2>
-        <p className="text-sm">
-          Pick a subscription - billing automatically starts after 7-day trial
-          ends, <br />
-          Cancel anytime, No fee
-        </p>
+        {description && <p className="text-sm">{description}</p>}
 
         {loading ? (
-          <Loading /> 
+          <Loading />
         ) : (
           <div className="w-full flex flex-wrap gap-4 h-auto">
             {data.map((plan, idx) => (
-              <PlanCard key={idx} {...mapPlanToPlanCardProps(plan)} isHighlighted={idx === 1} />
+              <PlanCard
+                key={idx}
+                {...mapPlanToPlanCardProps(plan)}
+                isHighlighted={idx === 1}
+              />
             ))}
           </div>
         )}
