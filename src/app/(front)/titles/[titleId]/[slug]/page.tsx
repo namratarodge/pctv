@@ -171,7 +171,7 @@ export default function TitleDetailPage() {
           )}
           <div className="w-1/3 ">
             <h2 className="text-white px-4">Recommended Videos for you </h2>
-            <div className="flex flex-col gap-1 px-2">
+            <div className="flex flex-col gap-1 px-2 h-screen overflow-y-auto scrollable">
               {title.map((data) => (
                 <Link
                   href={`/titles/${data._id}/${data.slug}`}
@@ -187,7 +187,7 @@ export default function TitleDetailPage() {
                   />
                   <div>
                     <h2 className="text-sm font-semibold text-gray-300 mb-2">
-                      {data.name.slice(0, 34)}
+                      {data.name.slice(0, 65)}
                     </h2>
                     <p className="text-gray-400 text-sm">{data.language}</p>
                     <p className="text-gray-400 text-sm ">Director of India</p>
