@@ -23,7 +23,6 @@ export default function Step2() {
       );
       if (response.data.status) {
         const modifiedData = response.data.data.data;
-        console.log(modifiedData);
         setData(modifiedData);
       }
     } catch (error) {
@@ -89,7 +88,7 @@ export default function Step2() {
         ) : (
           <div className="w-full flex flex-wrap gap-4 h-auto">
             {data.map((plan, idx) => (
-              <PlanCard key={idx} {...mapPlanToPlanCardProps(plan)} />
+              <PlanCard key={idx} {...mapPlanToPlanCardProps(plan)} isHighlighted={idx === 1} />
             ))}
           </div>
         )}

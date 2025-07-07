@@ -17,7 +17,7 @@ export default function PlanCard({
 }: PlanCardProps) {
   return (
     <div
-      className={`relative rounded-xl w-full max-w-xs py-10 h-auto shadow-lg ${
+      className={`relative rounded-xl w-full max-w-xs py-10 h-auto shadow-lg hover:bg-red-200 cursor-pointer ${
         isHighlighted ? "bg-red-500 text-white" : "border border-red-500"
       }`}
     >

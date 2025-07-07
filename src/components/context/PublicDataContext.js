@@ -1,6 +1,6 @@
 // context/PublicDataContext.jsa
 
-'use client'
+"use client";
 import { createContext, useContext, useEffect, useState } from "react";
 
 import { DecodedUser } from "@/constants/Type";
@@ -90,40 +90,45 @@ export function PublicDataProvider({ children }) {
 
   const fetchUser = async () => {
     const token = localStorage.getItem("token");
-    const decoded = jwtDecode(token);
-    // setUser(decoded);
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/users`,
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-          params: {
-            _id: decoded.id,
-          },
+    if (token) {
+      const decoded = jwtDecode(token);
+      // setUser(decoded);
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/users`,
+          {
+            headers: {
+              Authorization: token,
+              "Content-Type": "application/json",
+            },
+            params: {
+              _id: decoded.id,
+            },
+          }
+        );
+        if (response.data.status) {
+          const modifiedData = response.data.data.data;
+          const userData = {
+            id: modifiedData._id,
+            first_name: modifiedData.first_name,
+            last_name: modifiedData.last_name,
+            email: modifiedData.email,
+            gender: modifiedData.gender,
+            phone: modifiedData.phone,
+            country: modifiedData.country,
+            avatar_url: modifiedData.avatar_url,
+          };
+          setUser(userData);
         }
-      );
-      if (response.data.status) {
-        const modifiedData = response.data.data.data;
-        const userData = {
-          id : modifiedData._id,
-          first_name : modifiedData.first_name,
-          last_name : modifiedData.last_name,
-          email : modifiedData.email,
-          gender : modifiedData.gender,
-          phone : modifiedData.phone,
-          country : modifiedData.country,
-          avatar_url : modifiedData.avatar_url
-        }
-        setUser(userData);
+      } catch (error) {
+        console.log(error.code);
+        // if(error.code === 'ERR_BAD_REQUEST'){
+        //   window.location.href = "/login";
+        // }
+        console.error("Error fetching data:", error);
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setLoading(false);
     }
-
   };
 
   useEffect(() => {

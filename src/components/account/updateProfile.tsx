@@ -45,9 +45,7 @@ export default function updateProfile() {
       );
       const responseNew = response.data;
       if (responseNew.status) {
-        // localStorage.setItem("token", responseNew.data.token);
-        toast.success("Password change successfully");
-        // window.location.href = "/login";
+        toast.success("Account Info Updated successfully");
       }
     } catch (error) {
       toast("Error during login:" + error);
@@ -103,7 +101,7 @@ export default function updateProfile() {
             
             <div className="mt-4 w-2/3 space-y-3">
               <input
-                type="text"
+                type="number"
                 {...register("phone")}
                 placeholder="Phone no"
                 autoComplete="phone"
