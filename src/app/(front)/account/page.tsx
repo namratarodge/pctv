@@ -1,10 +1,10 @@
-import React, { Suspense } from 'react';
-import Account from '@/components/account/MainAccount';
+import React, { Suspense } from "react";
+import AccountInner from "@/components/account/AccountInner";
 
 export default function AccountPage() {
   return (
     <Suspense fallback={<div>Loading account page...</div>}>
-      <Account />
+      <AccountInner />
     </Suspense>
   );
 }

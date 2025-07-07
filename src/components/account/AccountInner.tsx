@@ -1,19 +1,19 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
+
 import General from "@/components/account/general";
 import Membership from "@/components/account/membership";
 import Security from "@/components/account/security";
 import ChangePassword from "@/components/account/change_password";
 import UpdateProfile from "@/components/account/updateProfile";
 import ManagePayment from "@/components/account/managePayment";
-
-import { useSearchParams } from "next/navigation";
 import CancelMembership from "@/components/account/cancel_membership";
 import MembershipPause from "@/components/account/membership_pause";
 import CancelMembershipFinal from "@/components/account/cancel_membership_final";
 import ChangeMembership from "@/components/account/change_membership";
 
-export default function Account() {
+export default function AccountInner() {
   const searchParams = useSearchParams();
   const name = searchParams.get("name");
 
