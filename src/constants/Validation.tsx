@@ -14,11 +14,20 @@ export type UserUpdateFormData = z.infer<typeof userUpdateSchema>;
 
 
 // change password
-export const userChangePasswordSchema = z.object({
-  old_password: z.string().min(1, "Old Password is required"),
-  new_password: z.string().min(1, "New Password is required"),
-  new_enter_password: z.string().min(1, "New Enter Password is required"),
-});
+export const userChangePasswordSchema = z
+  .object({
+    old_password: z.string().min(1, "Old Password is required"),
+    new_password: z
+      .string()
+      .min(6, "New Password must be at least 6 characters"),
+    new_enter_password: z
+      .string()
+      .min(6, "Confirm Password must be at least 6 characters"),
+  })
+  .refine((data) => data.new_password === data.new_enter_password, {
+    path: ["new_enter_password"],
+    message: "Passwords do not match",
+  });
 export type UserChangePasswordFormData = z.infer<
   typeof userChangePasswordSchema
 >;

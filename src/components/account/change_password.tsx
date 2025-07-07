@@ -3,14 +3,18 @@ import {
   userChangePasswordSchema,
 } from "@/constants/Validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
+import axios, { toFormData } from "axios";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { usePublicData } from "../context/PublicDataContext";
 
 export default function ChangePassword() {
+  const { user } = usePublicData();
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<UserChangePasswordFormData>({
     resolver: zodResolver(userChangePasswordSchema),
@@ -18,11 +22,17 @@ export default function ChangePassword() {
 
   // ✅ Create or Update
   const onSubmit = async (data: UserChangePasswordFormData) => {
+    const payload = {
+      email: user.email,
+      password: data.old_password,
+      newpassword: data.new_password,
+    };
+    console.log(payload);
     const token = localStorage.getItem("token");
-    try { 
+    try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/change_password`,
-        data,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/changePassword`,
+        payload,
         {
           headers: {
             Authorization: token,
@@ -31,10 +41,13 @@ export default function ChangePassword() {
         }
       );
       const responseNew = response.data;
+      console.log(responseNew)
       if (responseNew.status) {
         localStorage.setItem("token", responseNew.data.token);
-        toast.success("Password change successfully");
-        window.location.href = "/login";
+        toast.success("Password Change Successfully");
+        reset();
+      }else{
+        toast.error(responseNew.message)
       }
     } catch (error) {
       toast("Error during login:" + error);
