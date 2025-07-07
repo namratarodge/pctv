@@ -16,15 +16,15 @@ export default function AutoCompeleteListUser({
 }: AutoCompletePersonListProps) {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<UserTagForUser[]>([]);
-  const [selectedUser, setSelectedUser] = useState<UserTagForUser | null>(null);
+  // const [selectedUser, setSelectedUser] = useState<UserTagForUser | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (value) {
-      setSelectedUser(value);
+      // setSelectedUser(value);
       setQuery(value.email);
     } else {
-      setSelectedUser(null);
+      // setSelectedUser(null);
       setQuery("");
     }
   }, [value]);
@@ -69,7 +69,7 @@ export default function AutoCompeleteListUser({
   };
 
   const handleSelect = (user: UserTagForUser) => {
-    setSelectedUser(user);
+    // setSelectedUser(user);
     setQuery(user.email);
     setSuggestions([]);
     onSelect(user);
@@ -82,7 +82,7 @@ export default function AutoCompeleteListUser({
         value={query}
         onChange={(e) => {
           setQuery(e.target.value);
-          setSelectedUser(null);
+          // setSelectedUser(null);
         }}
         placeholder="Search user by name..."
         className=" w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-200"

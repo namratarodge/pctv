@@ -10,7 +10,6 @@ type PlanCardProps = {
 export default function PlanCard({
   label,
   price,
-  type,
   isHighlighted = false,
   onSelect,
   features,

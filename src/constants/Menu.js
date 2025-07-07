@@ -6,10 +6,8 @@ import {
   CreditCardIcon, // Subscription
   FilmIcon, // Video
   UsersIcon, // People / Users
-  NewspaperIcon, // News
   ListBulletIcon, // Lists
   StarIcon, // Reviews
-  ChatBubbleBottomCenterTextIcon, // Comments
   UserGroupIcon, // Users
   KeyIcon, // Roles
   DocumentTextIcon, // Pages
@@ -17,7 +15,6 @@ import {
   UserCircleIcon,
   LockClosedIcon,
   BookmarkIcon,
-  ArrowUpTrayIcon,
 } from "@heroicons/react/24/outline";
 
 export const navigation = [

@@ -3,7 +3,6 @@ import {
   PencilIcon,
   PlusCircleIcon,
   TrashIcon,
-  XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { DataTable, ModelForm } from "@/components/forms";
 import { useEffect, useState } from "react";
@@ -17,10 +16,8 @@ import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
 import {
   PlanFormValues,
-  PersonType,
   SubscriptionPlanType,
 } from "@/constants/Type";
-import { json } from "stream/consumers";
 import { XCircleIcon } from "@heroicons/react/20/solid";
 
 type CurrencyCode = keyof typeof currencies;
@@ -152,14 +149,9 @@ export default function Plans() {
   };
 
   const handleEdit = (data: PlanFormValues) => {
-    console.log(data);
     setIsEditing(true);
     setEditingId(data._id);
     setIsModalOpen(true);
-    // Populate form with existing data
-    // const featuresArray = parseBrokenFeatures(data.features);
-
-    // console.log(JSON.parse(data.features[0]));
 
     reset({
       name: data.name,
@@ -167,9 +159,8 @@ export default function Plans() {
       currency: data.currency,
       interval: data.interval,
       interval_count: Number(data.interval_count),
-      features: [],
+      features: data.features || [],
     });
-    replace(data.features || []);
   };
 
   const handleDeletePlan = async (id: string) => {
@@ -196,27 +187,6 @@ export default function Plans() {
       console.log(error);
       toast("Error deleting plan:");
     }
-  };
-
-  const parseBrokenFeatures = (features: any) => {
-    if (
-      Array.isArray(features) &&
-      features.length === 1 &&
-      typeof features[0] === "string"
-    ) {
-      try {
-        const once = JSON.parse(features[0]);
-        if (typeof once === "string") {
-          return JSON.parse(once);
-        }
-        if (Array.isArray(once)) {
-          return once;
-        }
-      } catch (e) {
-        console.error("Failed to parse features JSON:", e);
-      }
-    }
-    return Array.isArray(features) ? features : [];
   };
 
   useEffect(() => {
@@ -252,27 +222,26 @@ export default function Plans() {
             <Loading />
           ) : (
             <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-             
-            <DataTable
-              columns={planColumn}
-              data={plans}
-              renderActions={(person: PersonType) => (
-                <div className="flex gap-3 justify-end">
-                  <button
-                    onClick={() => handleEdit(person)}
-                    className="text-gray-600 hover:text-gray-800 cursor-pointer"
-                  >
-                    <PencilIcon className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={() => handleDeletePlan(person._id)}
-                    className="text-red-600 hover:text-red-800 cursor-pointer"
-                  >
-                    <TrashIcon className="w-5 h-5" />
-                  </button>
-                </div>
-              )}
-            />
+              <DataTable
+                columns={planColumn}
+                data={plans}
+                renderActions={(person: PlanFormValues) => (
+                  <div className="flex gap-3 justify-end">
+                    <button
+                      onClick={() => handleEdit(person)}
+                      className="text-gray-600 hover:text-gray-800 cursor-pointer"
+                    >
+                      <PencilIcon className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={() => handleDeletePlan(person._id)}
+                      className="text-red-600 hover:text-red-800 cursor-pointer"
+                    >
+                      <TrashIcon className="w-5 h-5" />
+                    </button>
+                  </div>
+                )}
+              />
             </div>
           )}
           <ModelForm
@@ -373,7 +342,7 @@ export default function Plans() {
                     })}
                     className="px-4 py-2 rounded-md border border-gray-300 text-gray-700 flex-1"
                     placeholder={`Feature ${index + 1}`}
-                    defaultValue={field || ""}
+                    defaultValue={`${field}`}
                   />
                   <button
                     type="button"
@@ -386,7 +355,7 @@ export default function Plans() {
               ))}
               <button
                 type="button"
-                onClick={() => append("")}
+                onClick={() => append({ name: "" })}
                 className="mt-2 px-4 py-1 bg-red-500 text-white rounded-md"
               >
                 Add Feature

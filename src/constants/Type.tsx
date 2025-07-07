@@ -3,23 +3,46 @@ export type TvTopicType = {
   display_name: string;
 };
 
+// Settings
+
+export type SettingsFormValues = {
+  _id: string;
+  name: string;
+  value: string;
+  private: string;
+};
+
 // Subscription Type
 
 export type SubscriptionFormValue = {
-  _id: string;
-  user_id : string;
+  _id?: string;
+  user_id: string;
   person_id: {
     _id: string;
     name: string;
     poster: string;
     known_for: string;
   };
-  plan_id : string;
-  description : string;
+  plan_id: string;
+  description: string;
   renews_at: string | null;
   ends_at: string | null;
 };
 
+export type SubscriptionEditFormValue = {
+  _id: string;
+  user_id: { _id: string };
+  person_id: {
+    _id: string;
+    name: string;
+    poster: string;
+    known_for: string;
+  };
+  plan_id: { _id: string };
+  description: string;
+  renews_at: string | null;
+  ends_at: string | null;
+};
 
 export type SubscriptionType = {
   _id: string;
@@ -37,18 +60,17 @@ export type SubscriptionType = {
   updated_at: string;
 };
 
-
 export type UserTagForUser = {
-  value : string;
-  id : string;
-  _id: string;
+  value: string;
+  data : PersonType;
+  id: string;
+  _id?: string;
   username: string;
   first_name: string;
-  last_name : string;
-  email : string;
+  last_name: string;
+  email: string;
   avatar: string; // URL to image
 };
-
 
 // Titles Types
 
@@ -164,19 +186,20 @@ export type PageType = {
   workspace_id: string | null;
 };
 
-interface Feature {
-  title: string;
-  description: string;
-}
+type NameForPlan = {
+  name: string;
+};
 
 export type PlanFormValues = {
-  _id?: string;
+  _id: string;
   name: string;
   amount: number;
   currency: string;
+  currency_symbol: string;
+  recommended: string;
   interval: string;
   interval_count: number;
-  features: string[];
+  features?: Array<NameForPlan>;
 };
 
 export type SubscriptionPlanType = {
@@ -385,7 +408,7 @@ export type ApiUserTag = {
 // Country
 
 export type CountryFormType = {
-  person_id : UserTag[];
+  person_id: UserTag[];
   taggable_id: string;
   taggable_type: string;
   tag_id: string[];

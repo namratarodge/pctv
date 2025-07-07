@@ -4,16 +4,11 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { UserSignUpFormData, userSignUpSchema } from "@/constants/Validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 
 export default function Step1() {
-  const router = useRouter();
-
   const {
     register,
     handleSubmit,
-    control,
-    reset,
     formState: { errors },
   } = useForm<UserSignUpFormData>({
     resolver: zodResolver(userSignUpSchema),

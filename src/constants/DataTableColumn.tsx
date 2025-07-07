@@ -231,7 +231,11 @@ export const PeopleColumn: {
       </div>
     ),
   },
-  { key: "birthdate", label: "Birth Date", render: (row) => <div>-</div> },
+  {
+    key: "birthdate",
+    label: "Birth Date",
+    render: (row) => <div>{!row.birthdate && "-"}</div>,
+  },
   { key: "views", label: "Local View" },
   { key: "popularity", label: "Popularity" },
   { key: "updated_at", label: "Last Update" },

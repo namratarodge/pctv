@@ -9,18 +9,16 @@ import { toast } from "react-toastify";
 import { usePublicData } from "@/components/context/PublicDataContext";
 import { useEffect } from "react";
 
-export default function updateProfile() {
+export default function UpdateProfile() {
   const { user } = usePublicData();
 
   const {
     register,
     handleSubmit,
-    control,
     reset,
     formState: { errors },
   } = useForm<UserUpdateFormData>({
     resolver: zodResolver(userUpdateSchema),
-    
   });
 
   const notificationMethods = [
@@ -98,7 +96,7 @@ export default function updateProfile() {
                 </p>
               )}
             </div>
-            
+
             <div className="mt-4 w-2/3 space-y-3">
               <input
                 type="number"

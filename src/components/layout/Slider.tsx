@@ -1,4 +1,4 @@
-// components/VoicesSlider.js
+
 "use client";
 
 import Image from "next/image";
@@ -58,7 +58,6 @@ type VoicesSliderProps = {
 export default function VoicesSlider({
   title,
   speakers = false,
-  progress = false,
 }: VoicesSliderProps) {
   return (
     <div className=" py-8  text-white relative">

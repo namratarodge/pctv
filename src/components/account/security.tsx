@@ -4,12 +4,8 @@ import {
   ChevronRightIcon,
   AdjustmentsHorizontalIcon,
   LockClosedIcon,
-  UserCircleIcon,
-  CreditCardIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
-
-import { useSearchParams } from "next/navigation";
 
 export const accountSettingsLinks = [
   {
@@ -21,13 +17,10 @@ export const accountSettingsLinks = [
     name: "Update Profile details",
     href: "/account?name=update_profile",
     icon: LockClosedIcon,
-  }
+  },
 ];
 
 export default function Security() {
-  const searchParams = useSearchParams();
-  const name = searchParams.get("name");
-
   return (
     <>
       <div className="h-100 text-black">

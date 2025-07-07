@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 
 import { ChevronRightIcon, CreditCardIcon } from "@heroicons/react/24/outline";
 import { useSearchParams } from "next/navigation";

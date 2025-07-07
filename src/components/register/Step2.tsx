@@ -3,9 +3,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Loading from "../layout/Loading";
+import { PlanFormValues } from "@/constants/Type";
 
 export default function Step2() {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetch = async () => {
@@ -37,7 +38,7 @@ export default function Step2() {
     fetch();
   }, []);
 
-  const mapPlanToPlanCardProps = (plan) => {
+  const mapPlanToPlanCardProps = (plan : PlanFormValues) => {
     const parsedFeatures: string[] = [];
 
     if (Array.isArray(plan.features)) {

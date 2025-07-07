@@ -22,6 +22,7 @@ import axios from "axios";
 import {
   SubscriptionType,
   SubscriptionFormValue,
+  SubscriptionEditFormValue,
   SubscriptionPlanType,
   UserTagForUser,
 } from "@/constants/Type";
@@ -211,13 +212,14 @@ export default function Subscription() {
     }
   };
 
-  const handleEdit = async (data: SubscriptionFormValue) => {
+  const handleEdit = async (data: SubscriptionEditFormValue) => {
+    console.log(data)
     setLoadingForm(true);
     setIsEditing(true);
-    setEditingId(data._id);
+    setEditingId(data._id ?? null);
     setIsModalOpen(true);
     let user: UserTagForUser | null = null;
-    if (data.user_id?._id) {
+    if (data.user_id._id) {
       user = await fetchUserById(data.user_id._id);
     }
     // Populate form with existing data
@@ -285,7 +287,7 @@ export default function Subscription() {
               <AdvanceDataTable
                 columns={SubscriptionsColumn}
                 data={data}
-                renderActions={(person: SubscriptionType) => (
+                renderActions={(person: SubscriptionEditFormValue) => (
                   <div className="flex gap-3 justify-end">
                     <button
                       onClick={() => handleEdit(person)}
@@ -332,7 +334,6 @@ export default function Subscription() {
                     onSelect={(user: UserTagForUser) => {
                       field.onChange(user);
                     }}
-                    value={field.value}
                   />
                 )}
               />

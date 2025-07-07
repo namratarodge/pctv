@@ -3,7 +3,6 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 
-import { DecodedUser } from "@/constants/Type";
 import axios from "axios";
 const PublicDataContext = createContext();
 import { jwtDecode } from "jwt-decode";

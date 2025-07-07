@@ -7,12 +7,10 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-export default function changePassword() {
+export default function ChangePassword() {
   const {
     register,
     handleSubmit,
-    control,
-    reset,
     formState: { errors },
   } = useForm<UserChangePasswordFormData>({
     resolver: zodResolver(userChangePasswordSchema),
@@ -21,7 +19,6 @@ export default function changePassword() {
   // ✅ Create or Update
   const onSubmit = async (data: UserChangePasswordFormData) => {
     const token = localStorage.getItem("token");
-    console.log(data)
     try { 
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/auth/change_password`,

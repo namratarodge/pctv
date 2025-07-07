@@ -4,7 +4,7 @@ export default function CancelMembership() {
       <div className="h-100 text-black">
         <h1 className="text-4xl font-semibold">Cancel Membership</h1>
         <p className="my-4 text-md">
-          Whatever you choose , it'll take effect on 3 May 2025. You'll be able
+          Whatever you choose , it will take effect on 3 May 2025. You will be able
           to watch until then.
         </p>
         <div className="bg-gray-100 mt-4 py-4 px-6 rounded-sm space-y-2 text-sm">

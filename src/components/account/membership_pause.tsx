@@ -6,7 +6,7 @@ export default function MembershipPause() {
           Your membership will pause in 1 day
         </h1>
         <p className="my-4">
-          Whatever you choose, it'll take effect on 3 May 2025. <br /> you 'll
+          Whatever you choose, it will take effect on 3 May 2025. <br /> you will
           still be able to watch until then.
         </p>
         <div className="bg-gray-100 mt-4 py-4 px-6 rounded-sm space-y-4 text-sm">

@@ -1,13 +1,14 @@
 "use client";
 import { SectorMultiSelect } from "@/components/forms";
+import { SettingsFormValues } from "@/constants/Type";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function Content() {
-  const [settings, setSettings] = useState<
-    { id: number; name: string; value: string }[]
-  >([]);
+  // const [settings, setSettings] = useState<
+  //   { id: number; name: string; value: string }[]
+  // >([]);
 
   const [appRating, setAppRating] = useState<string[]>([]);
   const [languages, setLanguages] = useState<string[]>([]);
@@ -34,11 +35,11 @@ export default function Content() {
       );
       if (response.data.status) {
         const modifiedData = response.data.data.data;
-        setSettings(modifiedData);
+        // setSettings(modifiedData);
 
         // Find each setting by name, parse JSON value to string arrays
         const findSetting = (name: string) =>
-          modifiedData.find((item) => item.name === name);
+          modifiedData.find((item: SettingsFormValues) => item.name === name);
 
         setAppRating(
           JSON.parse(findSetting("browse.ageRatings")?.value ?? "[]")
@@ -52,8 +53,7 @@ export default function Content() {
         setQualities(
           JSON.parse(findSetting("streaming.qualities")?.value ?? "[]")
         );
-
-        setData(modifiedData);
+        
         setLoading(false);
       }
     } catch (error) {

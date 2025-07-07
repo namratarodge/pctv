@@ -1,10 +1,6 @@
 "use client";
 import { Filter, DataTable } from "@/components/forms";
-import {
-  PencilIcon,
-  PlusCircleIcon,
-  TrashIcon,
-} from "@heroicons/react/16/solid";
+import { PencilIcon, PlusCircleIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
 import { filterType } from "@/constants/Filter";
 import { useEffect, useState } from "react";
@@ -13,7 +9,6 @@ import axios from "axios";
 import Loading from "@/components/layout/Loading";
 import { listColumn } from "@/constants/DataTableColumn";
 import { ListType } from "@/constants/Type";
-import { toast } from "react-toastify";
 
 export default function Lists() {
   const [data, setData] = useState([]);
@@ -30,9 +25,9 @@ export default function Lists() {
             Authorization: token,
             "Content-Type": "application/json",
           },
-          params : {
-            public : 1
-          }
+          params: {
+            public: 1,
+          },
         }
       );
       if (response.data.status) {
@@ -40,42 +35,13 @@ export default function Lists() {
           ...item,
           updated_at: `${formatDate(item.updated_at)} `,
         }));
-        console.log("yes");
-        console.log(modifiedData);
 
         setLoading(false);
         setData(modifiedData);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false); // Always stop loading, whether success or failure
-    }
-  };
-
-  const handleDelete = async (id: string) => {
-    const token = localStorage.getItem("token");
-
-    try {
-      const response = await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/list/${id}`,
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          }
-        }
-      );
-
-      if (response.data.status) {
-        toast("List deleted successfully");
-        fetch(); // Refresh the plans list
-      } else {
-        toast("Delete failed:", response.data.message);
-      }
-    } catch (error) {
-      console.log(error);
-      toast("Error deleting list:");
+      setLoading(false); 
     }
   };
 

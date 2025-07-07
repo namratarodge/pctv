@@ -7,9 +7,7 @@ import {
   UserCircleIcon,
   CreditCardIcon,
 } from "@heroicons/react/24/outline";
-import Link from "next/link";
 
-import { useSearchParams } from "next/navigation";
 import ListButton from "./ListButton";
 
 export const accountSettingsLinks = [
@@ -36,9 +34,6 @@ export const accountSettingsLinks = [
 ];
 
 export default function General() {
-  const searchParams = useSearchParams();
-  const name = searchParams.get("name");
-
   return (
     <>
       <div className="h-100 text-black">
