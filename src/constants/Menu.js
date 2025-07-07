@@ -72,7 +72,11 @@ export const navigationSettings = [
 
 export const navigationAccount = [
   { name: "Overview", href: "/account", icon: HomeIcon },
-  { name: "Membership", href: "/account?name=membership", icon: UserCircleIcon },
+  {
+    name: "Membership",
+    href: "/account?name=membership",
+    icon: UserCircleIcon,
+  },
   { name: "Security", href: "/account?name=security", icon: LockClosedIcon },
   {
     name: "Watchlist",
@@ -93,3 +97,5 @@ export const navigationTitleSubMenu = [
   { name: "Countries", href: "countries" },
   { name: "Reviews", href: "reviews" },
 ];
+
+export const WhitePages = ["/account", "/register", "/pricing"];

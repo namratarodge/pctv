@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout";
 import { ToastContainer } from "react-toastify";
 import { PublicDataProvider } from "@/components/context/PublicDataContext";
 import { usePathname } from "next/navigation";
+import { WhitePages } from "@/constants/Menu";
 
 export default function RootLayout({
   children,
@@ -13,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const pageName = usePathname();
-  const WhitePages = ["/account", "/register",'/pricing'];
+
   return (
     <>
       <html lang="en">
