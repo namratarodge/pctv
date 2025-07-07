@@ -1,20 +1,24 @@
 import Image from "next/image";
 const joinPCTV = [
   {
-    title: "We'll always let you know about important changes, bu",
-    description: "We'll always let you know about important changes, bu hds",
+    title: "Exclusive Access to Industry-Leading Content",
+    description:
+      "Get access to high-quality sessions led by seasoned project controls professionals covering real-world challenges, solutions and innovations.",
   },
   {
-    title: "We'll always let you know about important changes, bu",
-    description: "We'll always let you know about important changes, bu hds",
+    title: "Learn from Global Experts AnyTime, AnyWhere",
+    description:
+      "Watch anytime, anywhere-from desktop to mobile. Perfect for busy professionals looking to grow their experties at their own place.",
   },
   {
-    title: "We'll always let you know about important changes, bu",
-    description: "We'll always let you know about important changes, bu hds",
+    title: "Stay Ahead with Cutting_edge Trands And Techniques",
+    description:
+      "Stay current with emerging trands,tools and best practices shaping the future of projects controls.",
   },
   {
-    title: "We'll always let you know about important changes, bu",
-    description: "We'll always let you know about important changes, bu hds",
+    title: "Join a growing Global Coummunity",
+    description:
+      "Join a growing international network of professionals who share your passion for projects excellence and continuous learning.",
   },
 ];
 
@@ -71,7 +75,7 @@ export default function Home() {
                   className="w-2/4 rounded-full px-4 py-3 text-sm text-white bg-gray-800 focus:outline-0"
                 />
 
-                <button className="w-1/4 rounded-full bg-red-500 px-6 py-3 text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+                <button className="cursor-pointer w-1/4 rounded-full bg-red-500 px-6 py-3 text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20">
                   Get Started
                 </button>
               </div>
@@ -93,20 +97,16 @@ export default function Home() {
       </div>
       <div className="p-6 lg:px-8 mx-auto max-w-11/12">
         <h2 className="text-white text-xl">More reasons To Join PCTV</h2>
-        <div className="mt-4 flex gap-4 ">
+        <div className="mt-4 flex gap-6 ">
           {joinPCTV.map((item, index) => (
             <div
               key={index}
-              className="w-1/4 text-white bg-[#1f3844] px-4 py-6"
+              className="w-1/4 text-white bg-[#1f3844] px-6 py-6"
             >
-              <h2 className="text-xl">
-                We will always let you know about important changes, bu
-              </h2>
-              <h4 className="text-sm mt-4">
-                We will always let you know about important changes, bu hds
-              </h4>
-              <div className="mt-3 text-right">
-                <h3>TV</h3>
+              <h2 className="text-xl">{item.title}</h2>
+              <h4 className="text-sm mt-4">{item.description}</h4>
+              <div className="mt-3 flex justify-end left-0">
+                <Image alt="" src="/Subtraction 3.png" width={30} height={30} />
               </div>
             </div>
           ))}
@@ -115,18 +115,15 @@ export default function Home() {
       <div className="p-6 lg:px-8 mx-auto max-w-11/12">
         <h2 className="text-white text-xl">Our Top Voice</h2>
         <div className="mt-4 grid grid-cols-4 gap-4">
-          {people.map((item, index) => (
+          {Array.from({ length: 8 }, (_, index) => (
             <div key={index} className="relative">
               <Image
-                src="https://picsum.photos/300/200/"
+                src={`/topvoice/Group${index + 1}.png`}
                 alt="test"
                 width={300}
                 height={200}
                 className="w-full h-auto object-cover rounded-md"
               />
-              <div className="absolute top-6 left-2 uppercase font-bold bg-opacity-50 text-shadow-lg/30 text-white px-2 py-1 text-xl w-30">
-                {item.name}
-              </div>
             </div>
           ))}
         </div>
