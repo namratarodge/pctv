@@ -16,6 +16,8 @@ import Loading from "@/components/layout/Loading";
 import { toast } from "react-toastify";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { ReviewType, reviewFormType } from "@/constants/Type";
+import { useDebounce } from "use-debounce";
+import { parseQueryString } from "@/utils/helper";
 
 export default function People() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -40,6 +42,9 @@ export default function People() {
 
   const [pages, setPages] = useState(1);
   const [limits, setLimits] = useState(10);
+
+  const [filterQuery, setFilterQuery] = useState("");
+  const [debouncedFilterQuery] = useDebounce(filterQuery, 1000); // 1 seconds delay
 
   const fetch = async () => {
     const token = localStorage.getItem("token");
@@ -127,6 +132,7 @@ export default function People() {
       const token = localStorage.getItem("token");
       setLoading(true);
       try {
+        const filterParams = parseQueryString(debouncedFilterQuery);
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/reviews`,
           {
@@ -137,6 +143,7 @@ export default function People() {
             params: {
               limit: limits,
               page: pages,
+              ...filterParams,
             },
           }
         );
@@ -149,8 +156,10 @@ export default function People() {
           );
           setData(modifiedData);
           setPagination(response.data.data.pagination);
-          setLoading(false);
+        } else {
+          setData([]);
         }
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -159,21 +168,22 @@ export default function People() {
     };
 
     fetch();
-  }, [pages, limits]);
+  }, [pages, limits, debouncedFilterQuery]);
 
   return (
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
       <h1 className="text-2xl font-semibold text-gray-600 ">Review</h1>
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          <div className="sm:flex sm:items-center mt-4  h-auto ">
-            <Filter filterType={ReviewfilterType} />
-          </div>
-          <div className="mt-8 flow-root">
-            <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+
+      <div className="sm:flex  mt-4  h-auto justify-between gap-4 ">
+        <Filter filterType={ReviewfilterType} onQueryChange={setFilterQuery} />
+      </div>
+      <div className="mt-8 flow-root">
+        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+            {loading ? (
+              <Loading />
+            ) : (
+              <>
                 <AdvanceDataTable
                   columns={reviewColumn}
                   data={data}
@@ -194,11 +204,11 @@ export default function People() {
                   onPageChange={setPage}
                   onLimitChange={setLimit}
                 />
-              </div>
-            </div>
+              </>
+            )}
           </div>
-        </>
-      )}
+        </div>
+      </div>
       <ModelForm
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

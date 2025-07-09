@@ -110,7 +110,7 @@ export default function Filter({
 
   return (
     <div className="sm:flex-auto  sm:w-1/5">
-      <div className="relative flex border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-red-300">
+      <div className="relative flex justify-between border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-red-300">
         <div className="border-l-1 border-gray-300 px-4 inset-y-0 left-0  flex items-center pointer-events-none">
           <MagnifyingGlassIcon
             className="h-5 w-5 text-gray-500"
@@ -134,7 +134,7 @@ export default function Filter({
         <button
           className={` ${
             showFilter ? "text-red-400" : "text-gray-700"
-          } flex items-center justify-center  px-3 w-30  gap-2 item cursor-pointer`}
+          }  flex items-center justify-center  px-3 w-30  gap-2 item cursor-pointer`}
           onClick={toggleFilter}
         >
           <AdjustmentsHorizontalIcon className="h-6 w-6  " />
