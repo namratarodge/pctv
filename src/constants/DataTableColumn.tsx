@@ -177,6 +177,7 @@ export const AdditionalTagColumn: {
 type TitleType = {
   _id: string;
   name: string;
+  poster: string;
   type: string;
   release_date: number;
   rating: number;
@@ -194,13 +195,14 @@ export const TitleColumn: {
     label: "Name",
     render: (row) => (
       <div className="flex items-center space-x-2">
-        <span className="flex flex-col">{row.name}</span>
+        <UserAvatar poster={row.poster} name={row.name} />
+
+        <span title={row.name} className="line-clamp-2">{truncateToWords(row.name, 7)}... </span>
       </div>
     ),
   },
-  { key: "type", label: "Type" },
+  { key: "type", label: "Type", render: () => <div>TV Topic</div> },
   { key: "release_date", label: "Release Date" },
-  { key: "rating", label: "Rating" },
   { key: "views", label: "Local View" },
   { key: "popularity", label: "Popularity" },
 ];

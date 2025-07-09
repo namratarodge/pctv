@@ -122,27 +122,17 @@ export const AdditionalTagFilter = [
 
 export const TitleFilter = [
   {
-    name: "Image",
-    key: "poster",
-    option: [
-      { name: "Has Image", value: "yes" },
-      { name: "Doesn't have Image", value: "no" },
-    ],
-    search: "name",
-  },
-  {
     name: "Release Date",
     key: "release_date",
-    option: numberOptions,
     field: {
       type: "date",
       placeholder: "Select date",
     },
+    search: "name",
   },
   {
     name: "Views",
     key: "views",
-    option: numberOptions,
     field: {
       type: "number",
       placeholder: "Enter View",
@@ -151,7 +141,6 @@ export const TitleFilter = [
   {
     name: "Created At",
     key: "created_at",
-    option: numberOptions,
     field: {
       type: "date",
       placeholder: "Select date",

@@ -15,6 +15,7 @@ import Loading from "@/components/layout/Loading";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { TitleDetailsType, TitleType } from "@/constants/Type";
+import { useDebounce } from "use-debounce";
 
 export default function Title() {
   const [data, setData] = useState([]);
@@ -25,6 +26,9 @@ export default function Title() {
     limit: 10,
     totalPages: 0,
   });
+
+  const [filterQuery, setFilterQuery] = useState("");
+  const [debouncedFilterQuery] = useDebounce(filterQuery, 1000); // 500ms delay
 
   const [pages, setPages] = useState(1);
   const [limits, setLimits] = useState(10);
@@ -41,6 +45,7 @@ export default function Title() {
     const token = localStorage.getItem("token");
     setLoading(true);
     try {
+      const filterParams = parseQueryString(debouncedFilterQuery);
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/titles`,
         {
@@ -51,6 +56,7 @@ export default function Title() {
           params: {
             limit: limits,
             page: pages,
+            ...filterParams,
           },
         }
       );
@@ -63,14 +69,16 @@ export default function Title() {
         );
         setData(modifiedData);
         setPagination(response.data.data.pagination);
-        setLoading(false);
+      } else {
+        setData([]);
       }
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
     }
-  }, [limits, pages]); // dependencies used inside fetch
+  }, [limits, pages, debouncedFilterQuery]); // dependencies used inside fetch
 
   const handleDelete = async (id: string) => {
     const token = localStorage.getItem("token");
@@ -98,6 +106,18 @@ export default function Title() {
     }
   };
 
+  const parseQueryString = (queryString: string): Record<string, string> => {
+    if (!queryString) return {};
+    return queryString
+      .split("&")
+      .filter(Boolean)
+      .reduce((acc: Record<string, string>, part) => {
+        const [key, value] = part.split("=");
+        acc[key] = decodeURIComponent(value || "");
+        return acc;
+      }, {});
+  };
+
   useEffect(() => {
     fetch();
   }, [fetch]);
@@ -105,28 +125,29 @@ export default function Title() {
   return (
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
       <h1 className="text-2xl font-semibold text-gray-600 ">Titles</h1>
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          <div className="sm:flex sm:items-center mt-4  h-auto ">
-            <Filter filterType={TitleFilter} />
-            <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none ">
-              <Link
-                href="titles/new/edit"
-                className="flex items-center cursor-pointer gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                <PlusCircleIcon className="w-6 h-6" /> New Title
-              </Link>
-            </div>
-          </div>
-          <div className="mt-8 flow-root">
-            <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+
+      <div className="sm:flex  mt-4  h-auto justify-between gap-4 ">
+        <Filter filterType={TitleFilter} onQueryChange={setFilterQuery} />
+        <div className="mt-4 sm:mt-0 sm:flex-none ">
+          <Link
+            href="titles/new/edit"
+            className="flex items-center cursor-pointer gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            <PlusCircleIcon className="w-6 h-6" /> New Title
+          </Link>
+        </div>
+      </div>
+      <div className="mt-8 flow-root">
+        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+            {loading ? (
+              <Loading />
+            ) : (
+              <>
                 <AdvanceDataTable
                   columns={TitleColumn}
                   data={data}
-                  renderActions={(person : TitleType) => (
+                  renderActions={(person: TitleType) => (
                     <div className="flex gap-3 justify-end">
                       <Link
                         href={`titles/${person._id}/edit `}
@@ -149,11 +170,11 @@ export default function Title() {
                   onPageChange={setPage}
                   onLimitChange={setLimit}
                 />
-              </div>
-            </div>
+              </>
+            )}
           </div>
-        </>
-      )}
+        </div>
+      </div>
     </div>
   );
 }

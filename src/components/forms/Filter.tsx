@@ -5,11 +5,17 @@ import {
   MagnifyingGlassIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { FilterItem, FilterValues } from "@/constants/Type";
 
-export default function Filter({ filterType }: { filterType: FilterItem[] }) {
+export default function Filter({
+  filterType,
+  onQueryChange,
+}: {
+  filterType: FilterItem[];
+  onQueryChange: (query: string) => void;
+}) {
   const [showFilter, setShowFilter] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState<FilterItem[]>([]);
   const [filterValues, setFilterValues] = useState<FilterValues>({});
@@ -48,13 +54,23 @@ export default function Filter({ filterType }: { filterType: FilterItem[] }) {
     }));
   };
 
+  // const queryString = Object.entries(filterValues)
+  //   .map(([key, val]) => {
+  //     if (val.value1 !== undefined) {
+  //       // value + value1 (e.g., created_at=<2025-06-17)
+  //       return `${key}=${val.value}${val.value1}`;
+  //     } else {
+  //       // only value (e.g., knownFor=art)
+  //       return `${key}=${String(val.value)}`;
+  //     }
+  //   })
+  //   .join("&");
+
   const queryString = Object.entries(filterValues)
     .map(([key, val]) => {
       if (val.value1 !== undefined) {
-        // value + value1 (e.g., created_at=<2025-06-17)
         return `${key}=${val.value}${val.value1}`;
       } else {
-        // only value (e.g., knownFor=art)
         return `${key}=${String(val.value)}`;
       }
     })
@@ -64,7 +80,7 @@ export default function Filter({ filterType }: { filterType: FilterItem[] }) {
     const existing = selectedFilter.find(
       (f): f is FilterItem => f.name === filterName
     );
-    if (existing) { 
+    if (existing) {
       const key = existing.key as string;
       setSelectedFilter(selectedFilter.filter((f) => f.name !== filterName));
       setFilterValues((prev) => {
@@ -88,8 +104,12 @@ export default function Filter({ filterType }: { filterType: FilterItem[] }) {
     setFilterValues({});
   };
 
+  useEffect(() => {
+    onQueryChange(queryString);
+  }, [queryString, onQueryChange]);
+
   return (
-    <div className="sm:flex-auto  w-1/5">
+    <div className="sm:flex-auto  sm:w-1/5">
       <div className="relative flex border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-red-300">
         <div className="border-l-1 border-gray-300 px-4 inset-y-0 left-0  flex items-center pointer-events-none">
           <MagnifyingGlassIcon
@@ -146,7 +166,7 @@ export default function Filter({ filterType }: { filterType: FilterItem[] }) {
           </div>
         )}
       </div>
-      <small>{queryString}</small>
+      {/* <small>{queryString}</small> */}
       <div>
         {selectedFilter.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-2">
