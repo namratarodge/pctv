@@ -14,6 +14,7 @@ import Loading from "@/components/layout/Loading";
 import { AdditionalTagColumn } from "@/constants/DataTableColumn";
 import { formatDate } from "@/utils/common";
 import { PersonType } from "@/constants/Type";
+import { useDebounce } from "use-debounce";
 
 export default function Subscription() {
   const [additionalTags, setAdditionalTags] = useState([]);
@@ -27,6 +28,9 @@ export default function Subscription() {
 
   const [pages, setPages] = useState(1);
   const [limits, setLimits] = useState(10);
+
+  const [filterQuery, setFilterQuery] = useState("");
+  const [debouncedFilterQuery] = useDebounce(filterQuery, 1000); // 1 seconds delay
 
   const fetch = useCallback(async () => {
     const token = localStorage.getItem("token");
@@ -55,14 +59,16 @@ export default function Subscription() {
         );
         setAdditionalTags(modifiedData);
         setPagination(response.data.data.pagination);
-        setLoading(false);
+      } else {
+        setAdditionalTags([]);
       }
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
       setLoading(false); // Always stop loading, whether success or failure
     }
-  }, [pages, limits]);
+  }, [pages, limits, debouncedFilterQuery]);
 
   const setPage = (value: number) => {
     setPages(value);
@@ -79,24 +85,28 @@ export default function Subscription() {
   return (
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
       <h1 className="text-2xl font-semibold text-gray-600 ">Additional Tag</h1>
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          <div className="flex relative w-full gap-4 mt-4">
-            <Filter filterType={AdditionalTagFilter} />
-            <div className="relative ">
-              <Link
-                href="people/create?known_for=sub-tv-topic"
-                className="flex items-center  gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                <PlusCircleIcon className="w-6 h-6" /> Add Additional Tag
-              </Link>
-            </div>
-          </div>
-          <div className="mt-8 flow-root">
-            <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+
+      <div className="flex relative w-full gap-4 mt-4">
+        <Filter
+          filterType={AdditionalTagFilter}
+          onQueryChange={setFilterQuery}
+        />
+        <div className="relative ">
+          <Link
+            href="people/create?known_for=sub-tv-topic"
+            className="flex items-center  gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            <PlusCircleIcon className="w-6 h-6" /> Add Additional Tag
+          </Link>
+        </div>
+      </div>
+      <div className="mt-8 flow-root">
+        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+            {loading ? (
+              <Loading />
+            ) : (
+              <>
                 <AdvanceDataTable
                   columns={AdditionalTagColumn}
                   data={additionalTags}
@@ -108,12 +118,6 @@ export default function Subscription() {
                       >
                         <PencilIcon className="w-5 h-5" />
                       </button>
-                      <button
-                        onClick={() => console.log("Delete", person)}
-                        className="text-red-600 hover:text-red-800 cursor-pointer"
-                      >
-                        <TrashIcon className="w-5 h-5" />
-                      </button>
                     </div>
                   )}
                 />
@@ -122,12 +126,12 @@ export default function Subscription() {
                   pagination={pagination}
                   onPageChange={setPage}
                   onLimitChange={setLimit}
-                />
-              </div>
-            </div>
+                />  
+              </>
+            )}
           </div>
-        </>
-      )}
+        </div>
+      </div>
     </div>
   );
 }

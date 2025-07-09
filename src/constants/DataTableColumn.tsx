@@ -156,6 +156,7 @@ export const planColumn: {
 // Additional Tag Column
 type AdditionalTagItem = {
   name: string;
+  poster: string;
   birth_place: string;
   views: number;
   popularity: number;
@@ -165,8 +166,21 @@ type AdditionalTagItem = {
 export const AdditionalTagColumn: {
   key: keyof AdditionalTagItem;
   label: string;
+  render?: (row: AdditionalTagItem) => React.ReactNode;
 }[] = [
-  { key: "name", label: "Name" },
+  {
+    key: "name",
+    label: "Name",
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        <UserAvatar poster={row.poster} name={row.name} />
+
+        <span title={row.name} className="line-clamp-2">
+          {truncateToWords(row.name, 7)}...{" "}
+        </span>
+      </div>
+    ),
+  },
   { key: "birth_place", label: "Birthday" },
   { key: "views", label: "Local View" },
   { key: "popularity", label: "Popularity" },
@@ -197,7 +211,9 @@ export const TitleColumn: {
       <div className="flex items-center space-x-2">
         <UserAvatar poster={row.poster} name={row.name} />
 
-        <span title={row.name} className="line-clamp-2">{truncateToWords(row.name, 7)}... </span>
+        <span title={row.name} className="line-clamp-2">
+          {truncateToWords(row.name, 7)}...{" "}
+        </span>
       </div>
     ),
   },

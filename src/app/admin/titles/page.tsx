@@ -28,7 +28,7 @@ export default function Title() {
   });
 
   const [filterQuery, setFilterQuery] = useState("");
-  const [debouncedFilterQuery] = useDebounce(filterQuery, 1000); // 500ms delay
+  const [debouncedFilterQuery] = useDebounce(filterQuery, 1000); // 1 seconds delay
 
   const [pages, setPages] = useState(1);
   const [limits, setLimits] = useState(10);
