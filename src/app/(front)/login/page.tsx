@@ -24,7 +24,7 @@ export default function Login() {
       );
 
       if (!response.ok) {
-        toast("Your Email id and Password is not correct");
+        return toast("Your Email id and Password is not correct");
       }
 
       const data = await response.json();
@@ -36,6 +36,7 @@ export default function Login() {
       }
      
     } catch (error) {
+      console.log(error)
       toast("Error during login:" + error);
     }
   }

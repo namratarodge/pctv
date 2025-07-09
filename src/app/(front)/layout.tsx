@@ -21,7 +21,9 @@ export default function RootLayout({
         <title> Project Controls TV </title>
         <body
           className={`${
-            WhitePages.includes(pageName) ? "bg-white" : "bg-[#161f27]"
+            WhitePages.includes(pageName)
+              ? "bg-white text-gray-700 "
+              : "bg-[#161f27] text-gray-300 "
           } `}
         >
           <PublicDataProvider>

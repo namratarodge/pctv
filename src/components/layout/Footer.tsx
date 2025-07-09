@@ -24,29 +24,43 @@ const navigation = {
     { name: "Terms of service", href: "#" },
     { name: "Privacy policy", href: "#" },
     { name: "License", href: "#" },
-  ]
+  ],
 };
 
 import { usePublicData } from "@/components/context/PublicDataContext";
 import { PageType, TagType } from "@/constants/Type";
+import { WhitePages } from "@/constants/Menu";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
   const { tvtopic, pages } = usePublicData();
-
+  const pageName = usePathname();
   return (
-    <footer className="border-t border-gray-700">
+    <footer className="border-t border-gray-700 ">
       <div className="mx-auto max-w-11/12 px-6  pb-8 sm:pt-10 lg:px-2 ">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
-            <Image
-              alt="Your Company"
-              src="https://projectcontrolstv.com/storage/branding_media/5lbRjBu1jH2A3Q61DkPaPLVxw3fidK9SlSwU8PAU.png"
-              width={200} // Replace with the actual width of the image or layout container
-              height={200} // Replace with the actual height
-              className="w-50"
-              unoptimized // required for external images unless configured in next.config.js
-            />
-            <p className="text-sm/6 text-balance text-gray-300">
+            {WhitePages.includes(pageName) ? (
+              <Image
+                alt="Your Company"
+                src="logo-white.png"
+                width={200} // Replace with the actual width of the image or layout container
+                height={200} // Replace with the actual height
+                className="w-50"
+                unoptimized // required for external images unless configured in next.config.js
+              />
+            ) : (
+              <Image
+                alt="Your Company"
+                src="logo-dark.png"
+                width={200} // Replace with the actual width of the image or layout container
+                height={200} // Replace with the actual height
+                className="w-50"
+                unoptimized // required for external images unless configured in next.config.js
+              />
+            )}
+
+            <p className="text-sm/6 text-balance ">
               Making the world a better place through constructing elegant
               hierarchies.
             </p>
@@ -54,14 +68,11 @@ export default function Footer() {
           <div className="mt-16 grid grid-cols-1  gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-3 md:gap-8">
               <div>
-                <h3 className="text-sm/6 font-semibold text-white">TV Topic</h3>
+                <h3 className="text-sm/6 font-semibold ">TV Topic</h3>
                 <ul role="list" className="mt-6 space-y-4">
-                  {tvtopic.map((item : TagType ) => (
+                  {tvtopic.map((item: TagType) => (
                     <li key={item._id}>
-                      <a
-                        href="#"
-                        className="text-sm/6 text-gray-400 hover:text-white"
-                      >
+                      <a href="#" className="text-sm/6">
                         {item.display_name}
                       </a>
                     </li>
@@ -69,16 +80,13 @@ export default function Footer() {
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <h3 className="text-sm/6 font-semibold text-white">
+                <h3 className="text-sm/6 font-semibold ">
                   Project Controls Expo
                 </h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.support.map((item) => (
                     <li key={item.name}>
-                      <a
-                        href={item.href}
-                        className="text-sm/6 text-gray-400 hover:text-white"
-                      >
+                      <a href={item.href} className="text-sm/6 ">
                         {item.name}
                       </a>
                     </li>
@@ -86,14 +94,11 @@ export default function Footer() {
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <h3 className="text-sm/6 font-semibold text-white">Pages</h3>
+                <h3 className="text-sm/6 font-semibold ">Pages</h3>
                 <ul role="list" className="mt-6 space-y-4">
-                  {pages.map((item : PageType) => (
+                  {pages.map((item: PageType) => (
                     <li key={item._id}>
-                      <a
-                        href={item.slug}
-                        className="text-sm/6 text-gray-400 hover:text-white"
-                      >
+                      <a href={item.slug} className="text-sm/6 ">
                         {item.title}
                       </a>
                     </li>
