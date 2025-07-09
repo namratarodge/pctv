@@ -3,21 +3,27 @@ import { Filter, DataTable } from "@/components/forms";
 import { PencilIcon, PlusCircleIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
 import { filterType } from "@/constants/Filter";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { formatDate } from "@/utils/common";
 import axios from "axios";
 import Loading from "@/components/layout/Loading";
 import { listColumn } from "@/constants/DataTableColumn";
 import { ListType } from "@/constants/Type";
+import { useDebounce } from "use-debounce";
+import { parseQueryString } from "@/utils/helper";
 
 export default function Lists() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetch = async () => {
+  const [filterQuery, setFilterQuery] = useState("");
+  const [debouncedFilterQuery] = useDebounce(filterQuery, 1000); // 1 seconds delay
+
+  const fetch = useCallback(async () => {
     const token = localStorage.getItem("token");
     setLoading(true);
     try {
+      const filterParams = parseQueryString(debouncedFilterQuery);
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/lists`,
         {
@@ -27,6 +33,7 @@ export default function Lists() {
           },
           params: {
             public: 1,
+            ...filterParams,
           },
         }
       );
@@ -36,14 +43,16 @@ export default function Lists() {
           updated_at: `${formatDate(item.updated_at)} `,
         }));
 
-        setLoading(false);
         setData(modifiedData);
+      } else {
+        setData([]);
       }
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
-      setLoading(false); 
+      setLoading(false);
     }
-  };
+  }, [debouncedFilterQuery]);
 
   useEffect(() => {
     fetch();
@@ -56,10 +65,10 @@ export default function Lists() {
       ) : (
         <>
           <div className="sm:flex sm:items-center mt-4  h-auto ">
-            <Filter filterType={filterType} />
+            <Filter filterType={filterType} onQueryChange={setFilterQuery} />
             <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none flex gap-2">
               <Link
-                href="/list/create"
+                href="#"
                 className="flex items-center  gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 <PlusCircleIcon className="w-6 h-6" /> Add New Lists
