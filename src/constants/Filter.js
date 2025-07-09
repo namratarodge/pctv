@@ -240,8 +240,8 @@ export const TagsfilterType = [
     name: "Type",
     key: "type",
     option: [
-      { name: "TV Topic", value: "tv_topic" },
-      { name: "categories", value: "categories" },
+      { name: "TV Topic", value: "keyword" },
+      { name: "categories", value: "genre" },
       { name: "Production Country", value: "production_country" },
       { name: "Custom", value: "custom" },
     ],

@@ -16,6 +16,8 @@ import { toast } from "react-toastify";
 import Loading from "@/components/layout/Loading";
 
 import { TagType, TagFormValue } from "@/constants/Type";
+import { useDebounce } from "use-debounce";
+import { parseQueryString } from "@/utils/helper";
 
 export default function Tags() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +31,7 @@ export default function Tags() {
     reset,
     formState: { errors },
   } = useForm<TagFormValue>();
-    
+
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({
@@ -41,6 +43,9 @@ export default function Tags() {
 
   const [pages, setPages] = useState(1);
   const [limits, setLimits] = useState(10);
+
+  const [filterQuery, setFilterQuery] = useState("");
+  const [debouncedFilterQuery] = useDebounce(filterQuery, 1000); // 1 seconds delay
 
   const handleFormSubmit = async (data: Record<string, string>) => {
     const token = localStorage.getItem("token");
@@ -73,7 +78,7 @@ export default function Tags() {
         toast("Tags creation failed:", response.data.message);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast("Error creating plan:");
     }
   };
@@ -122,7 +127,7 @@ export default function Tags() {
         toast("Delete failed:", response.data.message);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast("Error deleting plan:");
     }
   };
@@ -130,6 +135,7 @@ export default function Tags() {
   const fetch = useCallback(async () => {
     const token = localStorage.getItem("token");
     setLoading(true);
+    const filterParams = parseQueryString(debouncedFilterQuery);
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/tags`,
@@ -141,6 +147,7 @@ export default function Tags() {
           params: {
             limit: limits,
             page: pages,
+            ...filterParams,
           },
         }
       );
@@ -151,14 +158,16 @@ export default function Tags() {
         }));
         setData(modifiedData);
         setPagination(response.data.data.pagination);
-        setLoading(false);
+      } else {
+        setData([]);
       }
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
       setLoading(false); // Always stop loading, whether success or failure
     }
-  }, [limits, pages]);
+  }, [limits, pages, debouncedFilterQuery]);
 
   const setPage = (value: number) => {
     setPages(value);
@@ -175,9 +184,9 @@ export default function Tags() {
   return (
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
       <h1 className="text-2xl font-semibold text-gray-600 ">Tags</h1>
-      <div className="sm:flex sm:items-center mt-4  h-auto ">
-        <Filter filterType={TagsfilterType} />
-        <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none ">
+      <div className="sm:flex  mt-4  h-auto justify-between gap-4 ">
+        <Filter filterType={TagsfilterType} onQueryChange={setFilterQuery} />
+        <div className="mt-4 sm:mt-0 sm:flex-none ">
           <button
             type="button"
             onClick={() => addNewTags()}

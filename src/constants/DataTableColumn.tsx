@@ -364,17 +364,34 @@ export const listColumn: {
 // tags Column
 type typeOTags = {
   name: "string";
-  type: "number";
+  type: string;
   display_name: "string";
   updated_at: "string";
+};
+
+const replaceName = (name: string) => {
+  if (name === "genre") {
+    return "Categories";
+  } else if (name === "keyword") {
+    return "TV Topics";
+  } else {
+    return name;
+  }
 };
 
 export const tagsColumn: {
   key: keyof typeOTags;
   label: string;
+  render?: (row: typeOTags) => React.ReactNode;
 }[] = [
   { key: "name", label: "Name" },
-  { key: "type", label: "Type" },
+  {
+    key: "type",
+    label: "Type",
+    render: (row) => (
+      <div className="flex items-center space-x-2">{replaceName(row.type)}</div>
+    ),
+  },
   { key: "display_name", label: "Display Name" },
   { key: "updated_at", label: "Last Updated" },
 ];
