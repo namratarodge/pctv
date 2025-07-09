@@ -12,6 +12,8 @@ import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
 import { VideoColumn } from "@/constants/DataTableColumn";
 import Loading from "@/components/layout/Loading";
 import { VideoType } from "@/constants/Type";
+import { useDebounce } from "use-debounce";
+import { parseQueryString } from "@/utils/helper";
 
 export default function Videos() {
   const [data, setData] = useState([]);
@@ -26,6 +28,9 @@ export default function Videos() {
   const [pages, setPages] = useState(1);
   const [limits, setLimits] = useState(10);
 
+  const [filterQuery, setFilterQuery] = useState("");
+  const [debouncedFilterQuery] = useDebounce(filterQuery, 1000); // 1 seconds delay
+
   const setPage = (value: number) => {
     setPages(value);
   };
@@ -35,6 +40,7 @@ export default function Videos() {
   };
 
   const fetch = useCallback(async () => {
+    const filterParams = parseQueryString(debouncedFilterQuery);
     const token = localStorage.getItem("token");
     setLoading(true);
     try {
@@ -58,8 +64,10 @@ export default function Videos() {
         }));
         setData(modifiedData);
         setPagination(response.data.data.pagination);
-        setLoading(false);
+      } else {
+        setData([]);
       }
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -73,24 +81,24 @@ export default function Videos() {
 
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          <div className="sm:flex sm:items-center mt-4  h-auto ">
-            <Filter filterType={VideoFilter} />
-            <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none ">
-              <Link
-                href="videos/create"
-                className="flex items-center  gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                <PlusCircleIcon className="w-6 h-6" /> Add New Video
-              </Link>
-            </div>
-          </div>
-          <div className="mt-8 flow-root">
-            <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+      <div className="sm:flex  mt-4  h-auto justify-between gap-4 ">
+        <Filter filterType={VideoFilter} onQueryChange={setFilterQuery} />
+        <div className="mt-4 sm:mt-0 sm:flex-none ">
+          <Link
+            href="videos/create"
+            className="flex items-center  gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            <PlusCircleIcon className="w-6 h-6" /> Add New Video
+          </Link>
+        </div>
+      </div>
+      <div className="mt-8 flow-root">
+        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+            {loading ? (
+              <Loading />
+            ) : (
+              <>
                 <AdvanceDataTable
                   columns={VideoColumn}
                   data={data}
@@ -117,11 +125,11 @@ export default function Videos() {
                   onPageChange={setPage}
                   onLimitChange={setLimit}
                 />
-              </div>
-            </div>
+              </>
+            )}
           </div>
-        </>
-      )}
+        </div>
+      </div>
     </>
   );
 }

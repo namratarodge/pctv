@@ -2,6 +2,7 @@ import { StarIcon } from "@heroicons/react/24/solid";
 
 import UserAvatar from "@/components/forms/UserAvatar";
 import { truncateToWords } from "@/utils/common";
+import { CheckCircleIcon } from "@heroicons/react/24/outline";
 
 // Crew subscriptions
 type typeOfSubscriptions = {
@@ -270,25 +271,48 @@ type VideoItem = {
   quality: number;
   score: number;
   reports: number;
-  sessions: number;
-  episode: number;
 };
 
 export const VideoColumn: {
   key: keyof VideoItem;
   label: string;
+  render?: (row: VideoItem) => React.ReactNode;
 }[] = [
   { key: "name", label: "Name" },
   { key: "title", label: "Title" },
-  { key: "type", label: "Type" },
-  { key: "category", label: "Category" },
-  { key: "approved", label: "Approved" },
-  { key: "plays", label: "Plays" },
-  { key: "quality", label: "quality" },
-  { key: "score", label: "score" },
-  { key: "reports", label: "reports" },
-  { key: "sessions", label: "session" },
-  { key: "episode", label: "Episode" },
+  {
+    key: "type",
+    label: "Type",
+
+    render: (row) => <div className=" capitalize">{row.type}</div>,
+  },
+  {
+    key: "category",
+    label: "Category",
+    render: (row) => <div className=" capitalize">{row.category}</div>,
+  },
+  {
+    key: "approved",
+    label: "Approved",
+
+    render: (row) => (
+      <div className=" flex">
+        {row.approved ? (
+          <CheckCircleIcon className="w-5 h-5 text-green-500" />
+        ) : (
+          "No"
+        )}
+      </div>
+    ),
+  },
+  {
+    key: "plays",
+    label: "Plays",
+    render: (row) => <span>{row.plays ? row.plays : "-"}</span>,
+  },
+  { key: "quality", label: "Quality" },
+  { key: "score", label: "Score" },
+  { key: "reports", label: "Reports" },
 ];
 
 // List Column
