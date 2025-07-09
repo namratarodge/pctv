@@ -120,6 +120,36 @@ export const AdditionalTagFilter = [
   },
 ];
 
+export const SubscriptionsFilter = [
+  {
+    name: "Status",
+    key: "status",
+    option: [
+      { name: "Active", value: "yes" },
+      { name: "Cancelled", value: "no" },
+    ],
+    search: "name",
+  },
+  {
+    name: "Gateway",
+    key: "Gateway",
+    option: [
+      { name: "Stripe", value: "Stripe" },
+      { name: "Paypal", value: "Paypal" },
+      { name: "None", value: "None" },
+    ],
+  },
+  {
+    name: "Created At",
+    key: "created_at",
+    option: numberOptions,
+    field: {
+      type: "date",
+      placeholder: "Select date",
+    },
+  },
+];
+
 export const TitleFilter = [
   {
     name: "Release Date",

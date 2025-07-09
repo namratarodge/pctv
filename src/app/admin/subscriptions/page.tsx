@@ -10,7 +10,7 @@ import {
   PlusCircleIcon,
   TrashIcon,
 } from "@heroicons/react/16/solid";
-import { AdditionalTagFilter } from "@/constants/Filter";
+import { SubscriptionsFilter } from "@/constants/Filter";
 import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
 import { Error, LoadingForm } from "@/components/layout";
 import { useCallback, useEffect, useState } from "react";
@@ -276,7 +276,10 @@ export default function Subscription() {
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
       <h1 className="text-2xl font-semibold text-gray-600 ">Subscription</h1>
       <div className="sm:flex  mt-4  h-auto justify-between gap-4 ">
-        <Filter filterType={AdditionalTagFilter} onQueryChange={setFilterQuery} />
+        <Filter
+          filterType={SubscriptionsFilter}
+          onQueryChange={setFilterQuery}
+        />
         <div className="mt-4 sm:mt-0 sm:flex-none ">
           <Button
             type="button"

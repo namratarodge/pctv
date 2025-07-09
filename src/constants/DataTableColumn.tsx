@@ -13,6 +13,7 @@ type typeOfSubscriptions = {
     userType: string;
     avatar: string;
   };
+  gateway_name: string;
   gateway_id: string;
   cancelled: string;
   renews_at: string;
@@ -44,12 +45,19 @@ export const SubscriptionsColumn: {
       </div>
     ),
   },
-  { key: "gateway_id", label: "Gateway" },
-  { key: "cancelled", label: "Cancelled" },
+  { key: "gateway_name", label: "Gateway" },
+  {
+    key: "gateway_id",
+    label: "Cancelled",
+    render: (row) => (
+      <div> {row.gateway_id === 'none' ? '-' : <CheckCircleIcon className="w-5 h-5 text-green-800"/> }</div>
+    ),
+  },
   { key: "renews_at", label: "Renews At" },
   { key: "ends_at", label: "Ends At" },
   { key: "created_at", label: "Created At" },
 ];
+
 
 // Crew Column
 type typeOfCrew = {
