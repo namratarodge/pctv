@@ -150,41 +150,21 @@ export const TitleFilter = [
 
 export const PeopleFilter = [
   {
-    name: "Known For",
-    key: "knownFor",
+    name: "Email",
+    key: "email",
     option: [
-      { name: "Acting", value: "acting" },
-      { name: "Directing", value: "directing" },
-      { name: "Art", value: "art" },
-      { name: "Camera", value: "camera" },
+      { name: "Confirmed", value: 'Yes' },
+      { name: "Not Confirmed", value: 'No' },
     ],
     search: "name",
   },
   {
-    name: "Birthday",
-    key: "birthday",
-    option: numberOptions,
-    field: {
-      type: "date",
-      placeholder: "Select date",
-    },
-  },
-  {
-    name: "Gender",
-    key: "gender",
+    name: "Subscribed",
+    key: "subscribed",
     option: [
-      { name: "Male", value: "male" },
-      { name: "Female", value: "female" },
+      { name: "Yes", value: 'yes' },
+      { name: "No", value: 'no' },
     ],
-  },
-  {
-    name: "Views",
-    key: "views",
-    option: numberOptions,
-    field: {
-      type: "number",
-      placeholder: "Enter View",
-    },
   },
   {
     name: "Created At",
