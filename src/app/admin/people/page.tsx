@@ -12,6 +12,8 @@ import { PeopleColumn } from "@/constants/DataTableColumn";
 import Loading from "@/components/layout/Loading";
 import { toast } from "react-toastify";
 import { PersonType } from "@/constants/Type";
+import { useDebounce } from "use-debounce";
+import { parseQueryString } from "@/utils/helper";
 
 export default function People() {
   const [data, setData] = useState([]);
@@ -26,10 +28,14 @@ export default function People() {
   const [pages, setPages] = useState(1);
   const [limits, setLimits] = useState(10);
 
+  const [filterQuery, setFilterQuery] = useState("");
+  const [debouncedFilterQuery] = useDebounce(filterQuery, 1000); // 1 seconds delay
+
   const fetch = useCallback(async () => {
     const token = localStorage.getItem("token");
     setLoading(true);
     try {
+      const filterParams = parseQueryString(debouncedFilterQuery);
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/peoples`,
         {
@@ -38,9 +44,11 @@ export default function People() {
             "Content-Type": "application/json",
           },
           params: {
-            known_for : 'sub-tv-topic',
+            known_for: "sub-tv-topic",
+            filterType: "not",
             limit: limits,
             page: pages,
+            ...filterParams,
           },
         }
       );
@@ -53,14 +61,16 @@ export default function People() {
         );
         setData(modifiedData);
         setPagination(response.data.data.pagination);
-        setLoading(false);
+      } else {
+        setData([]);
       }
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
       setLoading(false); // Always stop loading, whether success or failure
     }
-  }, [limits, pages]);
+  }, [limits, pages, debouncedFilterQuery]);
 
   const setPage = (value: number) => {
     setPages(value);
@@ -91,7 +101,7 @@ export default function People() {
         toast("Delete failed:", response.data.message);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.error("Error deleting People:");
     }
   };
@@ -103,24 +113,25 @@ export default function People() {
   return (
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
       <h1 className="text-2xl font-semibold text-gray-600 ">People</h1>
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          <div className="sm:flex sm:items-center mt-4  h-auto ">
-            <Filter filterType={PeopleFilter} />
-            <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none ">
-              <Link
-                href="people/create"
-                className="flex items-center  gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                <PlusCircleIcon className="w-6 h-6" /> New People
-              </Link>
-            </div>
-          </div>
-          <div className="mt-8 flow-root">
-            <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+
+      <div className="sm:flex sm:items-center mt-4  h-auto ">
+        <Filter filterType={PeopleFilter} onQueryChange={setFilterQuery} />
+        <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none ">
+          <Link
+            href="people/create"
+            className="flex items-center  gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            <PlusCircleIcon className="w-6 h-6" /> New People
+          </Link>
+        </div>
+      </div>
+      <div className="mt-8 flow-root">
+        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+            {loading ? (
+              <Loading />
+            ) : (
+              <>
                 <AdvanceDataTable
                   columns={PeopleColumn}
                   data={data}
@@ -147,11 +158,11 @@ export default function People() {
                   onPageChange={setPage}
                   onLimitChange={setLimit}
                 />
-              </div>
-            </div>
+              </>
+            )}
           </div>
-        </>
-      )}
+        </div>
+      </div>
     </div>
   );
 }

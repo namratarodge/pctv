@@ -150,23 +150,15 @@ export const TitleFilter = [
 
 export const PeopleFilter = [
   {
-    name: "Image",
-    key: "poster",
-    option: [
-      { name: "Has Image", value: "Yes" },
-      { name: "Doesn't have Image", value: "No" },
-    ],
-    search: "name",
-  },
-  {
     name: "Known For",
     key: "knownFor",
     option: [
-      { name: "Acting", value: "Acting" },
-      { name: "Directing", value: "Directing" },
-      { name: "Art", value: "Art" },
-      { name: "Camera", value: "Camera" },
+      { name: "Acting", value: "acting" },
+      { name: "Directing", value: "directing" },
+      { name: "Art", value: "art" },
+      { name: "Camera", value: "camera" },
     ],
+    search: "name",
   },
   {
     name: "Birthday",

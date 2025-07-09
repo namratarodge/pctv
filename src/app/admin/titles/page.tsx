@@ -16,6 +16,7 @@ import Link from "next/link";
 import { toast } from "react-toastify";
 import { TitleDetailsType, TitleType } from "@/constants/Type";
 import { useDebounce } from "use-debounce";
+import { parseQueryString } from "@/utils/helper"
 
 export default function Title() {
   const [data, setData] = useState([]);
@@ -104,18 +105,6 @@ export default function Title() {
       console.log(error);
       toast("Error deleting plan:");
     }
-  };
-
-  const parseQueryString = (queryString: string): Record<string, string> => {
-    if (!queryString) return {};
-    return queryString
-      .split("&")
-      .filter(Boolean)
-      .reduce((acc: Record<string, string>, part) => {
-        const [key, value] = part.split("=");
-        acc[key] = decodeURIComponent(value || "");
-        return acc;
-      }, {});
   };
 
   useEffect(() => {

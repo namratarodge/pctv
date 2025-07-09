@@ -15,6 +15,7 @@ import { AdditionalTagColumn } from "@/constants/DataTableColumn";
 import { formatDate } from "@/utils/common";
 import { PersonType } from "@/constants/Type";
 import { useDebounce } from "use-debounce";
+import { parseQueryString } from "@/utils/helper"
 
 export default function Subscription() {
   const [additionalTags, setAdditionalTags] = useState([]);
@@ -36,6 +37,7 @@ export default function Subscription() {
     const token = localStorage.getItem("token");
     setLoading(true);
     try {
+      const filterParams = parseQueryString(debouncedFilterQuery);
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/peoples`,
         {
@@ -47,6 +49,7 @@ export default function Subscription() {
             known_for: "sub-tv-topic",
             limit: limits,
             page: pages,
+            ...filterParams,
           },
         }
       );
