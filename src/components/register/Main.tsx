@@ -10,15 +10,15 @@ export default function Main() {
   const step = searchParams.get("step");
   const router = useRouter();
 
-  useEffect(() => {
-    // ✅ Ensure this runs only on the client
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("token");
-      if (token) {
-        router.push("/account");
-      }
-    }
-  }, [router]);
+  // useEffect(() => {
+  //   // ✅ Ensure this runs only on the client
+  //   if (typeof window !== "undefined") {
+  //     const token = localStorage.getItem("token");
+  //     if (token) {
+  //       router.push("/account");
+  //     }
+  //   }
+  // }, [router]);
 
   return (
     <>

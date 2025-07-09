@@ -46,7 +46,12 @@ const userNavigation = [
   { name: "Profile", key: "profile", href: "/account", icon: UserIcon },
   { name: "Watchlist", key: "watchlists", href: "/watchlists", icon: EyeIcon },
   { name: "Your List", key: "profile", href: "#", icon: ClipboardIcon },
-  { name: "Account Settings", key: "security", href: "/account?name=security", icon: Cog6ToothIcon },
+  {
+    name: "Account Settings",
+    key: "security",
+    href: "/account?name=security",
+    icon: Cog6ToothIcon,
+  },
   {
     name: "Log out",
     key: "logout",
@@ -68,6 +73,10 @@ export default function Header() {
   const toggleSubmenu = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
+
+  const filteredNavigation = userNavigation.filter(
+    (item) => item.key !== "admin_home" || user?.userType === "admin"
+  );
 
   const loginButton = (type: string) => {
     setMobileMenuOpen(false);
@@ -218,7 +227,7 @@ export default function Header() {
                     {/* <UserCircleIcon className="w-6 h-6 text-gray-300 " /> */}
                     <span
                       aria-hidden="true"
-                      className="ml-4 text-sm font-semibold text-white"
+                      className="ml-4 text-sm font-semibold text-white capitalize"
                     >
                       {user.full_name}
                     </span>
@@ -232,7 +241,7 @@ export default function Header() {
                   transition
                   className="absolute right-0 z-10 mt-2.5 w-56 origin-top-right rounded-md text-gray-400  bg-gray-800 py-2  shadow-lg  transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
                 >
-                  {userNavigation.map((item, index) =>
+                  {filteredNavigation.map((item, index) =>
                     item.key === "logout" ? (
                       <MenuItem key={index}>
                         <button

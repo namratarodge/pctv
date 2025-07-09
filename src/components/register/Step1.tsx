@@ -34,12 +34,16 @@ export default function Step1() {
         }
       );
       const responseNew = response.data;
+      console.log(responseNew)
       if (responseNew.status) {
         localStorage.setItem("token", responseNew.data.token);
         toast.success("User created successfully");
         window.location.href = "/register?step=two";
+      }else{
+        toast.error(responseNew?.message?.message);
       }
     } catch (error) {
+      console.log(error)
       toast("Error during login:" + error);
     }
   };
