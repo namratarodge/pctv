@@ -114,9 +114,9 @@ export default function People() {
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
       <h1 className="text-2xl font-semibold text-gray-600 ">People</h1>
 
-      <div className="sm:flex sm:items-center mt-4  h-auto ">
+      <div className="sm:flex  mt-4  h-auto justify-between gap-4 ">
         <Filter filterType={PeopleFilter} onQueryChange={setFilterQuery} />
-        <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none ">
+        <div className="mt-4 sm:mt-0 sm:flex-none ">
           <Link
             href="people/create"
             className="flex items-center  gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

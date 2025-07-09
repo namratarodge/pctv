@@ -30,6 +30,8 @@ import Loading from "@/components/layout/Loading";
 import { Controller, useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Button } from "@headlessui/react";
+import { useDebounce } from "use-debounce";
+import { parseQueryString } from "@/utils/helper";
 
 export default function Subscription() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,6 +49,9 @@ export default function Subscription() {
     totalPages: 0,
   });
 
+  const [filterQuery, setFilterQuery] = useState("");
+  const [debouncedFilterQuery] = useDebounce(filterQuery, 1000); // 1 seconds delay
+
   const [pages, setPages] = useState(1);
   const [limits, setLimits] = useState(10);
   const [plans, setPlans] = useState([]);
@@ -63,6 +68,7 @@ export default function Subscription() {
     const token = localStorage.getItem("token");
     setLoading(true);
     try {
+      const filterParams = parseQueryString(debouncedFilterQuery);
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/subscriptions`,
         {
@@ -73,6 +79,7 @@ export default function Subscription() {
           params: {
             limit: limits,
             page: pages,
+            ...filterParams,
           },
         }
       );
@@ -87,13 +94,15 @@ export default function Subscription() {
         );
         setData(modifiedData);
         setPagination(response.data.data.pagination);
-        setLoading(false);
+      } else {
+        setData([]);
       }
+      setLoading(false);
     } catch (error) {
       setLoading(false);
       console.error("Error fetching data:", error);
     }
-  }, [limits, pages]);
+  }, [limits, pages, debouncedFilterQuery]);
 
   const handleFormSubmit: SubmitHandler<SubscriptionFormValue> = async (
     data
@@ -213,7 +222,7 @@ export default function Subscription() {
   };
 
   const handleEdit = async (data: SubscriptionEditFormValue) => {
-    console.log(data)
+    console.log(data);
     setLoadingForm(true);
     setIsEditing(true);
     setEditingId(data._id ?? null);
@@ -266,9 +275,9 @@ export default function Subscription() {
   return (
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
       <h1 className="text-2xl font-semibold text-gray-600 ">Subscription</h1>
-      <div className="sm:flex sm:items-center mt-4  h-auto ">
-        <Filter filterType={AdditionalTagFilter} />
-        <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none ">
+      <div className="sm:flex  mt-4  h-auto justify-between gap-4 ">
+        <Filter filterType={AdditionalTagFilter} onQueryChange={setFilterQuery} />
+        <div className="mt-4 sm:mt-0 sm:flex-none ">
           <Button
             type="button"
             onClick={() => addSubscriptions()}
