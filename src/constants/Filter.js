@@ -183,8 +183,8 @@ export const PeopleFilter = [
     name: "Email",
     key: "email",
     option: [
-      { name: "Confirmed", value: 'Yes' },
-      { name: "Not Confirmed", value: 'No' },
+      { name: "Confirmed", value: "Yes" },
+      { name: "Not Confirmed", value: "No" },
     ],
     search: "name",
   },
@@ -192,8 +192,8 @@ export const PeopleFilter = [
     name: "Subscribed",
     key: "subscribed",
     option: [
-      { name: "Yes", value: 'yes' },
-      { name: "No", value: 'no' },
+      { name: "Yes", value: "yes" },
+      { name: "No", value: "no" },
     ],
   },
   {
@@ -222,37 +222,11 @@ export const VideoFilter = [
   },
   {
     name: "Status",
-    key: "status",
+    key: "approved",
     option: [
-      { name: "Approved", value: "approved" },
-      { name: "Not Approved", value: "not_approved" },
+      { name: "Approved", value: "1" },
+      { name: "Not Approved", value: "0" },
     ],
-  },
-  {
-    name: "Quality",
-    key: "quality",
-    option: [
-      { name: "SD", value: "sd" },
-      { name: "HD", value: "hd" },
-      { name: "4K", value: "4k" },
-      { name: "HDR", value: "hdr" },
-    ],
-  },
-  {
-    name: "Gender",
-    key: "gender",
-    option: [
-      { name: "Male", value: "male" },
-      { name: "Female", value: "female" },
-    ],
-  },
-  {
-    name: "Title",
-    key: "title",
-    field: {
-      type: "text",
-      placeholder: "Enter Title",
-    },
   },
   {
     name: "Created At",

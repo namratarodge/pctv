@@ -54,6 +54,7 @@ export default function Videos() {
           params: {
             limit: limits,
             page: pages,
+            ...filterParams,
           },
         }
       );
@@ -73,7 +74,7 @@ export default function Videos() {
     } finally {
       setLoading(false); // Always stop loading, whether success or failure
     }
-  }, [pages, limits]);
+  }, [pages, limits, debouncedFilterQuery]);
 
   useEffect(() => {
     fetch();
