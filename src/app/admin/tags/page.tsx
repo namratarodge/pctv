@@ -205,7 +205,7 @@ export default function Tags() {
               <AdvanceDataTable
                 columns={tagsColumn}
                 data={data}
-                renderActions={(person) => (
+                renderActions={(person : TagType) => (
                   <div className="flex gap-3 justify-end">
                     <button
                       onClick={() => handleEdit(person)}

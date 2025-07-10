@@ -80,6 +80,8 @@ export type TitleType = {
   slug: string;
   poster: string;
   language: string;
+  views: string;
+  genres: TagType[];
   description: string;
   created_at: string;
 };

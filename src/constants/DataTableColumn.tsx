@@ -371,10 +371,10 @@ export const listColumn: {
 
 // tags Column
 type typeOTags = {
-  name: "string";
+  name: string;
   type: string;
-  display_name: "string";
-  updated_at: "string";
+  display_name: string;
+  updated_at: string;
 };
 
 const replaceName = (name: string) => {
