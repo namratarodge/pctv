@@ -50,14 +50,20 @@ export const SubscriptionsColumn: {
     key: "gateway_id",
     label: "Cancelled",
     render: (row) => (
-      <div> {row.gateway_id === 'none' ? '-' : <CheckCircleIcon className="w-5 h-5 text-green-800"/> }</div>
+      <div>
+        {" "}
+        {row.gateway_id === "none" ? (
+          "-"
+        ) : (
+          <CheckCircleIcon className="w-5 h-5 text-green-800" />
+        )}
+      </div>
     ),
   },
   { key: "renews_at", label: "Renews At" },
   { key: "ends_at", label: "Ends At" },
   { key: "created_at", label: "Created At" },
 ];
-
 
 // Crew Column
 type typeOfCrew = {
@@ -271,7 +277,10 @@ export const PeopleColumn: {
 // Video  Column
 type VideoItem = {
   name: string;
-  title: string;
+  title_id: {
+    name: string;
+    poster: string;
+  };
   type: number;
   category: number;
   approved: number;
@@ -287,7 +296,20 @@ export const VideoColumn: {
   render?: (row: VideoItem) => React.ReactNode;
 }[] = [
   { key: "name", label: "Name" },
-  { key: "title", label: "Title" },
+  {
+    key: "title_id",
+    label: "Title",
+    render: (row) => (
+      <div className="flex items-center space-x-4">
+        <UserAvatar poster={row.title_id?.poster} name={row.title_id?.name} />
+        <div>
+          <span title={row.title_id.name} className="flex flex-col text-xs">
+            {truncateToWords(row.title_id?.name,6)}
+          </span>
+        </div>
+      </div>
+    ),
+  },
   {
     key: "type",
     label: "Type",
