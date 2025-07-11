@@ -98,4 +98,4 @@ export const navigationTitleSubMenu = [
   { name: "Reviews", href: "reviews" },
 ];
 
-export const WhitePages = ["/account", "/register", "/pricing","/lists","/lists/new"];
+export const WhitePages = ["/account", "/register", "/pricing"];

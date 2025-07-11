@@ -1,5 +1,13 @@
 import { z } from "zod";
 
+export const listsUpSchema = z.object({
+  name: z.string().min(1, "name is required"),
+  public: z.enum(["true", "false"]),
+
+  description: z.string().min(1, "description is required"),
+});
+export type ListFormData = z.infer<typeof listsUpSchema>;
+
 export const userUpdateSchema = z.object({
   first_name: z.string().min(1, "First Name is required"),
   last_name: z.string().min(1, "Last Name is required"),
@@ -11,7 +19,6 @@ export const userUpdateSchema = z.object({
     .regex(/^[0-9+\-\s()]{7,20}$/, "Invalid phone number"),
 });
 export type UserUpdateFormData = z.infer<typeof userUpdateSchema>;
-
 
 // change password
 export const userChangePasswordSchema = z
