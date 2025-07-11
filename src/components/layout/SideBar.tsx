@@ -20,6 +20,7 @@ type SideBarProps = {
   setSideBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export default function SideBar({ sideBarOpen, setSideBarOpen }: SideBarProps) {
   const pageName = usePathname();
@@ -71,7 +72,7 @@ export default function SideBar({ sideBarOpen, setSideBarOpen }: SideBarProps) {
                     <ul role="list" className="-mx-2 space-y-1">
                       {navigation.map((item) => (
                         <li key={item.name}>
-                          <a
+                          <Link
                             href={item.href}
                             className={classNames(
                               item.href === pageName
@@ -90,7 +91,7 @@ export default function SideBar({ sideBarOpen, setSideBarOpen }: SideBarProps) {
                               )}
                             />
                             {item.name}
-                          </a>
+                          </Link>
                         </li>
                       ))}
                     </ul>
@@ -122,7 +123,7 @@ export default function SideBar({ sideBarOpen, setSideBarOpen }: SideBarProps) {
                 <ul role="list" className="-mx-2 space-y-1">
                   {navigation.map((item) => (
                     <li key={item.name}>
-                      <a
+                      <Link
                         href={item.href}
                         className={classNames(
                           item.href === pageName
@@ -141,7 +142,7 @@ export default function SideBar({ sideBarOpen, setSideBarOpen }: SideBarProps) {
                           )}
                         />
                         {item.name}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
