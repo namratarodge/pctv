@@ -72,7 +72,7 @@ export default function TitleDetailPage() {
   }, [titleId, fetchTitleDetails]);
 
   return (
-    <div className="pt-18  flex max-w-11/12 mx-auto">
+    <div className="pt-18 flex flex-col md:flex-row max-w-11/12 mx-auto">
       {loading ? (
         <div className="mx-auto">
           <Loading title="" />
@@ -80,7 +80,7 @@ export default function TitleDetailPage() {
       ) : (
         <>
           {titleDetails && (
-            <div className="w-2/3 ">
+            <div className="w-full  md:w-2/3 lg:w-2/3">
               <Image
                 src={`${process.env.NEXT_PUBLIC_WEBSITE}/${titleDetails?.poster}`}
                 alt="poster"
@@ -169,14 +169,14 @@ export default function TitleDetailPage() {
               </div>
             </div>
           )}
-          <div className="w-1/3 ">
-            <h2 className="text-white px-4">Recommended Videos for you </h2>
-            <div className="flex flex-col gap-1 px-2 h-screen overflow-y-auto scrollable">
+          <div className="w-full md:w-1/3 ">
+            <h2 className="text-white md:px-4 pb-4 ">Recommended Videos for you </h2>
+            <div className="flex flex-col gap-1 h-screen overflow-y-auto scrollable">
               {title.map((data) => (
                 <Link
                   href={`/titles/${data._id}/${data.slug}`}
                   key={data._id}
-                  className="flex items-center gap-4 px-2 py-1 "
+                  className="flex items-center gap-4 md:px-4 py-1 "
                 >
                   <Image
                     src={`${process.env.NEXT_PUBLIC_WEBSITE}/${data?.poster}`}

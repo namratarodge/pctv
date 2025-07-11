@@ -68,14 +68,14 @@ export default function Home() {
                 Ready to watch? Sign up for a free trial and start watching
                 today.
               </p>
-              <div className="mt-10 flex items-center justify-center gap-6">
+              <div className="mt-10 flex items-center justify-center gap-6 flex-col md:flex-col lg:flex-row ">
                 <input
                   type="email"
                   placeholder="Enter email"
-                  className="w-2/4 rounded-full px-4 py-3 text-sm text-white bg-gray-800 focus:outline-0"
+                  className="w-80 rounded-full px-4 py-3 text-sm text-white bg-gray-800 focus:outline-0"
                 />
 
-                <button className="cursor-pointer w-1/4 rounded-full bg-red-500 px-6 py-3 text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+                <button className="cursor-pointer w-40 rounded-full bg-red-500 px-6 py-3 text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20">
                   Get Started
                 </button>
               </div>
@@ -97,11 +97,11 @@ export default function Home() {
       </div>
       <div className="p-6 lg:px-8 mx-auto max-w-11/12">
         <h2 className="text-white text-xl">More reasons To Join PCTV</h2>
-        <div className="mt-4 flex gap-6 ">
+        <div className="mt-4 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {joinPCTV.map((item, index) => (
             <div
               key={index}
-              className="w-1/4 text-white bg-[#1f3844] px-6 py-6"
+              className=" text-white bg-[#1f3844] px-6 py-6 "
             >
               <h2 className="text-xl">{item.title}</h2>
               <h4 className="text-sm mt-4">{item.description}</h4>
@@ -114,9 +114,9 @@ export default function Home() {
       </div>
       <div className="p-6 lg:px-8 mx-auto max-w-11/12">
         <h2 className="text-white text-xl">Our Top Voice</h2>
-        <div className="mt-4 grid grid-cols-4 gap-4">
+        <div className="mt-4 grid  gap-4  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {Array.from({ length: 8 }, (_, index) => (
-            <div key={index} className="relative">
+            <div key={index} className="">
               <Image
                 src={`/topvoice/Group${index + 1}.png`}
                 alt="test"

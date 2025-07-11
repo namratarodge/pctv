@@ -59,7 +59,7 @@ export default function Step1() {
         <p className=" text-sm">
           Set your email & password - light the fuse on your learning journey
         </p>
-        <div className="w-3/5 space-y-4 ">
+        <div className="w-full space-y-4 md:w-3/5 lg:w-3/5 ">
           <div>
             <input
               type="text"

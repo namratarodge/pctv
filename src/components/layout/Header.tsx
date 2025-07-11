@@ -69,6 +69,7 @@ export default function Header() {
   const { tvtopic, categories } = usePublicData();
   const [user, setUser] = useState<DecodedUser | null>(null);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleSubmenu = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -326,19 +327,18 @@ export default function Header() {
                   >
                     {item.name}
 
-                    {/* Submenu */}
                     {item.children && openIndex === index && (
                       <div className=" space-y-1 mt-4">
                         {(
                           item.children as { name: string; href: string }[]
                         ).map((child, childIndex) => (
-                          <a
+                          <Link
                             key={childIndex}
                             href={child.href}
                             className="block rounded-md px-1 py-2 text-sm text-gray-300"
                           >
                             {child.name}
-                          </a>
+                          </Link>
                         ))}
                       </div>
                     )}
@@ -347,25 +347,51 @@ export default function Header() {
               </div>
               <div className="py-6">
                 {user && Object.keys(user).length > 0 ? (
-                  <div className="flex items-center">
-                    <Image
-                      src="/default-front.jpg"
-                      alt="test"
-                      width={10}
-                      height={10}
-                      className="w-10 h-auto object-cover rounded-full"
-                    />
-                    {/* <UserCircleIcon className="w-6 h-6 text-gray-300 " /> */}
-                    <span
-                      aria-hidden="true"
-                      className="ml-4 text-sm font-semibold text-white"
+                  <div>
+                    <div
+                      className="flex items-center"
+                      onClick={() => setIsOpen(!isOpen)}
                     >
-                      {user.username}
-                    </span>
-                    <ChevronDownIcon
-                      aria-hidden="true"
-                      className="ml-2 size-5 text-gray-400"
-                    />
+                      <Image
+                        src="/default-front.jpg"
+                        alt="test"
+                        width={10}
+                        height={10}
+                        className="w-10 h-auto object-cover rounded-full"
+                      />
+                      {/* <UserCircleIcon className="w-6 h-6 text-gray-300 " /> */}
+                      <span
+                        aria-hidden="true"
+                        className="ml-4 text-sm font-semibold text-white"
+                      >
+                        {user.username}
+                      </span>
+                      <ChevronDownIcon
+                        aria-hidden="true"
+                        className={`ml-2 size-5 text-gray-400 transform transition-transform duration-200 ${
+                          isOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </div>
+                    {isOpen && (
+                      <div className="bg-gray-800 mt-4 rounded-md ">
+                        {filteredNavigation.map((item, index) =>
+                          item.key === "logout" ? (
+                            <button
+                            key={index} 
+                              onClick={() => singOut()}
+                              className="block px-4 py-2 text-sm text-gray-400 hover:text-gray-200 w-full text-left cursor-pointer"
+                            >
+                              {item.name}
+                            </button>
+                          ) : (
+                            <button key={index} className="block px-4 py-2 text-sm text-gray-400 hover:text-gray-200 w-full text-left cursor-pointer">
+                              {item.name}
+                            </button>
+                          )
+                        )}
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <>
@@ -383,7 +409,6 @@ export default function Header() {
                     </Button>
                   </>
                 )}
-                ;
               </div>
             </div>
           </div>

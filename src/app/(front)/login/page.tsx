@@ -44,8 +44,8 @@ export default function Login() {
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8 h-screen">
-        <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-[380px]">
-          <div className="bg-gray-800   py-10 shadow-sm sm:rounded-xl sm:px-6  bg-opacity-75 backdrop-invert">
+        <div className="mt-5 sm:mx-auto sm:w-full lg:w-1/3">
+          <div className="bg-gray-800 px-5  py-10 shadow-sm sm:rounded-xl sm:px-6  bg-opacity-75 backdrop-invert">
             <form onSubmit={handleSubmit} className="space-y-6">
               <h2 className="text-white text-2xl">Log In</h2>
               <p className="text-gray-200 text-sm">

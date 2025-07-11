@@ -128,7 +128,7 @@ export default function BrowserInner() {
 
   return (
     <div className="pt-18  max-w-11/12 mx-auto flex flex-col lg:flex-row mb-10">
-      <div className="w-full md:w-1/5 px-4 py-4 overflow-auto lg:h-screen ">
+      <div className="w-full  md:w-1/5 sm:w-full px-4 py-4 overflow-auto lg:h-screen ">
         <div className="w-full border-b border-gray-500 pb-4">
           <div className="text-gray-300 text-lg">TV Topic</div>
           <div className="relative inline-block mt-4 w-full text-white">
@@ -272,7 +272,7 @@ export default function BrowserInner() {
                 <Image
                   src={`${process.env.NEXT_PUBLIC_WEBSITE}/${title.poster}`}
                   alt={title.name || "Poster"}
-                  width={300} // or any appropriate width
+                  width={400} // or any appropriate width
                   height={450} // adjust height as needed
                   className="rounded-lg"
                 />
