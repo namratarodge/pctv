@@ -1,12 +1,16 @@
 "use client";
 
+import { AutoCompeleteTitle } from "@/components/forms";
+import UserAvatar from "@/components/forms/UserAvatar";
 import Loading from "@/components/layout/Loading";
+import { TitleDetailsType, TitleType } from "@/constants/Type";
 import { ListFormData, listsUpSchema } from "@/constants/Validation";
+import { TrashIcon } from "@heroicons/react/24/outline";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 export default function TitleDetailPage() {
@@ -14,10 +18,12 @@ export default function TitleDetailPage() {
   const id = params?.id as string;
   const isNew = id === "new";
   const [loading, setLoading] = useState(true);
+  const [title, setTitle] = useState([]);
   const {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm<ListFormData>({
     resolver: zodResolver(listsUpSchema),
@@ -60,7 +66,6 @@ export default function TitleDetailPage() {
         );
       }
       const responseNew = response.data;
-      console.log(responseNew);
       if (responseNew.status) {
         if (isNew) {
           toast.success("Lists Added successfully");
@@ -77,52 +82,87 @@ export default function TitleDetailPage() {
       toast("Error during login:" + error);
     }
   };
+  const fetchListData = async () => {
+    if (isNew) return;
+    setLoading(true);
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/list/${id}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      const listData = response.data?.data;
+      if (listData) {
+        setTitle(listData?.title);
+        reset({
+          name: listData.name,
+          description: listData.description,
+          public: listData.public ? "true" : "false",
+        });
+        setLoading(false);
+      }
+    } catch (error) {
+      // window.location.href = "/lists";
+      console.error("Error loading list:", error);
+      toast.error("Failed to load list data");
+      setLoading(false);
+    }
+  };
 
   // Add this in your component
   useEffect(() => {
-    const fetchListData = async () => {
-      if (isNew) return;
-      setLoading(true);
-
-      try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/lists`,
-          {
-            headers: {
-              Authorization: token,
-            },
-            params: {
-              _id: id,
-            },
-          }
-        );
-
-        const listData = response.data?.data.data[0];
-        if (listData) {
-          // IMPORTANT: ensure public is string "true"/"false" for the radio
-          reset({
-            name: listData.name,
-            description: listData.description,
-            public: listData.public ? "true" : "false",
-          });
-          setLoading(false);
-        }
-      } catch (error) {
-        window.location.href = "/lists";
-        console.error("Error loading list:", error);
-        toast.error("Failed to load list data");
-        setLoading(false);
-      }
-    };
-
     fetchListData();
   }, [id, reset]);
 
+  const handleUserSelected = async (titleId: string) => {
+    try {
+      const token = localStorage.getItem("token");
+      const payload = {
+        titleId: titleId,
+      };
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/list/${id}/add`,
+        payload,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      toast.success("Titles Added successfully");
+      await fetchListData();
+    } catch (error) {
+      console.error("Error loading list:", error);
+      toast.error("Failed to load list data");
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (titleId: string) => {
+    const token = localStorage.getItem("token");
+    const response = await axios.delete(
+      `${process.env.NEXT_PUBLIC_API_URL}/list/${id}/delete/${titleId}`,
+      {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    toast.success("Titles remove successfully");
+    await fetchListData();
+  };
 
   return (
-    <div className="mt-20  max-w-8/12 mx-auto flex flex-col lg:flex-row">
-      <div className="w-1/2 p-5">
+    <div className="mt-20 max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-8">
+      <div className="w-full lg:w-1/2 p-4 sm:p-6 lg:p-8">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base/7 font-semibold ">
             {isNew ? "Create" : "Update"} List
@@ -223,16 +263,40 @@ export default function TitleDetailPage() {
         </div>
       </div>
       {!isNew && (
-        <div className="w-1/2">
-          <div className="p-5 ">
-            <input
-              type="text"
-              className="border border-gray-300 rounded-md w-full px-4 py-2"
-              placeholder="Enter title name"
-            />
-            <div className="border mt-5 ">
-              <div></div>
-            </div>
+        <div className="w-full lg:w-1/2 p-4 sm:p-6 lg:p-8 ">
+          <AutoCompeleteTitle onSelect={handleUserSelected} />
+          <div className=" mt-5">
+            {title.length > 0 ? (
+            <ul className="border border-gray-300 mt-2 rounded-md shadow-md bg-white max-h-100 overflow-y-auto">
+              {title.map((item: TitleDetailsType, index: number) => (
+                <li
+                  key={index}
+                  className="flex items-center justify-between gap-2 px-2 py-2  hover:bg-blue-200"
+                >
+                  <div className="flex gap-4">
+                    <UserAvatar poster={item.poster} />
+                    <div className="flex flex-col text-gray-800 ">
+                      <span className="text-sm">{item.name}</span>
+                      <small>
+                        {item.type === "movie" ? "TV Topic" : "Category"}
+                      </small>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => handleDelete(item._id)}
+                    className="text-red-500 hover:text-red-700 px-2 py-1 rounded-md cursor-pointer"
+                  >
+                    <TrashIcon className="w-5 h-5 text-gray-800" />
+                  </button>
+                </li>
+              ))}
+            </ul>
+            ) : (
+              <div className="flex items-center justify-center h-100 text-center">
+                <h1>No items are attached to this list yet.</h1>
+              </div>
+            )}
           </div>
         </div>
       )}
