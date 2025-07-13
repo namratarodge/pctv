@@ -21,7 +21,7 @@ export default function AutoCompeleteTitle({
   onSelect,
 }: AutoCompletePersonListProps) {
   const [query, setQuery] = useState("");
-  const [suggestions, setSuggestions] = useState<User[]>([]);
+  const [suggestions, setSuggestions] = useState<TitleDetailsType[]>([]);
   // const [selectedUser, setSelectedUser] = useState<TitleDetailsType | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -64,11 +64,11 @@ export default function AutoCompeleteTitle({
     }
   };
 
-  const handleSelect = (user: TitleDetailsType) => {
+  const handleSelect = (data: TitleDetailsType) => {
     // setSelectedUser(user);
     setQuery("");
     setSuggestions([]);
-    onSelect(user._id);
+    onSelect(data._id);
   };
 
   return (
@@ -88,34 +88,21 @@ export default function AutoCompeleteTitle({
 
       {suggestions.length > 0 && (
         <ul className="border relative border-gray-300 mt-2 rounded-md shadow-md bg-white max-h-60 overflow-y-auto">
-          {suggestions.map((user) => (
+          {suggestions.map((data) => (
             <li
-              key={user._id}
-              onClick={() => handleSelect(user)}
+              key={data._id}
+              onClick={() => handleSelect(data)}
               className="flex items-center gap-2 px-2 py-2 cursor-pointer hover:bg-blue-50"
             >
-              <UserAvatar poster={user.poster} />
+              <UserAvatar poster={data.poster} />
               <div className="flex flex-col text-gray-800">
-                <span>{user.name}</span>
-                <small>{user.type}</small>
+                <span>{data.name}</span>
+                <small>{data.type}</small>
               </div>
             </li>
           ))}
         </ul>
       )}
-
-      {/* {selectedUser && (
-        <div className="mt-4 p-4 border rounded-md bg-green-50 text-gray-600">
-          <h3 className="font-bold">Selected User</h3>
-          <div className="flex items-center gap-2 mt-2">
-            <UserAvatar poster={selectedUser.poster} />
-            <div className="flex flex-col ">
-              <span>{selectedUser.name}</span>
-              <small>{selectedUser.type}</small>
-            </div>
-          </div>
-        </div>
-      )} */}
     </div>
   );
 }

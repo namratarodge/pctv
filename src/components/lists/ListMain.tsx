@@ -36,7 +36,6 @@ export default function ListMain() {
       setLoading(false);
     } catch (error) {
       console.log(error);
-      toast(`${error.message}`);
       setLoading(false);
     }
   };

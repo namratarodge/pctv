@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { TitleType } from "@/constants/Type";
 import { formatDate } from "@/utils/common";
+import { toast } from "react-toastify";
 
 export default function TitleDetailPage() {
   const params = useParams();
@@ -71,6 +72,32 @@ export default function TitleDetailPage() {
     fetchData();
   }, [titleId, fetchTitleDetails]);
 
+  const handleWhatchList = async (id: string) => {
+    const token = localStorage.getItem("token");
+    const payload = {
+      title_id: id,
+    };
+    try {
+      console.log(payload)
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/watchlist`,
+        payload,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.data.status) {
+        toast("Titles addedd whatchlist. Successfully");
+      }else{
+        toast(response.data.error);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
   return (
     <div className="pt-18 flex flex-col md:flex-row max-w-11/12 mx-auto">
       {loading ? (
@@ -91,7 +118,10 @@ export default function TitleDetailPage() {
 
               <h1 className="text-xl text-white py-4">{titleDetails?.name}</h1>
               <div className="flex gap-2">
-                <button className="flex rounded-full bg-[#707070]  px-2 gap-1 py-1 items-center text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20 cursor-pointer">
+                <button
+                  onClick={() => handleWhatchList(titleDetails._id)}
+                  className="flex rounded-full bg-[#707070]  px-2 gap-1 py-1 items-center text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20 cursor-pointer"
+                >
                   <PlusIcon className="h-4 w-4 text-white" />
                   Whatchlist
                 </button>
@@ -147,7 +177,7 @@ export default function TitleDetailPage() {
                       key={item._id}
                       className="rounded-full bg-gray-700 text-gray-200 px-3 py-1 text-sm"
                     >
-                      {item.display_name} dsds
+                      {item.display_name}
                     </span>
                   ))}
                 </div>
@@ -170,7 +200,9 @@ export default function TitleDetailPage() {
             </div>
           )}
           <div className="w-full md:w-1/3 ">
-            <h2 className="text-white md:px-4 pb-4 ">Recommended Videos for you </h2>
+            <h2 className="text-white md:px-4 pb-4 ">
+              Recommended Videos for you{" "}
+            </h2>
             <div className="flex flex-col gap-1 h-screen overflow-y-auto scrollable">
               {title.map((data) => (
                 <Link

@@ -3,9 +3,14 @@ export type TvTopicType = {
   display_name: string;
 };
 
+// WhatchList
 
-
-
+export type WhatchListType = {
+  _id: string;
+  user_id: string;
+  title_id: TitleDetailsType;
+  created_date: string;
+};
 
 // Settings
 
@@ -66,7 +71,7 @@ export type SubscriptionType = {
 
 export type UserTagForUser = {
   value: string;
-  data : PersonType;
+  data: PersonType;
   id: string;
   _id?: string;
   username: string;
