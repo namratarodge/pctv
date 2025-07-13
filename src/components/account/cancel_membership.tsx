@@ -1,13 +1,13 @@
 export default function CancelMembership() {
   return (
     <>
-      <div className="h-100 text-black">
+      <div className="min-h-screen bg-white text-black max-w-3xl mx-auto ">
         <h1 className="text-4xl font-semibold">Cancel Membership</h1>
         <p className="my-4 text-md">
           Whatever you choose , it will take effect on 3 May 2025. You will be able
           to watch until then.
         </p>
-        <div className="bg-gray-100 mt-4 py-4 px-6 rounded-sm space-y-2 text-sm">
+        <div className="bg-gray-100 mt-4 py-4 px-6 rounded-md space-y-2 text-sm">
           <p className="font-semibold">Pause of a month</p>
           <p>
             Pause lets you keep your profile and preferences. you will still
@@ -18,7 +18,7 @@ export default function CancelMembership() {
           </button>
         </div>
 
-        <div className="bg-gray-100 mt-4 py-4 px-6 rounded-sm space-y-2 text-sm">
+        <div className="bg-gray-100 mt-4 py-4 px-6 rounded-md space-y-2 text-sm">
           <p className="font-semibold">Change Plann</p>
           <p>Switch to a lower-priced plan in a few.easy steps.</p>
           <button className="rounded-full text-white border bg-red-500 px-4 py-1.5 text-sm cursor-pointer">
@@ -26,7 +26,7 @@ export default function CancelMembership() {
           </button>
         </div>
 
-        <div className="bg-gray-100 mt-4 py-4 px-6 rounded-sm space-y-2 text-sm">
+        <div className="bg-gray-100 mt-4 py-4 px-6 rounded-md space-y-2 text-sm">
           <p className="font-semibold">Cancel</p>
           <p>
             Canceling your membership means losing access to personalized

@@ -65,11 +65,11 @@ export default function UpdateProfile() {
 
   return (
     <>
-      <div className="h-100 text-black">
+     <div className="min-h-screen bg-white text-black max-w-3xl mx-auto ">
         <h1 className="text-4xl font-semibold">Update Profile Details</h1>
         <p className="my-4">Account Details</p>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="bg-gray-100 mt-4 py-6 px-6 rounded-sm">
+          <div className="bg-gray-100 mt-4 py-6 px-6 rounded-md">
             <h3 className="text-sm">Update user Info</h3>
             <div className="mt-4 w-2/3 space-y-3">
               <input
@@ -151,18 +151,16 @@ export default function UpdateProfile() {
                 />
               </div>
             </div>
-          </div>
-          <div className="flex gap-4">
+            <div className="flex gap-4 mt-6">
             <button
               type="submit"
-              className="rounded-full bg-red-500 text-white px-6 py-1 mt-4 text-sm cursor-pointer"
+              className="rounded-full bg-red-500 text-white px-6 py-2 text-sm cursor-pointer"
             >
               Update
             </button>
-            <button className="rounded-full text-red-400 border border-red-400 px-4 py-1 mt-4 text-sm cursor-pointer">
-              Cancel
-            </button>
           </div>
+          </div>
+         
         </form>
       </div>
     </>

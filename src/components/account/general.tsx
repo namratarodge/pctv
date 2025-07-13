@@ -36,10 +36,10 @@ export const accountSettingsLinks = [
 export default function General() {
   return (
     <>
-      <div className="h-100 text-black">
-        <h1 className="text-4xl font-semibold">Account</h1>
+      <div className="min-h-screen bg-white text-black max-w-3xl mx-auto ">
+        <h1 className="text-4xl font-semibold">Account</h1> 
         <p className="my-4">Membership Details</p>
-        <div className="bg-gray-100 mt-4 py-4 px-6 rounded-sm space-y-4">
+        <div className="bg-gray-100 mt-4 sm:mt-6 p-4 sm:p-6 rounded-lg space-y-3 sm:space-y-4">
           <h2>
             Monthly plan{" "}
             <span className="ml-4 border border-red-400 text-red-400 px-2 py-1 rounded-full text-xs">

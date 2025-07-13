@@ -18,7 +18,7 @@ export default function ListButton({ item }: ListButtonProps) {
   return (
     <Link
       href={item.href}
-      className=" py-3 flex justify-between border-b border-gray-300 cursor-pointer"
+      className=" py-3 flex justify-between  border-gray-300 cursor-pointer"
       key={item.name}
     >
       <div className="flex gap-2 text-sm">

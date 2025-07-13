@@ -9,14 +9,16 @@ export default function SettingsLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex h-screen flex-1 justify-center py-4 sm:px-6 lg:px-8 mt-20 w-3/5 mx-auto">
-      <div className="w-1/4 px-4">
-        <Suspense fallback={<div>Loading account page...</div>}>
-          <AccountSideBar />
-        </Suspense>
-      </div>
-      <div className="w-3/4 border-gray-300 rounded-sm px-10 bg-white">
-        {children}
+    <div className="max-w-6xl mx-auto mt-20 px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col md:flex-row gap-6 md:gap-8">
+        <div className="w-full md:w-1/4 bg-white rounded-lg  border-gray-200 p-4">
+          <Suspense fallback={<div>Loading account page...</div>}>
+            <AccountSideBar />
+          </Suspense>
+        </div>
+        <div className="w-full md:w-3/4 bg-white rounded-lg  border-gray-200 p-4 sm:p-6">
+          {children}
+        </div>
       </div>
     </div>
   );

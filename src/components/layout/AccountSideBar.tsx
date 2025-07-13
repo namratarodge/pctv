@@ -17,8 +17,8 @@ export default function AccountSideBar() {
           <BackspaceIcon className="h-5 w-5" /> Back to PCTV
         </button>
         <ul role="list" className=" space-y-1">
-          {navigationAccount.map((item) => (
-            <li key={item.name}>
+          {navigationAccount.map((item,index) => (
+            <li key={index}>
               <a
                 href={item.href}
                 className={classNames(
