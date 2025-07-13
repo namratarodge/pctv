@@ -43,6 +43,7 @@ export default function UpdateProfile() {
       );
       const responseNew = response.data;
       if (responseNew.status) {
+        
         toast.success("Account Info Updated successfully");
       }
     } catch (error) {
@@ -99,7 +100,7 @@ export default function UpdateProfile() {
 
             <div className="mt-4 w-2/3 space-y-3">
               <input
-                type="number"
+                type="text"
                 {...register("phone")}
                 placeholder="Phone no"
                 autoComplete="phone"

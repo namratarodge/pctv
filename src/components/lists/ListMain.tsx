@@ -36,8 +36,7 @@ export default function ListMain() {
       setLoading(false);
     } catch (error) {
       console.log(error);
-      toast("Error fetching data:");
-    } finally {
+      toast(`${error.message}`);
       setLoading(false);
     }
   };

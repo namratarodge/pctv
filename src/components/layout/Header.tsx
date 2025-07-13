@@ -255,13 +255,13 @@ export default function Header() {
                       </MenuItem>
                     ) : (
                       <MenuItem key={index}>
-                        <a
+                        <Link
                           href={item.href}
                           className="flex  items-center gap-3 w-full text-left px-3 py-2 rounded hover:text-gray-100 transition text-sm"
                         >
                           <item.icon className="w-5 h-5 text-gray-300" />
                           {item.name}
-                        </a>
+                        </Link>
                       </MenuItem>
                     )
                   )}
@@ -364,7 +364,7 @@ export default function Header() {
                         aria-hidden="true"
                         className="ml-4 text-sm font-semibold text-white"
                       >
-                        {user.username}
+                        {user.full_name}
                       </span>
                       <ChevronDownIcon
                         aria-hidden="true"
@@ -378,16 +378,20 @@ export default function Header() {
                         {filteredNavigation.map((item, index) =>
                           item.key === "logout" ? (
                             <button
-                            key={index} 
+                              key={index}
                               onClick={() => singOut()}
                               className="block px-4 py-2 text-sm text-gray-400 hover:text-gray-200 w-full text-left cursor-pointer"
                             >
                               {item.name}
                             </button>
                           ) : (
-                            <button key={index} className="block px-4 py-2 text-sm text-gray-400 hover:text-gray-200 w-full text-left cursor-pointer">
+                            <Link
+                              key={index}
+                              href={item.href}
+                              className="block px-4 py-2 text-sm text-gray-400 hover:text-gray-200 w-full text-left cursor-pointer"
+                            >
                               {item.name}
-                            </button>
+                            </Link>
                           )
                         )}
                       </div>

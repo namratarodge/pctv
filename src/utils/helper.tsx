@@ -11,3 +11,9 @@ export const parseQueryString = (
       return acc;
     }, {});
 };
+
+export const logoutAndRedirect = () => {
+  // clear tokens, cookies etc
+  localStorage.removeItem("accessToken");
+  window.location.href = "/login";
+};
