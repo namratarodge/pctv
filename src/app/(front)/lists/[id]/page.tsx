@@ -2,15 +2,14 @@
 
 import { AutoCompeleteTitle } from "@/components/forms";
 import UserAvatar from "@/components/forms/UserAvatar";
-import Loading from "@/components/layout/Loading";
-import { TitleDetailsType, TitleType } from "@/constants/Type";
+import { TitleDetailsType } from "@/constants/Type";
 import { ListFormData, listsUpSchema } from "@/constants/Validation";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 export default function TitleDetailPage() {

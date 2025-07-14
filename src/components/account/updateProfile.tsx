@@ -1,13 +1,13 @@
 "use client";
 
+import { usePublicData } from "@/components/context/PublicDataContext";
 import { UserUpdateFormData, userUpdateSchema } from "@/constants/Validation";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { usePublicData } from "@/components/context/PublicDataContext";
-import { useEffect } from "react";
 
 export default function UpdateProfile() {
   const { user } = usePublicData();

@@ -1,14 +1,10 @@
 "use client";
 
-import { LoadingForm } from "@/components/layout";
 import Loading from "@/components/layout/Loading";
-import { TitleType, WhatchListType } from "@/constants/Type";
+import { WhatchListType } from "@/constants/Type";
 import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-
-
 
 export default function Home() {
   const [data, setData] = useState<WhatchListType[]>([]);
@@ -56,7 +52,7 @@ export default function Home() {
           {data.length === 0 && (
             <h1 className="text-2xl ">There are no whachlists.</h1>
           )}
-          {data.map((item : WhatchListType , index) => (
+          {data.map((item: WhatchListType, index) => (
             <div key={index} className="flex items-center gap-4 py-2">
               <Image
                 src={`${process.env.NEXT_PUBLIC_WEBSITE}/${item.title_id.poster}`}

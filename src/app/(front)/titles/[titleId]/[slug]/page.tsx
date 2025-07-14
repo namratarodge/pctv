@@ -1,15 +1,15 @@
 "use client"; // ✅ client component, hooks allowed
 
 import Loading from "@/components/layout/Loading";
-import Image from "next/image";
+import { TitleType } from "@/constants/Type";
+import { formatDate } from "@/utils/common";
 import { PlusIcon, ShareIcon } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { TitleType } from "@/constants/Type";
-import { formatDate } from "@/utils/common";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function TitleDetailPage() {

@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import axios from "axios";
-import UserAvatar from "./UserAvatar";
 import { TitleDetailsType } from "@/constants/Type";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import UserAvatar from "./UserAvatar";
 
 type User = {
   id : string;

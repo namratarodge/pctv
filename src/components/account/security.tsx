@@ -1,11 +1,9 @@
 "use client";
 
 import {
-  ChevronRightIcon,
   AdjustmentsHorizontalIcon,
-  LockClosedIcon,
+  LockClosedIcon
 } from "@heroicons/react/24/outline";
-import Link from "next/link";
 import ListButton from "./ListButton";
 
 export const accountSettingsLinks = [

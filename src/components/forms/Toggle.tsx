@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
 import { Switch } from '@headlessui/react'
+import { useState } from 'react'
 
 export default function Toggle() {
   const [enabled, setEnabled] = useState(false)

@@ -1,12 +1,12 @@
 "use client";
 
 import "@/app/globals.css";
-import Header from "@/components/layout/Header";
-import { Footer } from "@/components/layout";
-import { ToastContainer } from "react-toastify";
 import { PublicDataProvider } from "@/components/context/PublicDataContext";
-import { usePathname } from "next/navigation";
+import { Footer } from "@/components/layout";
+import Header from "@/components/layout/Header";
 import { WhitePages } from "@/constants/Menu";
+import { usePathname } from "next/navigation";
+import { ToastContainer } from "react-toastify";
 
 export default function RootLayout({
   children,

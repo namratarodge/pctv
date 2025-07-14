@@ -4,8 +4,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 import axios from "axios";
-const PublicDataContext = createContext();
 import { jwtDecode } from "jwt-decode";
+const PublicDataContext = createContext();
 
 export function PublicDataProvider({ children }) {
   const [user, setUser] = useState([]);

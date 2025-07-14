@@ -1,5 +1,5 @@
-import { Suspense } from "react";
 import MainRegister from "@/components/register/Main";
+import { Suspense } from "react";
 
 export default function Register() {
   return (

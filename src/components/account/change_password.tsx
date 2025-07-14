@@ -3,7 +3,7 @@ import {
   userChangePasswordSchema,
 } from "@/constants/Validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios, { toFormData } from "axios";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { usePublicData } from "../context/PublicDataContext";

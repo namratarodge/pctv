@@ -1,5 +1,5 @@
-import React, { Suspense } from "react";
 import AccountInner from "@/components/account/AccountInner";
+import { Suspense } from "react";
 
 export default function AccountPage() {
   return (
