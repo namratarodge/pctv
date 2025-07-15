@@ -1,37 +1,37 @@
 "use client";
 
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { usePublicData } from "@/components/context/PublicDataContext";
+import axios from "axios";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 import { TagType, TitleType, TvTopicType } from "@/constants/Type";
 
 const country = [
-  { id: 1, name: "United States" },
-  { id: 2, name: "Canada" },
-  { id: 3, name: "United Kingdom" },
-  { id: 4, name: "Australia" },
-  { id: 5, name: "Germany" },
-  { id: 6, name: "France" },
-  { id: 7, name: "Japan" },
-  { id: 8, name: "India" },
-  { id: 9, name: "Brazil" },
-  { id: 10, name: "South Africa" },
+  { name: "United States", value: "United-States" },
+  { name: "Canada", value: "Canada" },
+  { name: "United Kingdom", value: "United-Kingdom" },
+  { name: "Australia", value: "Australia" },
+  { name: "Germany", value: "Germany" },
+  { name: "France", value: "France" },
+  { name: "Japan", value: "Japan" },
+  { name: "India", value: "India" },
+  { name: "Brazil", value: "Brazil" },
+  { name: "South Africa", value: "South-Africa" },
 ];
 
 const Language = [
-  { id: 1, name: "English" },
-  { id: 2, name: "Spanish" },
-  { id: 3, name: "French" },
-  { id: 4, name: "German" },
-  { id: 5, name: "Hindi" },
+  { value: "english", name: "English" },
+  { value: "spanish", name: "Spanish" },
+  { value: "french", name: "French" },
+  { value: "german", name: "German" },
+  { value: "hindi", name: "Hindi" },
 ];
 
 const Levels = [
-  { id: 1, name: "Beginner" },
-  { id: 2, name: "Intermediate" },
-  { id: 3, name: "Expert" },
+  { value: "beginner", name: "Beginner" },
+  { value: "intermediate", name: "Intermediate" },
+  { value: "expert", name: "Expert" },
 ];
 
 import Loading from "@/components/layout/Loading";
@@ -40,9 +40,9 @@ import {
   TableCellsIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { YearRange } from ".";
 
 export default function BrowserInner() {
   const router = useRouter();
@@ -51,11 +51,15 @@ export default function BrowserInner() {
   const [loading, setLoading] = useState(true);
 
   const searchParams = useSearchParams();
-  const genreParam = searchParams.get("genre"); 
+  const genreParam = searchParams.get("genre");
   const [selectedGenres, setSelectedGenres] = useState(
     genreParam ? genreParam.split(",") : []
   );
   const genreList = genreParam ? genreParam.split(",") : [];
+  const [range, setRange] = useState([2011, 2022]);
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedLanguage, setSelectedLanguage] = useState("");
+  const [selectedLevel, setSelectedLevel] = useState("");
 
   const handleChangeKeyword = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
@@ -89,6 +93,31 @@ export default function BrowserInner() {
 
     const newQueryString = query.toString(); // automatically handles `&` placement
 
+    router.push(`/browse?${newQueryString}`);
+  };
+
+  const handleYearRange = (year: string) => {
+    const yearName = year.toString();
+    const query = new URLSearchParams(window.location.search);
+
+    query.set("released", yearName);
+
+    const newQueryString = decodeURIComponent(query.toString());
+
+    router.push(`/browse?${newQueryString}`);
+  };
+
+  const handleSelectChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+    setter: (value: string) => void,
+    paramName: string
+  ) => {
+    const value = event.target.value;
+    setter(value);
+
+    const query = new URLSearchParams(window.location.search);
+    query.set(paramName, value);
+    const newQueryString = decodeURIComponent(query.toString());
     router.push(`/browse?${newQueryString}`);
   };
 
@@ -128,7 +157,7 @@ export default function BrowserInner() {
 
   return (
     <div className="pt-18  max-w-11/12 mx-auto flex flex-col lg:flex-row mb-10">
-      <div className="w-full  md:w-1/5 sm:w-full px-4 py-4 overflow-auto lg:h-screen ">
+      <div className="w-full  md:w-1/5 sm:w-full px-4 py-4 overflow-auto lg:h-auto h-screen ">
         <div className="w-full border-b border-gray-500 pb-4">
           <div className="text-gray-300 text-lg">TV Topic</div>
           <div className="relative inline-block mt-4 w-full text-white">
@@ -174,31 +203,22 @@ export default function BrowserInner() {
           </div>
         </div>
         <div className="w-full max-w-md mx-auto mt-4 border-b pb-6 border-gray-500">
-          <label
-            htmlFor="yearRange"
-            className="block text-md font-medium text-gray-700 mb-2"
-          >
-            Year
-          </label>
-          <input
-            type="range"
-            id="yearRange"
-            min="2010"
-            max="2025"
-            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
-          />
-          <div className="flex justify-between text-xs text-gray-500 mt-1">
-            <span>2010</span>
-            <span>2010</span>
-            <span>2025</span>
-          </div>
+          <YearRange values={range} onChange={handleYearRange} />
         </div>
         <div className="w-full border-b border-gray-500 py-6">
           <div className="text-gray-300">Select Region</div>
           <div className="relative inline-block mt-4 w-full">
-            <select className="block appearance-none w-full border border-gray-500  text-gray-300 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 ">
-              {country.map((country) => (
-                <option key={country.id}>{country.name}</option>
+            <select
+              value={selectedCountry}
+              onChange={(e) =>
+                handleSelectChange(e, setSelectedCountry, "country")
+              }
+              className="block appearance-none w-full border border-gray-500  text-gray-300 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
+            >
+              {country.map((country, index) => (
+                <option key={index} value={country.value}>
+                  {country.name}
+                </option>
               ))}
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-red-600">
@@ -212,9 +232,17 @@ export default function BrowserInner() {
         <div className="w-full border-b border-gray-500 py-6">
           <div className="text-gray-300">Language</div>
           <div className="relative inline-block mt-4 w-full">
-            <select className="block appearance-none w-full border border-gray-500  text-gray-300 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 ">
+            <select
+              value={selectedLanguage}
+              onChange={(e) =>
+                handleSelectChange(e, setSelectedLanguage, "language")
+              }
+              className="block appearance-none w-full border border-gray-500  text-gray-300 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
+            >
               {Language.map((language) => (
-                <option key={language.id}>{language.name}</option>
+                <option key={language.value} value={language.value}>
+                  {language.name}
+                </option>
               ))}
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-red-600">
@@ -228,9 +256,15 @@ export default function BrowserInner() {
         <div className="w-full border-b border-gray-500 py-6">
           <div className="text-gray-300">Levels</div>
           <div className="relative inline-block mt-4 w-full">
-            <select className="block appearance-none w-full border border-gray-500  text-gray-300 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 ">
+            <select
+              value={selectedLevel}
+              onChange={(e) => handleSelectChange(e, setSelectedLevel, "level")}
+              className="block appearance-none w-full border border-gray-500  text-gray-300 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
+            >
               {Levels.map((level) => (
-                <option key={level.id}>{level.name}</option>
+                <option key={level.name} value={level.value}>
+                  {level.name}
+                </option>
               ))}
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-red-600">
@@ -252,11 +286,14 @@ export default function BrowserInner() {
           <div className="flex gap-4 items-center ">
             <h1 className="text-3xl text-white">PCE Brazil</h1>
             {selectedGenres.length > 0 && (
-                <Link href="/browse" className="flex px-3 py-1.5  text-sm rounded-full bg-gray-700 text-gray-400 items-center cursor-pointer">
-                  Reset Filter
-                  <XMarkIcon className="w-6 h-6 cursor-pointer text-red-400" />
-                </Link>
-              )}
+              <Link
+                href="/browse"
+                className="flex px-3 py-1.5  text-sm rounded-full bg-gray-700 text-gray-400 items-center cursor-pointer"
+              >
+                Reset Filter
+                <XMarkIcon className="w-6 h-6 cursor-pointer text-red-400" />
+              </Link>
+            )}
           </div>
 
           <div className="flex items-center gap-4    px-3 py-1 text-white">
