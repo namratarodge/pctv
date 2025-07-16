@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import {
   Dialog,
   DialogBackdrop,
@@ -8,8 +7,11 @@ import {
   TransitionChild,
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 
 import { navigation } from "@/constants/Menu";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 function classNames(...classes: (string | false | null | undefined)[]): string {
   return classes.filter(Boolean).join(" ");
@@ -19,8 +21,6 @@ type SideBarProps = {
   sideBarOpen: boolean;
   setSideBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
-import { usePathname } from "next/navigation";
-import Link from "next/link";
 
 export default function SideBar({ sideBarOpen, setSideBarOpen }: SideBarProps) {
   const pageName = usePathname();
@@ -59,7 +59,7 @@ export default function SideBar({ sideBarOpen, setSideBarOpen }: SideBarProps) {
               <div className="flex h-16 shrink-0 items-center">
                 <Image
                   alt="Your Company"
-                  src="https://projectcontrolstv.com/storage/branding_media/5lbRjBu1jH2A3Q61DkPaPLVxw3fidK9SlSwU8PAU.png"
+                  src="/logo-dark.png"
                   width={600} // Replace with the actual width of the image or layout container
                   height={200} // Replace with the actual height
                   className="w-full p-4"
@@ -110,7 +110,7 @@ export default function SideBar({ sideBarOpen, setSideBarOpen }: SideBarProps) {
           <div className="flex h-16 shrink-0 items-center">
             <Image
               alt="Your Company"
-              src="https://projectcontrolstv.com/storage/branding_media/5lbRjBu1jH2A3Q61DkPaPLVxw3fidK9SlSwU8PAU.png"
+              src="/logo-dark.png"
               width={600} // Replace with the actual width of the image or layout container
               height={200} // Replace with the actual height
               className="w-full p-4"

@@ -9,7 +9,7 @@ type PersonImageProps = {
   rounded?: boolean;
 };
 
-const avatar = "/default-front.jpg";
+const avatar = "/default-front.svg";
 
 const UserAvatar: React.FC<PersonImageProps> = ({
   direct = false,

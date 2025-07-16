@@ -3,14 +3,11 @@
 import Image from "next/image";
 
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { Bars3Icon, BellIcon } from "@heroicons/react/24/outline";
 import {
   ChevronDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
-import { useEffect, useState } from "react";
-import { jwtDecode } from "jwt-decode";
-import { DecodedUser } from "@/constants/Type";
+import { Bars3Icon, BellIcon } from "@heroicons/react/24/outline";
 import { usePublicData } from "../context/PublicDataContext";
 
 const userNavigation = [
@@ -83,7 +80,7 @@ export default function TopHeader({
               <span className="sr-only">Open user menu</span>
 
               <Image
-                src="/default-front.jpg"
+                src="/default-front.svg"
                 alt="test"
                 width={10}
                 height={10}

@@ -151,7 +151,7 @@ export default function Header() {
             <Link href="/">
               <Image
                 alt="Your Company"
-                src="https://projectcontrolstv.com/storage/branding_media/5lbRjBu1jH2A3Q61DkPaPLVxw3fidK9SlSwU8PAU.png"
+                src="/logo-dark.png"
                 width={100}
                 height={10}
                 className="w-40"
@@ -220,7 +220,7 @@ export default function Header() {
                   <span className="sr-only">Open user menu</span>
                   <span className="hidden lg:flex lg:items-center cursor-pointer">
                     <Image
-                      src="/Group 291.svg"
+                      src="/default-front.svg"
                       alt="test"
                       width={5}
                       height={5}
@@ -300,7 +300,7 @@ export default function Header() {
               <Link href="/">
                 <Image
                   alt="Your Company"
-                  src="https://projectcontrolstv.com/storage/branding_media/5lbRjBu1jH2A3Q61DkPaPLVxw3fidK9SlSwU8PAU.png"
+                  src="/logo-dark.png"
                   width={400} // Replace with the actual width of the image or layout container
                   height={120} // Replace with the actual height
                   className="w-50 p-4"
@@ -354,7 +354,7 @@ export default function Header() {
                       onClick={() => setIsOpen(!isOpen)}
                     >
                       <Image
-                        src="/default-front.jpg"
+                        src="/default-front.svg"
                         alt="test"
                         width={10}
                         height={10}
