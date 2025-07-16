@@ -28,15 +28,15 @@ const navigation = {
 };
 
 import { usePublicData } from "@/components/context/PublicDataContext";
-import { PageType, TagType } from "@/constants/Type";
 import { WhitePages } from "@/constants/Menu";
+import { PageType, TagType } from "@/constants/Type";
 import { usePathname } from "next/navigation";
 
 export default function Footer() {
   const { tvtopic, pages } = usePublicData();
   const pageName = usePathname();
   return (
-    <footer className="border-t border-gray-300 ">
+    <footer className="border-t border-gray-700 ">
       <div className="mx-auto max-w-11/12 px-6  pb-8 pt-10 lg:px-2 ">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
@@ -110,7 +110,7 @@ export default function Footer() {
         </div>
         <div className="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24">
           <p className="text-sm/6 text-gray-400">
-            &copy; 2025 Your Company, Inc. All rights reserved.
+            &copy; 2025 Project Control TV, Inc. All rights reserved.
           </p>
         </div>
       </div>
