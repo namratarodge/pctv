@@ -69,8 +69,8 @@ export default function Home() {
       <div className="p-6 lg:px-8 mx-auto max-w-11/12">
         <Slider title="End Client and Govt. Voices" progress />
         <Slider title="Continue Watching" progress />
-        <Slider title="PCTv Regions" speakers />
-        <SliderNumber title="PCTv Top 10 Sessions" />
+        {/* <Slider title="PCTv Regions" speakers /> */}
+        <SliderNumber title="PCTv Regions" />
         <TopicSlider title="PCTv Topic" />
       </div>
     </>
