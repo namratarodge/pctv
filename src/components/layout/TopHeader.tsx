@@ -4,10 +4,9 @@ import Image from "next/image";
 
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import {
-  ChevronDownIcon,
-  MagnifyingGlassIcon,
+  ChevronDownIcon
 } from "@heroicons/react/20/solid";
-import { Bars3Icon, BellIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon } from "@heroicons/react/24/outline";
 import { usePublicData } from "../context/PublicDataContext";
 
 const userNavigation = [
@@ -47,7 +46,7 @@ export default function TopHeader({
 
       <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
         <form action="#" method="GET" className="grid flex-1 grid-cols-1">
-          <input
+          {/* <input
             name="search"
             type="search"
             placeholder="Search"
@@ -57,16 +56,16 @@ export default function TopHeader({
           <MagnifyingGlassIcon
             aria-hidden="true"
             className="pointer-events-none col-start-1 row-start-1 size-5 self-center text-gray-400"
-          />
+          /> */}
         </form>
         <div className="flex items-center gap-x-4 lg:gap-x-6">
-          <button
+          {/* <button
             type="button"
             className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
           >
             <span className="sr-only">View notifications</span>
             <BellIcon aria-hidden="true" className="size-6" />
-          </button>
+          </button> */}
 
           {/* Separator */}
           <div
