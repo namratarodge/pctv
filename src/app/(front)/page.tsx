@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 const joinPCTV = [
   {
     title: "Exclusive Access to Industry-Leading Content",
@@ -22,24 +23,13 @@ const joinPCTV = [
   },
 ];
 
-const people = [
-  { name: "Greg Lawton", image: "/people/greg_lawton.png" },
-  { name: "Michael Armes", image: "/people/michael_armes.png" },
-  { name: "Sadia Janjua", image: "/people/sadia_janjua.png" },
-  { name: "Dr. Alexia Nalewaik", image: "/people/dr._alexia_nalewaik.png" },
-  { name: "Hatem Elbanna", image: "/people/hatem_elbanna.png" },
-  { name: "Karen Mislick", image: "/people/karen_mislick.png" },
-  { name: "Greg Lawton", image: "/people/greg_lawton.png" },
-  { name: "Michael Armes", image: "/people/michael_armes.png" },
-];
-
 export default function Home() {
   return (
     <>
       <div className="relative isolate overflow-hidden pt-14 ">
         <Image
           alt=""
-          src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
+          src="/landing-banner.jpg"
           fill
           className="absolute inset-0 -z-10 object-cover"
         />
@@ -69,15 +59,9 @@ export default function Home() {
                 today.
               </p>
               <div className="mt-10 flex items-center justify-center gap-6 flex-col md:flex-col lg:flex-row ">
-                <input
-                  type="email"
-                  placeholder="Enter email"
-                  className="w-80 rounded-full px-4 py-3 text-sm text-white bg-gray-800 focus:outline-0"
-                />
-
-                <button className="cursor-pointer w-40 rounded-full bg-red-500 px-6 py-3 text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+                <Link href="/register" className="cursor-pointer w-40 rounded-full bg-red-500 px-6 py-3 text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20">
                   Get Started
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -99,10 +83,7 @@ export default function Home() {
         <h2 className="text-white text-xl">More reasons To Join PCTV</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {joinPCTV.map((item, index) => (
-            <div
-              key={index}
-              className=" text-white bg-[#1f3844] px-6 py-6 "
-            >
+            <div key={index} className=" text-white bg-[#1f3844] px-6 py-6 ">
               <h2 className="text-xl">{item.title}</h2>
               <h4 className="text-sm mt-4">{item.description}</h4>
               <div className="mt-3 flex justify-end left-0">
@@ -116,7 +97,7 @@ export default function Home() {
         <h2 className="text-white text-xl">Our Top Voice</h2>
         <div className="mt-4 grid  gap-4  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {Array.from({ length: 8 }, (_, index) => (
-            <div key={index} className="">
+            <div key={index}>
               <Image
                 src={`/topvoice/Group${index + 1}.png`}
                 alt="test"

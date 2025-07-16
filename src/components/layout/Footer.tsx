@@ -37,7 +37,7 @@ export default function Footer() {
   const { tvtopic, pages } = usePublicData();
   const pageName = usePathname();
   return (
-    <footer className="border-t border-gray-700 ">
+    <footer className="border-t border-gray-300 ">
       <div className="mx-auto max-w-11/12 px-6  pb-8 pt-10 lg:px-2 ">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
