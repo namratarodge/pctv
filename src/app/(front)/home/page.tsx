@@ -1,15 +1,70 @@
+"use client";
 import { Slider, SliderNumber, TopicSlider } from "@/components/layout";
 import { SpeakerXMarkIcon } from "@heroicons/react/24/outline";
 import { PlayCircleIcon } from "@heroicons/react/24/solid";
+import axios from "axios";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
+type SliderType = {
+  title: string;
+  poster: string;
+};
+
+const slides = [
+  { image: "/topvoice/Group1.png", name: "Group1" },
+  { image: "/topvoice/Group2.png", name: "Group1" },
+  { image: "/topvoice/Group3.png", name: "Group1" },
+  { image: "/topvoice/Group4.png", name: "Group1" },
+  { image: "/topvoice/Group5.png", name: "Group1" },
+  { image: "/topvoice/Group6.png", name: "Group1" },
+  { image: "/topvoice/Group7.png", name: "Group1" },
+  { image: "/topvoice/Group8.png", name: "Group1" },
+];
 export default function Home() {
+  const [title, setTitle] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchTitlte = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/titles`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          params: {
+            limit: 10,
+          },
+        }
+      );
+      if (response.data.status) {
+        const modifiedData = response.data.data.data.map(
+          (item: SliderType) => ({
+            name: item.title,
+            image: process.env.NEXT_PUBLIC_WEBSITE + "/" + item.poster,
+          })
+        );
+        setLoading(false);
+        setTitle(modifiedData);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTitlte();
+  }, []);
+
   return (
     <>
-      <div className="relative isolate overflow-hidden pt-14">
+      <div className="relative isolate overflow-hidden pt-14 h-[85vh]">
         <Image
           alt=""
-          src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
+          src="/Home-page.png"
           fill
           className="absolute inset-0 -z-10 object-cover"
           priority // optional, if it's above-the-fold
@@ -26,22 +81,22 @@ export default function Home() {
             className="relative left-[calc(50%-11rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
           />
         </div>
-        <div className="mx-auto lg:px-8">
-          <div className="mx-auto max-w-11/12  py-32 sm:py-48 lg:py-56 ">
+        <div className="mx-auto">
+          <div className="mx-auto max-w-11/12  py-32 sm:py-48 lg:py-46 ">
             <div className="text-left">
-              <h1 className="text-3xl font-semibold tracking-tight text-balance text-white sm:text-5xl w-1/2">
+              <h1 className="text-3xl font-semibold tracking-tight text-balance text-white sm:text-5xl w-160 ">
                 Delivering the UKs most complex projects and programmes
               </h1>
-              <p className="mt-8 text-sm text-pretty text-white sm:text-md">
+              <p className="mt-8 text-lg text-pretty text-white sm:text-md">
                 Mathew Vickerstaff
               </p>
-              <div className="mt-10 flex  justify-between  ">
+              <div className="mt-8 flex  justify-between  ">
                 <div className="flex  gap-4">
-                  <button className="flex rounded-full bg-red-500 px-4 gap-2 py-2 items-center text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20 cursor-pointer">
+                  <button className=" flex rounded-full bg-red-500 px-4 gap-2 py-1 items-center text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20 cursor-pointer">
                     Watch Now
                     <PlayCircleIcon className="h-7 w-7 text-white" />
                   </button>
-                  <button className="w-25 rounded-full bg-gray-500 px-6 py-3 text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+                  <button className="w-25 rounded-full bg-gray-500 px-6 py-1 text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20 cursor-pointer">
                     Share
                   </button>
                 </div>
@@ -66,10 +121,9 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="p-6 lg:px-8 mx-auto max-w-11/12">
-        <Slider title="End Client and Govt. Voices" progress />
-        <Slider title="Continue Watching" progress />
-        {/* <Slider title="PCTv Regions" speakers /> */}
+      <div className=" mx-auto max-w-11/12">
+        <Slider title="Govt. and End Users Zone" slides={title} />
+        <Slider title="PCTv Top Voice" slides={slides} />
         <SliderNumber title="PCTv Regions" />
         <TopicSlider title="PCTv Topic" />
       </div>

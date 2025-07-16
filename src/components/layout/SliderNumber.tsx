@@ -39,7 +39,7 @@ export default function SliderNumber({ title }: VoicesSliderProps) {
           type: "progressbar",
         }}
         breakpoints={{
-          768: { slidesPerView: 6 },
+          768: { slidesPerView: 3 },
           1024: { slidesPerView: 6 },
         }}
         className="relative"
