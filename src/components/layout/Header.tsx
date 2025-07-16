@@ -1,7 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { usePublicData } from "@/components/context/PublicDataContext";
 import {
   Button,
   Dialog,
@@ -22,12 +21,14 @@ import {
   UserIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import Image from "next/image";
 import Link from "next/link";
-import { usePublicData } from "@/components/context/PublicDataContext";
+import { useEffect, useState } from "react";
 
-import { redirect, usePathname } from "next/navigation";
+import { NoBGPages } from "@/constants/Menu";
+import { DecodedUser, TagType } from "@/constants/Type";
 import { jwtDecode } from "jwt-decode";
-import { TagType, DecodedUser } from "@/constants/Type";
+import { redirect, usePathname } from "next/navigation";
 
 const baseNavigation = [
   { name: "Home", key: "home", href: "/home" },
@@ -136,8 +137,8 @@ export default function Header() {
 
   return (
     <header
-      className={` absolute inset-x-0 top-0 z-50  ${
-        pageName !== "/" && "bg-black"
+      className={` absolute inset-x-0 top-0 z-50 inset-shadow-md  ${
+        NoBGPages.includes(pageName) ? 'inset-shadow-black topHeader' :  "bg-black"
       }`}
     >
       <nav
@@ -167,7 +168,7 @@ export default function Header() {
                     href={item.href}
                     className={classNames(
                       item.href === pageName && "text-white ",
-                      "text-gray-300 text-sm hover:text-white items-center justify-center px-3 py-2 rounded-md font-semibold"
+                      "text-gray-300 text-sm hover:text-white items-center justify-center px-3 py-2 rounded-md "
                     )}
                   >
                     {item.name}

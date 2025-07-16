@@ -1,20 +1,20 @@
 import {
-  HomeIcon,
-  Cog6ToothIcon, // Settings
-  TagIcon, // Additional Tags
-  CalendarIcon, // Plans
-  CreditCardIcon, // Subscription
-  FilmIcon, // Video
+  BookmarkIcon, // Additional Tags
+  CalendarIcon, // Pages
+  ChartPieIcon,
+  Cog6ToothIcon, // Plans
+  CreditCardIcon, // Roles
+  DocumentTextIcon, // Subscription
+  FilmIcon,
+  HomeIcon, // Users
+  KeyIcon, // People / Users
+  ListBulletIcon,
+  LockClosedIcon, // Lists
+  StarIcon, // Settings
+  TagIcon, // Title (or Analytics)
+  UserCircleIcon, // Reviews
+  UserGroupIcon, // Video
   UsersIcon, // People / Users
-  ListBulletIcon, // Lists
-  StarIcon, // Reviews
-  UserGroupIcon, // Users
-  KeyIcon, // Roles
-  DocumentTextIcon, // Pages
-  ChartPieIcon, // Title (or Analytics)
-  UserCircleIcon,
-  LockClosedIcon,
-  BookmarkIcon,
 } from "@heroicons/react/24/outline";
 
 export const navigation = [
@@ -99,3 +99,5 @@ export const navigationTitleSubMenu = [
 ];
 
 export const WhitePages = ["/account", "/register", "/pricing"];
+
+export const NoBGPages = ["/", "/home"];
