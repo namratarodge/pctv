@@ -147,6 +147,10 @@ export default function BrowserInner() {
     }
   };
 
+  const restFilter = () => {
+    router.push(`browse`);
+  }
+
   useEffect(() => {
     fetchTitlte();
   }, []);
@@ -276,7 +280,7 @@ export default function BrowserInner() {
         </div>
 
         <div>
-          <button className="cursor-pointer w-full mt-4 rounded-full bg-red-500 px-6 py-3 text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+          <button onClick={restFilter} className="cursor-pointer w-full mt-4 rounded-full bg-red-500 px-6 py-3 text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20">
             Reset Filter
           </button>
         </div>
