@@ -71,7 +71,7 @@ export default function Footer() {
               <div>
                 <h3 className="text-sm/6 font-semibold ">TV Topic</h3>
                 <ul role="list" className="mt-6 space-y-4">
-                  {tvtopic.map((item: TagType,index:number) => (
+                  {tvtopic.map((item: TagType, index: number) => (
                     <li key={index}>
                       <Link
                         href={`browse?keyword=${item.name}`}
@@ -99,14 +99,15 @@ export default function Footer() {
               </div>
               <div className="mt-10 md:mt-0">
                 <h3 className="text-sm/6 font-semibold ">Pages</h3>
-                <ul role="list" className="mt-6 space-y-4">
+                <ul role="list" className="mt-6 space-y-4 text-sm/6">
                   {pages.map((item: PageType) => (
                     <li key={item._id}>
-                      <Link href={`/pages/${item.slug}`} className="text-sm/6 ">
-                        {item.title}
-                      </Link>
+                      <Link href={`/pages/${item.slug}`}>{item.title}</Link>
                     </li>
                   ))}
+                  <li>
+                    <Link href="/contact-us">Contact Us</Link>
+                  </li>
                 </ul>
               </div>
             </div>

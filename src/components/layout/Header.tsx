@@ -220,7 +220,7 @@ export default function Header() {
                   <span className="sr-only">Open user menu</span>
                   <span className="hidden lg:flex lg:items-center cursor-pointer">
                     <Image
-                      src="/default-front.jpg"
+                      src="/Group 291.svg"
                       alt="test"
                       width={5}
                       height={5}
