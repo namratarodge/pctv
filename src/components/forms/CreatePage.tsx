@@ -1,14 +1,14 @@
 "use client";
 
-import { PageFormData, pageSchema } from "@/constants/Validation";
-import dynamic from "next/dynamic";
-import { useSearchParams, useRouter } from "next/navigation"; // for getting query string or routing
-import { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { toast } from "react-toastify";
-import axios from "axios";
-import { zodResolver } from "@hookform/resolvers/zod";
 import Loading from "@/components/layout/Loading";
+import { PageFormData, pageSchema } from "@/constants/Validation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import dynamic from "next/dynamic";
+import { useRouter, useSearchParams } from "next/navigation"; // for getting query string or routing
+import { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const EditorInput = dynamic(() => import("@/components/forms/EditorInput"), {
   ssr: false,
@@ -65,7 +65,6 @@ export default function CreatePage() {
     const requestData = {
       ...data,
       type: "default",
-      user_id: 1,
     };
 
     try {

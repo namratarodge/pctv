@@ -71,7 +71,7 @@ export function PublicDataProvider({ children }) {
             "Content-Type": "application/json",
           },
           params: {
-            limit: 5,
+            limit: 10,
           },
         }
       );

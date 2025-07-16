@@ -30,6 +30,7 @@ const navigation = {
 import { usePublicData } from "@/components/context/PublicDataContext";
 import { WhitePages } from "@/constants/Menu";
 import { PageType, TagType } from "@/constants/Type";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function Footer() {
@@ -70,11 +71,14 @@ export default function Footer() {
               <div>
                 <h3 className="text-sm/6 font-semibold ">TV Topic</h3>
                 <ul role="list" className="mt-6 space-y-4">
-                  {tvtopic.map((item: TagType) => (
-                    <li key={item._id}>
-                      <a href="#" className="text-sm/6">
+                  {tvtopic.map((item: TagType,index:number) => (
+                    <li key={index}>
+                      <Link
+                        href={`browse?keyword=${item.name}`}
+                        className="text-sm/6"
+                      >
                         {item.display_name}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -98,9 +102,9 @@ export default function Footer() {
                 <ul role="list" className="mt-6 space-y-4">
                   {pages.map((item: PageType) => (
                     <li key={item._id}>
-                      <a href={item.slug} className="text-sm/6 ">
+                      <Link href={`/pages/${item.slug}`} className="text-sm/6 ">
                         {item.title}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
