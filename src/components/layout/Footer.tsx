@@ -44,7 +44,7 @@ export default function Footer() {
             {WhitePages.includes(pageName) ? (
               <Image
                 alt="Your Company"
-                src="logo-white.png"
+                src="/logo-white.png"
                 width={200} // Replace with the actual width of the image or layout container
                 height={200} // Replace with the actual height
                 className="w-50"
@@ -53,7 +53,7 @@ export default function Footer() {
             ) : (
               <Image
                 alt="Your Company"
-                src="logo-dark.png"
+                src="/logo-dark.png"
                 width={200} // Replace with the actual width of the image or layout container
                 height={200} // Replace with the actual height
                 className="w-50"
