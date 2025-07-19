@@ -1,10 +1,10 @@
 "use client"; // ✅ client component, hooks allowed
 
+import { StarRating } from "@/components/forms";
 import Loading from "@/components/layout/Loading";
 import { TitleType } from "@/constants/Type";
 import { formatDate } from "@/utils/common";
 import { PlusIcon, ShareIcon } from "@heroicons/react/24/outline";
-import { StarIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -138,11 +138,7 @@ export default function TitleDetailPage() {
                 <div className="flex gap-2">
                   <span className="text-gray-400">Rate us</span>
                   <div className="flex gap-1 items-center">
-                    <StarIcon className="h-5 w-5 text-yellow-500" />
-                    <StarIcon className="h-5 w-5 text-yellow-500" />
-                    <StarIcon className="h-5 w-5 text-yellow-500" />
-                    <StarIcon className="h-5 w-5 text-yellow-500" />
-                    <StarIcon className="h-5 w-5 text-yellow-500" />
+                    <StarRating score={4} titleId={titleDetails._id}/>
                   </div>
                 </div>
               </div>

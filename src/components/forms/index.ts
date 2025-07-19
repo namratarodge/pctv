@@ -12,6 +12,7 @@ export { default as AutoCompeleteList } from "./AutoCompeleteList";
 export { default as AutoCompeleteListUser } from "./AutoCompeleteListUser";
 export { default as AutoCompeleteTitle } from "./AutoCompeleteTitle";
 
+export { default as StarRating } from "./StarRating";
 export { default as TenStarRating } from "./TenStarRating";
 
 export { default as NewTable } from "./NewTable";

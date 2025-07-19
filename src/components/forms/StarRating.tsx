@@ -1,26 +1,45 @@
-'use client'
+"use client";
 
 import { StarIcon as StarOutline } from "@heroicons/react/24/outline";
 import { StarIcon as StarSolid } from "@heroicons/react/24/solid";
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 type RatingProps = {
   score?: number;
-  onRate?: (value: number) => void;
+  titleId: string;
 };
 
-export default function TenStarRating({ score = 0, onRate }: RatingProps) {
+export default function StarRating({ score = 0, titleId }: RatingProps) {
   const [hovered, setHovered] = useState<number | null>(null);
   const [selected, setSelected] = useState<number>(score);
-
 
   useEffect(() => {
     setSelected(score);
   }, [score]);
 
-  const handleClick = (value: number) => {
+  const handleClick = async (value: number) => {
     setSelected(value);
-    onRate?.(value); 
+    const token = localStorage.getItem("token");
+    const payload = {
+      reviewable_id: titleId,
+      score: value,
+    };
+    try {
+      console.log(payload);
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/review`,
+        payload,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   return (
