@@ -9,19 +9,19 @@ import { useEffect, useState } from "react";
 type SliderType = {
   title: string;
   poster: string;
-  _id : string;
-  slug : string;
+  _id: string;
+  slug: string;
 };
 
 const slides = [
-  { image: "/topvoice/Group1.png", name: "Group1" } ,
-  { image: "/topvoice/Group2.png", name: "Group1" },
-  { image: "/topvoice/Group3.png", name: "Group1" },
-  { image: "/topvoice/Group4.png", name: "Group1" },
-  { image: "/topvoice/Group5.png", name: "Group1" },
-  { image: "/topvoice/Group6.png", name: "Group1" },
-  { image: "/topvoice/Group7.png", name: "Group1" },
-  { image: "/topvoice/Group8.png", name: "Group1" },
+  { _id: "1", slug: "", image: "/topvoice/Group1.png", name: "Group1" },
+  { _id: "2", slug: "", image: "/topvoice/Group2.png", name: "Group1" },
+  { _id: "3", slug: "", image: "/topvoice/Group3.png", name: "Group1" },
+  { _id: "4", slug: "", image: "/topvoice/Group4.png", name: "Group1" },
+  { _id: "5", slug: "", image: "/topvoice/Group5.png", name: "Group1" },
+  { _id: "6", slug: "", image: "/topvoice/Group6.png", name: "Group1" },
+  { _id: "7", slug: "", image: "/topvoice/Group7.png", name: "Group1" },
+  { _id: "8", slug: "", image: "/topvoice/Group8.png", name: "Group1" },
 ];
 export default function Home() {
   const [title, setTitle] = useState([]);
@@ -46,12 +46,12 @@ export default function Home() {
         const modifiedData = response.data.data.data.map(
           (item: SliderType) => ({
             name: item.title,
-            _id : item._id,
-            slug : item.slug,
+            _id: item._id,
+            slug: item.slug,
             image: process.env.NEXT_PUBLIC_WEBSITE + "/" + item.poster,
           })
         );
-        console.log(modifiedData)
+        console.log(modifiedData);
         setLoading(false);
         setTitle(modifiedData);
       }
@@ -76,14 +76,12 @@ export default function Home() {
         }
       );
       if (response.data.status) {
-        const modifiedData = response.data.data.map(
-          (item: SliderType) => ({
-            name: item.title,
-            _id : item._id,
-            slug : item.slug,
-            image: process.env.NEXT_PUBLIC_WEBSITE + "/" + item.poster,
-          })
-        );
+        const modifiedData = response.data.data.map((item: SliderType) => ({
+          name: item.title,
+          _id: item._id,
+          slug: item.slug,
+          image: process.env.NEXT_PUBLIC_WEBSITE + "/" + item.poster,
+        }));
         setLoading(false);
         setTopTitle(modifiedData);
       }
@@ -161,7 +159,6 @@ export default function Home() {
         </div>
       </div>
       <div className=" mx-auto max-w-11/12">
-        
         <SliderNumber title="PCTv Regions" />
         <Slider title="Latest Videos" slides={title} />
         <Slider title="PCTv Top Voice" slides={slides} />

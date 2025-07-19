@@ -43,7 +43,7 @@ export default function VoicesSlider({ title, slides }: VoicesSliderProps) {
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
             <Link
-              href={`/titles/${slide._id}/${slide.slug}`}
+              href={`/titles/${slide.slug && slide._id}/${slide.slug}`}
               className="relative h-40 flex items-center justify-center  overflow-hidden "
             >
               <Image
