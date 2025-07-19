@@ -1,21 +1,22 @@
 "use client";
 
 import { Filter, Paginations } from "@/components/forms";
-import { PlusCircleIcon } from "@heroicons/react/16/solid";
-import Link from "next/link";
-import { VideoFilter } from "@/constants/Filter";
-import { useCallback, useEffect, useState } from "react";
-import axios from "axios";
-import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { formatDate } from "@/utils/common";
 import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
-import { VideoColumn } from "@/constants/DataTableColumn";
 import Loading from "@/components/layout/Loading";
+import { VideoColumn } from "@/constants/DataTableColumn";
+import { VideoFilter } from "@/constants/Filter";
 import { VideoType } from "@/constants/Type";
-import { useDebounce } from "use-debounce";
+import { formatDate } from "@/utils/common";
 import { parseQueryString } from "@/utils/helper";
+import { PlusCircleIcon } from "@heroicons/react/16/solid";
+import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
+import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
+import { useDebounce } from "use-debounce";
 
 export default function Videos() {
+
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({
@@ -30,6 +31,8 @@ export default function Videos() {
 
   const [filterQuery, setFilterQuery] = useState("");
   const [debouncedFilterQuery] = useDebounce(filterQuery, 1000); // 1 seconds delay
+
+ 
 
   const setPage = (value: number) => {
     setPages(value);
@@ -80,6 +83,9 @@ export default function Videos() {
     fetch();
   }, [fetch]);
 
+ 
+
+
   return (
     <>
       <div className="sm:flex  mt-4  h-auto justify-between gap-4 ">
@@ -106,7 +112,7 @@ export default function Videos() {
                   renderActions={(person) => (
                     <div className="flex gap-3 justify-end">
                       <button
-                        onClick={() => console.log("Edit", person)}
+                        onClick={() => handleEdit(person)}
                         className="text-blue-600 hover:text-blue-800 cursor-pointer"
                       >
                         <PencilIcon className="w-5 h-5" />

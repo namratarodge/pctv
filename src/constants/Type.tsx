@@ -320,6 +320,19 @@ export type UserType = {
 
 // Video Type
 
+export type VideoFormType = {
+  _id : string;
+  name : string;
+  thumbnail: string;
+  type : string;
+  embed_code : string;
+  url : string;
+  quality : string;
+  language : string;
+  title_id : string;
+  category : string;
+}
+
 export type VideoType = {
   _id: string;
   id: number;

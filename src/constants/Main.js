@@ -108,3 +108,11 @@ export const videoCategory = [
   { key: "gaming", value: "Gaming" },
   { key: "lifestyle", value: "Lifestyle" },
 ];
+
+export const categoryOptions = [
+  { label: "Trailer", value: "trailer" },
+  { label: "Clip", value: "clip" },
+  { label: "Featurette", value: "featurette" },
+  { label: "Teaser", value: "teaser" },
+  { label: "Full Movie or Episode", value: "full" },
+];
