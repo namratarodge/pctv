@@ -44,6 +44,9 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { YearRange } from ".";
 
+const MIN_YEAR = 2010;
+const MAX_YEAR = 2025;
+
 export default function BrowserInner() {
   const router = useRouter();
   const [title, setTitle] = useState([]);
@@ -56,7 +59,7 @@ export default function BrowserInner() {
     genreParam ? genreParam.split(",") : []
   );
   const genreList = genreParam ? genreParam.split(",") : [];
-  const [range, setRange] = useState([2011, 2022]);
+  const [range, setRange] = useState<[number, number]>([MIN_YEAR, MAX_YEAR]);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const [selectedLevel, setSelectedLevel] = useState("");
@@ -96,7 +99,7 @@ export default function BrowserInner() {
     router.push(`/browse?${newQueryString}`);
   };
 
-  const handleYearRange = (year: string) => {
+  const handleYearRange = (year:  [number, number]) => {
     const yearName = year.toString();
     const query = new URLSearchParams(window.location.search);
 

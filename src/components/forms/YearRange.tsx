@@ -1,20 +1,29 @@
+'use client'
+
 import { useEffect, useState } from "react";
 import { Range } from "react-range";
 
 const MIN = 2010;
 const MAX = 2025;
 
-export default function YearRange({ values: parentValues, onChange }) {
-  const [values, setValues] = useState(parentValues);
+type YearRangeProps = {
+  values: [number, number];
+  onChange?: (values: [number, number]) => void;
+};
 
-  // Keep local state in sync with parent
+export default function YearRange({ values: parentValues, onChange }: YearRangeProps) {
+  const [values, setValues] = useState<number[]>(parentValues);
+
+  // Sync local state with parent values
   useEffect(() => {
     setValues(parentValues);
   }, [parentValues]);
 
-  const handleChange = (newValues) => {
+  const handleChange = (newValues: number[]) => {
     setValues(newValues);
-    onChange?.(newValues); // Call parent callback if it exists
+    if (newValues.length === 2) {
+      onChange?.([newValues[0], newValues[1]]);
+    }
   };
 
   return (
