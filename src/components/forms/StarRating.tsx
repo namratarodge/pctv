@@ -26,7 +26,6 @@ export default function StarRating({ score = 0, titleId }: RatingProps) {
       score: value,
     };
     try {
-      console.log(payload);
       await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/review`,
         payload,
@@ -38,6 +37,7 @@ export default function StarRating({ score = 0, titleId }: RatingProps) {
         }
       );
     } catch (error) {
+      window.location.href = "/login";
       console.error("Error fetching data:", error);
     }
   };

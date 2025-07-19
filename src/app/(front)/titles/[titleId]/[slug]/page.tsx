@@ -78,7 +78,7 @@ export default function TitleDetailPage() {
       title_id: id,
     };
     try {
-      console.log(payload)
+      console.log(payload);
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/watchlist`,
         payload,
@@ -91,7 +91,7 @@ export default function TitleDetailPage() {
       );
       if (response.data.status) {
         toast("Titles addedd whatchlist. Successfully");
-      }else{
+      } else {
         toast(response.data.error);
       }
     } catch (error) {
@@ -138,7 +138,7 @@ export default function TitleDetailPage() {
                 <div className="flex gap-2">
                   <span className="text-gray-400">Rate us</span>
                   <div className="flex gap-1 items-center">
-                    <StarRating score={4} titleId={titleDetails._id}/>
+                    <StarRating score={4} titleId={titleDetails._id} />
                   </div>
                 </div>
               </div>
