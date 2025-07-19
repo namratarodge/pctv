@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -11,6 +12,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 type Slide = {
   image: string;
   name: string;
+  _id: string;
+  slug: string;
 };
 
 type VoicesSliderProps = {
@@ -39,7 +42,10 @@ export default function VoicesSlider({ title, slides }: VoicesSliderProps) {
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
-            <div className="relative h-40 flex items-center justify-center  overflow-hidden ">
+            <Link
+              href={`/titles/${slide._id}/${slide.slug}`}
+              className="relative h-40 flex items-center justify-center  overflow-hidden "
+            >
               <Image
                 width={100}
                 height={100}
@@ -47,7 +53,7 @@ export default function VoicesSlider({ title, slides }: VoicesSliderProps) {
                 src={slide.image}
                 className="w-full h-auto rounded-sm"
               />
-            </div>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>

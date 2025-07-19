@@ -9,10 +9,12 @@ import { useEffect, useState } from "react";
 type SliderType = {
   title: string;
   poster: string;
+  _id : string;
+  slug : string;
 };
 
 const slides = [
-  { image: "/topvoice/Group1.png", name: "Group1" },
+  { image: "/topvoice/Group1.png", name: "Group1" } ,
   { image: "/topvoice/Group2.png", name: "Group1" },
   { image: "/topvoice/Group3.png", name: "Group1" },
   { image: "/topvoice/Group4.png", name: "Group1" },
@@ -44,9 +46,12 @@ export default function Home() {
         const modifiedData = response.data.data.data.map(
           (item: SliderType) => ({
             name: item.title,
+            _id : item._id,
+            slug : item.slug,
             image: process.env.NEXT_PUBLIC_WEBSITE + "/" + item.poster,
           })
         );
+        console.log(modifiedData)
         setLoading(false);
         setTitle(modifiedData);
       }
@@ -74,6 +79,8 @@ export default function Home() {
         const modifiedData = response.data.data.map(
           (item: SliderType) => ({
             name: item.title,
+            _id : item._id,
+            slug : item.slug,
             image: process.env.NEXT_PUBLIC_WEBSITE + "/" + item.poster,
           })
         );
