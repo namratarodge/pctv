@@ -1,18 +1,18 @@
 // components/VoicesSlider.js
 "use client";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+import { useEffect } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { usePublicData } from "../context/PublicDataContext";
-import { useEffect } from "react";
 
+import { TagType } from "@/constants/Type";
 import {
   FaceSmileIcon,
 } from '@heroicons/react/24/outline';
-import { TagType } from "@/constants/Type";
 
 
 
@@ -30,7 +30,7 @@ export default function TopicSlider({ title }: VoicesSliderProps) {
   }, [categories]);
 
   return (
-    <div className=" py-8  text-white relative">
+    <div className=" mb-10  text-white relative">
       <h2 className="text-xl font-bold mb-4">{title}</h2>
       <Swiper
         modules={[Navigation, Pagination]}

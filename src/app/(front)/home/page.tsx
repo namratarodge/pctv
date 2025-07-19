@@ -23,6 +23,7 @@ const slides = [
 ];
 export default function Home() {
   const [title, setTitle] = useState([]);
+  const [topTitle, setTopTitle] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const fetchTitlte = async () => {
@@ -55,8 +56,39 @@ export default function Home() {
     }
   };
 
+  const fetchLatest = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/titles/most-views`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          params: {
+            limit: 10,
+          },
+        }
+      );
+      if (response.data.status) {
+        const modifiedData = response.data.data.map(
+          (item: SliderType) => ({
+            name: item.title,
+            image: process.env.NEXT_PUBLIC_WEBSITE + "/" + item.poster,
+          })
+        );
+        setLoading(false);
+        setTopTitle(modifiedData);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error("Error fetching data:", error);
+    }
+  };
+
   useEffect(() => {
     fetchTitlte();
+    fetchLatest();
   }, []);
 
   return (
@@ -122,9 +154,11 @@ export default function Home() {
         </div>
       </div>
       <div className=" mx-auto max-w-11/12">
-        <Slider title="Govt. and End Users Zone" slides={title} />
-        <Slider title="PCTv Top Voice" slides={slides} />
+        
         <SliderNumber title="PCTv Regions" />
+        <Slider title="Latest Videos" slides={title} />
+        <Slider title="PCTv Top Voice" slides={slides} />
+        <Slider title="PCTv Top 10 Sessions" slides={topTitle} />
         <TopicSlider title="PCTv Topic" />
       </div>
     </>
