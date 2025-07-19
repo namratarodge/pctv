@@ -148,21 +148,25 @@ export default function TitleDetailPage() {
 
               <div className="border-t border-b border-[#37454D] py-3 mr-5">
                 <h2 className="text-white">About Speaker</h2>
-                <div className="flex gap-3 py-2 items-center">
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_WEBSITE}/${titleDetails?.poster}`}
-                    alt="poster"
-                    width={800} // You can adjust this
-                    height={500} // Adjust as needed for layout
-                    className="w-15 h-15 rounded-full"
-                  />
-                  <div className="items-center justify-center">
-                    <p className="text-white text-sm mb-2">Andy Browns</p>
-                    <p className="text-gray-400 text-xs ">
-                      Project Controls Director
-                    </p>
+
+                {titleDetails.credit.map((item,index) => (
+                  <div className="flex gap-3 py-2 items-center" key={index}>
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_WEBSITE}/${item.person_id?.poster}`}
+                      alt="poster"
+                      width={800} // You can adjust this
+                      height={500} // Adjust as needed for layout
+                      className="w-15 h-15 rounded-full"
+                    />
+                    
+                    <div className="items-center justify-center">
+                      <p className="text-white text-sm mb-2">{item.person_id.name}</p>
+                      <p className="text-gray-400 text-xs capitalize">
+                       {item.department}
+                      </p>
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
 
               <div className="py-4">
@@ -176,21 +180,27 @@ export default function TitleDetailPage() {
                       {item.display_name}
                     </span>
                   ))}
+                   {titleDetails.keywords.map((item) => (
+                    <span
+                      key={item._id}
+                      className="rounded-full bg-gray-700 text-gray-200 px-3 py-1 text-sm"
+                    >
+                      {item.display_name}
+                    </span>
+                  ))}
                 </div>
               </div>
 
               <div className="py-4 border-t border-[#37454D]  mr-5">
                 <h2 className="text-white">Additional Tags</h2>
-                <div className="flex py-2 gap-3">
-                  <span className="rounded-full  bg-gray-700 text-gray-200 px-3 py-1 text-sm">
-                    BIM
-                  </span>
-                  <span className="rounded-full bg-gray-700 text-gray-200 px-3 py-1 text-sm">
-                    General Project Controls
-                  </span>
-                  <span className="rounded-full bg-gray-700 text-gray-200 px-3 py-1 text-sm">
-                    Innovation Zone
-                  </span>
+                <div className="flex  flex-wrap  py-2 gap-3">
+                {titleDetails.genres.map((item,index) => (
+                <span key={index} className="rounded-full  bg-gray-700 text-gray-200 px-3 py-1 text-sm">
+                {item.name}
+              </span>
+                ))}
+                  
+                
                 </div>
               </div>
             </div>

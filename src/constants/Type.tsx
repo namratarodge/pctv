@@ -91,6 +91,9 @@ export type TitleType = {
   language: string;
   views: string;
   genres: TagType[];
+  keywords: TagType[];
+  credit : CastCreditType[];
+  cast : CastCreditType[];
   description: string;
   created_at: string;
 };
