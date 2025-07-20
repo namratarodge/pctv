@@ -10,13 +10,19 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { AutoCompleteTitleList } from ".";
 
-import { QualityOptions, categoryOptions, languageOptions, videoOptions } from "@/constants/Main";
-
-
-
+import {
+  QualityOptions,
+  categoryOptions,
+  languageOptions,
+  videoOptions,
+} from "@/constants/Main";
+import { useParams } from "next/navigation";
 
 export default function CreateVideo() {
   const [videoType, setVideoType] = useState("embed");
+  const params = useParams();
+  const videoId = params.id as string;
+  const isNew = videoId === "new";
 
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -55,7 +61,7 @@ export default function CreateVideo() {
         toast("Video Added sucessfully.");
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.error("Failed to create Video:");
     }
   };
@@ -76,7 +82,7 @@ export default function CreateVideo() {
       <div className="w-full bg-white rounded-sm shadow-lg p-10 space-y-6">
         <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
           <VideoCameraIcon className="h-7 w-7 text-red-500" />
-          Add New Video
+          {isNew ? 'Add New' : 'Edit '} Video
         </h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
