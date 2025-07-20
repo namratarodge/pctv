@@ -4,7 +4,11 @@ import { StarRating } from "@/components/forms";
 import Loading from "@/components/layout/Loading";
 import { TitleType } from "@/constants/Type";
 import { formatDate } from "@/utils/common";
-import { PlusIcon, ShareIcon } from "@heroicons/react/24/outline";
+import {
+  PlayCircleIcon,
+  PlusIcon,
+  ShareIcon,
+} from "@heroicons/react/24/outline";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -107,14 +111,25 @@ export default function TitleDetailPage() {
       ) : (
         <>
           {titleDetails && (
-            <div className="w-full  md:w-2/3 lg:w-2/3">
+            <div className="w-full  md:w-2/3 lg:w-2/3 ">
+              <div className="relative">
               <Image
                 src={`${process.env.NEXT_PUBLIC_WEBSITE}/${titleDetails?.poster}`}
                 alt="poster"
                 width={800} // You can adjust this
                 height={500} // Adjust as needed for layout
-                className="w-full rounded-lg object-cover"
+                className="w-full rounded-lg object-cover opacity-40"
               />
+
+              {/* Centered Play Button */}
+              <div className="absolute inset-0 flex items-center justify-center ">
+                <div className="bg-white/80 hover:bg-white rounded-full p-4 transition cursor-pointer">
+                  {/* <PlayIcon className="w-10 h-10 text-red-600" /> */}
+                  <PlayCircleIcon className="w-10 h-10 text-red-600 " />
+                </div>
+              </div>
+              </div>
+             
 
               <h1 className="text-xl text-white py-4">{titleDetails?.name}</h1>
               <div className="flex gap-2">
@@ -149,7 +164,7 @@ export default function TitleDetailPage() {
               <div className="border-t border-b border-[#37454D] py-3 mr-5">
                 <h2 className="text-white">About Speaker</h2>
 
-                {titleDetails.credit.map((item,index) => (
+                {titleDetails.credit.map((item, index) => (
                   <div className="flex gap-3 py-2 items-center" key={index}>
                     <Image
                       src={`${process.env.NEXT_PUBLIC_WEBSITE}/${item.person_id?.poster}`}
@@ -158,11 +173,13 @@ export default function TitleDetailPage() {
                       height={500} // Adjust as needed for layout
                       className="w-15 h-15 rounded-full"
                     />
-                    
+
                     <div className="items-center justify-center">
-                      <p className="text-white text-sm mb-2">{item.person_id.name}</p>
+                      <p className="text-white text-sm mb-2">
+                        {item.person_id.name}
+                      </p>
                       <p className="text-gray-400 text-xs capitalize">
-                       {item.department}
+                        {item.department}
                       </p>
                     </div>
                   </div>
@@ -180,7 +197,7 @@ export default function TitleDetailPage() {
                       {item.display_name}
                     </span>
                   ))}
-                   {titleDetails.keywords.map((item) => (
+                  {titleDetails.keywords.map((item) => (
                     <span
                       key={item._id}
                       className="rounded-full bg-gray-700 text-gray-200 px-3 py-1 text-sm"
@@ -194,13 +211,14 @@ export default function TitleDetailPage() {
               <div className="py-4 border-t border-[#37454D]  mr-5">
                 <h2 className="text-white">Additional Tags</h2>
                 <div className="flex  flex-wrap  py-2 gap-3">
-                {titleDetails.genres.map((item,index) => (
-                <span key={index} className="rounded-full  bg-gray-700 text-gray-200 px-3 py-1 text-sm">
-                {item.name}
-              </span>
-                ))}
-                  
-                
+                  {titleDetails.genres.map((item, index) => (
+                    <span
+                      key={index}
+                      className="rounded-full  bg-gray-700 text-gray-200 px-3 py-1 text-sm"
+                    >
+                      {item.name}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
