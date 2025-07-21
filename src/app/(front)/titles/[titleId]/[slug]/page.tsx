@@ -260,33 +260,40 @@ export default function TitleDetailPage() {
               </div>
 
               <div className="py-6 border-t border-[#37454D] mr-5">
-  <h2 className="text-white text-xl font-semibold mb-4">Video and Presentation</h2>
-  <div className="flex flex-wrap gap-6">
-    {titleDetails.video.map((item, index) => (
-      <div key={index} className="relative w-full sm:w-[48%] lg:w-[30%]">
-        <div className="rounded-lg overflow-hidden shadow-lg group">
-          <div className="relative">
-            <div
-              className="aspect-video opacity-50 group-hover:opacity-100 transition duration-300"
-              dangerouslySetInnerHTML={{ __html: item.url }}
-            />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <button
-                className="bg-white/80 hover:bg-white rounded-full p-3 transition duration-300 cursor-pointer"
-                onClick={() => handlePlay(item)}
-              >
-                <PlayCircleIcon className="w-7 h-7 text-red-600" />
-              </button>
-            </div>
-          </div>
-          <div className="bg-[#1E293B] p-3">
-            <h3 className="text-white text-base font-medium">{item.name}</h3>
-          </div>
-        </div>
-      </div>
-    ))}
-  </div>
-</div>
+                <h2 className="text-white text-xl font-semibold mb-4">
+                  Video and Presentation
+                </h2>
+                <div className="flex flex-wrap gap-6">
+                  {titleDetails.video.map((item, index) => (
+                    <div
+                      key={index}
+                      className="relative w-full sm:w-[48%] lg:w-[30%]"
+                    >
+                      <div className="rounded-lg overflow-hidden shadow-lg group">
+                        <div className="relative">
+                          <div
+                            className="aspect-video opacity-50 group-hover:opacity-100 transition duration-300"
+                            dangerouslySetInnerHTML={{ __html: item.url }}
+                          />
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <button
+                              className="bg-white/80 hover:bg-white rounded-full p-3 transition duration-300 cursor-pointer"
+                              onClick={() => handlePlay(item)}
+                            >
+                              <PlayCircleIcon className="w-7 h-7 text-red-600" />
+                            </button>
+                          </div>
+                        </div>
+                        <div className="bg-[#1E293B] p-3">
+                          <h3 className="text-white text-base font-medium">
+                            {item.name}
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
           <div className="w-full md:w-1/3 ">
