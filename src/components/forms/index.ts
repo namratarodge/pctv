@@ -17,6 +17,7 @@ export { default as StarRating } from "./StarRating";
 export { default as TenStarRating } from "./TenStarRating";
 
 export { default as NewTable } from "./NewTable";
+export { default as ViemoEmbed } from './VimeoEmbed';
 
 
 export { default as YearRange } from "./YearRange";

@@ -1,6 +1,6 @@
 "use client"; // ✅ client component, hooks allowed
 
-import { StarRating } from "@/components/forms";
+import { StarRating, ViemoEmbed } from "@/components/forms";
 import Loading from "@/components/layout/Loading";
 import { TitleType, VideoType } from "@/constants/Type";
 import { formatDate } from "@/utils/common";
@@ -112,6 +112,11 @@ export default function TitleDetailPage() {
     });
     setPlay(data);
   };
+  const handleProgress = (seconds:string) => {
+    console.log(play)
+    console.log("Last watched seconds before switching:", seconds);
+    // Optionally save it to backend/localStorage
+  };
 
   return (
     <div className="pt-18 flex flex-col md:flex-row max-w-11/12 mx-auto">
@@ -145,12 +150,7 @@ export default function TitleDetailPage() {
                   </>
                 )}
                 {play && (
-                  <div
-                    className="rounded-md"
-                    dangerouslySetInnerHTML={{
-                      __html: play.url,
-                    }}
-                  />
+                  <ViemoEmbed htmlString={play.url} onVideoProgress={handleProgress}/>
                 )}
               </div>
 
