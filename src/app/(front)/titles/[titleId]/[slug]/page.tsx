@@ -2,7 +2,7 @@
 
 import { StarRating } from "@/components/forms";
 import Loading from "@/components/layout/Loading";
-import { TitleType } from "@/constants/Type";
+import { TitleType, VideoType } from "@/constants/Type";
 import { formatDate } from "@/utils/common";
 import {
   PlayCircleIcon,
@@ -22,6 +22,8 @@ export default function TitleDetailPage() {
   const [title, setTitle] = useState<TitleType[]>([]);
   const [titleDetails, setTitleDetails] = useState<TitleType | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const [play, setPlay] = useState<VideoType | null>(null);
 
   const fetchTitleList = async () => {
     try {
@@ -102,6 +104,15 @@ export default function TitleDetailPage() {
       console.error("Error fetching data:", error);
     }
   };
+
+  const handlePlay = (data: VideoType) => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    setPlay(data);
+  };
+
   return (
     <div className="pt-18 flex flex-col md:flex-row max-w-11/12 mx-auto">
       {loading ? (
@@ -113,23 +124,35 @@ export default function TitleDetailPage() {
           {titleDetails && (
             <div className="w-full  md:w-2/3 lg:w-2/3 ">
               <div className="relative">
-              <Image
-                src={`${process.env.NEXT_PUBLIC_WEBSITE}/${titleDetails?.poster}`}
-                alt="poster"
-                width={800} // You can adjust this
-                height={500} // Adjust as needed for layout
-                className="w-full rounded-lg object-cover opacity-40"
-              />
+                {!play && (
+                  <>
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_WEBSITE}/${titleDetails?.poster}`}
+                      alt="poster"
+                      width={800} // You can adjust this
+                      height={500} // Adjust as needed for layout
+                      className="w-full rounded-lg object-cover opacity-10"
+                    />
 
-              {/* Centered Play Button */}
-              <div className="absolute inset-0 flex items-center justify-center ">
-                <div className="bg-white/80 hover:bg-white rounded-full p-4 transition cursor-pointer">
-                  {/* <PlayIcon className="w-10 h-10 text-red-600" /> */}
-                  <PlayCircleIcon className="w-10 h-10 text-red-600 " />
-                </div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div
+                        className="bg-white/80 hover:bg-white rounded-full p-4 transition cursor-pointer"
+                        onClick={() => setPlay(titleDetails?.video[0])}
+                      >
+                        <PlayCircleIcon className="w-10 h-10 text-red-600 " />
+                      </div>
+                    </div>
+                  </>
+                )}
+                {play && (
+                  <div
+                    className="rounded-md"
+                    dangerouslySetInnerHTML={{
+                      __html: play.url,
+                    }}
+                  />
+                )}
               </div>
-              </div>
-             
 
               <h1 className="text-xl text-white py-4">{titleDetails?.name}</h1>
               <div className="flex gap-2">
@@ -185,42 +208,85 @@ export default function TitleDetailPage() {
                   </div>
                 ))}
               </div>
-
               <div className="py-4">
                 <h2 className="text-white">Related Tags</h2>
-                <div className="flex  flex-wrap  py-2 gap-3">
-                  {titleDetails.genres.map((item) => (
-                    <span
-                      key={item._id}
-                      className="rounded-full bg-gray-700 text-gray-200 px-3 py-1 text-sm"
-                    >
-                      {item.display_name}
+                <div className="flex flex-wrap py-2 gap-3">
+                  {titleDetails.genres.length === 0 ||
+                  titleDetails.keywords.length === 0 ? (
+                    <span className="text-gray-400 text-sm">
+                      No related tags available
                     </span>
-                  ))}
-                  {titleDetails.keywords.map((item) => (
-                    <span
-                      key={item._id}
-                      className="rounded-full bg-gray-700 text-gray-200 px-3 py-1 text-sm"
-                    >
-                      {item.display_name}
-                    </span>
-                  ))}
+                  ) : (
+                    <>
+                      {titleDetails.genres.map((item) => (
+                        <span
+                          key={item._id}
+                          className="rounded-full bg-gray-700 text-gray-200 px-3 py-1 text-sm"
+                        >
+                          {item.display_name}
+                        </span>
+                      ))}
+                      {titleDetails.keywords.map((item) => (
+                        <span
+                          key={item._id}
+                          className="rounded-full bg-gray-700 text-gray-200 px-3 py-1 text-sm"
+                        >
+                          {item.display_name}
+                        </span>
+                      ))}
+                    </>
+                  )}
                 </div>
               </div>
 
-              <div className="py-4 border-t border-[#37454D]  mr-5">
+              <div className="py-4 border-t border-[#37454D] mr-5">
                 <h2 className="text-white">Additional Tags</h2>
-                <div className="flex  flex-wrap  py-2 gap-3">
-                  {titleDetails.genres.map((item, index) => (
-                    <span
-                      key={index}
-                      className="rounded-full  bg-gray-700 text-gray-200 px-3 py-1 text-sm"
-                    >
-                      {item.name}
+                <div className="flex flex-wrap py-2 gap-3">
+                  {titleDetails.cast.length === 0 ? (
+                    <span className="text-gray-400 text-sm">
+                      No additional tags available
                     </span>
-                  ))}
+                  ) : (
+                    titleDetails.cast.map((item, index) => (
+                      <span
+                        key={index}
+                        className="rounded-full bg-gray-700 text-gray-200 px-3 py-1 text-sm"
+                      >
+                        {item.character}
+                      </span>
+                    ))
+                  )}
                 </div>
               </div>
+
+              <div className="py-6 border-t border-[#37454D] mr-5">
+  <h2 className="text-white text-xl font-semibold mb-4">Video and Presentation</h2>
+  <div className="flex flex-wrap gap-6">
+    {titleDetails.video.map((item, index) => (
+      <div key={index} className="relative w-full sm:w-[48%] lg:w-[30%]">
+        <div className="rounded-lg overflow-hidden shadow-lg group">
+          <div className="relative">
+            <div
+              className="aspect-video opacity-50 group-hover:opacity-100 transition duration-300"
+              dangerouslySetInnerHTML={{ __html: item.url }}
+            />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <button
+                className="bg-white/80 hover:bg-white rounded-full p-3 transition duration-300 cursor-pointer"
+                onClick={() => handlePlay(item)}
+              >
+                <PlayCircleIcon className="w-7 h-7 text-red-600" />
+              </button>
+            </div>
+          </div>
+          <div className="bg-[#1E293B] p-3">
+            <h3 className="text-white text-base font-medium">{item.name}</h3>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
             </div>
           )}
           <div className="w-full md:w-1/3 ">
