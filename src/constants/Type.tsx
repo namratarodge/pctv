@@ -94,7 +94,7 @@ export type TitleType = {
   keywords: TagType[];
   credit : CastCreditType[];
   cast : CastCreditType[];
-  video : VideoType[];
+  videos : VideoType[];
   description: string;
   created_at: string;
 };

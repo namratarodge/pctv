@@ -23,14 +23,18 @@ export default function TitleDetailPage() {
   const [titleDetails, setTitleDetails] = useState<TitleType | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const [titleReview,setTitleReview] = useState(0);
+
   const [play, setPlay] = useState<VideoType | null>(null);
 
   const fetchTitleList = async () => {
+    const token = localStorage.getItem("token");
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/titles`,
         {
           headers: {
+            Authorization: token,
             "Content-Type": "application/json",
           },
           params: {
@@ -47,11 +51,13 @@ export default function TitleDetailPage() {
   };
 
   const fetchTitleDetails = useCallback(async () => {
+    const token = localStorage.getItem("token");
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/titles`,
         {
           headers: {
+            Authorization: token,
             "Content-Type": "application/json",
           },
           params: {
@@ -62,6 +68,7 @@ export default function TitleDetailPage() {
       if (response.data.status) {
         console.log(response.data.data);
         setTitleDetails(response.data.data);
+        setTitleReview(response.data.data?.review[0]?.score)
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -112,10 +119,31 @@ export default function TitleDetailPage() {
     });
     setPlay(data);
   };
-  const handleProgress = (seconds:string) => {
-    console.log(play)
-    console.log("Last watched seconds before switching:", seconds);
-    // Optionally save it to backend/localStorage
+  const handleProgress = async (seconds: number) => {
+    const token = localStorage.getItem("token");
+    console.log(seconds)
+
+    if(!token || seconds === 0) return;
+    const payload = {
+      video_id: play?._id,
+      time_watched: seconds,
+    };
+
+    try {
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/video-plays`,
+        payload,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+      toast("Error during login:" + error);
+    }
   };
 
   return (
@@ -142,7 +170,7 @@ export default function TitleDetailPage() {
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div
                         className="bg-white/80 hover:bg-white rounded-full p-4 transition cursor-pointer"
-                        onClick={() => setPlay(titleDetails?.video[0])}
+                        onClick={() => setPlay(titleDetails?.videos[0])}
                       >
                         <PlayCircleIcon className="w-10 h-10 text-red-600 " />
                       </div>
@@ -150,7 +178,10 @@ export default function TitleDetailPage() {
                   </>
                 )}
                 {play && (
-                  <ViemoEmbed htmlString={play.url} onVideoProgress={handleProgress}/>
+                  <ViemoEmbed
+                    htmlString={play.url}
+                    onVideoProgress={handleProgress}
+                  />
                 )}
               </div>
 
@@ -176,7 +207,7 @@ export default function TitleDetailPage() {
                 <div className="flex gap-2">
                   <span className="text-gray-400">Rate us</span>
                   <div className="flex gap-1 items-center">
-                    <StarRating score={4} titleId={titleDetails._id} />
+                    <StarRating score={titleReview} titleId={titleDetails._id} />
                   </div>
                 </div>
               </div>
@@ -258,13 +289,13 @@ export default function TitleDetailPage() {
                   )}
                 </div>
               </div>
-
+              {titleDetails.videos.length > 0 &&     
               <div className="py-6 border-t border-[#37454D] mr-5">
                 <h2 className="text-white text-xl font-semibold mb-4">
                   Video and Presentation
                 </h2>
                 <div className="flex flex-wrap gap-6">
-                  {titleDetails.video.map((item, index) => (
+                  {titleDetails.videos.map((item, index) => (
                     <div
                       key={index}
                       className="relative w-full sm:w-[48%] lg:w-[30%]"
@@ -294,6 +325,7 @@ export default function TitleDetailPage() {
                   ))}
                 </div>
               </div>
+          }
             </div>
           )}
           <div className="w-full md:w-1/3 ">

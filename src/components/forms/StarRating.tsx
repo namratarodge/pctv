@@ -27,7 +27,7 @@ export default function StarRating({ score = 0, titleId }: RatingProps) {
     };
     try {
       await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/review`,
+        `${process.env.NEXT_PUBLIC_API_URL}/titleReview/${titleId}`,
         payload,
         {
           headers: {
