@@ -87,6 +87,9 @@ export default function TitleDetailPage() {
 
   const handleWhatchList = async (id: string) => {
     const token = localStorage.getItem("token");
+    if(!token){
+      window.location.href = "/login";
+    }
     const payload = {
       title_id: id,
     };

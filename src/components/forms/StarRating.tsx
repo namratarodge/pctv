@@ -21,6 +21,9 @@ export default function StarRating({ score = 0, titleId }: RatingProps) {
   const handleClick = async (value: number) => {
     setSelected(value);
     const token = localStorage.getItem("token");
+    if(!token){
+      window.location.href = "/login";
+    }
     const payload = {
       reviewable_id: titleId,
       score: value,
@@ -37,7 +40,6 @@ export default function StarRating({ score = 0, titleId }: RatingProps) {
         }
       );
     } catch (error) {
-      window.location.href = "/login";
       console.error("Error fetching data:", error);
     }
   };
