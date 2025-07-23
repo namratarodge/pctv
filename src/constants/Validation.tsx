@@ -81,10 +81,10 @@ export const videoSchema = z.object({
   name: z.string().min(1, "Name is required"),
   type: z.string().min(1, "type is required"),
   title_id: z.string().min(1, "title is required"),
-  url: z.string(),// initially optional
-  quality: z.string(),// initially optional
-  language: z.string(),// initially optional
-  category: z.string(),// initially optional
+  url: z.string(),
+  quality: z.string(),
+  language: z.string(),
+  category: z.string(),
 });
 export type VideoFormData = z.infer<typeof videoSchema>;
 

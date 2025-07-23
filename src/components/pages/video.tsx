@@ -112,7 +112,7 @@ export default function Videos() {
                   renderActions={(person) => (
                     <div className="flex gap-3 justify-end">
                       <button
-                        onClick={() => handleEdit(person)}
+                        onClick={() => console.log("edit", person)}
                         className="text-blue-600 hover:text-blue-800 cursor-pointer"
                       >
                         <PencilIcon className="w-5 h-5" />

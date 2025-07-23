@@ -1,9 +1,7 @@
 "use client";
 
 import { VideoFormType } from "@/constants/Type";
-import { videoSchema } from "@/constants/Validation";
 import { PhotoIcon, VideoCameraIcon } from "@heroicons/react/24/solid";
-import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -33,9 +31,7 @@ export default function CreateVideo() {
     control,
     formState: { errors },
     reset,
-  } = useForm<VideoFormType>({
-    resolver: zodResolver(videoSchema),
-  });
+  } = useForm<VideoFormType>();
 
   const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setVideoType(e.target.value);
@@ -176,9 +172,9 @@ export default function CreateVideo() {
                   rows={3}
                   className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none"
                 />
-                {errors.embed_code && (
+                {errors.url && (
                   <p className="text-red-500 text-sm mt-1">
-                    {errors.embed_code.message}
+                    {errors.url.message}
                   </p>
                 )}
               </>
@@ -247,9 +243,9 @@ export default function CreateVideo() {
                 )}
               />
 
-              {errors.title && (
+              {errors.title_id && (
                 <p className="text-red-500 text-sm mt-1">
-                  {errors.title.message}
+                  {errors.title_id.message}
                 </p>
               )}
             </div>

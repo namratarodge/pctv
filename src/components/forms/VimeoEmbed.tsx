@@ -1,10 +1,17 @@
-import Player from "@vimeo/player";
-import { useEffect, useRef } from "react";
+'use client'
 
-const VimeoEmbed = ({ htmlString, onVideoProgress }) => {
-  const containerRef = useRef(null);
-  const playerRef = useRef(null);
-  const lastWatchedRef = useRef(0); // stores last watched seconds
+import Player from "@vimeo/player";
+import { FC, useEffect, useRef } from "react";
+
+interface VimeoEmbedProps {
+  htmlString: string;
+  onVideoProgress?: (seconds: number) => void;
+}
+
+const VimeoEmbed: FC<VimeoEmbedProps> = ({ htmlString, onVideoProgress }) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const playerRef = useRef<Player | null>(null);
+  const lastWatchedRef = useRef<number>(0);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -12,10 +19,10 @@ const VimeoEmbed = ({ htmlString, onVideoProgress }) => {
     const iframe = containerRef.current.querySelector("iframe");
     if (!iframe) return;
 
-    const player = new Player(iframe);
+    const player = new Player(iframe as HTMLIFrameElement);
     playerRef.current = player;
 
-    player.on("timeupdate", ({ seconds, duration }) => {
+    player.on("timeupdate", ({ seconds, duration }: { seconds: number; duration: number }) => {
       lastWatchedRef.current = seconds;
       const percent = (seconds / duration) * 100;
       console.log(`Watched: ${seconds.toFixed(1)}s / ${duration}s (${percent.toFixed(2)}%)`);
@@ -26,7 +33,6 @@ const VimeoEmbed = ({ htmlString, onVideoProgress }) => {
     });
 
     return () => {
-      // Notify parent before unloading
       if (onVideoProgress) {
         onVideoProgress(lastWatchedRef.current);
       }
