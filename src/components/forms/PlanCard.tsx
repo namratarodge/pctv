@@ -13,6 +13,10 @@ type PlanCardProps = {
 
 const handleSubscribe = async (priceId: string,interval_count:number) => {
   try {
+    const token = localStorage.getItem("token");
+    if(!token){
+      window.location.href = "/login";
+    }
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/create-checkout-session`,
       {
