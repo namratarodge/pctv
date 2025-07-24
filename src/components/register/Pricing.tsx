@@ -71,35 +71,35 @@ export default function Pricing({ step, title, description }: PricingProps) {
       label: plan.name,
       price: `${plan.currency_symbol}${plan.amount}`,
       type: plan.interval,
+      interval_count: plan.interval_count,
+      paypal_id: plan.paypal_id,
       isHighlighted: plan.recommended,
       features: parsedFeatures.map((label) => ({ label })),
       onSelect: () => console.log(`${plan.name} selected`),
     };
   };
 
-
-
   return (
     <div className="px-6 py-12 sm:rounded-lg sm:px-12 space-y-6">
-        {step && <small className="text-sm font-extralight">{step}</small>}
-        <h2 className="mt-3 text-left text-5xl font-bold tracking-tight text-gray-800 w-2/3">
-          {title}
-        </h2>
-        {description && <p className="text-sm">{description}</p>}
+      {step && <small className="text-sm font-extralight">{step}</small>}
+      <h2 className="mt-3 text-left text-5xl font-bold tracking-tight text-gray-800 w-2/3">
+        {title}
+      </h2>
+      {description && <p className="text-sm">{description}</p>}
 
-        {loading ? (
-          <Loading />
-        ) : (
-          <div className="w-full flex flex-wrap gap-4 h-auto">
-            {data.map((plan, idx) => (
-              <PlanCard
-                key={idx}
-                {...mapPlanToPlanCardProps(plan)}
-                isHighlighted={idx === 1}
-              />
-            ))}
-          </div>
-        )}
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="w-full flex flex-wrap gap-4 h-auto">
+          {data.map((plan, idx) => (
+            <PlanCard
+              key={idx}
+              {...mapPlanToPlanCardProps(plan)}
+              isHighlighted={idx === 1}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

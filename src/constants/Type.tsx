@@ -213,6 +213,7 @@ export type PlanFormValues = {
   currency_symbol: string;
   recommended: string;
   interval: string;
+  paypal_id : string;
   interval_count: number;
   features?: Array<NameForPlan>;
 };

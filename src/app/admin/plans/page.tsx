@@ -1,24 +1,24 @@
 "use client";
+import { DataTable, ModelForm } from "@/components/forms";
+import Loading from "@/components/layout/Loading";
+import { planColumn } from "@/constants/DataTableColumn";
+import {
+  PlanFormValues,
+  SubscriptionPlanType,
+} from "@/constants/Type";
+import currencies from "@/constants/currencies.json"; // adjust path as needed
+import { formatDate } from "@/utils/common";
+import { XCircleIcon } from "@heroicons/react/20/solid";
 import {
   PencilIcon,
   PlusCircleIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
-import { DataTable, ModelForm } from "@/components/forms";
-import { useEffect, useState } from "react";
-import { formatDate } from "@/utils/common";
 import axios from "axios";
-import Loading from "@/components/layout/Loading";
-import { planColumn } from "@/constants/DataTableColumn";
-import { SubmitHandler, useForm, useFieldArray } from "react-hook-form";
-import currencies from "@/constants/currencies.json"; // adjust path as needed
-import { v4 as uuidv4 } from "uuid";
+import { useEffect, useState } from "react";
+import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import {
-  PlanFormValues,
-  SubscriptionPlanType,
-} from "@/constants/Type";
-import { XCircleIcon } from "@heroicons/react/20/solid";
+import { v4 as uuidv4 } from "uuid";
 
 type CurrencyCode = keyof typeof currencies;
 
@@ -143,6 +143,7 @@ export default function Plans() {
       currency: selectedCurrency,
       interval: "Month",
       interval_count: 1,
+      paypal_id :"",
       features: [],
     });
     replace([]);
@@ -159,6 +160,7 @@ export default function Plans() {
       currency: data.currency,
       interval: data.interval,
       interval_count: Number(data.interval_count),
+      paypal_id: data.paypal_id,
       features: data.features || [],
     });
   };
@@ -319,6 +321,21 @@ export default function Plans() {
                 <option value="year">Year</option>
               </select>
             </div>
+
+            <div className="flex flex-col">
+              <label className="mb-1 text-gray-800">Price Id</label>
+              <input
+                {...register("paypal_id", {
+                  required: "Price Id is required",
+                })}
+                className="px-4 py-2 rounded-md border border-gray-300 text-gray-700"
+              />
+              {errors.paypal_id && (
+                <p className="text-red-500">{errors.paypal_id.message}</p>
+              )}
+            </div>
+
+
             <div className="flex flex-col">
               <label className="mb-1 text-gray-800">Interval Count</label>
               <input
