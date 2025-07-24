@@ -23,6 +23,7 @@ export default function PaymentSuccess() {
           },
         }
       );
+      
     } catch (error) {
       console.log(error);
       toast("Error fetching data:");
