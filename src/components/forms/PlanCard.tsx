@@ -1,3 +1,5 @@
+import axios from "axios";
+
 type PlanCardProps = {
   label: string;
   price: string;
@@ -5,6 +7,21 @@ type PlanCardProps = {
   isHighlighted?: boolean;
   onSelect?: () => void;
   features: { label: string; value?: string }[];
+};
+
+const handleSubscribe = async (priceId: string) => {
+  try {
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/create-checkout-session`,
+      {
+        priceId,
+        customerEmail: "mankarsandesh111@gmail.com", // Or your logged-in user's email
+      }
+    );
+    window.location.href = res.data.url;
+  } catch (error) {
+    console.error("Subscription error", error);
+  }
 };
 
 export default function PlanCard({
@@ -28,11 +45,15 @@ export default function PlanCard({
       )}
 
       {/* Header */}
-      <div className={`text-center space-y-3 ${isHighlighted ? "text-white" : "text-gray-600"}`}>
+      <div
+        className={`text-center space-y-3 ${
+          isHighlighted ? "text-white" : "text-gray-600"
+        }`}
+      >
         <small className="uppercase tracking-wider">{label}</small>
         <h3 className="text-5xl font-bold">{price}</h3>
         <button
-          onClick={onSelect}
+          onClick={() => handleSubscribe("price_1Ro7nf2mvbhaF9Azd9JuAzJm")}
           className={`px-4 py-1.5 w-3/4 rounded-full mt-2 ${
             isHighlighted ? "bg-white text-red-500" : "bg-red-500 text-white"
           } cursor-pointer hover:opacity-90 transition`}

@@ -1,11 +1,11 @@
 "use client";
 
 import PlanCard from "@/components/forms/PlanCard";
+import { PlanFormValues } from "@/constants/Type";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Loading from "../layout/Loading";
-import { PlanFormValues } from "@/constants/Type";
 type PricingProps = {
   step?: string;
   title: string;
@@ -77,9 +77,10 @@ export default function Pricing({ step, title, description }: PricingProps) {
     };
   };
 
+
+
   return (
-    <div className="px-6 py-12 sm:rounded-lg sm:px-12">
-      <form action="#" method="POST" className="space-y-6">
+    <div className="px-6 py-12 sm:rounded-lg sm:px-12 space-y-6">
         {step && <small className="text-sm font-extralight">{step}</small>}
         <h2 className="mt-3 text-left text-5xl font-bold tracking-tight text-gray-800 w-2/3">
           {title}
@@ -99,7 +100,6 @@ export default function Pricing({ step, title, description }: PricingProps) {
             ))}
           </div>
         )}
-      </form>
     </div>
   );
 }
