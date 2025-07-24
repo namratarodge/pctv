@@ -20,6 +20,21 @@ export const formatNormal = (date, defaultText = "-") => {
   return date.slice(0, 10);
 };
 
+export const DateTimeConvert = (dateN) => {
+  if (!dateN) return null;
+  const date = new Date(dateN * 1000);
+  const pad = (n) => n.toString().padStart(2, "0");
+
+  const year = date.getFullYear();
+  const month = pad(date.getMonth() + 1); // Months are 0-based
+  const day = pad(date.getDate());
+  const hours = pad(date.getHours());
+  const minutes = pad(date.getMinutes());
+  const seconds = pad(date.getSeconds());
+
+  return `${year}-${month}-${day}`;
+};
+
 export const truncateToWords = (text, number) => {
   return text.split(/\s+/).slice(0, number).join(" ");
 };

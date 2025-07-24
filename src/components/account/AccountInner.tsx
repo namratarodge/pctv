@@ -10,6 +10,7 @@ import General from "@/components/account/general";
 import ManagePayment from "@/components/account/managePayment";
 import Membership from "@/components/account/membership";
 import MembershipPause from "@/components/account/membership_pause";
+import Payment_history from "@/components/account/payment_history";
 import Security from "@/components/account/security";
 import UpdateProfile from "@/components/account/updateProfile";
 
@@ -21,6 +22,7 @@ export default function AccountInner() {
     <>
       {!name && <General />}
       {name === "membership" && <Membership />}
+      {name === "payment_history" && <Payment_history />}
       {name === "change_membership" && <ChangeMembership />}
       {name === "cancel_membership" && <CancelMembership />}
       {name === "cancel_membership_final" && <CancelMembershipFinal />}

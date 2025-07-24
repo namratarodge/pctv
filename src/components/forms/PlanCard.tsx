@@ -5,27 +5,28 @@ type PlanCardProps = {
   price: string;
   type: string;
   paypal_id: string;
-  interval_count : number;
+  interval_count: number;
   isHighlighted?: boolean;
   onSelect?: () => void;
   features: { label: string; value?: string }[];
 };
 
-const handleSubscribe = async (priceId: string,interval_count:number) => {
+const handleSubscribe = async (priceId: string, interval_count: number,plan_id : number) => {
   try {
     const token = localStorage.getItem("token");
-    if(!token){
+    if (!token) {
       window.location.href = "/login";
     }
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/create-checkout-session`,
       {
         priceId,
-        customerEmail: "mankarsandesh111@gmail.com", 
+        customerEmail: "mankarsandesh111@gmail.com",
         trial_period_days: interval_count,
+        plan_id : plan_id
       }
     );
-    console.log(res)
+    console.log(res);
     window.location.href = res.data.url;
   } catch (error) {
     console.error("Subscription error", error);
@@ -36,6 +37,7 @@ export default function PlanCard({
   label,
   price,
   paypal_id,
+  plan_id,
   interval_count,
   isHighlighted = false,
   onSelect,
@@ -63,7 +65,7 @@ export default function PlanCard({
         <small className="uppercase tracking-wider">{label}</small>
         <h3 className="text-5xl font-bold">{price}</h3>
         <button
-          onClick={() => handleSubscribe(paypal_id,interval_count)}
+          onClick={() => handleSubscribe(paypal_id, interval_count,plan_id)}
           className={`px-4 py-1.5 w-3/4 rounded-full mt-2 ${
             isHighlighted ? "bg-white text-red-500" : "bg-red-500 text-white"
           } cursor-pointer hover:opacity-90 transition`}

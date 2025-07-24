@@ -1,4 +1,5 @@
-'use client'
+"use client";
+import { DateTimeConvert } from "@/utils/common";
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import Link from "next/link";
@@ -8,9 +9,11 @@ import { toast } from "react-toastify";
 export default function PaymentSuccess() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
   const fetch = async () => {
-    const sessionId = new URLSearchParams(window.location.search).get("session_id");
+    const sessionId = new URLSearchParams(window.location.search).get(
+      "session_id"
+    );
     const token = localStorage.getItem("token");
     setLoading(true);
     try {
@@ -23,7 +26,30 @@ export default function PaymentSuccess() {
           },
         }
       );
-      
+
+      const { subscription, session } = response.data;
+      const payload = {
+        plan_id: session.client_reference_id,
+        gateway_name: "stripe",
+        gateway_id: subscription.plan.id,
+        quantity: subscription.quantity,
+        description: "",
+        trial_ends_at: DateTimeConvert(subscription.trial_end),
+      };
+      const responsSubscription = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/subscription`,
+        payload,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(responsSubscription.data.message);
+      if (responsSubscription.data.status) {
+        toast(responsSubscription.data.message);
+      }
     } catch (error) {
       console.log(error);
       toast("Error fetching data:");
@@ -34,7 +60,6 @@ export default function PaymentSuccess() {
     fetch();
   }, []);
 
-  
   return (
     <div className="pt-18 max-w-11/12 mx-auto flex flex-col lg:flex-row mb-10">
       <div className="w-full  text-white shadow-lg rounded-2xl p-8 text-center">

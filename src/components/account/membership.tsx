@@ -5,25 +5,21 @@ import {
   ChevronRightIcon,
   CreditCardIcon,
 } from "@heroicons/react/24/outline";
+import Link from "next/link";
 import ListButton from "./ListButton";
 
 export const accountSettingsLinks = [
   {
     name: "View payment History",
-    href: "/account/plan",
+    href: "/account?name=payment_history",
     icon: AdjustmentsHorizontalIcon,
-  },
-  {
-    name: "Manage Payment Methods",
-    href: "/account?name=manage_payment",
-    icon: CreditCardIcon,
   },
 ];
 
 export default function Membership() {
   return (
     <>
-       <div className="min-h-screen bg-white text-black max-w-3xl mx-auto ">
+      <div className="min-h-screen bg-white text-black max-w-3xl mx-auto ">
         <h1 className="text-4xl font-semibold">Membership</h1>
         <p className="my-4">Plan Details</p>
         <div className="bg-gray-100 mt-4 py-4 px-6 rounded-sm space-y-4">
@@ -38,11 +34,14 @@ export default function Membership() {
             <CreditCardIcon className="w-5" />
             xxxx xxxx xxx24{" "}
           </p>
-          <div className=" py-3 flex justify-between border-t border-gray-300 cursor-pointer">
+          <Link
+            href="/pricing"
+            className=" py-3 flex justify-between border-t border-gray-300 cursor-pointer"
+          >
             <div className="flex gap-2 text-sm">Change Plan</div>
 
             <ChevronRightIcon className="w-5" />
-          </div>
+          </Link>
         </div>
 
         <p className="my-4">Payment Info </p>
