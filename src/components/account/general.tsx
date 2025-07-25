@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  AdjustmentsHorizontalIcon,
   CreditCardIcon,
   LockClosedIcon,
   UserCircleIcon
@@ -10,11 +9,6 @@ import {
 import ListButton from "./ListButton";
 
 export const accountSettingsLinks = [
-  {
-    name: "Change plan",
-    href: "/account?",
-    icon: AdjustmentsHorizontalIcon,
-  },
   {
     name: "Update password",
     href: "/account?name=change_password",

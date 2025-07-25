@@ -94,19 +94,16 @@ export function PublicDataProvider({ children }) {
       // setUser(decoded);
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/users`,
+          `${process.env.NEXT_PUBLIC_API_URL}/user`,
           {
             headers: {
               Authorization: token,
               "Content-Type": "application/json",
-            },
-            params: {
-              _id: decoded.id,
-            },
+            }
           }
         );
         if (response.data.status) {
-          const modifiedData = response.data.data.data;
+          const modifiedData = response.data.data;
           const userData = {
             id: modifiedData._id,
             first_name: modifiedData.first_name,
@@ -116,9 +113,11 @@ export function PublicDataProvider({ children }) {
             phone: modifiedData.phone,
             country: modifiedData.country,
             avatar_url: modifiedData.avatar_url,
+            subscriptions : modifiedData.subscriptions
           };
           setUser(userData);
         }
+        setLoading(false);
       } catch (error) {
         console.log(error.code);
         // if(error.code === 'ERR_BAD_REQUEST'){

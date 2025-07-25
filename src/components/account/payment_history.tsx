@@ -5,8 +5,6 @@ import { formatDate } from "@/utils/common";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { LoadingForm } from "../layout";
 
 export const accountSettingsLinks = [
   {
@@ -15,6 +13,35 @@ export const accountSettingsLinks = [
     icon: AdjustmentsHorizontalIcon,
   },
 ];
+
+function SubscriptionTableSkeleton() {
+  return (
+    <table className="min-w-full divide-y divide-gray-100 text-sm text-left">
+      <thead className="bg-gray-50">
+        <tr>
+          <th className="px-6 py-3 font-semibold text-gray-600">Plan</th>
+          <th className="px-6 py-3 font-semibold text-gray-600">Gateway</th>
+          <th className="px-6 py-3 font-semibold text-gray-600">Trial Ends</th>
+          <th className="px-6 py-3 font-semibold text-gray-600">Status</th>
+          <th className="px-6 py-3 font-semibold text-gray-600">Created</th>
+        </tr>
+      </thead>
+      <tbody className="divide-y divide-gray-100">
+        {[...Array(5)].map((_, index) => (
+          <tr className="bg-white hover:bg-gray-50" key={index}>
+            {Array(5)
+              .fill(0)
+              .map((_, i) => (
+                <td className="px-6 py-3" key={i}>
+                  <div className="h-4 bg-gray-200 rounded animate-pulse w-3/4"></div>
+                </td>
+              ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
 
 export default function Payment_history() {
   const [data, setData] = useState([]);
@@ -33,17 +60,20 @@ export default function Payment_history() {
           },
         }
       );
-      setData(response.data.data.data);
+      if (response.data.status) {
+        setData(response.data.data.data);
+      }
+
       setLoading(false);
     } catch (error) {
       console.log(error);
-      toast("Error fetching data:");
     }
   };
 
   useEffect(() => {
     fetch();
   }, []);
+
   return (
     <>
       <div className="min-h-screen bg-white text-black max-w-3xl mx-auto ">
@@ -54,7 +84,7 @@ export default function Payment_history() {
           <p className="text-sm text-gray-500">Active & past subscriptions</p>
         </div>
         {loading ? (
-          <LoadingForm />
+          <SubscriptionTableSkeleton />
         ) : (
           <table className="min-w-full divide-y divide-gray-100 text-sm text-left">
             <thead className="bg-gray-50">
@@ -75,23 +105,40 @@ export default function Payment_history() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {/* Example row */}
-
-              {data.map((item: SubscriptionType, index) => (
-                <tr className="bg-white text-left hover:bg-gray-50" key={index}>
-                  <td className="px-6 py-3 text-gray-800">
-                    {item.plan_id.name} : {item.plan_id.amount} {item.plan_id.currency}
+              {data.length > 0 ? (
+                data.map((item: SubscriptionType, index) => (
+                  <tr
+                    className="bg-white text-left hover:bg-gray-50"
+                    key={index}
+                  >
+                    <td className="px-6 py-3 text-gray-800">
+                      {item.plan_id.name} : {item.plan_id.amount}{" "}
+                      {item.plan_id.currency}
+                    </td>
+                    <td className="px-6 py-3 text-gray-600">
+                      {item.gateway_name}
+                    </td>
+                    <td className="px-6 py-3 text-gray-600">
+                      {formatDate(item.trial_ends_at)}
+                    </td>
+                    <td className="px-6 py-3 text-gray-600">
+                      {item.trial_ends_at && "Trial Data"}
+                    </td>
+                    <td className="px-6 py-3 text-gray-600">
+                      {formatDate(item.created_at)}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    className="px-6 py-4 text-gray-500 text-center"
+                    colSpan={5}
+                  >
+                    No subscriptions found.
                   </td>
-                  <td className="px-6 py-3 text-gray-600">{item.gateway_name}</td>
-                  <td className="px-6 py-3 text-gray-600">
-                    {formatDate(item.trial_ends_at)}
-                  </td>
-                  <td className="px-6 py-3 text-gray-600">
-                    {item.trial_ends_at && "Trial Data"}
-                  </td>
-                  <td className="px-6 py-3 text-gray-600">{formatDate(item.created_at)}</td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         )}
