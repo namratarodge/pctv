@@ -33,7 +33,6 @@ export default function Payment_history() {
           },
         }
       );
-      console.log(response.data.data.data);
       setData(response.data.data.data);
       setLoading(false);
     } catch (error) {

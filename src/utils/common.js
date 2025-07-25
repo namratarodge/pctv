@@ -38,3 +38,20 @@ export const DateTimeConvert = (dateN) => {
 export const truncateToWords = (text, number) => {
   return text.split(/\s+/).slice(0, number).join(" ");
 };
+
+
+export const getTrialDaysLeft = (trialEndsAt) => {
+  if (!trialEndsAt) return null;
+
+  const endDate = new Date(trialEndsAt);
+  const today = new Date();
+
+  // Zero out the time part for accurate day difference
+  endDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  const diffInMs = endDate - today;
+  const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+
+  return diffInDays > 0 ? diffInDays : 0; // Returns 0 if trial has ended
+}
