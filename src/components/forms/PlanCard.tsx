@@ -5,13 +5,18 @@ type PlanCardProps = {
   price: string;
   type: string;
   paypal_id: string;
+  plan_id: string;
   interval_count: number;
-  isHighlighted?: boolean;
+  isHighlighted: boolean;
   onSelect?: () => void;
   features: { label: string; value?: string }[];
 };
 
-const handleSubscribe = async (priceId: string, interval_count: number,plan_id : number) => {
+const handleSubscribe = async (
+  priceId: string,
+  interval_count: number,
+  plan_id: string
+) => {
   try {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -23,7 +28,7 @@ const handleSubscribe = async (priceId: string, interval_count: number,plan_id :
         priceId,
         customerEmail: "mankarsandesh111@gmail.com",
         trial_period_days: interval_count,
-        plan_id : plan_id
+        plan_id: plan_id,
       }
     );
     console.log(res);
@@ -39,7 +44,7 @@ export default function PlanCard({
   paypal_id,
   plan_id,
   interval_count,
-  isHighlighted = false,
+  isHighlighted,
   onSelect,
   features,
 }: PlanCardProps) {
@@ -52,7 +57,7 @@ export default function PlanCard({
       {/* Best Value badge */}
       {isHighlighted && (
         <div className="absolute top-2 right-2 flex items-center gap-1 bg-gray-600 text-white text-xs font-bold px-2 py-1 rounded-full">
-          Best Value
+          Your Plan
         </div>
       )}
 
@@ -65,7 +70,7 @@ export default function PlanCard({
         <small className="uppercase tracking-wider">{label}</small>
         <h3 className="text-5xl font-bold">{price}</h3>
         <button
-          onClick={() => handleSubscribe(paypal_id, interval_count,plan_id)}
+          onClick={() => handleSubscribe(paypal_id, interval_count, plan_id)}
           className={`px-4 py-1.5 w-3/4 rounded-full mt-2 ${
             isHighlighted ? "bg-white text-red-500" : "bg-red-500 text-white"
           } cursor-pointer hover:opacity-90 transition`}

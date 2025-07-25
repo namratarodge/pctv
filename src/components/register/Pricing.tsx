@@ -5,6 +5,7 @@ import { PlanFormValues } from "@/constants/Type";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { usePublicData } from "../context/PublicDataContext";
 import Loading from "../layout/Loading";
 type PricingProps = {
   step?: string;
@@ -15,6 +16,8 @@ type PricingProps = {
 export default function Pricing({ step, title, description }: PricingProps) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const { user } = usePublicData();
 
   const fetch = async () => {
     const token = localStorage.getItem("token");
@@ -68,13 +71,13 @@ export default function Pricing({ step, title, description }: PricingProps) {
     }
 
     return {
-      plan_id : plan._id,
+      plan_id: plan._id,
       label: plan.name,
       price: `${plan.currency_symbol}${plan.amount}`,
       type: plan.interval,
       interval_count: plan.interval_count,
       paypal_id: plan.paypal_id,
-      isHighlighted: plan.recommended,
+      isHighlighted: plan._id === user.subscriptions?.plan_id._id,
       features: parsedFeatures.map((label) => ({ label })),
       onSelect: () => console.log(`${plan.name} selected`),
     };
@@ -93,11 +96,7 @@ export default function Pricing({ step, title, description }: PricingProps) {
       ) : (
         <div className="w-full flex flex-wrap gap-4 h-auto">
           {data.map((plan, idx) => (
-            <PlanCard
-              key={idx}
-              {...mapPlanToPlanCardProps(plan)}
-              isHighlighted={idx === 1}
-            />
+            <PlanCard key={idx} {...mapPlanToPlanCardProps(plan)} />
           ))}
         </div>
       )}
