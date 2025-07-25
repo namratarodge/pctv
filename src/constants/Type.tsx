@@ -57,7 +57,11 @@ export type SubscriptionType = {
   _id: string;
   id: number;
   user_id: string;
-  plan_id: string;
+  plan_id: {
+    name : string;
+    amount : string;
+    currency : string;
+  };
   gateway_name: string;
   gateway_id: string;
   quantity: number;

@@ -13,6 +13,11 @@ type typeOfSubscriptions = {
     userType: string;
     avatar: string;
   };
+  plan_id: {
+    name: string;
+    amount: string;
+    currency: string;
+  };
   gateway_name: string;
   gateway_id: string;
   cancelled: string;
@@ -45,7 +50,18 @@ export const SubscriptionsColumn: {
       </div>
     ),
   },
-  { key: "gateway_name", label: "Gateway" },
+  {
+    key: "plan_id",
+    label: "Plan Name",
+    render: (row) => (
+      <div>
+        <div className="font-semibold">{row.plan_id.name}</div>
+        <small>
+          {row.plan_id.currency} {row.plan_id.amount}
+        </small>
+      </div>
+    ),
+  },
   {
     key: "gateway_id",
     label: "Cancelled",
@@ -304,7 +320,7 @@ export const VideoColumn: {
         <UserAvatar poster={row.title_id?.poster} name={row.title_id?.name} />
         <div>
           <span title={row.title_id.name} className="flex flex-col text-xs">
-            {truncateToWords(row.title_id?.name,6)}
+            {truncateToWords(row.title_id?.name, 6)}
           </span>
         </div>
       </div>
