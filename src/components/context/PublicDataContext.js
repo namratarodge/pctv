@@ -113,6 +113,7 @@ export function PublicDataProvider({ children }) {
             phone: modifiedData.phone,
             country: modifiedData.country,
             avatar_url: modifiedData.avatar_url,
+            userType: modifiedData.userType,
             subscriptions : modifiedData.subscriptions
           };
           setUser(userData);

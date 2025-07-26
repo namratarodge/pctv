@@ -1,4 +1,5 @@
 import axios from "axios";
+import { usePublicData } from "../context/PublicDataContext";
 
 type PlanCardProps = {
   label: string;
@@ -12,32 +13,6 @@ type PlanCardProps = {
   features: { label: string; value?: string }[];
 };
 
-const handleSubscribe = async (
-  priceId: string,
-  interval_count: number,
-  plan_id: string
-) => {
-  try {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      window.location.href = "/login";
-    }
-    const res = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/create-checkout-session`,
-      {
-        priceId,
-        customerEmail: "mankarsandesh111@gmail.com",
-        trial_period_days: interval_count,
-        plan_id: plan_id,
-      }
-    );
-    console.log(res);
-    window.location.href = res.data.url;
-  } catch (error) {
-    console.error("Subscription error", error);
-  }
-};
-
 export default function PlanCard({
   label,
   price,
@@ -48,6 +23,32 @@ export default function PlanCard({
   onSelect,
   features,
 }: PlanCardProps) {
+  const { user } = usePublicData();
+
+  const handleSubscribe = async (
+    priceId: string,
+    interval_count: number,
+    plan_id: string
+  ) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        window.location.href = "/login";
+      }
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/create-checkout-session`,
+        {
+          priceId,
+          customerEmail: user.email,
+          trial_period_days: interval_count,
+          plan_id: plan_id,
+        }
+      );
+      window.location.href = res.data.url;
+    } catch (error) {
+      console.error("Subscription error", error);
+    }
+  };
   return (
     <div
       className={`relative rounded-xl w-full max-w-xs py-10 h-auto shadow-lg hover:bg-red-200 cursor-pointer ${
@@ -60,7 +61,6 @@ export default function PlanCard({
           Your Plan
         </div>
       )}
-
       {/* Header */}
       <div
         className={`text-center space-y-3 ${
@@ -78,7 +78,6 @@ export default function PlanCard({
           Select
         </button>
       </div>
-
       {/* Features */}
       <div
         className={`mt-10 text-xs px-4 space-y-4 ${

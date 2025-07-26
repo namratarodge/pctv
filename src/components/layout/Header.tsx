@@ -68,7 +68,9 @@ function classNames(...classes: (string | false | null | undefined)[]): string {
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { tvtopic, categories } = usePublicData();
+  
   const [user, setUser] = useState<DecodedUser | null>(null);
+
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
