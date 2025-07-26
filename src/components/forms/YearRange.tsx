@@ -54,8 +54,8 @@ export default function YearRange({ values: parentValues, onChange }: YearRangeP
               {...rest}
               className="relative w-5 h-5 bg-red-400 rounded-full shadow-lg border-2 border-white focus:outline-none"
             >
-              <div className="absolute -top-8 text-sm text-gray-700 font-medium -ml-4">
-                {values[index]}
+              <div className={`absolute -top-8 text-sm text-white font-medium   ${index === 1 ? '-ml-4' : '-ml-2' }`}>
+                {values[index]} 
               </div>
             </div>
           );

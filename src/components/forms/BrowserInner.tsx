@@ -41,7 +41,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { YearRange } from ".";
 
 const MIN_YEAR = 2010;
@@ -53,7 +53,9 @@ export default function BrowserInner() {
   const { tvtopic, categories } = usePublicData();
   const [loading, setLoading] = useState(true);
 
+  const pathname = usePathname();
   const searchParams = useSearchParams();
+
   const genreParam = searchParams.get("genre");
   const [selectedGenres, setSelectedGenres] = useState(
     genreParam ? genreParam.split(",") : []
@@ -99,7 +101,7 @@ export default function BrowserInner() {
     router.push(`/browse?${newQueryString}`);
   };
 
-  const handleYearRange = (year:  [number, number]) => {
+  const handleYearRange = (year: [number, number]) => {
     const yearName = year.toString();
     const query = new URLSearchParams(window.location.search);
 
@@ -128,6 +130,29 @@ export default function BrowserInner() {
     const token = localStorage.getItem("token");
     setLoading(true);
     try {
+      const searchParams = new URLSearchParams(window.location.search);
+      const query: Record<string, string> = {};
+
+      const allowedParams = [
+        "limit",
+        "page",
+        "genre",
+        "released",
+        "keyword",
+        "country",
+        "language",
+        "level",
+        "name",
+        "slug",
+        "_id",
+      ];
+      allowedParams.forEach((key) => {
+        const value = searchParams.get(key);
+        if (value) {
+          query[key] = value;
+        }
+      });
+
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/titles`,
         {
@@ -135,9 +160,7 @@ export default function BrowserInner() {
             Authorization: token,
             "Content-Type": "application/json",
           },
-          params: {
-            limit: 20,
-          },
+          params: query,
         }
       );
       if (response.data.status) {
@@ -158,7 +181,7 @@ export default function BrowserInner() {
 
   useEffect(() => {
     fetchTitlte();
-  }, []);
+  }, [pathname, searchParams.toString()]);
 
   if (loading) {
     return <Loading title="" />;
