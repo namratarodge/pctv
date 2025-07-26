@@ -49,6 +49,32 @@ export default function PaymentSuccess() {
       console.log(responsSubscription.data.message);
       if (responsSubscription.data.status) {
         toast(responsSubscription.data.message);
+
+        const subscriptionData = responsSubscription.data.data; // Ensure your API returns subscription ID here
+        const transactionPayload = {
+          user_id: subscriptionData.user_id,
+          subscription_id: subscriptionData._id, // Use ID from the subscription response
+          stripe_payment_intent_id: session.payment_intent,
+          stripe_invoice_id: session.invoice,
+          amount: subscription.plan.amount / 100, // Stripe amounts are in cents
+          currency: subscription.plan.currency,
+          status: session.payment_status, // "succeeded" or other
+          type: "initial", // For first payment
+          payment_method: session.payment_method_types[0], // e.g. "card"
+          paid_at: new Date().toISOString(), // Current timestamp
+        };
+        await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/transaction`,
+          transactionPayload,
+          {
+            headers: {
+              Authorization: token,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        console.log("Transaction recorded successfully");
       }
     } catch (error) {
       console.log(error);

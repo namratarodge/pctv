@@ -189,6 +189,29 @@ export type ListType = {
   userId: number;
 };
 
+
+
+// Page Types
+export type TransactionType = {
+  _id: string;
+  user_id: string;
+  subscription_id: string;
+  stripe_payment_intent_id: string | null;
+  stripe_invoice_id: string | null;
+  amount: {
+    $numberDecimal: string; // string representing decimal number
+  };
+  currency: string;
+  status: string;
+  type: string;
+  payment_method: string | null;
+  paid_at: string; // ISO date string
+  created_at: string; // ISO date string
+  updated_at: string; // ISO date string
+  __v?: number;
+};
+
+
 // Page Types
 export type PageType = {
   _id: string;

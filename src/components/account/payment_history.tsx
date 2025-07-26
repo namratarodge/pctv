@@ -1,6 +1,6 @@
 "use client";
 
-import { SubscriptionType } from "@/constants/Type";
+import { TransactionType } from "@/constants/Type";
 import { formatDate } from "@/utils/common";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
@@ -52,7 +52,7 @@ export default function Payment_history() {
     setLoading(true);
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/subscriptions/user`,
+        `${process.env.NEXT_PUBLIC_API_URL}/transactions/user`,
         {
           headers: {
             Authorization: token,
@@ -60,8 +60,9 @@ export default function Payment_history() {
           },
         }
       );
+      console.log(response.data);
       if (response.data.status) {
-        setData(response.data.data.data);
+        setData(response.data.data);
       }
 
       setLoading(false);
@@ -77,7 +78,7 @@ export default function Payment_history() {
   return (
     <>
       <div className="min-h-screen bg-white text-black max-w-3xl mx-auto ">
-        <div className="px-2 py-4 border-b border-gray-300">
+        <div className="px-2 py-4 border-b border-gray-200">
           <h2 className="text-2xl font-semibold text-gray-800">
             Payment History
           </h2>
@@ -89,15 +90,20 @@ export default function Payment_history() {
           <table className="min-w-full divide-y divide-gray-100 text-sm text-left">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 font-semibold text-gray-600">Plan</th>
                 <th className="px-6 py-3 font-semibold text-gray-600">
-                  Gateway
+                  Payment Type
                 </th>
                 <th className="px-6 py-3 font-semibold text-gray-600">
-                  Trial Ends
+                  Amount
                 </th>
                 <th className="px-6 py-3 font-semibold text-gray-600">
                   Status
+                </th>
+                <th className="px-6 py-3 font-semibold text-gray-600">
+                  Payment Method
+                </th>
+                <th className="px-6 py-3 font-semibold text-gray-600">
+                  Paid At
                 </th>
                 <th className="px-6 py-3 font-semibold text-gray-600">
                   Created
@@ -106,23 +112,33 @@ export default function Payment_history() {
             </thead>
             <tbody className="divide-y divide-gray-100">
               {data.length > 0 ? (
-                data.map((item: SubscriptionType, index) => (
+                data.map((item: TransactionType, index) => (
                   <tr
-                    className="bg-white text-left hover:bg-gray-50"
                     key={index}
+                    className="bg-white text-left hover:bg-gray-50"
                   >
                     <td className="px-6 py-3 text-gray-800">
-                      {item.plan_id.name} : {item.plan_id.amount}{" "}
-                      {item.plan_id.currency}
+                      {item.type || "-"}
+                    </td>
+                    <td className="px-6 py-3 text-gray-800">
+                      £{parseFloat(item.amount.$numberDecimal).toFixed(2)}
                     </td>
                     <td className="px-6 py-3 text-gray-600">
-                      {item.gateway_name}
+                      <span
+                        className={`px-3 py-1 text-xs rounded-full font-semibold ${
+                          item.status === "paid"
+                            ? "bg-green-100 text-green-600"
+                            : "bg-yellow-100 text-yellow-600"
+                        }`}
+                      >
+                        {item.status}
+                      </span>
                     </td>
                     <td className="px-6 py-3 text-gray-600">
-                      {formatDate(item.trial_ends_at)}
+                      {item.payment_method || "-"}
                     </td>
                     <td className="px-6 py-3 text-gray-600">
-                      {item.trial_ends_at && "Trial Data"}
+                      {formatDate(item.paid_at)}
                     </td>
                     <td className="px-6 py-3 text-gray-600">
                       {formatDate(item.created_at)}
@@ -133,9 +149,9 @@ export default function Payment_history() {
                 <tr>
                   <td
                     className="px-6 py-4 text-gray-500 text-center"
-                    colSpan={5}
+                    colSpan={6}
                   >
-                    No subscriptions found.
+                    No transactions found.
                   </td>
                 </tr>
               )}

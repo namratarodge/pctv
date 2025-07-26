@@ -16,7 +16,7 @@ export default function SettingsLayout({
             <AccountSideBar />
           </Suspense>
         </div>
-        <div className="w-full md:w-3/4 bg-white rounded-lg  border-gray-200 p-4 sm:p-6">
+        <div className="w-full md:w-3/4 bg-white rounded-lg  border-gray-200 p-2 sm:p-2">
           {children}
         </div>
       </div>
