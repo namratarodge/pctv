@@ -36,7 +36,7 @@ export default function DataTable<T extends { [key: string]: string }>({
               </th>
             ))}
             {renderActions && (
-              <th scope="col" className="relative py-3.5 pr-4 pl-3 sm:pr-0">
+              <th scope="col" className="px-4 py-4 text-sm font-semibold text-gray-700 text-right">
                 Actions
               </th>
             )}

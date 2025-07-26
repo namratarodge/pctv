@@ -1,12 +1,13 @@
 "use client";
 
 import { DataTable } from "@/components/forms";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import Loading from "@/components/layout/Loading";
 import { reviewColumn } from "@/constants/DataTableColumn";
-import { formatDate } from "@/utils/common";
 import { ReviewType } from "@/constants/Type";
+import { formatDate } from "@/utils/common";
+import { TrashIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function Review({ titleId }: { titleId: string }) {
   const [review, setReview] = useState([]);
@@ -57,7 +58,7 @@ export default function Review({ titleId }: { titleId: string }) {
         </div>
       </div>
       <div className="mt-8 flow-root">
-        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div className="-mx-4 -my-2 overflow-x-auto ">
           {loading ? (
             <Loading />
           ) : (
@@ -67,7 +68,7 @@ export default function Review({ titleId }: { titleId: string }) {
               renderActions={() => (
                 <div className="flex gap-3 justify-end">
                   <button className="text-gray-600 hover:text-gray-800 cursor-pointer">
-                    Delete
+                    <TrashIcon className="text-gray-700 w-5 h-5"/>
                   </button>
                 </div>
               )}

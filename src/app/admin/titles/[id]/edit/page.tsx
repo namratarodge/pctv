@@ -1,19 +1,19 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-import { navigationTitleSubMenu } from "@/constants/Menu";
-import { useSearchParams, useParams } from "next/navigation";
-import Video from "@/components/pages/video";
-import Genre from "@/components/pages/genre";
 import Cast from "@/components/pages/cast";
-import Crew from "@/components/pages/crew";
-import axios from "axios";
-import Keywords from "@/components/pages/keywords";
 import Country from "@/components/pages/country";
-import Review from "@/components/pages/review";
+import Crew from "@/components/pages/crew";
 import General from "@/components/pages/general";
+import Genre from "@/components/pages/genre";
+import Keywords from "@/components/pages/keywords";
+import Review from "@/components/pages/review";
+import Video from "@/components/pages/video";
+import { navigationTitleSubMenu } from "@/constants/Menu";
 import { TitleDetailsType } from "@/constants/Type";
+import axios from "axios";
+import { useParams, useSearchParams } from "next/navigation";
 
 function classNames(...classes: (string | false | null | undefined)[]): string {
   return classes.filter(Boolean).join(" ");
@@ -71,7 +71,7 @@ export default function EditTitles() {
   return (
     <div className="flex gap-4">
       <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md w-4/5">
-        {active === "videos" && <Video />}
+        {active === "videos" && <Video titleId={titleId} />}
         {active === "cast" && <Cast titleId={titleId} />}
         {active === "crew" && <Crew titleId={titleId} />}
         {active === "genres" && (
@@ -97,10 +97,7 @@ export default function EditTitles() {
         )}
         {active === "reviews" && <Review titleId={titleId} />}
         {active === "general" && (
-          <General
-            titleId={titleId}
-            data={titleDetails}
-          />
+          <General titleId={titleId} data={titleDetails} />
         )}
       </div>
       <div className=" bg-white rounded-md w-1/5 border border-gray-200 h-full   ">

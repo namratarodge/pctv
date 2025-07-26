@@ -16,8 +16,11 @@ import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useDebounce } from "use-debounce";
 
-export default function Videos() {
+interface VideosProps {
+  titleId?: string | null;
+}
 
+export default function Videos({ titleId = null }: VideosProps) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({
@@ -32,8 +35,6 @@ export default function Videos() {
 
   const [filterQuery, setFilterQuery] = useState("");
   const [debouncedFilterQuery] = useDebounce(filterQuery, 1000); // 1 seconds delay
-
- 
 
   const setPage = (value: number) => {
     setPages(value);
@@ -58,6 +59,7 @@ export default function Videos() {
           params: {
             limit: limits,
             page: pages,
+            title_id : titleId,
             ...filterParams,
           },
         }
@@ -81,7 +83,7 @@ export default function Videos() {
   }, [pages, limits, debouncedFilterQuery]);
 
   const handleDelete = async (id: string) => {
-    console.log(id)
+    console.log(id);
     if (!window.confirm("Are you sure you want to delete this video?")) {
       return;
     }
@@ -114,16 +116,13 @@ export default function Videos() {
     fetch();
   }, [fetch]);
 
- 
-
-
   return (
     <>
       <div className="sm:flex  mt-4  h-auto justify-between gap-4 ">
         <Filter filterType={VideoFilter} onQueryChange={setFilterQuery} />
         <div className="mt-4 sm:mt-0 sm:flex-none ">
           <Link
-            href="videos/new"
+            href="/admin/videos/new"
             className="flex items-center  gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             <PlusCircleIcon className="w-6 h-6" /> Add New Video
@@ -140,7 +139,7 @@ export default function Videos() {
                 <AdvanceDataTable
                   columns={VideoColumn}
                   data={data}
-                  renderActions={(person : VideoType) => (
+                  renderActions={(person: VideoType) => (
                     <div className="flex gap-3 justify-end">
                       <button
                         onClick={() => console.log("edit", person)}

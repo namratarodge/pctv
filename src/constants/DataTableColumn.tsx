@@ -351,14 +351,14 @@ export const VideoColumn: {
       </div>
     ),
   },
-  {
-    key: "plays",
-    label: "Plays",
-    render: (row) => <span>{row.plays ? row.plays : "-"}</span>,
-  },
-  { key: "quality", label: "Quality" },
-  { key: "score", label: "Score" },
-  { key: "reports", label: "Reports" },
+  // {
+  //   key: "plays",
+  //   label: "Plays",
+  //   render: (row) => <span>{row.plays ? row.plays : "-"}</span>,
+  // },
+  // { key: "quality", label: "Quality" },
+  // { key: "score", label: "Score" },
+  // { key: "reports", label: "Reports" },
 ];
 
 // List Column
@@ -420,8 +420,8 @@ const replaceName = (name: string) => {
     return "Categories";
   } else if (name === "keyword") {
     return "TV Topics";
-  } else {
-    return name;
+  } else if(name === 'production_country'){
+    return "Production Country";
   }
 };
 
@@ -603,11 +603,6 @@ export const reviewColumn: {
         </p>
       </div>
     ),
-  },
-  {
-    key: "rating_type",
-    label: "Type",
-    render: () => <div>Rating</div>,
   },
   { key: "updated_at", label: "Last Updated" },
 ];
