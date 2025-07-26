@@ -13,6 +13,7 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { useDebounce } from "use-debounce";
 
 export default function Videos() {
@@ -79,6 +80,36 @@ export default function Videos() {
     }
   }, [pages, limits, debouncedFilterQuery]);
 
+  const handleDelete = async (id: string) => {
+    console.log(id)
+    if (!window.confirm("Are you sure you want to delete this video?")) {
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/video/${id}`,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data.status) {
+        toast("video deleted successfully");
+        fetch();
+      } else {
+        toast("Failed to delete creditable:", response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast("Error deleting creditable:");
+    }
+  };
+
   useEffect(() => {
     fetch();
   }, [fetch]);
@@ -109,7 +140,7 @@ export default function Videos() {
                 <AdvanceDataTable
                   columns={VideoColumn}
                   data={data}
-                  renderActions={(person) => (
+                  renderActions={(person : VideoType) => (
                     <div className="flex gap-3 justify-end">
                       <button
                         onClick={() => console.log("edit", person)}
@@ -118,7 +149,7 @@ export default function Videos() {
                         <PencilIcon className="w-5 h-5" />
                       </button>
                       <button
-                        onClick={() => console.log("Delete", person)}
+                        onClick={() => handleDelete(person._id)}
                         className="text-red-600 hover:text-red-800 cursor-pointer"
                       >
                         <TrashIcon className="w-5 h-5" />
