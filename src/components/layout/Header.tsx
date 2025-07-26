@@ -138,7 +138,9 @@ export default function Header() {
   return (
     <header
       className={` absolute inset-x-0 top-0 z-50 inset-shadow-md  ${
-        NoBGPages.includes(pageName) ? 'inset-shadow-black topHeader' :  "bg-black"
+        NoBGPages.includes(pageName)
+          ? "inset-shadow-black topHeader"
+          : "bg-black"
       }`}
     >
       <nav
@@ -320,31 +322,42 @@ export default function Header() {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/25">
               <div className="space-y-2 py-6">
-                {navigation.map((item, index) => (
-                  <div
-                    key={index}
-                    className=" block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800 cursor-pointer"
-                    onClick={() => toggleSubmenu(index)}
-                  >
-                    {item.name}
+                {navigation.map((item, index) => {
+                  const hasChildren = item.children && item.children.length > 0;
 
-                    {item.children && openIndex === index && (
-                      <div className=" space-y-1 mt-4">
-                        {(
-                          item.children as { name: string; href: string }[]
-                        ).map((child, childIndex) => (
-                          <Link
-                            key={childIndex}
-                            href={child.href}
-                            className="block rounded-md px-1 py-2 text-sm text-gray-300"
-                          >
-                            {child.name}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
+                  const menuContent = (
+                    <div
+                      className="block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800 cursor-pointer"
+                      onClick={() => hasChildren && toggleSubmenu(index)}
+                    >
+                      {item.name}
+
+                      {hasChildren && openIndex === index && (
+                        <div className="space-y-1 mt-4">
+                          {(
+                            item.children as { name: string; href: string }[]
+                          ).map((child, childIndex) => (
+                            <Link
+                              key={childIndex}
+                              href={child.href}
+                              className="block rounded-md px-1 py-2 text-sm text-gray-300"
+                            >
+                              {child.name}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+
+                  return hasChildren ? (
+                    <div key={index}>{menuContent}</div>
+                  ) : (
+                    <Link key={index} href={item.href} className="block">
+                      {menuContent}
+                    </Link>
+                  );
+                })}
               </div>
               <div className="py-6">
                 {user && Object.keys(user).length > 0 ? (
