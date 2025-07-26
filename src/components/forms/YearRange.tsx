@@ -27,7 +27,7 @@ export default function YearRange({ values: parentValues, onChange }: YearRangeP
   };
 
   return (
-    <div className="mt-5 pt-10">
+    <div className="mt-2 py-8">
       <Range
         values={values}
         step={1}
@@ -52,7 +52,7 @@ export default function YearRange({ values: parentValues, onChange }: YearRangeP
             <div
               key={key}
               {...rest}
-              className="relative w-5 h-5 bg-red-400 rounded-full shadow-lg border-2 border-white focus:outline-none"
+              className="relative w-3 h-3 bg-red-400 rounded-full shadow-lg border-2 border-white focus:outline-none"
             >
               <div className={`absolute -top-8 text-sm text-white font-medium   ${index === 1 ? '-ml-4' : '-ml-2' }`}>
                 {values[index]} 

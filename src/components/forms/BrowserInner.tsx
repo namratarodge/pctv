@@ -36,9 +36,8 @@ const Levels = [
 
 import Loading from "@/components/layout/Loading";
 import {
-  ListBulletIcon,
-  TableCellsIcon,
-  XMarkIcon,
+  DocumentMagnifyingGlassIcon,
+  XMarkIcon
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -102,6 +101,7 @@ export default function BrowserInner() {
   };
 
   const handleYearRange = (year: [number, number]) => {
+    console.log(year)
     const yearName = year.toString();
     const query = new URLSearchParams(window.location.search);
 
@@ -181,7 +181,7 @@ export default function BrowserInner() {
 
   useEffect(() => {
     fetchTitlte();
-  }, [pathname, searchParams.toString()]);
+  }, [pathname]);
 
   if (loading) {
     return <Loading title="" />;
@@ -189,10 +189,10 @@ export default function BrowserInner() {
 
   return (
     <div className="pt-18  max-w-11/12 mx-auto flex flex-col lg:flex-row mb-10">
-      <div className="w-full  md:w-1/5 sm:w-full px-4 py-4 overflow-auto lg:h-auto h-screen ">
+      <div className="w-full  md:w-1/5 sm:w-full px-2 py-4 overflow-auto lg:h-auto h-screen ">
         <div className="w-full border-b border-gray-500 pb-4">
           <div className="text-gray-300 text-lg">TV Topic</div>
-          <div className="relative inline-block mt-4 w-full text-white">
+          <div className="relative inline-block mt-4 w-full text-white  bg-gray-800 rounded-full text-sm">
             <select
               className="block appearance-none w-full border border-gray-500  text-gray-300 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2"
               onChange={handleChangeKeyword}
@@ -217,7 +217,7 @@ export default function BrowserInner() {
             <ul className="list-none">
               {categories.map((category: TagType) => (
                 <li
-                  className="text-gray-300 py-1 cursor-pointer"
+                  className="text-gray-300 py-1 cursor-pointer text-sm"
                   key={category._id}
                 >
                   <label className="cursor-pointer">
@@ -225,7 +225,7 @@ export default function BrowserInner() {
                       type="checkbox"
                       checked={genreList.includes(category.name)}
                       onChange={() => handleCheckboxChange(category.name)}
-                      className="mr-2 form-checkbox accent-red-500 border border-red-400"
+                      className="mr-1 form-checkbox accent-red-500 border border-red-400"
                     />{" "}
                     {category.display_name}
                   </label>
@@ -234,18 +234,18 @@ export default function BrowserInner() {
             </ul>
           </div>
         </div>
-        <div className="w-full max-w-md mx-auto mt-4 border-b pb-6 border-gray-500">
+        <div className="w-full max-w-md mx-auto  border-b px-2 py-2  border-gray-500">
           <YearRange values={range} onChange={handleYearRange} />
         </div>
         <div className="w-full border-b border-gray-500 py-6">
           <div className="text-gray-300">Select Region</div>
-          <div className="relative inline-block mt-4 w-full">
+          <div className="relative inline-block mt-4 w-full bg-gray-800 rounded-full">
             <select
               value={selectedCountry}
               onChange={(e) =>
                 handleSelectChange(e, setSelectedCountry, "country")
               }
-              className="block appearance-none w-full border border-gray-500  text-gray-300 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
+              className="text-sm block appearance-none w-full border border-gray-500  text-gray-300 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
             >
               {country.map((country, index) => (
                 <option key={index} value={country.value}>
@@ -263,7 +263,7 @@ export default function BrowserInner() {
 
         <div className="w-full border-b border-gray-500 py-6">
           <div className="text-gray-300">Language</div>
-          <div className="relative inline-block mt-4 w-full">
+          <div className="relative inline-block mt-4 w-full bg-gray-800 rounded-full text-sm">
             <select
               value={selectedLanguage}
               onChange={(e) =>
@@ -285,9 +285,9 @@ export default function BrowserInner() {
           </div>
         </div>
 
-        <div className="w-full border-b border-gray-500 py-6">
+        <div className="w-full py-6">
           <div className="text-gray-300">Levels</div>
-          <div className="relative inline-block mt-4 w-full">
+          <div className="relative inline-block mt-4 w-full bg-gray-800 rounded-full text-sm">
             <select
               value={selectedLevel}
               onChange={(e) => handleSelectChange(e, setSelectedLevel, "level")}
@@ -316,7 +316,7 @@ export default function BrowserInner() {
           </button>
         </div>
       </div>
-      <div className="w-full lg:w-4/5 px-4 py-2 ">
+      <div className="w-full  lg:w-4/5 px-4 py-2 ">
         <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
           <div className="flex gap-4 items-center ">
             <h1 className="text-3xl text-white">PCE Brazil</h1>
@@ -331,30 +331,40 @@ export default function BrowserInner() {
             )}
           </div>
 
-          <div className="flex items-center gap-4    px-3 py-1 text-white">
+          {/* <div className="flex items-center gap-4    px-3 py-1 text-white">
             <TableCellsIcon className="w-6 h-6 cursor-pointer hover:text-red-400" />
             <ListBulletIcon className="w-6 h-6 cursor-pointer hover:text-red-400" />
-          </div>
+          </div> */}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-          {title.map((title: TitleType) => (
-            <div className=" text-white gap-4" key={title._id}>
-              <Link href={`/titles/${title._id}/${title.slug}`}>
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_WEBSITE}/${title.poster}`}
-                  alt={title.name || "Poster"}
-                  width={400} // or any appropriate width
-                  height={450} // adjust height as needed
-                  className="rounded-lg"
-                />
-                <div className="mt-4">
-                  <span className="text-sm">{title?.name.slice(0, 34)}</span>
-                </div>
-              </Link>
-            </div>
-          ))}
-        </div>
+        {title.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+            {title.map((title: TitleType,index) => (
+              <div className=" text-white gap-4" key={index}>
+                <Link href={`/titles/${title._id}/${title.slug}`}>
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_WEBSITE}/${title.poster}`}
+                    alt={title.name || "Poster"}
+                    width={400} // or any appropriate width
+                    height={450} // adjust height as needed
+                    className="rounded-lg"
+                  />
+                  <div className="mt-4">
+                    <span className="text-sm">{title?.name.slice(0, 34)}</span>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center p-6 text-gray-400  h-100 w-full">
+            <DocumentMagnifyingGlassIcon className="w-20 h-20 mb-2" />
+            <p className="text-2xl font-medium">Nothing To Display</p>
+            <p className="text-xl text-gray-500 mt-4">
+              Try adjusting your filters or check back later.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
