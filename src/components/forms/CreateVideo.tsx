@@ -3,7 +3,7 @@
 import { VideoFormType } from "@/constants/Type";
 import { PhotoIcon, VideoCameraIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { AutoCompleteTitleList } from ".";
@@ -17,6 +17,7 @@ import {
 import { useParams } from "next/navigation";
 
 export default function CreateVideo() {
+  const fileInputRef = useRef(null);
   const [videoType, setVideoType] = useState("embed");
   const params = useParams();
   const videoId = params.id as string;
@@ -75,16 +76,15 @@ export default function CreateVideo() {
             headers: {
               Authorization: token,
             },
-          } 
+          }
         );
       }
 
       if (response.data.status) {
         toast.success(`Video ${isNew ? "created" : "updated"} successfully.`);
-        if(isNew){
+        if (isNew) {
           reset({});
         }
-        
       }
     } catch (error) {
       console.log(error);
@@ -149,6 +149,14 @@ export default function CreateVideo() {
     fetchVideo();
   }, [isNew, reset, videoId]);
 
+  const handleRemoveThumbnail = () => {
+    setPreviewUrl(null); // Or setPreviewUrl('')
+    // Clear the file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   return (
     <div className="  from-gray-100 to-gray-200 flex items-center justify-center px-2">
       <div className="w-full bg-white rounded-sm shadow-lg p-10 space-y-6">
@@ -186,11 +194,20 @@ export default function CreateVideo() {
               </label>
               <div className="flex items-center gap-3">
                 {previewUrl ? (
-                  <img
-                    src={previewUrl}
-                    alt="Thumbnail Preview"
-                    className="w-16 h-16 rounded object-cover border"
-                  />
+                  <>
+                    <img
+                      src={previewUrl}
+                      alt="Thumbnail Preview"
+                      className="w-16 h-16 rounded object-cover border"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleRemoveThumbnail}
+                      className="text-sm text-red-600 hover:underline"
+                    >
+                      Remove
+                    </button>
+                  </>
                 ) : (
                   <PhotoIcon className="w-10 h-10 text-gray-300" />
                 )}
@@ -203,6 +220,7 @@ export default function CreateVideo() {
                     Select Thumbnail
                   </label>
                   <input
+                    ref={fileInputRef}
                     type="file"
                     name="thumbnail"
                     id="thumbnailUpload"
