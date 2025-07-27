@@ -101,7 +101,6 @@ export default function BrowserInner() {
   };
 
   const handleYearRange = (year: [number, number]) => {
-    console.log(year)
     const yearName = year.toString();
     const query = new URLSearchParams(window.location.search);
 
