@@ -1,6 +1,8 @@
 "use client";
 import { navigationAccount } from "@/constants/Menu";
+import { Button } from "@headlessui/react";
 import { BackspaceIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 function classNames(...classes: (string | false | null | undefined)[]): string {
@@ -13,9 +15,11 @@ export default function AccountSideBar() {
   return (
     <>
       <nav aria-label="Sidebar" className="flex flex-1 flex-col">
-        <button className="bg-gray-200 items-center flex gap-4 px-3 py-2 mb-2 cursor-pointer">
-          <BackspaceIcon className="h-5 w-5" /> Back to PCTV
-        </button>
+      <Link href="/home">
+        <Button className="bg-gray-200 items-center flex gap-4 px-3 py-2 mb-2 cursor-pointer">
+          <BackspaceIcon className="h-5 w-5" /> Back to PCTVc
+        </Button>
+        </Link>
         <ul role="list" className=" space-y-1">
           {navigationAccount.map((item,index) => (
             <li key={index}>
