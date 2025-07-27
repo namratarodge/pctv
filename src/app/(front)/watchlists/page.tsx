@@ -2,6 +2,7 @@
 
 import Loading from "@/components/layout/Loading";
 import { WhatchListType } from "@/constants/Type";
+import { DocumentMagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -43,34 +44,40 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="pt-25  max-w-11/12  mx-auto h-screen">
-      <h2 className="text-white text-4xl font-semibold">WhatchList</h2>
-      {loading ? (
-        <Loading />
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 py-6">
-          {data.length === 0 && (
-            <h1 className="text-2xl ">There are no whachlists.</h1>
-          )}
-          {data.map((item: WhatchListType, index) => (
-            <div key={index} className="flex items-center gap-4 py-2">
-              <Image
-                src={`${process.env.NEXT_PUBLIC_WEBSITE}/${item.title_id.poster}`}
-                alt={item.title_id.name}
-                width={300}
-                height={200}
-                className="w-2/5 rounded-lg object-cover"
-              />
-              <div>
-                <h2 className="text-sm font-semibold text-gray-300 mb-2">
-                  {item.title_id.name}
-                </h2>
-                <p className="text-gray-400 text-sm">{item.title_id.type}</p>
-              </div>
+    <div className="pt-25 max-w-11/12 mx-auto h-screen">
+    <h2 className="text-white text-4xl font-semibold">WhatchList</h2>
+  
+    {loading ? (
+      <Loading />
+    ) : data.length > 0 ? (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 py-6">
+        {data.map((item: WhatchListType, index) => (
+          <div key={index} className="flex items-center gap-4 py-2">
+            <Image
+              src={`${process.env.NEXT_PUBLIC_WEBSITE}/${item.title_id.poster}`}
+              alt={item.title_id.name}
+              width={300}
+              height={200}
+              className="w-2/5 rounded-lg object-cover"
+            />
+            <div>
+              <h2 className="text-sm font-semibold text-gray-300 mb-2">
+                {item.title_id.name}
+              </h2>
+              <p className="text-gray-400 text-sm">{item.title_id.type}</p>
             </div>
-          ))}
-        </div>
-      )}
-    </div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div className="flex flex-col items-center justify-center p-6 text-gray-400 h-100 w-full">
+        <DocumentMagnifyingGlassIcon className="w-20 h-20 mb-2" />
+        <p className="text-2xl font-medium">Nothing To Display</p>
+        <p className="text-xl text-gray-500 mt-4">
+          There is not WhatchList.
+        </p>
+      </div>
+    )}
+  </div>
   );
 }
