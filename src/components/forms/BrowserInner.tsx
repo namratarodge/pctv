@@ -7,18 +7,7 @@ import { useEffect, useState } from "react";
 
 import { TagType, TitleType, TvTopicType } from "@/constants/Type";
 
-const country = [
-  { name: "United States", value: "United-States" },
-  { name: "Canada", value: "Canada" },
-  { name: "United Kingdom", value: "United-Kingdom" },
-  { name: "Australia", value: "Australia" },
-  { name: "Germany", value: "Germany" },
-  { name: "France", value: "France" },
-  { name: "Japan", value: "Japan" },
-  { name: "India", value: "India" },
-  { name: "Brazil", value: "Brazil" },
-  { name: "South Africa", value: "South-Africa" },
-];
+import { countryOptions } from "@/constants/Main";
 
 const Language = [
   { value: "english", name: "English" },
@@ -246,7 +235,7 @@ export default function BrowserInner() {
               }
               className="text-sm block appearance-none w-full border border-gray-500  text-gray-300 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
             >
-              {country.map((country, index) => (
+              {countryOptions.map((country, index) => (
                 <option key={index} value={country.value}>
                   {country.name}
                 </option>

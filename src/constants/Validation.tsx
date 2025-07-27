@@ -11,6 +11,7 @@ export type ListFormData = z.infer<typeof listsUpSchema>;
 export const userUpdateSchema = z.object({
   first_name: z.string().min(1, "First Name is required"),
   last_name: z.string().min(1, "Last Name is required"),
+  email: z.string().min(1, "email is required"),
   gender: z.string().min(1, "Gender is required"),
   country: z.string().min(1, "Country is required"),
   phone: z

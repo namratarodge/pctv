@@ -1,16 +1,18 @@
 "use client";
 
 import { usePublicData } from "@/components/context/PublicDataContext";
+import { countryOptions, genderOption } from "@/constants/Main";
 import { UserUpdateFormData, userUpdateSchema } from "@/constants/Validation";
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import { CheckBadgeIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 export default function UpdateProfile() {
   const { user } = usePublicData();
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -21,15 +23,10 @@ export default function UpdateProfile() {
     resolver: zodResolver(userUpdateSchema),
   });
 
-  const notificationMethods = [
-    { label: "male", value: "Male" },
-    { label: "female", value: "Female" },
-    { label: "other", value: "Other" },
-  ];
-
   // ✅ Create or Update
   const onSubmit = async (data: UserUpdateFormData) => {
     const token = localStorage.getItem("token");
+    setLoading(true);
     try {
       const response = await axios.put(
         `${process.env.NEXT_PUBLIC_API_URL}/user/${user?.id}`,
@@ -43,11 +40,12 @@ export default function UpdateProfile() {
       );
       const responseNew = response.data;
       if (responseNew.status) {
-        
         toast.success("Account Info Updated successfully");
       }
+      setLoading(false);
     } catch (error) {
       toast("Error during login:" + error);
+      setLoading(false);
     }
   };
 
@@ -56,16 +54,17 @@ export default function UpdateProfile() {
       reset({
         first_name: user.first_name || "",
         last_name: user.last_name || "",
+        email: user.email || "",
         phone: user.phone || "",
         gender: user.gender || "Male",
-        country: user.country || "Canada",
+        country: user.country || "India",
       });
     }
   }, [user, reset]);
 
   return (
     <>
-     <div className="min-h-screen bg-white text-black max-w-3xl mx-auto ">
+      <div className="min-h-screen bg-white text-black max-w-3xl mx-auto ">
         <h1 className="text-4xl font-semibold">Update Profile Details</h1>
         <p className="my-4">Account Details</p>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -96,9 +95,20 @@ export default function UpdateProfile() {
                   {errors.last_name.message}
                 </p>
               )}
-            </div>
 
-            <div className="mt-4 w-2/3 space-y-3">
+              <div className="flex gap-2 justify-center items-center">
+                <input
+                  type="text"
+                  disabled
+                  {...register("email")}
+                  className="block w-full rounded-full bg-gray-200 px-4 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-400 sm:text-sm/6"
+                />
+
+                {user.email_verified_at && (
+                  <CheckBadgeIcon className="w-8 h-8 text-green-400" />
+                )}
+              </div>
+
               <input
                 type="text"
                 {...register("phone")}
@@ -112,23 +122,20 @@ export default function UpdateProfile() {
                 </p>
               )}
               <div className="mt-6 space-y-6 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
-                {notificationMethods.map((notificationMethod) => (
-                  <div
-                    key={notificationMethod.label}
-                    className="flex items-center"
-                  >
+                {genderOption.map((gender) => (
+                  <div key={gender.label} className="flex items-center">
                     <input
                       {...register("gender")}
-                      value={notificationMethod.value}
-                      defaultChecked={notificationMethod.label === "male"}
+                      value={gender.value}
+                      defaultChecked={gender.label === "male"}
                       type="radio"
                       className="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-red-600 checked:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden"
                     />
                     <label
-                      htmlFor={notificationMethod.label}
+                      htmlFor={gender.label}
                       className="ml-3 block text-sm/6 font-medium text-gray-900"
                     >
-                      {notificationMethod.value}
+                      {gender.value}
                     </label>
                   </div>
                 ))}
@@ -140,10 +147,11 @@ export default function UpdateProfile() {
                   defaultValue="Canada"
                   className="col-start-1 row-start-1 w-full appearance-none rounded-full bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-red-600 sm:text-sm/6"
                 >
-                  <option value="">Select Country</option>
-                  <option value="US">United States</option>
-                  <option value="Canada">Canada</option>
-                  <option value="mexico">Mexico</option>
+                  {countryOptions.map((country, index) => (
+                    <option key={index} value={country.value}>
+                      {country.name}
+                    </option>
+                  ))}
                 </select>
                 <ChevronDownIcon
                   aria-hidden="true"
@@ -152,15 +160,15 @@ export default function UpdateProfile() {
               </div>
             </div>
             <div className="flex gap-4 mt-6">
-            <button
-              type="submit"
-              className="rounded-full bg-red-500 text-white px-6 py-2 text-sm cursor-pointer"
-            >
-              Update
-            </button>
+              <button
+                type="submit"
+                disabled={loading && true}
+                className="rounded-full bg-red-500 text-white px-6 py-2 text-sm cursor-pointer"
+              >
+                {loading ? "Updating..." : "Update Profile"}
+              </button>
+            </div>
           </div>
-          </div>
-         
         </form>
       </div>
     </>

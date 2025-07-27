@@ -116,3 +116,22 @@ export const categoryOptions = [
   { label: "Teaser", value: "teaser" },
   { label: "Full Movie or Episode", value: "full" },
 ];
+
+export const countryOptions = [
+  { name: "United States", value: "United-States" },
+  { name: "Canada", value: "Canada" },
+  { name: "United Kingdom", value: "United-Kingdom" },
+  { name: "Australia", value: "Australia" },
+  { name: "Germany", value: "Germany" },
+  { name: "France", value: "France" },
+  { name: "Japan", value: "Japan" },
+  { name: "India", value: "India" },
+  { name: "Brazil", value: "Brazil" },
+  { name: "South Africa", value: "South-Africa" },
+];
+
+export const genderOption =  [
+  { label: "male", value: "Male" },
+  { label: "female", value: "Female" },
+  { label: "other", value: "Other" },
+];
