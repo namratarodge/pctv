@@ -3,7 +3,7 @@
 import { VideoFormType } from "@/constants/Type";
 import { PhotoIcon, VideoCameraIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { AutoCompleteTitleList } from ".";
@@ -21,6 +21,7 @@ export default function CreateVideo() {
   const params = useParams();
   const videoId = params.id as string;
   const isNew = videoId === "new";
+  const [isLoading, setIsLoading] = useState(false);
 
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -39,30 +40,56 @@ export default function CreateVideo() {
 
   const onSubmit = async (data: VideoFormType) => {
     const token = localStorage.getItem("token");
-    console.log("Sending:", data);
+    const formData = new FormData();
+
+    // Append all the fields manually
+    formData.append("name", data.name);
+    formData.append("type", data.type);
+    formData.append("url", data.url);
+    formData.append("quality", data.quality);
+    formData.append("language", data.language);
+    formData.append("category", data.category);
+    formData.append("title_id", data.title_id);
+
+    if (thumbnail) {
+      formData.append("thumbnail", thumbnail);
+    }
     // post logic here
     try {
-      const response = await axios.post(
-        process.env.NEXT_PUBLIC_API_URL + "/video",
-        data,
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      let response;
+      if (isNew) {
+        response = await axios.post(
+          process.env.NEXT_PUBLIC_API_URL + "/video",
+          formData,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+      } else {
+        response = await axios.put(
+          `${process.env.NEXT_PUBLIC_API_URL}/video/${videoId}`,
+          formData,
+          {
+            headers: {
+              Authorization: token,
+            },
+          } 
+        );
+      }
 
       if (response.data.status) {
-        toast("Video Added sucessfully.");
+        toast.success(`Video ${isNew ? "created" : "updated"} successfully.`);
+        if(isNew){
+          reset({});
+        }
+        
       }
     } catch (error) {
       console.log(error);
       toast.error("Failed to create Video:");
     }
-  };
-  const handleUserSelected = async (data: string) => {
-    console.log(data);
   };
 
   const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,12 +100,61 @@ export default function CreateVideo() {
     }
   };
 
+  useEffect(() => {
+    const fetchVideo = async () => {
+      if (!isNew) {
+        setIsLoading(true);
+        try {
+          const token = localStorage.getItem("token");
+          const res = await axios.get(
+            `${process.env.NEXT_PUBLIC_API_URL}/video/${videoId}`,
+            {
+              headers: {
+                Authorization: token,
+              },
+            }
+          );
+
+          const data = res.data?.data.data;
+          console.log(data);
+
+          if (data) {
+            // Populate form fields
+            reset({
+              name: data.name,
+              type: data.type,
+              url: data.url,
+              quality: data.quality,
+              language: data.language,
+              category: data.category,
+              title_id: data.title_id._id,
+            });
+
+            // Set video type so dropdown updates
+            setVideoType(data.type);
+
+            // Set thumbnail preview
+            if (data.thumbnail) {
+              setPreviewUrl(data.thumbnail);
+            }
+          }
+        } catch (err) {
+          toast.error("Failed to fetch video details.");
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchVideo();
+  }, [isNew, reset, videoId]);
+
   return (
     <div className="  from-gray-100 to-gray-200 flex items-center justify-center px-2">
       <div className="w-full bg-white rounded-sm shadow-lg p-10 space-y-6">
         <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
           <VideoCameraIcon className="h-7 w-7 text-red-500" />
-          {isNew ? 'Add New' : 'Edit '} Video
+          {isNew ? "Add New" : "Edit "} Video
         </h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -128,6 +204,7 @@ export default function CreateVideo() {
                   </label>
                   <input
                     type="file"
+                    name="thumbnail"
                     id="thumbnailUpload"
                     accept="image/*"
                     onChange={handleThumbnailChange}
@@ -236,6 +313,7 @@ export default function CreateVideo() {
                 rules={{ required: "Title is required" }}
                 render={({ field }) => (
                   <AutoCompleteTitleList
+                    value={field.value}
                     onSelect={(titleId: string) => {
                       field.onChange(titleId);
                     }}

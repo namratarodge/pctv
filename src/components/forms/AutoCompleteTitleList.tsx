@@ -14,10 +14,12 @@ type User = {
 };
 
 type AutoCompletePersonListProps = {
+  value?: string;
   onSelect: (selected: string) => void;
 };
 
 export default function AutoCompeleteTitle({
+  value,
   onSelect,
 }: AutoCompletePersonListProps) {
   const [query, setQuery] = useState("");
@@ -26,6 +28,33 @@ export default function AutoCompeleteTitle({
     null
   );
   const [loading, setLoading] = useState(false);
+
+  // Fetch selected title by ID if editing
+  useEffect(() => {
+    const fetchInitialTitle = async () => {
+      if (value && !selectedUser) {
+        try {
+          const token = localStorage.getItem("token");
+          const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/titles`, {
+            headers: {
+              Authorization: token,
+            },
+            params: {
+              _id : value
+            }
+          });
+          const data = res.data?.data;
+          if (data) {
+            setSelectedUser(data);
+          }
+        } catch (err) {
+          console.error("Failed to fetch selected title", err);
+        }
+      }
+    };
+
+    fetchInitialTitle();
+  }, [value, selectedUser]);
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {

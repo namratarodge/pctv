@@ -141,12 +141,12 @@ export default function Videos({ titleId = null }: VideosProps) {
                   data={data}
                   renderActions={(person: VideoType) => (
                     <div className="flex gap-3 justify-end">
-                      <button
-                        onClick={() => console.log("edit", person)}
+                      <Link
+                        href={`videos/${person._id}`}
                         className="text-blue-600 hover:text-blue-800 cursor-pointer"
                       >
                         <PencilIcon className="w-5 h-5" />
-                      </button>
+                      </Link>
                       <button
                         onClick={() => handleDelete(person._id)}
                         className="text-red-600 hover:text-red-800 cursor-pointer"
