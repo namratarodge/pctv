@@ -23,11 +23,16 @@ const VimeoEmbed: FC<VimeoEmbedProps> = ({ htmlString, onVideoProgress, startTim
     const player = new Player(iframe as HTMLIFrameElement);
     playerRef.current = player;
 
-    player.ready().then(() => {
-      if (startTime > 0) {
-        player.setCurrentTime(startTime).catch((error) => {
-          console.error("Failed to set start time:", error);
-        });
+    let isUnmounted = false;
+
+    player.ready().then(async () => {
+      try {
+        const duration = await player.getDuration();
+        if (!isUnmounted && startTime > 0 && startTime < duration) {
+          await player.setCurrentTime(startTime);
+        }
+      } catch (error) {
+        console.error("Failed to set start time:", error);
       }
     });
 
@@ -42,13 +47,14 @@ const VimeoEmbed: FC<VimeoEmbedProps> = ({ htmlString, onVideoProgress, startTim
     });
 
     return () => {
+      isUnmounted = true;
       if (onVideoProgress) {
         onVideoProgress(lastWatchedRef.current);
       }
 
       player.unload();
     };
-  }, [htmlString, onVideoProgress]);
+  }, [htmlString, onVideoProgress,startTime]);
 
   return (
     <div
