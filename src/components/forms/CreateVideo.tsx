@@ -17,7 +17,7 @@ import {
 import { useParams } from "next/navigation";
 
 export default function CreateVideo() {
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [videoType, setVideoType] = useState("embed");
   const params = useParams();
   const videoId = params.id as string;
