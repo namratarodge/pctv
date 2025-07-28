@@ -386,7 +386,17 @@ export type VideoType = {
   category: string;
   episode_id: number | null;
   userId: number;
+  video_play : VideoPlayed
 };
+
+export type VideoPlayed =  {
+  _id: string;
+  user_id: string;
+  video_id: string;
+  time_watched: number;
+  created_at: string; // ISO date string
+  __v: number;
+}
 
 // Filter Types
 

@@ -38,7 +38,7 @@ const MAX_YEAR = 2025;
 export default function BrowserInner() {
   const router = useRouter();
   const [title, setTitle] = useState([]);
-  const { tvtopic, categories } = usePublicData();
+  const {tvtopic, categories} = usePublicData();
   const [loading, setLoading] = useState(true);
 
   const pathname = usePathname();
@@ -148,7 +148,7 @@ export default function BrowserInner() {
             Authorization: token,
             "Content-Type": "application/json",
           },
-          params: query,
+          // params: query,
         }
       );
       if (response.data.status) {

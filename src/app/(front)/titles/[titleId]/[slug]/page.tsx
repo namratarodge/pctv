@@ -116,6 +116,7 @@ export default function TitleDetailPage() {
   };
 
   const handlePlay = (data: VideoType) => {
+    console.log(data)
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -183,12 +184,14 @@ export default function TitleDetailPage() {
                 {play && (
                   <ViemoEmbed
                     htmlString={play.url}
+                    startTime={play?.video_play?.time_watched}
                     onVideoProgress={handleProgress}
                   />
                 )}
-              </div>
-
+               
+              </div>   
               <h1 className="text-xl text-white py-4">{titleDetails?.name}</h1>
+
               <div className="flex gap-2">
                 <button
                   onClick={() => handleWhatchList(titleDetails._id)}

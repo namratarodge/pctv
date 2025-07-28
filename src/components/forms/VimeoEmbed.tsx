@@ -6,9 +6,10 @@ import { FC, useEffect, useRef } from "react";
 interface VimeoEmbedProps {
   htmlString: string;
   onVideoProgress?: (seconds: number) => void;
+  startTime?: number; // Add this prop
 }
 
-const VimeoEmbed: FC<VimeoEmbedProps> = ({ htmlString, onVideoProgress }) => {
+const VimeoEmbed: FC<VimeoEmbedProps> = ({ htmlString, onVideoProgress, startTime = 0  }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<Player | null>(null);
   const lastWatchedRef = useRef<number>(0);
@@ -21,6 +22,14 @@ const VimeoEmbed: FC<VimeoEmbedProps> = ({ htmlString, onVideoProgress }) => {
 
     const player = new Player(iframe as HTMLIFrameElement);
     playerRef.current = player;
+
+    player.ready().then(() => {
+      if (startTime > 0) {
+        player.setCurrentTime(startTime).catch((error) => {
+          console.error("Failed to set start time:", error);
+        });
+      }
+    });
 
     player.on("timeupdate", ({ seconds, duration }: { seconds: number; duration: number }) => {
       lastWatchedRef.current = seconds;
