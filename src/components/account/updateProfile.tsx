@@ -2,7 +2,6 @@
 
 import { usePublicData } from "@/components/context/PublicDataContext";
 import { countryOptions, genderOption } from "@/constants/Main";
-import { UserType } from "@/constants/Type";
 import { UserUpdateFormData, userUpdateSchema } from "@/constants/Validation";
 import {
   CheckBadgeIcon,
@@ -34,7 +33,7 @@ export default function UpdateProfile() {
   });
 
   // ✅ Create or Update
-  const onSubmit = async (data: UserType) => {
+  const onSubmit = async (data: UserUpdateFormData) => {
     const token = localStorage.getItem("token");
     setLoadingUser(true);
 

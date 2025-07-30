@@ -342,7 +342,7 @@ export type UserType = {
   language: string;
   country: string;
   timezone: string | null;
-  avatar: string | null;
+  avatar: string;
   stripe_id: string | null;
   available_space: number | null;
   email_verified_at: string | null;
