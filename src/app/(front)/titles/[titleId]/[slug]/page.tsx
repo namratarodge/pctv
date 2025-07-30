@@ -23,7 +23,7 @@ export default function TitleDetailPage() {
   const [titleDetails, setTitleDetails] = useState<TitleType | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const [titleReview,setTitleReview] = useState(0);
+  const [titleReview, setTitleReview] = useState(0);
 
   const [play, setPlay] = useState<VideoType | null>(null);
 
@@ -68,7 +68,7 @@ export default function TitleDetailPage() {
       if (response.data.status) {
         console.log(response.data.data);
         setTitleDetails(response.data.data);
-        setTitleReview(response.data.data?.review[0]?.score)
+        setTitleReview(response.data.data?.review[0]?.score);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -87,7 +87,7 @@ export default function TitleDetailPage() {
 
   const handleWhatchList = async (id: string) => {
     const token = localStorage.getItem("token");
-    if(!token){
+    if (!token) {
       window.location.href = "/login";
     }
     const payload = {
@@ -116,7 +116,7 @@ export default function TitleDetailPage() {
   };
 
   const handlePlay = (data: VideoType) => {
-    console.log(data)
+    console.log(data);
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -125,9 +125,9 @@ export default function TitleDetailPage() {
   };
   const handleProgress = async (seconds: number) => {
     const token = localStorage.getItem("token");
-    console.log(seconds)
+    console.log(seconds);
 
-    if(!token || seconds === 0) return;
+    if (!token || seconds === 0) return;
     const payload = {
       video_id: play?._id,
       time_watched: seconds,
@@ -160,7 +160,7 @@ export default function TitleDetailPage() {
         <>
           {titleDetails && (
             <div className="w-full  md:w-2/3 lg:w-2/3 ">
-              <div className="relative">
+              <div className="relative w-full rounded-lg overflow-hidden group">
                 {!play && (
                   <>
                     <Image
@@ -168,17 +168,20 @@ export default function TitleDetailPage() {
                       alt="poster"
                       width={800} // You can adjust this
                       height={500} // Adjust as needed for layout
-                      className="w-full rounded-lg object-cover opacity-10"
+                      className="w-full rounded-lg object-cover opacity-10 transition-transform duration-700 group-hover:scale-105"
                     />
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent  rounded-md" />
 
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div
-                        className="bg-white/80 hover:bg-white rounded-full p-4 transition cursor-pointer"
+                        className="bg-white/70 hover:bg-white p-4 rounded-full shadow-lg transition-all duration-300 cursor-pointer"
                         onClick={() => setPlay(titleDetails?.videos[0])}
                       >
-                        <PlayCircleIcon className="w-10 h-10 text-red-600 " />
+                        <PlayCircleIcon className="w-12 h-12 text-red-600" />
                       </div>
                     </div>
+                    
                   </>
                 )}
                 {play && (
@@ -188,19 +191,19 @@ export default function TitleDetailPage() {
                     onVideoProgress={handleProgress}
                   />
                 )}
-               
-              </div>   
+              </div>
               <h1 className="text-xl text-white py-4">{titleDetails?.name}</h1>
 
               <div className="flex gap-2">
                 <button
                   onClick={() => handleWhatchList(titleDetails._id)}
-                  className="flex rounded-full bg-[#707070]  px-2 gap-1 py-1 items-center text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20 cursor-pointer"
+                  className="flex cursor-pointer items-center gap-2 rounded-full bg-white/10 backdrop-blur-md px-3 py-1.5 text-sm font-medium text-white hover:bg-white/20 transition duration-200 shadow-md ring-1 ring-white/20"
                 >
                   <PlusIcon className="h-4 w-4 text-white" />
-                  Whatchlist
+                  Watchlist
                 </button>
-                <button className="flex rounded-full bg-[#707070] px-2 gap-1 py-1 items-center text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20 cursor-pointer">
+
+                <button className="flex cursor-pointer items-center gap-2 rounded-full bg-white/10 backdrop-blur-md px-3 py-1.5 text-sm font-medium text-white hover:bg-white/20 transition duration-200 shadow-md ring-1 ring-white/20">
                   <ShareIcon className="h-4 w-4 text-white" />
                   Share
                 </button>
@@ -213,7 +216,10 @@ export default function TitleDetailPage() {
                 <div className="flex gap-2">
                   <span className="text-gray-400">Rate us</span>
                   <div className="flex gap-1 items-center">
-                    <StarRating score={titleReview} titleId={titleDetails._id} />
+                    <StarRating
+                      score={titleReview}
+                      titleId={titleDetails._id}
+                    />
                   </div>
                 </div>
               </div>
@@ -295,43 +301,43 @@ export default function TitleDetailPage() {
                   )}
                 </div>
               </div>
-              {titleDetails.videos.length > 0 &&     
-              <div className="py-6 border-t border-[#37454D] mr-5">
-                <h2 className="text-white text-xl font-semibold mb-4">
-                  Video and Presentation
-                </h2>
-                <div className="flex flex-wrap gap-6">
-                  {titleDetails.videos.map((item, index) => (
-                    <div
-                      key={index}
-                      className="relative w-full sm:w-[48%] lg:w-[30%]"
-                    >
-                      <div className="rounded-lg overflow-hidden shadow-lg group">
-                        <div className="relative">
-                          <div
-                            className="aspect-video opacity-50 group-hover:opacity-100 transition duration-300"
-                            dangerouslySetInnerHTML={{ __html: item.url }}
-                          />
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <button
-                              className="bg-white/80 hover:bg-white rounded-full p-3 transition duration-300 cursor-pointer"
-                              onClick={() => handlePlay(item)}
-                            >
-                              <PlayCircleIcon className="w-7 h-7 text-red-600" />
-                            </button>
+              {titleDetails.videos.length > 0 && (
+                <div className="py-6 border-t border-[#37454D] mr-5">
+                  <h2 className="text-white text-xl font-semibold mb-4">
+                    Video and Presentation
+                  </h2>
+                  <div className="flex flex-wrap gap-6">
+                    {titleDetails.videos.map((item, index) => (
+                      <div
+                        key={index}
+                        className="relative w-full sm:w-[48%] lg:w-[30%]"
+                      >
+                        <div className="rounded-lg overflow-hidden shadow-lg group">
+                          <div className="relative">
+                            <div
+                              className="aspect-video opacity-50 group-hover:opacity-100 transition duration-300"
+                              dangerouslySetInnerHTML={{ __html: item.url }}
+                            />
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <button
+                                className="bg-white/80 hover:bg-white rounded-full p-3 transition duration-300 cursor-pointer"
+                                onClick={() => handlePlay(item)}
+                              >
+                                <PlayCircleIcon className="w-7 h-7 text-red-600" />
+                              </button>
+                            </div>
+                          </div>
+                          <div className="bg-[#1E293B] p-3">
+                            <h3 className="text-white text-base font-medium">
+                              {item.name}
+                            </h3>
                           </div>
                         </div>
-                        <div className="bg-[#1E293B] p-3">
-                          <h3 className="text-white text-base font-medium">
-                            {item.name}
-                          </h3>
-                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-          }
+              )}
             </div>
           )}
           <div className="w-full md:w-1/3 ">
