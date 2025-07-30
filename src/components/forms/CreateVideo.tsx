@@ -51,10 +51,11 @@ export default function CreateVideo() {
     formData.append("language", data.language);
     formData.append("category", data.category);
     formData.append("title_id", data.title_id);
-
+    console.log(thumbnail)
     if (thumbnail) {
       formData.append("thumbnail", thumbnail);
     }
+    console.log(formData)
     // post logic here
     try {
       let response;
@@ -151,6 +152,7 @@ export default function CreateVideo() {
 
   const handleRemoveThumbnail = () => {
     setPreviewUrl(null); // Or setPreviewUrl('')
+    setThumbnail(null); // Or setPreviewUrl('')
     // Clear the file input
     if (fileInputRef.current) {
       fileInputRef.current.value = "";

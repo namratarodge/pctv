@@ -324,11 +324,12 @@ export type UserType = {
   userType: "user";
   _id: string;
   id: number;
-  username: string | null;
-  first_name: string | null;
-  last_name: string | null;
+  username: string;
+  first_name: string;
+  last_name: string;
   avatar_url: string | null;
-  gender: string | null;
+  gender: string;
+  phone: string;
   legacy_permissions: unknown | null;
   email: string;
   password: string;

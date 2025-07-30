@@ -32,7 +32,7 @@ const UserAvatar: React.FC<PersonImageProps> = ({
       height={40}
       className={`${
         rounded ? "rounded-full" : "rounded-sm"
-      } w-10 h-10  object-cover`}
+      } w-10 h-10  object-cover border border-gray-300`}
       onError={() => setImgSrc(avatar)}
     />
   );

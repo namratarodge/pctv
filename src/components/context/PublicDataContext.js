@@ -100,7 +100,7 @@ export function PublicDataProvider({ children }) {
             gender: modifiedData.gender,
             phone: modifiedData.phone,
             country: modifiedData.country,
-            avatar_url: modifiedData.avatar_url,
+            avatar: modifiedData.avatar,
             userType: modifiedData.userType,
             subscriptions : modifiedData.subscriptions
           };

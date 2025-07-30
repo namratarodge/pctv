@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import {
@@ -8,6 +7,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { usePublicData } from "../context/PublicDataContext";
+import UserAvatar from "../forms/UserAvatar";
 
 const userNavigation = [
   { name: "Your profile", href: "/account" },
@@ -78,13 +78,8 @@ export default function TopHeader({
             <MenuButton className="-m-1.5 flex items-center p-1.5 cursor-pointer">
               <span className="sr-only">Open user menu</span>
 
-              <Image
-                src="/default-front.svg"
-                alt="test"
-                width={10}
-                height={10}
-                className="w-10 h-auto object-cover rounded-full"
-              />
+              <UserAvatar poster={user.avatar} rounded={true} />
+
               <span className="hidden lg:flex lg:items-center ">
                 <span
                   aria-hidden="true"

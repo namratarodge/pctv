@@ -26,9 +26,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { NoBGPages } from "@/constants/Menu";
-import { DecodedUser, TagType } from "@/constants/Type";
-import { jwtDecode } from "jwt-decode";
+import { TagType } from "@/constants/Type";
 import { redirect, usePathname } from "next/navigation";
+import UserAvatar from "../forms/UserAvatar";
 
 const baseNavigation = [
   { name: "Home", key: "home", href: "/home" },
@@ -67,9 +67,9 @@ function classNames(...classes: (string | false | null | undefined)[]): string {
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { tvtopic, categories } = usePublicData();
-  
-  const [user, setUser] = useState<DecodedUser | null>(null);
+  const { user, tvtopic, categories } = usePublicData();
+
+  // const [user, setUser] = useState<DecodedUser | null>(null);
 
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -97,15 +97,6 @@ export default function Header() {
   const [navigation, setNavigation] = useState(baseNavigation);
 
   useEffect(() => {
-    try {
-      const token = localStorage.getItem("token");
-      if (token && token.split(".").length === 3) {
-        const decoded = jwtDecode<DecodedUser>(token);
-        setUser(decoded);
-      }
-    } catch (e) {
-      console.error("Failed to decode token", e);
-    }
     const merged = baseNavigation.map((item) => {
       if (item.key === "tv_topics") {
         return {
@@ -183,13 +174,13 @@ export default function Header() {
                     <div
                       className=" absolute  whitespace-nowrap
                      left-0 mt-1 cursor-pointer rounded-md  bg-black ring-opacity-5 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-opacity duration-200 z-50"
-                    >
+                    > 
                       <div className="py-1">
                         {(
                           item.children as { name: string; href: string }[]
-                        ).map((subItem, index) => (
+                        ).map((subItem) => (
                           <a
-                            key={index}
+                            key={subItem.href}
                             href={subItem.href}
                             className="capitalize block px-3 py-2 text-xs text-gray-400 hover:text-gray-300 "
                           >
@@ -223,19 +214,13 @@ export default function Header() {
                 <MenuButton className="-m-1.5 flex items-center p-1.5">
                   <span className="sr-only">Open user menu</span>
                   <span className="hidden lg:flex lg:items-center cursor-pointer">
-                    <Image
-                      src="/default-front.svg"
-                      alt="test"
-                      width={5}
-                      height={5}
-                      className="w-10 h-auto object-cover rounded-full"
-                    />
-                    {/* <UserCircleIcon className="w-6 h-6 text-gray-300 " /> */}
+                    <UserAvatar poster={user.avatar} rounded={true} />
                     <span
                       aria-hidden="true"
                       className="ml-4 text-sm font-semibold text-white capitalize"
                     >
-                      {user.full_name}
+                      {user?.first_name} &nbsp;
+                      {user?.last_name}
                     </span>
                     <ChevronDownIcon
                       aria-hidden="true"
