@@ -12,3 +12,24 @@
 .topHeader{
 box-shadow: inset 0 40px 20px rgba(0,0,0,0.7);   /* top edge */
 }
+
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #1f2937; /* Dark background for track (gray-800) */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #ef4444; /* Red color */
+  border-radius: 10px;
+  border: 2px solid #1f2937; /* Padding around the thumb */
+}
+
+/* Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #ef4444 #1f2937;
+}

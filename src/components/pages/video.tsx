@@ -59,7 +59,7 @@ export default function Videos({ titleId = null }: VideosProps) {
           params: {
             limit: limits,
             page: pages,
-            title_id : titleId,
+            title_id: titleId,
             ...filterParams,
           },
         }
@@ -82,34 +82,61 @@ export default function Videos({ titleId = null }: VideosProps) {
     }
   }, [pages, limits, debouncedFilterQuery]);
 
-  const handleDelete = async (id: string) => {
-    console.log(id);
-    if (!window.confirm("Are you sure you want to delete this video?")) {
-      return;
-    }
+  const handleDeleteWithConfirm = (id: string, fetch: () => void) => {
+    toast(
+      ({ closeToast }) => (
+        <div className="space-y-3">
+          <p className="text-gray-800 font-medium">
+            Are you sure you want to delete this Video?
+          </p>
+          <div className="flex justify-end gap-2">
+            <button
+              onClick={() => closeToast()}
+              className="px-3 py-1 text-sm rounded bg-gray-200 hover:bg-gray-300"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={async () => {
+                closeToast();
 
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/video/${id}`,
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+                const token = localStorage.getItem("token");
+                try {
+                  const response = await axios.delete(
+                    `${process.env.NEXT_PUBLIC_API_URL}/video/${id}`,
+                    {
+                      headers: {
+                        Authorization: token,
+                        "Content-Type": "application/json",
+                      },
+                    }
+                  );
 
-      if (response.data.status) {
-        toast("video deleted successfully");
-        fetch();
-      } else {
-        toast("Failed to delete creditable:", response.data.message);
+                  if (response.data.status) {
+                    toast.success("Video deleted successfully");
+                    fetch(); // Refresh list
+                  } else {
+                    toast.error(`Delete failed: ${response.data.message}`);
+                  }
+                } catch (error) {
+                  console.error(error);
+                  toast.error("Error deleting video.");
+                }
+              }}
+              className="px-3 py-1 text-sm rounded bg-red-500 text-white hover:bg-red-600"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      ),
+      {
+        autoClose: false,
+        closeOnClick: false,
+        draggable: false,
+        closeButton: false,
       }
-    } catch (error) {
-      console.log(error);
-      toast("Error deleting creditable:");
-    }
+    );
   };
 
   useEffect(() => {
@@ -148,7 +175,9 @@ export default function Videos({ titleId = null }: VideosProps) {
                         <PencilIcon className="w-5 h-5" />
                       </Link>
                       <button
-                        onClick={() => handleDelete(person._id)}
+                        onClick={() =>
+                          handleDeleteWithConfirm(person._id, fetch)
+                        }
                         className="text-red-600 hover:text-red-800 cursor-pointer"
                       >
                         <TrashIcon className="w-5 h-5" />

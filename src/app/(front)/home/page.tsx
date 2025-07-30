@@ -98,7 +98,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="relative isolate overflow-hidden pt-14 h-[55vh] sm:h-[80vh]">
+      <div className="relative isolate overflow-hidden pt-14 h-[55vh] sm:h-[80vh] ">
         <Image
           alt=""
           src="/Home-page.png"

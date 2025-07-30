@@ -344,7 +344,7 @@ export default function TitleDetailPage() {
             <h2 className="text-white md:px-4 pb-4 ">
               Recommended Videos for you{" "}
             </h2>
-            <div className="flex flex-col gap-1 h-screen overflow-y-auto scrollable">
+            <div className="flex flex-col gap-1 h-screen overflow-y-auto scrollable custom-scrollbar">
               {title.map((data) => (
                 <Link
                   href={`/titles/${data._id}/${data.slug}`}
