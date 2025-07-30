@@ -2,30 +2,19 @@
 import Image from "next/image";
 
 const navigation = {
-  solutions: [
-    { name: "Marketing", href: "#" },
-    { name: "Analytics", href: "#" },
-    { name: "Automation", href: "#" },
-    { name: "Commerce", href: "#" },
-    { name: "Insights", href: "#" },
-  ],
   support: [
     { name: "Submit ticket", href: "#" },
     { name: "Documentation", href: "#" },
     { name: "Guides", href: "#" },
   ],
-  company: [
-    { name: "About", href: "#" },
-    { name: "Blog", href: "#" },
-    { name: "Jobs", href: "#" },
-    { name: "Press", href: "#" },
-  ],
-  legal: [
-    { name: "Terms of service", href: "#" },
-    { name: "Privacy policy", href: "#" },
-    { name: "License", href: "#" },
-  ],
 };
+
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+  FaYoutube,
+} from "react-icons/fa6";
 
 import { usePublicData } from "@/components/context/PublicDataContext";
 import { WhitePages } from "@/constants/Menu";
@@ -113,10 +102,42 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24">
+        <div className="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24 flex justify-between">
           <p className="text-sm/6 text-gray-400">
             &copy; 2025 Project Control TV, Inc. All rights reserved.
           </p>
+          <div className="flex space-x-4 justify-end ">
+            <label>Connect with us:</label>
+            <a
+              href="https://www.youtube.com/channel/UCgcNn2Z5CVCuaYDIvnY9xaw"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaYoutube className="w-6 h-6 text-red-600 hover:text-red-800 hover:scale-110 transition-transform duration-200" />
+            </a>
+            <a
+              href="https://www.facebook.com/ProjectControlsTV/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaFacebookF className="w-6 h-6 text-blue-600 hover:text-blue-800 hover:scale-110 transition-transform duration-200" />
+            </a>
+
+            <a
+              href="https://www.instagram.com/projectcontrolstv/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaInstagram className="w-6 h-6 text-pink-500 hover:text-pink-700 hover:scale-110 transition-transform duration-200" />
+            </a>
+            <a
+              href="https://www.linkedin.com/company/project-controls-tv/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaLinkedinIn className="w-6 h-6 text-blue-700 hover:text-blue-900 hover:scale-110 transition-transform duration-200" />
+            </a>
+          </div>
         </div>
       </div>
     </footer>

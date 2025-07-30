@@ -34,8 +34,7 @@ export default function Example() {
               Get in touch
             </h2>
             <p className="mt-6 text-lg/8 text-gray-600">
-            Please use the form below to send us a message and we'll get back to you as soon as possible. Alternatively, you can email us at pctv@projectcontrolstv.com
-            </p>
+            Please use the form below to send us a message and we'll get back to you as soon as possible. Alternatively, you can email us at pctv@projectcontrolstv.com </p>
             <dl className="mt-10 space-y-4 text-base/7 text-gray-600">
               <div className="flex gap-x-4">
                 <dt className="flex-none">

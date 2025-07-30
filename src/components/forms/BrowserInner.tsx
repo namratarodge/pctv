@@ -3,18 +3,18 @@
 import { usePublicData } from "@/components/context/PublicDataContext";
 import axios from "axios";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { TagType, TitleType, TvTopicType } from "@/constants/Type";
 
 import { countryOptions } from "@/constants/Main";
 
 const Language = [
-  { value: "english", name: "English" },
-  { value: "spanish", name: "Spanish" },
-  { value: "french", name: "French" },
-  { value: "german", name: "German" },
-  { value: "hindi", name: "Hindi" },
+  { value: "English", name: "English" },
+  { value: "Spanish", name: "Spanish" },
+  { value: "French", name: "French" },
+  { value: "German", name: "German" },
+  { value: "Hindi", name: "Hindi" },
 ];
 
 const Levels = [
@@ -25,8 +25,9 @@ const Levels = [
 
 import Loading from "@/components/layout/Loading";
 import {
+  ChevronDownIcon,
   DocumentMagnifyingGlassIcon,
-  XMarkIcon
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -38,21 +39,40 @@ const MAX_YEAR = 2025;
 export default function BrowserInner() {
   const router = useRouter();
   const [title, setTitle] = useState([]);
-  const {tvtopic, categories} = usePublicData();
+  const { tvtopic, categories } = usePublicData();
   const [loading, setLoading] = useState(true);
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const genreParam = searchParams.get("genre");
+  const limitParam = searchParams.get("limit") ?? 16;
+  const languageName = searchParams.get("language") ?? "";
   const [selectedGenres, setSelectedGenres] = useState(
     genreParam ? genreParam.split(",") : []
   );
   const genreList = genreParam ? genreParam.split(",") : [];
+
+  const [limit, setLimit] = useState(limitParam);
   const [range, setRange] = useState<[number, number]>([MIN_YEAR, MAX_YEAR]);
   const [selectedCountry, setSelectedCountry] = useState("");
-  const [selectedLanguage, setSelectedLanguage] = useState("");
+  const [selectedLanguage, setSelectedLanguage] = useState(languageName);
   const [selectedLevel, setSelectedLevel] = useState("");
+
+  const handleMore = () => {
+    const newLimit = (limit as number) + 4;
+    setLimit(newLimit);
+    console.log(newLimit);
+    const query = new URLSearchParams(window.location.search);
+
+    if (newLimit >= 20) {
+      query.set("limit", newLimit.toString());
+    } else {
+      query.delete("limit");
+    }
+
+    router.push(`/browse?${query}`);
+  };
 
   const handleChangeKeyword = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
@@ -90,6 +110,7 @@ export default function BrowserInner() {
   };
 
   const handleYearRange = (year: [number, number]) => {
+    setRange(year);
     const yearName = year.toString();
     const query = new URLSearchParams(window.location.search);
 
@@ -148,14 +169,19 @@ export default function BrowserInner() {
             Authorization: token,
             "Content-Type": "application/json",
           },
-          // params: query,
+          params: {
+            ...query,
+            limit: limit,
+          },
         }
       );
       if (response.data.status) {
         const modifiedData = response.data.data.data;
-        setLoading(false);
         setTitle(modifiedData);
+      } else {
+        setTitle([]);
       }
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -168,8 +194,42 @@ export default function BrowserInner() {
   };
 
   useEffect(() => {
-    fetchTitlte();
-  }, [pathname]);
+    const releasedParams = searchParams.get("released");
+
+    if (releasedParams) {
+      const [start, end] = releasedParams.split(",").map(Number);
+
+      if (!isNaN(start) && !isNaN(end)) {
+        setRange([start, end]);
+        return;
+      }
+    }
+
+    // fallback to default range
+    setRange([MIN_YEAR, MAX_YEAR]);
+  }, [searchParams]); // 👈 run when the query string changes
+
+  // useEffect(() => {
+  //   fetchTitlte();
+  // }, [pathname,searchParams.toString()]);
+
+  const debounceRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+
+    debounceRef.current = setTimeout(() => {
+      fetchTitlte();
+    }, 500); // 500ms delay – adjust as needed
+
+    return () => {
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
+    };
+  }, [searchParams.toString()]);
 
   if (loading) {
     return <Loading title="" />;
@@ -259,6 +319,7 @@ export default function BrowserInner() {
               }
               className="block appearance-none w-full border border-gray-500  text-gray-300 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
             >
+              <option>Select Language</option>
               {Language.map((language) => (
                 <option key={language.value} value={language.value}>
                   {language.name}
@@ -326,24 +387,37 @@ export default function BrowserInner() {
         </div>
 
         {title.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-            {title.map((title: TitleType,index) => (
-              <div className=" text-white gap-4" key={index}>
-                <Link href={`/titles/${title._id}/${title.slug}`}>
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_WEBSITE}/${title.poster}`}
-                    alt={title.name || "Poster"}
-                    width={400} // or any appropriate width
-                    height={450} // adjust height as needed
-                    className="rounded-lg"
-                  />
-                  <div className="mt-4">
-                    <span className="text-sm">{title?.name.slice(0, 34)}</span>
-                  </div>
-                </Link>
-              </div>
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+              {title.map((title: TitleType, index) => (
+                <div className=" text-white gap-4" key={index}>
+                  <Link href={`/titles/${title._id}/${title.slug}`}>
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_WEBSITE}/${title.poster}`}
+                      alt={title.name || "Poster"}
+                      width={400} // or any appropriate width
+                      height={450} // adjust height as needed
+                      className="rounded-lg"
+                    />
+                    <div className="mt-4">
+                      <span className="text-sm">
+                        {title?.name.slice(0, 34)}
+                      </span>
+                    </div>
+                  </Link>
+                </div>
+              ))}
+            </div>
+            <div className="mt-10 flex justify-center">
+              <button
+                className="flex cursor-pointer items-center gap-2 px-5 py-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition"
+                onClick={() => handleMore()}
+              >
+                View More
+                <ChevronDownIcon className="w-5 h-5" />
+              </button>
+            </div>
+          </>
         ) : (
           <div className="flex flex-col items-center justify-center p-6 text-gray-400  h-100 w-full">
             <DocumentMagnifyingGlassIcon className="w-20 h-20 mb-2" />
