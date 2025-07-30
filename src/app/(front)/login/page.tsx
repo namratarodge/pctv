@@ -29,23 +29,27 @@ export default function Login() {
 
       const data = await response.json();
       localStorage.setItem("token", data.token);
-      if(data.user.userType === 'admin'){
-         window.location.href = "/admin";
-      }else{
+      if (data.user.userType === "admin") {
+        window.location.href = "/admin";
+      } else {
         window.location.href = "/";
       }
-     
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast("Error during login:" + error);
     }
   }
 
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8 h-screen">
-        <div className="mt-5 sm:mx-auto sm:w-full lg:w-1/3">
-          <div className="bg-gray-800 px-5  py-10 shadow-sm sm:rounded-xl sm:px-6  bg-opacity-75 backdrop-invert">
+      <div
+        className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8 h-screen "
+        style={{
+          backgroundImage: 'url("/bg-login-page.jpg")',
+        }}
+      >
+        <div className="mt-5 sm:mx-auto sm:w-full lg:w-1/4 ">
+          <div className="bg-white/1 backdrop-blur-md border border-white/20 px-5 py-10 shadow-xl sm:rounded-xl sm:px-6">
             <form onSubmit={handleSubmit} className="space-y-6">
               <h2 className="text-white text-2xl">Log In</h2>
               <p className="text-gray-200 text-sm">
@@ -86,12 +90,12 @@ export default function Login() {
 
               <div className="flex items-center justify-between">
                 <div className="text-sm/6 mx-auto ">
-                  <a
-                    href="#"
+                  <Link
+                    href="/forgot-password"
                     className="font-semibold text-gray-500 hover:text-white"
                   >
                     Forgot password?
-                  </a>
+                  </Link>
                 </div>
               </div>
 
@@ -100,23 +104,21 @@ export default function Login() {
                   type="submit"
                   className="flex w-full justify-center rounded-full cursor-pointer bg-[#f44336] px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-red-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
                 >
-                  LOGIN
+                  Log In
                 </button>
               </div>
             </form>
 
-            
-          <p className="mt-10 text-center text-sm/6 text-gray-500">
-            Don not have an account?
-            <Link
-              href="register"
-              className="font-semibold text-red-400 hover:text-red-500"
-            >
-              Sign Up
-            </Link>
-          </p>
+            <p className="mt-10 text-center text-sm/6 text-gray-300">
+              Don not have an account? 
+              <Link
+                href="register"
+                className="font-semibold text-red-400 hover:text-red-500 px-2"
+              >
+                Sign Up
+              </Link>
+            </p>
           </div>
-
         </div>
       </div>
     </>

@@ -100,4 +100,4 @@ export const navigationTitleSubMenu = [
 
 export const WhitePages = ["/account", "/register", "/pricing"];
 
-export const NoBGPages = ["/", "/home"];
+export const NoBGPages = ["/", "/home", "/login", "/forgot-password"];
