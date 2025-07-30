@@ -75,6 +75,39 @@ export default function TitleDetailPage() {
     }
   }, [titleId]);
 
+  const updateTitleView = async (id: string) => {
+    const token = localStorage.getItem("token");
+
+    // Avoid updating view if already done recently
+    const viewedKey = `viewed_${id}`;
+    const lastViewed = sessionStorage.getItem(viewedKey);
+
+    if (lastViewed) return;
+
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/title/visit/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data.status) {
+        sessionStorage.setItem(viewedKey, "true");
+      }
+    } catch (error) {
+      console.error("Error updating view count:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (titleDetails?._id) {
+      updateTitleView(titleDetails._id);
+    }
+  }, [titleDetails]);
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -181,7 +214,6 @@ export default function TitleDetailPage() {
                         <PlayCircleIcon className="w-12 h-12 text-red-600" />
                       </div>
                     </div>
-                    
                   </>
                 )}
                 {play && (
@@ -363,7 +395,6 @@ export default function TitleDetailPage() {
                       {data.name.slice(0, 65)}
                     </h2>
                     <p className="text-gray-400 text-sm">{data.language}</p>
-                    <p className="text-gray-400 text-sm ">Director of India</p>
                   </div>
                 </Link>
               ))}
