@@ -26,7 +26,7 @@ const slides = [
 export default function Home() {
   const [title, setTitle] = useState([]);
   const [topTitle, setTopTitle] = useState([]);
-  const [mainWatch, setMainwatch] = useState([]);
+  const [mainWatch, setMainwatch] = useState<SliderType | null>(null);
   const [loading, setLoading] = useState(false);
 
   const fetchTitlte = async () => {
@@ -132,8 +132,8 @@ export default function Home() {
               <div className="mt-8 flex  justify-between  ">
                 <div className="flex  gap-4">
                   <Link
-                    href={`/titles/${mainWatch.slug && mainWatch._id}/${
-                      mainWatch.slug
+                    href={`/titles/${mainWatch?.slug && mainWatch?._id}/${
+                      mainWatch?.slug
                     }`}
                     target="_blank"
                     className=" flex rounded-full bg-red-500 pl-3 pr-1 gap-2 py-1 items-center text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20 cursor-pointer"
