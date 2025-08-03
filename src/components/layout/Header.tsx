@@ -26,8 +26,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { NoBGPages } from "@/constants/Menu";
-import { TagType } from "@/constants/Type";
-import { redirect, usePathname } from "next/navigation";
+import { TagType, TitleDetailsType } from "@/constants/Type";
+import { redirect, usePathname, useRouter } from "next/navigation";
+import { AutoCompeleteTitleForHeader } from "../forms";
 import UserAvatar from "../forms/UserAvatar";
 
 const baseNavigation = [
@@ -66,9 +67,10 @@ function classNames(...classes: (string | false | null | undefined)[]): string {
 }
 
 export default function Header() {
+  const router = useRouter();
+  const [showSearch, setShowSearch] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user, tvtopic, categories } = usePublicData();
-
 
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -127,6 +129,10 @@ export default function Header() {
     window.location.href = "/login"; // or use router.push('/login') if using Next.js router
   };
 
+  const handleUserSelected = async (data : TitleDetailsType) => {
+    router.push(`/titles/${data._id}/${data.slug}`);
+  }
+
   return (
     <header
       className={` absolute inset-x-0 top-0 z-50 inset-shadow-md  ${
@@ -173,7 +179,7 @@ export default function Header() {
                     <div
                       className=" absolute  whitespace-nowrap
                      left-0 mt-1 cursor-pointer rounded-md  bg-black ring-opacity-5 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-opacity duration-200 z-50"
-                    > 
+                    >
                       <div className="py-1">
                         {(
                           item.children as { name: string; href: string }[]
@@ -205,8 +211,22 @@ export default function Header() {
           </button>
         </div>
 
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-6 items-center">
-          <MagnifyingGlassIcon className="w-5 h-5 text-white cursor-pointer" />
+        <div className="relative hidden lg:flex lg:flex-1 lg:justify-end gap-6 items-center">
+          {showSearch && (
+           <>
+           {/* <input
+              type="text"
+              placeholder="Search title here..."
+              className=" left-0 ml-6 px-2 py-1  text-md border-b-1 text-white  border-gray-300 focus:outline-0 w-100"
+            /> */}
+          <AutoCompeleteTitleForHeader onSelect={handleUserSelected} />
+          </>
+          )}
+          <MagnifyingGlassIcon
+            className="w-5 h-5 text-white cursor-pointer"
+            onClick={() => setShowSearch(!showSearch)}
+          />
+
           {user && Object.keys(user).length > 0 ? (
             <>
               <Menu as="div" className="relative">

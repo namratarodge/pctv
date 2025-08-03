@@ -11,6 +11,7 @@ export { default as Toggle } from "./Toggle";
 export { default as AutoCompeleteList } from "./AutoCompeleteList";
 export { default as AutoCompeleteListUser } from "./AutoCompeleteListUser";
 export { default as AutoCompeleteTitle } from "./AutoCompeleteTitle";
+export { default as AutoCompeleteTitleForHeader } from "./AutoCompeleteTitleForHeader";
 export { default as AutoCompleteTitleList } from "./AutoCompleteTitleList";
 
 export { default as StarRating } from "./StarRating";
