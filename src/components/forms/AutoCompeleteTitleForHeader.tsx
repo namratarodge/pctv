@@ -14,7 +14,7 @@ type User = {
 };
 
 type AutoCompletePersonListProps = {
-  onSelect: (selected: User) => void;
+  onSelect: (selected: TitleDetailsType) => void;
 };
 
 export default function AutoCompeleteTitleForHeader({
