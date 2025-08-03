@@ -28,6 +28,7 @@ const VimeoEmbed: FC<VimeoEmbedProps> = ({ htmlString, onVideoProgress, startTim
     player.ready().then(async () => {
       try {
         const duration = await player.getDuration();
+        await player.setVolume(1); // Set volume to 100%
         if (!isUnmounted && startTime > 0 && startTime < duration) {
           await player.setCurrentTime(startTime);
         }

@@ -3,18 +3,16 @@
 import { StarRating, ViemoEmbed } from "@/components/forms";
 import Loading from "@/components/layout/Loading";
 import { TitleType, VideoType } from "@/constants/Type";
-import { formatDate } from "@/utils/common";
-import {
-  PlayCircleIcon,
-  PlusIcon,
-  ShareIcon,
-} from "@heroicons/react/24/outline";
+import { formatDate, timeAgo } from "@/utils/common";
+import { PlayCircleIcon, PlusIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+
+import ShareButtonWithFallback from "@/components/account/ShareButtonWithFallback";
 
 export default function TitleDetailPage() {
   const params = useParams();
@@ -139,7 +137,7 @@ export default function TitleDetailPage() {
         }
       );
       if (response.data.status) {
-        toast("Titles addedd whatchlist. Successfully");
+        toast("Titles were successfully added to the watchlist.");
       } else {
         toast(response.data.error);
       }
@@ -235,15 +233,17 @@ export default function TitleDetailPage() {
                   Watchlist
                 </button>
 
-                <button className="flex cursor-pointer items-center gap-2 rounded-full bg-white/10 backdrop-blur-md px-3 py-1.5 text-sm font-medium text-white hover:bg-white/20 transition duration-200 shadow-md ring-1 ring-white/20">
+                {/* <button className="flex cursor-pointer items-center gap-2 rounded-full bg-white/10 backdrop-blur-md px-3 py-1.5 text-sm font-medium text-white hover:bg-white/20 transition duration-200 shadow-md ring-1 ring-white/20">
                   <ShareIcon className="h-4 w-4 text-white" />
                   Share
-                </button>
+                </button> */}
+                <ShareButtonWithFallback />
               </div>
               <div className="flex justify-between py-2 border-t mt-4 border-b border-[#37454D]  mr-5">
                 <p className="text-gray-400 text-sm">
-                  {formatDate(titleDetails?.created_at, true)} -{" "}
-                  {titleDetails?.views} views
+                  {titleDetails?.views} views  - &nbsp;
+                  {timeAgo(titleDetails?.created_at)} 
+                  <span className="text-xs ml-1">({formatDate(titleDetails?.created_at)})</span>
                 </p>
                 <div className="flex gap-2">
                   <span className="text-gray-400">Rate us</span>

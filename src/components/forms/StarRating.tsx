@@ -4,6 +4,7 @@ import { StarIcon as StarOutline } from "@heroicons/react/24/outline";
 import { StarIcon as StarSolid } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 type RatingProps = {
   score?: number;
@@ -39,6 +40,7 @@ export default function StarRating({ score = 0, titleId }: RatingProps) {
           },
         }
       );
+      toast("Thanks for Rating.");
     } catch (error) {
       console.error("Error fetching data:", error);
     }

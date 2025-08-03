@@ -1,6 +1,6 @@
-// components/VoicesSlider.js
 "use client";
 
+import { slidesCountry } from "@/constants/Menu";
 import Link from "next/link";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -8,20 +8,6 @@ import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-const slides = [
-  { image: "regions/PCE-AUS.png", url: "https://projectcontrolexpo.com/aus" },
-  {
-    image: "regions/PCE-BRAZIL.png",
-    url: "https://projectcontrolexpo.com/brazil",
-  },
-  { image: "regions/PCE-UAE.png", url: "https://projectcontrolexpo.com/dubai" },
-  { image: "regions/PCE-UK.png", url: "https://projectcontrolexpo.com/uk" },
-  { image: "regions/PCE-USA.png", url: "https://projectcontrolexpo.com/usa" },
-  {
-    image: "regions/PCE-VIRTUAL.png",
-    url: "https://projectcontrolexpo.com/virtual",
-  },
-];
 type VoicesSliderProps = {
   title: string;
 };
@@ -44,7 +30,7 @@ export default function SliderNumber({ title }: VoicesSliderProps) {
         }}
         className="relative"
       >
-        {slides.map((slide, index) => (
+        {slidesCountry.map((slide, index) => (
           <SwiperSlide key={index}>
             <div className="relative h-40 flex items-center justify-center  overflow-hidden ">
               <Link href={slide.url} target="_blank">

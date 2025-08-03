@@ -101,3 +101,36 @@ export const navigationTitleSubMenu = [
 export const WhitePages = ["/account", "/register", "/pricing"];
 
 export const NoBGPages = ["/", "/home", "/login", "/forgot-password"];
+
+export const slidesCountry = [
+  {
+    name: "Australia",
+    image: "regions/PCE-AUS.png",
+    url: "https://projectcontrolexpo.com/aus",
+  },
+  {
+    name: "Brazil",
+    image: "regions/PCE-BRAZIL.png",
+    url: "https://projectcontrolexpo.com/brazil",
+  },
+  {
+    name: "United Arab Emirates",
+    image: "regions/PCE-UAE.png",
+    url: "https://projectcontrolexpo.com/dubai",
+  },
+  {
+    name: "United Kingdom",
+    image: "regions/PCE-UK.png",
+    url: "https://projectcontrolexpo.com/uk",
+  },
+  {
+    name: "United States",
+    image: "regions/PCE-USA.png",
+    url: "https://projectcontrolexpo.com/usa",
+  },
+  {
+    name: "Virtual",
+    image: "regions/PCE-VIRTUAL.png",
+    url: "https://projectcontrolexpo.com/virtual",
+  },
+];

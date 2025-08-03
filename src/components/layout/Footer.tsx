@@ -9,6 +9,8 @@ const navigation = {
   ],
 };
 
+import { slidesCountry } from "@/constants/Menu";
+
 import {
   FaFacebookF,
   FaInstagram,
@@ -77,9 +79,9 @@ export default function Footer() {
                   Project Controls Expo
                 </h3>
                 <ul role="list" className="mt-6 space-y-4">
-                  {navigation.support.map((item) => (
+                  {slidesCountry.map((item) => (
                     <li key={item.name}>
-                      <a href={item.href} className="text-sm/6 ">
+                      <a target="_blank" href={item.url} className="text-sm/6 ">
                         {item.name}
                       </a>
                     </li>
@@ -88,7 +90,7 @@ export default function Footer() {
               </div>
               <div className="mt-10 md:mt-0">
                 <h3 className="text-sm/6 font-semibold ">Pages</h3>
-                <ul role="list" className="mt-6 space-y-4 text-sm/6">
+                <ul role="list" className="mt-6 space-y-4 text-sm">
                   {pages.map((item: PageType) => (
                     <li key={item._id}>
                       <Link href={`/pages/${item.slug}`}>{item.title}</Link>
