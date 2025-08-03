@@ -1,9 +1,9 @@
 "use client";
 import { Slider, SliderNumber, TopicSlider } from "@/components/layout";
-import { SpeakerXMarkIcon } from "@heroicons/react/24/outline";
-import { PlayCircleIcon } from "@heroicons/react/24/solid";
+import { PlayCircleIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 type SliderType = {
@@ -26,6 +26,7 @@ const slides = [
 export default function Home() {
   const [title, setTitle] = useState([]);
   const [topTitle, setTopTitle] = useState([]);
+  const [mainWatch, setMainwatch] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const fetchTitlte = async () => {
@@ -51,7 +52,8 @@ export default function Home() {
             image: process.env.NEXT_PUBLIC_WEBSITE + "/" + item.poster,
           })
         );
-        console.log(modifiedData);
+        console.log('sandesh')
+        setMainwatch(modifiedData[0]);
         setLoading(false);
         setTitle(modifiedData);
       }
@@ -129,18 +131,23 @@ export default function Home() {
               </p>
               <div className="mt-8 flex  justify-between  ">
                 <div className="flex  gap-4">
-                  <button className=" flex rounded-full bg-red-500 px-4 gap-2 py-1 items-center text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20 cursor-pointer">
+                  <Link
+                    href={`/titles/${mainWatch.slug && mainWatch._id}/${
+                      mainWatch.slug
+                    }`}
+                    target="_blank"
+                    className=" flex rounded-full bg-red-500 pl-3 pr-1 gap-2 py-1 items-center text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20 cursor-pointer"
+                  >
                     Watch Now
                     <PlayCircleIcon className="h-7 w-7 text-white" />
-                  </button>
+                  </Link>
                   <button className="w-25 rounded-full bg-gray-500 px-6 py-1 text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20 cursor-pointer">
                     Share
                   </button>
                 </div>
-
-                <button className="p-3 text-center items-center border-gray-300 rounded-full border  text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+                {/* <button className="p-3 text-center items-center border-gray-300 rounded-full border  text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20">
                   <SpeakerXMarkIcon className="h-5 w-5 text-white" />
-                </button>
+                </button> */}
               </div>
             </div>
           </div>

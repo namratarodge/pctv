@@ -4,7 +4,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 const PublicDataContext = createContext();
 
 export function PublicDataProvider({ children }) {
@@ -78,8 +77,6 @@ export function PublicDataProvider({ children }) {
     setLoading(true);
     const token = localStorage.getItem("token");
     if (token && token.split(".").length === 3) {
-      const decoded = jwtDecode(token);
-      // setUser(decoded);
       try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/user`,
