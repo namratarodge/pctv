@@ -129,9 +129,9 @@ export default function Header() {
     window.location.href = "/login"; // or use router.push('/login') if using Next.js router
   };
 
-  const handleUserSelected = async (data : TitleDetailsType) => {
+  const handleUserSelected = async (data: TitleDetailsType) => {
     router.push(`/titles/${data._id}/${data.slug}`);
-  }
+  };
 
   return (
     <header
@@ -213,19 +213,18 @@ export default function Header() {
 
         <div className="relative hidden lg:flex lg:flex-1 lg:justify-end gap-6 items-center">
           {showSearch && (
-           <>
-           {/* <input
-              type="text"
-              placeholder="Search title here..."
-              className=" left-0 ml-6 px-2 py-1  text-md border-b-1 text-white  border-gray-300 focus:outline-0 w-100"
-            /> */}
-          <AutoCompeleteTitleForHeader onSelect={handleUserSelected} />
-          </>
+            <>
+              <AutoCompeleteTitleForHeader onSelect={handleUserSelected} />
+              <XMarkIcon className="w-5 h-5  text-white cursor-pointer" onClick={() => setShowSearch(!showSearch)} />
+            </>
           )}
-          <MagnifyingGlassIcon
-            className="w-5 h-5 text-white cursor-pointer"
-            onClick={() => setShowSearch(!showSearch)}
-          />
+
+          {!showSearch && (
+            <MagnifyingGlassIcon
+              className="w-5 h-5 text-white cursor-pointer"
+              onClick={() => setShowSearch(!showSearch)}
+            />
+          )}
 
           {user && Object.keys(user).length > 0 ? (
             <>
