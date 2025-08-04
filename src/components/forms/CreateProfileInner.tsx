@@ -1,5 +1,4 @@
 "use client";
-import { UserType } from "@/constants/Type";
 import { CreateUserFormData, EditUserFormData, createUserSchema, editUserSchema } from "@/constants/Validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
@@ -50,7 +49,7 @@ export default function CreateProfile() {
 
 
 
-  const onSubmit = async (data: UserType) => {
+  const onSubmit = async (data: CreateUserFormData) => {
     const token = localStorage.getItem("token");
   
     try {

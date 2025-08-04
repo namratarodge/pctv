@@ -1,7 +1,7 @@
-import { Suspense } from "react";
 import CreateProfileInner from "@/components/forms/CreateProfileInner";
+import { Suspense } from "react";
 
-export default function CreateProfile() {
+export default function UsersPage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <CreateProfileInner />

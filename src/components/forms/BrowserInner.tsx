@@ -240,9 +240,9 @@ export default function BrowserInner() {
       <div className="w-full  md:w-1/5 sm:w-full px-2 py-4 overflow-auto lg:h-auto h-screen ">
         <div className="w-full border-b border-gray-500 pb-4">
           <div className="text-gray-300 text-lg">TV Topic</div>
-          <div className="relative inline-block mt-4 w-full text-white  bg-gray-800 rounded-full text-sm">
+          <div className="relative inline-block mt-4 w-full  bg-gray-800 rounded-full text-sm">
             <select
-              className="block appearance-none w-full border border-gray-500  text-gray-300 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2"
+              className="block appearance-none w-full border border-gray-500   py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2"
               onChange={handleChangeKeyword}
             >
               <option value="all">All</option>
@@ -293,7 +293,7 @@ export default function BrowserInner() {
               onChange={(e) =>
                 handleSelectChange(e, setSelectedCountry, "country")
               }
-              className="text-sm block appearance-none w-full border border-gray-500  text-gray-300 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
+              className="text-sm block appearance-none w-full border border-gray-500  py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
             >
               {countryOptions.map((country, index) => (
                 <option key={index} value={country.value}>
@@ -317,7 +317,7 @@ export default function BrowserInner() {
               onChange={(e) =>
                 handleSelectChange(e, setSelectedLanguage, "language")
               }
-              className="block appearance-none w-full border border-gray-500  text-gray-300 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
+              className="block appearance-none w-full border border-gray-500  py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
             >
               <option>Select Language</option>
               {Language.map((language) => (

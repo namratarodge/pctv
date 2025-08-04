@@ -321,7 +321,7 @@ export type DecodedUser = {
   username: string;
 };
 export type UserType = {
-  userType: "user";
+  userType: "user" | "admin"; // adjust as needed
   _id: string;
   id: number;
   username: string;
@@ -332,7 +332,8 @@ export type UserType = {
   phone: string;
   legacy_permissions: unknown | null;
   email: string;
-  password: string;
+  password: string | null;
+  pass: string | null;
   card_brand: string | null;
   card_last_four: string | null;
   remember_token: string | null;

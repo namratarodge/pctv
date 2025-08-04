@@ -1,7 +1,7 @@
-import { Suspense } from "react";
 import CreatePage from "@/components/forms/CreatePage";
+import { Suspense } from "react";
 
-export default function CreateProfile() {
+export default function ProfilePage() {
   return (
     <Suspense fallback={<div>Loading form...</div>}>
       <CreatePage />
