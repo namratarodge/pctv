@@ -391,6 +391,7 @@ export const listColumn: {
         <UserAvatar
           poster={row.user_id?.avatar}
           name={row.user_id?.first_name}
+          rounded={true}
         />
         <span className="flex flex-col text-sm">
           {row.user_id?.first_name} {row.user_id?.last_name}
@@ -565,7 +566,7 @@ export const reviewColumn: {
     render: (row) => (
       <div className="flex items-center flex-col space-x-2">
         <StarIcon className="h-5 w-5 text-yellow-400" />
-        {row.score} / 10
+        {row.score} / 5
       </div>
     ),
   },

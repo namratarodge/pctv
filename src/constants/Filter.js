@@ -245,10 +245,11 @@ export const TagsfilterType = [
     key: "type",
     option: [
       { name: "TV Topic", value: "keyword" },
-      { name: "categories", value: "genre" },
+      { name: "Categories", value: "genre" },
       { name: "Production Country", value: "production_country" },
       { name: "Custom", value: "custom" },
     ],
+    search: "name",
   },
   {
     name: "Created At",

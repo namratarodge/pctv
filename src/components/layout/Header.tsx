@@ -215,7 +215,7 @@ export default function Header() {
           {showSearch && (
             <>
               <AutoCompeleteTitleForHeader onSelect={handleUserSelected} />
-              <XMarkIcon className="w-5 h-5  text-white cursor-pointer" onClick={() => setShowSearch(!showSearch)} />
+              <XMarkIcon className="w-5 h-5  text-white cursor-pointer" onClick={() => setShowSearch(! showSearch)} />
             </>
           )}
 

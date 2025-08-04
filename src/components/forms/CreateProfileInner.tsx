@@ -1,16 +1,18 @@
 "use client";
-import { UserFormData, userSchema } from "@/constants/Validation";
+import { UserType } from "@/constants/Type";
+import { CreateUserFormData, EditUserFormData, createUserSchema, editUserSchema } from "@/constants/Validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import Image from "next/image";
 
 export default function CreateProfile() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id"); // check for ID in query param
+
+  const isEditMode = !!id;
 
   const {
     register,
@@ -18,12 +20,9 @@ export default function CreateProfile() {
     formState: { errors },
     setValue,
     reset,
-  } = useForm<UserFormData>({
-    resolver: zodResolver(userSchema),
+  } = useForm<EditUserFormData | CreateUserFormData>({
+    resolver: zodResolver(isEditMode ? editUserSchema : createUserSchema),
   });
-
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-
   // Fetch user details if in edit mode
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -41,8 +40,7 @@ export default function CreateProfile() {
           setValue("last_name", user.last_name);
           setValue("email", user.email);
           // setValue("email_confirmed", user.email_confirmed ? "yes" : "no");
-          setValue("user_type", user.userType);
-          setPreviewUrl(user.image_url); // existing image
+          setValue("userType", user.userType);
         })
         .catch(() => {
           toast.error("Failed to fetch user details.");
@@ -50,39 +48,37 @@ export default function CreateProfile() {
     }
   }, [id, setValue]);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setPreviewUrl(URL.createObjectURL(file));
-    }
-  };
 
-  const onSubmit = async (data: UserFormData) => {
+
+  const onSubmit = async (data: UserType) => {
     const token = localStorage.getItem("token");
+  
     try {
-      const response = await axios.post(
-        process.env.NEXT_PUBLIC_API_URL + "/users",
+      const url = id
+        ? `${process.env.NEXT_PUBLIC_API_URL}/user/${id}` // Adjust to match your API route
+        : `${process.env.NEXT_PUBLIC_API_URL}/user`;
+  
+      const method = id ? "put" : "post"; // use PATCH or PUT if that's what your API expects
+  
+      const response = await axios({
+        method,
+        url,
         data,
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      });
+  
       if (response.data.status) {
-        toast("User created sucessfully.");
-        reset();
+        toast.success(id ? "User updated successfully." : "User created successfully.");
+        if (!id) reset(); // reset only on create
       }
-      // Optionally reset form or give user feedback here
     } catch (error) {
-      console.log(error)
-      toast("Failed to create person:");
-      // Optionally show error message to user
+      console.log(error);
+      toast.error(id ? "Failed to update user." : "Failed to create user.");
     }
   };
-
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center p-4">
       <div className="w-full bg-white rounded-md shadow-xl p-8">
@@ -158,6 +154,7 @@ export default function CreateProfile() {
               <input
                 type="text"
                 {...register("password")}
+                disabled={!!id}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               {errors.password && (
@@ -172,6 +169,7 @@ export default function CreateProfile() {
               <input
                 type="text"
                 {...register("password_confirmed")}
+                disabled={!!id}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               {errors.password_confirmed && (
@@ -190,38 +188,18 @@ export default function CreateProfile() {
                   key={g}
                   className="flex items-center gap-2 text-gray-700"
                 >
-                  <input type="radio" {...register("user_type")} value={g} />
+                  <input type="radio" {...register("userType")} value={g} />
                   {g.charAt(0).toUpperCase() + g.slice(1)}
                 </label>
               ))}
             </div>
 
-            {errors.user_type && (
-              <p className="text-red-500">{errors.user_type.message}</p>
+            {errors.userType && (
+              <p className="text-red-500">{errors.userType.message}</p>
             )}
           </div>
 
-          <div>
-            <label className="block text-gray-600 mb-1">Upload Image</label>
-            {previewUrl && (
-              <div className="w-48 h-48 relative shadow rounded overflow-hidden">
-                <Image
-                  src={previewUrl}
-                  alt="Preview"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            )}
-            <div className="mt-2">
-              <input
-                type="file"
-                name="image"
-                onChange={handleImageChange}
-                className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border file:border-gray-300 file:rounded-xl file:text-sm file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200"
-              />
-            </div>
-          </div>
+       
 
           <button
             type="submit"

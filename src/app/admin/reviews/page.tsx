@@ -1,23 +1,21 @@
 "use client";
 import {
-  Filter,
-  Paginations,
   ModelForm,
-  TenStarRating,
+  Paginations,
+  TenStarRating
 } from "@/components/forms";
-import { ReviewfilterType } from "@/constants/Filter";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { PencilIcon } from "@heroicons/react/24/outline";
-import { formatDate } from "@/utils/common";
 import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
-import { reviewColumn } from "@/constants/DataTableColumn";
 import Loading from "@/components/layout/Loading";
-import { toast } from "react-toastify";
-import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { reviewColumn } from "@/constants/DataTableColumn";
 import { ReviewType, reviewFormType } from "@/constants/Type";
-import { useDebounce } from "use-debounce";
+import { formatDate } from "@/utils/common";
 import { parseQueryString } from "@/utils/helper";
+import { PencilIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { useDebounce } from "use-debounce";
 
 export default function People() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -174,9 +172,9 @@ export default function People() {
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
       <h1 className="text-2xl font-semibold text-gray-600 ">Review</h1>
 
-      <div className="sm:flex  mt-4  h-auto justify-between gap-4 ">
+      {/* <div className="sm:flex  mt-4  h-auto justify-between gap-4 ">
         <Filter filterType={ReviewfilterType} onQueryChange={setFilterQuery} />
-      </div>
+      </div> */}
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">

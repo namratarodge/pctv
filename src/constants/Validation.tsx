@@ -89,7 +89,7 @@ export const videoSchema = z.object({
 });
 export type VideoFormData = z.infer<typeof videoSchema>;
 
-export const userSchema = z
+export const createUserSchema = z
   .object({
     first_name: z.string().min(1, "First Name is required"),
     last_name: z.string().min(1, "Last Name is required"),
@@ -98,19 +98,38 @@ export const userSchema = z
 
     email_confirmed: z.string().min(1, "Email Confirmed is required"),
 
-    user_type: z.enum(["user", "admin"], {
+    userType: z.enum(["user", "admin"], {
       errorMap: () => ({ message: "User Type is required" }),
     }),
 
     password: z.string().min(1, "Password is required"),
     password_confirmed: z.string().min(1, "password confimed is required"),
-    image: z.any().nullable(),
   })
   .refine((data) => data.password === data.password_confirmed, {
     path: ["password_confirmed"],
     message: "Password do not match",
   });
-export type UserFormData = z.infer<typeof userSchema>;
+
+  export const editUserSchema = z.object({
+    first_name: z.string().min(1, "First Name is required"),
+    last_name: z.string().min(1, "Last Name is required"),
+    email: z.string().min(1, "Email is required"),
+    email_confirmed: z.string().optional(),
+    userType: z.enum(["user", "admin"], {
+      errorMap: () => ({ message: "User Type is required" }),
+    }),
+    password: z.string().optional(),
+    password_confirmed: z.string().optional(),
+  }).refine(
+    (data) =>
+      !data.password || data.password === data.password_confirmed,
+    {
+      path: ["password_confirmed"],
+      message: "Passwords do not match",
+    }
+  );  
+export type CreateUserFormData = z.infer<typeof createUserSchema>;
+export type EditUserFormData = z.infer<typeof editUserSchema>;
 
 export const pageSchema = z.object({
   title: z.string().min(1, "Title is required"),

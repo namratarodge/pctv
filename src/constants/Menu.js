@@ -56,17 +56,12 @@ export const teams = [
 export const navigationSettings = [
   { name: "General", href: "/admin/settings", current: true },
   { name: "Content", href: "/admin/settings/content", current: false },
-  { name: "Localization", href: "/", current: false },
   {
     name: "Authentication",
     href: "/admin/settings/authentication",
     current: false,
   },
-  { name: "Uploading", href: "#", current: false },
-  { name: "Mail", href: "#", current: false },
-  { name: "Cache", href: "#", current: false },
   { name: "Analytics", href: "/admin/settings/analytics", current: false },
-  { name: "Logging", href: "#", current: false },
   { name: "Recaptcha", href: "/admin/settings/recaptcha", current: false },
 ];
 

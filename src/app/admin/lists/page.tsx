@@ -1,16 +1,15 @@
 "use client";
-import { Filter, DataTable } from "@/components/forms";
-import { PencilIcon, PlusCircleIcon } from "@heroicons/react/16/solid";
-import Link from "next/link";
-import { filterType } from "@/constants/Filter";
-import { useCallback, useEffect, useState } from "react";
-import { formatDate } from "@/utils/common";
-import axios from "axios";
+import { DataTable } from "@/components/forms";
 import Loading from "@/components/layout/Loading";
 import { listColumn } from "@/constants/DataTableColumn";
 import { ListType } from "@/constants/Type";
-import { useDebounce } from "use-debounce";
+import { formatDate } from "@/utils/common";
 import { parseQueryString } from "@/utils/helper";
+import { PencilIcon, PlusCircleIcon } from "@heroicons/react/16/solid";
+import axios from "axios";
+import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
+import { useDebounce } from "use-debounce";
 
 export default function Lists() {
   const [data, setData] = useState([]);
@@ -59,16 +58,16 @@ export default function Lists() {
   }, []);
   return (
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
-      <h1 className="text-2xl font-semibold text-gray-600 ">Lists</h1>
       {loading ? (
         <Loading />
       ) : (
         <>
-          <div className="sm:flex sm:items-center mt-4  h-auto ">
-            <Filter filterType={filterType} onQueryChange={setFilterQuery} />
+          <div className="sm:flex sm:items-center mt-4  h-auto  justify-between">
+            <h1 className="text-2xl font-semibold text-gray-600 ">Lists</h1>
+            {/* <Filter filterType={filterType} onQueryChange={setFilterQuery} /> */}
             <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none flex gap-2">
               <Link
-                href="#"
+                href="/lists/new"
                 className="flex items-center  gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 <PlusCircleIcon className="w-6 h-6" /> Add New Lists
@@ -81,14 +80,14 @@ export default function Lists() {
                 <DataTable
                   columns={listColumn}
                   data={data}
-                  renderActions={(person) => (
+                  renderActions={(person: ListType) => (
                     <div className="flex gap-3 justify-end">
-                      <button
-                        onClick={() => console.log("Edit", person)}
+                      <Link
+                        href={`/lists/${person._id}`}
                         className="text-gray-600 hover:text-gray-800 cursor-pointer"
                       >
                         <PencilIcon className="w-5 h-5" />
-                      </button>
+                      </Link>
                     </div>
                   )}
                 />
