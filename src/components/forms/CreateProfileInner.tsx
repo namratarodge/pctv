@@ -49,7 +49,7 @@ export default function CreateProfile() {
 
 
 
-  const onSubmit = async (data: CreateUserFormData) => {
+  const onSubmit = async (data: CreateUserFormData | EditUserFormData) => {
     const token = localStorage.getItem("token");
   
     try {
@@ -78,6 +78,7 @@ export default function CreateProfile() {
       toast.error(id ? "Failed to update user." : "Failed to create user.");
     }
   };
+
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center p-4">
       <div className="w-full bg-white rounded-md shadow-xl p-8">
