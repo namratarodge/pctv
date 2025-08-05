@@ -18,6 +18,7 @@ export default function CreatePage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pageId = searchParams.get("id"); // edit mode if this exists
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL+"pages/";
 
   const [loading, setLoading] = useState(false);
 
@@ -133,7 +134,7 @@ export default function CreatePage() {
               </label>
               <div className="mt-2 flex items-center rounded-md border px-3 py-2">
                 <span className="text-gray-500 text-sm">
-                  https://projectcontrolstv.com/pages/
+                  {baseUrl}
                 </span>
                 <input
                   type="text"

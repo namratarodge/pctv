@@ -15,7 +15,7 @@ const EditorInput: React.FC<EditorInputProps> = ({ name, value, onChange, label 
 
   return (
     <div className="flex flex-col gap-2 mb-4">
-      {label && <label className="text-sm font-medium text-gray-700">{label} {name}</label>}
+      {label && <label className="text-sm font-medium text-gray-700">{label}</label>}
       <Editor
        apiKey="whyb8cfl1fqwrtall8smrpnhlfuvz9jf6mr8qbh325zepvvp"
         onInit={(_, editor) => (editorRef.current = editor)}

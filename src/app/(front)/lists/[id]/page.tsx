@@ -7,6 +7,7 @@ import { ListFormData, listsUpSchema } from "@/constants/Validation";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -254,9 +255,9 @@ export default function TitleDetailPage() {
               <button className="bg-red-500 rounded-md px-6 py-2 text-white cursor-pointer hover:bg-red-400">
                 {isNew ? "Save" : "Update"}
               </button>
-              <button className="bg-gray-800 rounded-md px-6 py-2 text-white cursor-pointer hover:bg-gray-400">
+              <Link href="/lists" className="bg-gray-800 rounded-md px-6 py-2 text-white cursor-pointer hover:bg-gray-400">
                 Cancel
-              </button>
+              </Link>
             </div>
           </form>
         </div>
