@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  CreditCardIcon,
   LockClosedIcon,
   UserCircleIcon
 } from "@heroicons/react/24/outline";
@@ -19,11 +18,11 @@ export const accountSettingsLinks = [
     href: "/account?name=update_profile",
     icon: UserCircleIcon,
   },
-  {
-    name: "Manage Payment Methods",
-    href: "/account?name=manage_payment",
-    icon: CreditCardIcon,
-  },
+  // {
+  //   name: "Manage Payment Methods",
+  //   href: "/account?name=manage_payment",
+  //   icon: CreditCardIcon,
+  // },
 ];
 
 import MyMembership from "./MyMembership";
