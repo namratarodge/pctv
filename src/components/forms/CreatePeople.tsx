@@ -1,66 +1,147 @@
 "use client";
+import { PeopleType } from "@/constants/Type";
 import { ProfileFormData, profileSchema } from "@/constants/Validation";
-import { useSearchParams } from "next/navigation";
-import React from "react";
-import { useForm } from "react-hook-form";
+import { PhotoIcon } from "@heroicons/react/24/outline";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "react-toastify";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 export default function CreatePeople() {
   const searchParams = useSearchParams(); // type: URLSearchParams
-  const known_for = searchParams.get("known_for") ?? "";
+  const Known_for = searchParams.get("known_for") ?? "";
+  const id = searchParams.get("id"); // check for ID in query param
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [thumbnail, setThumbnail] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  const isEditMode = !!id;
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
     reset,
   } = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      knownFor: known_for,
+      known_for: Known_for,
       allow_update: false,
     },
   });
 
-
-
-  const onSubmit = async (data: ProfileFormData) => {
+  // Fetch user details if in edit mode
+  useEffect(() => {
     const token = localStorage.getItem("token");
-    // write post request to
-    try {
-      const response = await axios.post(
-        process.env.NEXT_PUBLIC_API_URL + "/api/createPeople",
-        data,
-        {
+    if (id) {
+      axios
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/peoples?_id=${id}`, {
           headers: {
             Authorization: token,
             "Content-Type": "application/json",
           },
-        }
-      );
+        })
+        .then((res) => {
+          const user = res.data.data.data[0];
+          setValue("name", user.name);
+          setValue("known_for", user.known_for);
+          setValue("birth_date", user.birth_date);
+          setValue("death_date", user.death_date);
+          setValue("birth_place", user.birth_place);
+          setValue("popularity", Number(user.popularity));
+          setValue("gender", user.gender);
+          setValue("description", user.description);
+          setValue("allow_update", Boolean(user.allow_update));
+
+          // Set thumbnail preview
+          if (user.poster) {
+            const baseURL = process.env.NEXT_PUBLIC_WEBSITE + "/" + user.poster;
+            setPreviewUrl(baseURL);
+          }
+        })
+        .catch(() => {
+          toast.error("Failed to fetch user details.");
+        });
+    }
+  }, [id, setValue]);
+
+  const onSubmit = async (data: PeopleType) => {
+    console.log(data)
+    const token = localStorage.getItem("token");
+
+    const formData = new FormData();
+
+    // Append all the fields manually
+    formData.append("name", data.name);
+    formData.append("known_for", data.known_for);
+    formData.append("birth_date", data.birth_date);
+    formData.append("death_date", data.death_date);
+    formData.append("birth_place", data.birth_place);
+    formData.append("popularity", data.popularity);
+    formData.append("gender", data.gender);
+    formData.append("description", data.description);
+    formData.append("allow_update", data.allow_update);
+    if (thumbnail) {
+      formData.append("poster", thumbnail);
+    }
+
+    // write post request to
+    try {
+      let response;
+      if (!isEditMode) {
+        response = await axios.post(
+          process.env.NEXT_PUBLIC_API_URL + "/people",
+          formData,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+      } else {
+        response = await axios.put(
+          `${process.env.NEXT_PUBLIC_API_URL}/people/${id}`,
+          formData,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+      }
 
       if (response.data.status) {
-        toast("People created sucessfully.");
-        reset({
-          name: "",
-          knownFor: known_for, // keep known_for prefilled if needed
-          birth_date: "",
-          death_date: "",
-          birth_place: "",
-          popularity: undefined,
-          gender: "male",
-          description: "",
-          allow_update: false,
-        });
-      
+        toast.success(
+          id ? "People updated successfully." : "People created successfully."
+        );
+        if (!id) reset(); // reset only on create
       }
       // Optionally reset form or give user feedback here
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.error("Failed to create person:");
       // Optionally show error message to user
+    }
+  };
+
+  const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setThumbnail(file);
+      setPreviewUrl(URL.createObjectURL(file));
+    }
+  };
+  const handleRemoveThumbnail = () => {
+    setPreviewUrl(null); // Or setPreviewUrl('')
+    setThumbnail(null); // Or setPreviewUrl('')
+    // Clear the file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
 
@@ -69,7 +150,7 @@ export default function CreatePeople() {
       <div className="w-full bg-white rounded-md shadow-xl p-8">
         <div className="flex gap-2">
           <h1 className="text-xl font-bold mb-6  text-gray-800">
-            Add New People
+            {isEditMode ? "Edit" : "Add"} New People
           </h1>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -90,13 +171,12 @@ export default function CreatePeople() {
               <label className="block text-gray-600 mb-1">Known For</label>
               <input
                 type="text"
-                {...register("knownFor")}
-                disabled={!!known_for}
-                value={known_for}
+                {...register("known_for")}
+                disabled={!!Known_for}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              {errors.knownFor && (
-                <p className="text-red-500">{errors.knownFor.message}</p>
+              {errors.known_for && (
+                <p className="text-red-500">{errors.known_for.message}</p>
               )}
             </div>
 
@@ -139,7 +219,7 @@ export default function CreatePeople() {
             <div>
               <label className="block text-gray-600 mb-1">Popularity</label>
               <input
-                type="number"
+                type="text"
                 {...register("popularity")}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -155,7 +235,6 @@ export default function CreatePeople() {
               <select
                 {...register("gender")}
                 className="col-start-1 row-start-1 w-1/6 appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-        
               >
                 <option value="">Select gender</option>
                 <option value="male">Male</option>
@@ -182,11 +261,44 @@ export default function CreatePeople() {
 
           <div>
             <label className="block text-gray-600 mb-1">Upload Image</label>
-            <input
-              type="file"
-              name="image"
-              className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border file:border-gray-300 file:rounded-xl file:text-sm file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200"
-            />
+            <div className="flex items-center gap-3">
+              {previewUrl ? (
+                <>
+                  <img
+                    src={previewUrl}
+                    alt="Thumbnail Preview"
+                    className="w-16 h-16 rounded object-cover border"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleRemoveThumbnail}
+                    className="text-sm text-red-600 hover:underline"
+                  >
+                    Remove
+                  </button>
+                </>
+              ) : (
+                <PhotoIcon className="w-10 h-10 text-gray-300" />
+              )}
+
+              <div>
+                <label
+                  htmlFor="thumbnailUpload"
+                  className="cursor-pointer inline-block px-4 py-2 text-sm rounded-md border bg-white hover:bg-gray-50 text-gray-700"
+                >
+                  Select Poster
+                </label>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  name="poster"
+                  id="thumbnailUpload"
+                  accept="image/*"
+                  onChange={handleThumbnailChange}
+                  className="hidden"
+                />
+              </div>
+            </div>
           </div>
 
           <div className="flex items-center">
@@ -202,9 +314,9 @@ export default function CreatePeople() {
 
           <button
             type="submit"
-            className="w-50 bg-red-400 hover:bg-red-500 text-white font-semibold py-3 rounded-md transition-all"
+            className="px-4 cursor-pointer bg-red-400 hover:bg-red-500 text-white font-semibold py-2 rounded-md transition-all"
           >
-            Submit
+            {isEditMode ? "Edit" : "Add"} Submit
           </button>
         </form>
       </div>

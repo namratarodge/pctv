@@ -1,19 +1,19 @@
 "use client";
 import { Filter, Paginations } from "@/components/forms";
-import { PlusCircleIcon } from "@heroicons/react/16/solid";
-import Link from "next/link";
-import { PeopleFilter } from "@/constants/Filter";
-import { useCallback, useEffect, useState } from "react";
-import axios from "axios";
-import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { formatDate } from "@/utils/common";
 import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
-import { PeopleColumn } from "@/constants/DataTableColumn";
 import Loading from "@/components/layout/Loading";
-import { toast } from "react-toastify";
+import { PeopleColumn } from "@/constants/DataTableColumn";
+import { PeopleFilter } from "@/constants/Filter";
 import { PersonType } from "@/constants/Type";
-import { useDebounce } from "use-debounce";
+import { formatDate } from "@/utils/common";
 import { parseQueryString } from "@/utils/helper";
+import { PlusCircleIcon } from "@heroicons/react/16/solid";
+import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
+import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { useDebounce } from "use-debounce";
 
 export default function People() {
   const [data, setData] = useState([]);
@@ -80,30 +80,61 @@ export default function People() {
     setLimits(value);
   };
 
-  const handleDelete = async (data: PersonType) => {
-    const token = localStorage.getItem("token");
+  const handleDeleteWithConfirm = (id: string, fetch: () => void) => {
+    toast(
+      ({ closeToast }) => (
+        <div className="space-y-3">
+          <p className="text-gray-800 font-medium">
+            Are you sure you want to delete this people?
+          </p>
+          <div className="flex justify-end gap-2">
+            <button
+              onClick={() => closeToast()}
+              className="px-3 py-1 text-sm rounded bg-gray-200 hover:bg-gray-300"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={async () => {
+                closeToast();
 
-    try {
-      const response = await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/people/${data._id}`,
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+                const token = localStorage.getItem("token");
+                try {
+                  const response = await axios.delete(
+                    `${process.env.NEXT_PUBLIC_API_URL}/people/${id}`,
+                    {
+                      headers: {
+                        Authorization: token,
+                        "Content-Type": "application/json",
+                      },
+                    }
+                  );
 
-      if (response.data.status) {
-        toast("People deleted successfully");
-        fetch(); // Refresh the plans list
-      } else {
-        toast("Delete failed:", response.data.message);
+                  if (response.data.status) {
+                    toast.success("People deleted successfully");
+                    fetch(); // Refresh list
+                  } else {
+                    toast.error(`Delete failed: ${response.data.message}`);
+                  }
+                } catch (error) {
+                  console.error(error);
+                  toast.error("Error deleting page.");
+                }
+              }}
+              className="px-3 py-1 text-sm rounded bg-red-500 text-white hover:bg-red-600"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      ),
+      {
+        autoClose: false,
+        closeOnClick: false,
+        draggable: false,
+        closeButton: false,
       }
-    } catch (error) {
-      console.log(error);
-      toast.error("Error deleting People:");
-    }
+    );
   };
 
   useEffect(() => {
@@ -137,14 +168,16 @@ export default function People() {
                   data={data}
                   renderActions={(person) => (
                     <div className="flex gap-3 justify-end">
-                      <button
-                        onClick={() => console.log("Edit")}
+                      <Link
+                        href={"people/create?id=" + person._id}
                         className="text-blue-600 hover:text-blue-800 cursor-pointer"
                       >
                         <PencilIcon className="w-5 h-5" />
-                      </button>
+                      </Link>
                       <button
-                        onClick={() => handleDelete(person)}
+                        onClick={() =>
+                          handleDeleteWithConfirm(person._id, fetch)
+                        }
                         className="text-red-600 hover:text-red-800 cursor-pointer"
                       >
                         <TrashIcon className="w-5 h-5" />

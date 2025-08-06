@@ -171,6 +171,22 @@ export type PersonType = {
   adult: boolean;
 };
 
+
+export type PeopleType = {
+  _id: string;
+  id: number;
+  name: string;
+  description: string;
+  gender: string;
+  birth_date: string;
+  birth_place: string;
+  poster: string;
+  allow_update: boolean;
+  known_for: string;
+  popularity: string;
+  death_date: string;
+};
+
 // List Type
 
 export type ListType = {

@@ -1,7 +1,7 @@
 import { StarIcon } from "@heroicons/react/24/solid";
 
 import UserAvatar from "@/components/forms/UserAvatar";
-import { truncateToWords } from "@/utils/common";
+import { formatDate, truncateToWords } from "@/utils/common";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 
 // Crew subscriptions
@@ -259,7 +259,7 @@ type PeopleItem = {
   _id: string;
   name: string;
   poster: string;
-  birthdate: string;
+  birth_date: string;
   views: number;
   popularity: number;
   updated_at: number;
@@ -281,9 +281,9 @@ export const PeopleColumn: {
     ),
   },
   {
-    key: "birthdate",
+    key: "birth_date",
     label: "Birth Date",
-    render: (row) => <div>{!row.birthdate && "-"}</div>,
+    render: (row) => <div>{row.birth_date ? formatDate(row.birth_date) : "-"}</div>,
   },
   { key: "views", label: "Local View" },
   { key: "popularity", label: "Popularity" },
@@ -421,7 +421,7 @@ const replaceName = (name: string) => {
     return "Categories";
   } else if (name === "keyword") {
     return "TV Topics";
-  } else if(name === 'production_country'){
+  } else if (name === "production_country") {
     return "Production Country";
   }
 };

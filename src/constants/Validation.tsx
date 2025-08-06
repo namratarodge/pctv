@@ -53,11 +53,10 @@ export const userSignUpSchema = z.object({
 });
 export type UserSignUpFormData = z.infer<typeof userSignUpSchema>;
 
-
 export const profileSchema = z.object({
   name: z.string().min(1, "Name is required"),
 
-  knownFor: z.string().min(1, "Known For is required"),
+  known_for: z.string().min(1, "Known For is required"),
 
   description: z.string().min(1, "Bio is required"),
 
@@ -65,10 +64,12 @@ export const profileSchema = z.object({
     errorMap: () => ({ message: "Gender is required" }),
   }),
 
-  birth_date: z.string().optional(),
-  death_date: z.string().optional(),
+  birth_date: z.string().optional().nullable(),
+  death_date: z.string().optional().nullable(),
 
-  popularity: z.string().min(1, "popularity is required."),
+  popularity: z
+    .number()
+    .optional().nullable(),
 
   birth_place: z.string().optional(),
 
@@ -110,7 +111,8 @@ export const createUserSchema = z
     message: "Password do not match",
   });
 
-  export const editUserSchema = z.object({
+export const editUserSchema = z
+  .object({
     first_name: z.string().min(1, "First Name is required"),
     last_name: z.string().min(1, "Last Name is required"),
     email: z.string().min(1, "Email is required"),
@@ -120,14 +122,14 @@ export const createUserSchema = z
     }),
     password: z.string().optional(),
     password_confirmed: z.string().optional(),
-  }).refine(
-    (data) =>
-      !data.password || data.password === data.password_confirmed,
+  })
+  .refine(
+    (data) => !data.password || data.password === data.password_confirmed,
     {
       path: ["password_confirmed"],
       message: "Passwords do not match",
     }
-  );  
+  );
 export type CreateUserFormData = z.infer<typeof createUserSchema>;
 export type EditUserFormData = z.infer<typeof editUserSchema>;
 
