@@ -74,7 +74,7 @@ export default function Home() {
         <DocumentMagnifyingGlassIcon className="w-20 h-20 mb-2" />
         <p className="text-2xl font-medium">Nothing To Display</p>
         <p className="text-xl text-gray-500 mt-4">
-          There is not WhatchList.
+          There is not Watchlists.
         </p>
       </div>
     )}

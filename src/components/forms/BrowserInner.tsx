@@ -242,7 +242,7 @@ export default function BrowserInner() {
           <div className="text-gray-300 text-lg">TV Topic</div>
           <div className="relative inline-block mt-4 w-full  bg-gray-800 rounded-full text-sm">
             <select
-              className="block appearance-none w-full border border-gray-500   py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2"
+              className="block appearance-none w-full border border-gray-500 bg-gray-800 text-white   py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2"
               onChange={handleChangeKeyword}
             >
               <option value="all">All</option>
@@ -282,8 +282,11 @@ export default function BrowserInner() {
             </ul>
           </div>
         </div>
-        <div className="w-full max-w-md mx-auto  border-b px-2 py-2  border-gray-500">
-          <YearRange values={range} onChange={handleYearRange} />
+        <div className="w-full max-w-md mx-auto  border-b   border-gray-500">
+          <h2 className="text-gray-400 py-2">Year</h2>
+          <div className="px-2 ">
+            <YearRange values={range} onChange={handleYearRange} />
+          </div>
         </div>
         <div className="w-full border-b border-gray-500 py-6">
           <div className="text-gray-300">Select Region</div>
@@ -293,7 +296,7 @@ export default function BrowserInner() {
               onChange={(e) =>
                 handleSelectChange(e, setSelectedCountry, "country")
               }
-              className="text-sm block appearance-none w-full border border-gray-500  py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
+              className="text-sm block appearance-none w-full border border-gray-500 bg-gray-800 text-white  py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
             >
               {countryOptions.map((country, index) => (
                 <option key={index} value={country.value}>
@@ -317,7 +320,7 @@ export default function BrowserInner() {
               onChange={(e) =>
                 handleSelectChange(e, setSelectedLanguage, "language")
               }
-              className="block appearance-none w-full border border-gray-500  py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
+              className="block appearance-none w-full border border-gray-500  bg-gray-800 text-white  py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
             >
               <option>Select Language</option>
               {Language.map((language) => (
@@ -340,7 +343,7 @@ export default function BrowserInner() {
             <select
               value={selectedLevel}
               onChange={(e) => handleSelectChange(e, setSelectedLevel, "level")}
-              className="block appearance-none w-full border border-gray-500  text-gray-300 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
+              className="block appearance-none w-full border border-gray-500 bg-gray-800 text-white   py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
             >
               {Levels.map((level) => (
                 <option key={level.name} value={level.value}>

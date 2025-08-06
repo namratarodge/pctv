@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 type Page = {
   body: string;
+  title : string;
 };
 
 export default function Pages() {
@@ -48,6 +49,7 @@ export default function Pages() {
 
   return (
     <div className="pt-30  max-w-11/12 mx-auto  lg:flex-row mb-10">
+      <h1 className="text-3xl">{page?.title}</h1>
       <div className="mt-10">
         <div dangerouslySetInnerHTML={{ __html: page?.body ?? '' }} />
       </div>

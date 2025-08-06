@@ -137,7 +137,7 @@ export default function TitleDetailPage() {
         }
       );
       if (response.data.status) {
-        toast("Titles were successfully added to the watchlist.");
+        toast("Successfully added to the watchlist.");
       } else {
         toast(response.data.error);
       }

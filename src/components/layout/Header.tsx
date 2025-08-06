@@ -39,7 +39,7 @@ const baseNavigation = [
     href: "/browse",
     children: [],
   },
-  { name: "Course/Zones", key: "categories", href: "#", children: [] },
+  { name: "Course/Zones", key: "categories", href: "/browse", children: [] },
   { name: "Pricing", key: "price", href: "/pricing" },
 ];
 
