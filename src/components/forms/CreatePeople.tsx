@@ -1,5 +1,4 @@
 "use client";
-import { PeopleType } from "@/constants/Type";
 import { ProfileFormData, profileSchema } from "@/constants/Validation";
 import { PhotoIcon } from "@heroicons/react/24/outline";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -70,24 +69,27 @@ export default function CreatePeople() {
     }
   }, [id, setValue]);
 
-  const onSubmit = async (data: PeopleType) => {
-    console.log(data)
+  const onSubmit = async (formData: ProfileFormData) => {
     const token = localStorage.getItem("token");
 
-    const formData = new FormData();
+    const formDataToSend = new FormData();
 
-    // Append all the fields manually
-    formData.append("name", data.name);
-    formData.append("known_for", data.known_for);
-    formData.append("birth_date", data.birth_date);
-    formData.append("death_date", data.death_date);
-    formData.append("birth_place", data.birth_place);
-    formData.append("popularity", data.popularity);
-    formData.append("gender", data.gender);
-    formData.append("description", data.description);
-    formData.append("allow_update", data.allow_update);
+    // Append all fields manually
+    formDataToSend.append("name", formData.name);
+    formDataToSend.append("known_for", formData.known_for);
+    formDataToSend.append("birth_date", formData.birth_date ?? "");
+    formDataToSend.append("death_date", formData.death_date ?? "");
+    formDataToSend.append("birth_place", formData.birth_place ?? "");
+    formDataToSend.append("popularity", String(formData.popularity ?? ""));
+    formDataToSend.append("gender", formData.gender);
+    formDataToSend.append("description", formData.description);
+    formDataToSend.append(
+      "allow_update",
+      formData.allow_update ? "true" : "false"
+    );
+
     if (thumbnail) {
-      formData.append("poster", thumbnail);
+      formDataToSend.append("poster", thumbnail);
     }
 
     // write post request to
@@ -96,7 +98,7 @@ export default function CreatePeople() {
       if (!isEditMode) {
         response = await axios.post(
           process.env.NEXT_PUBLIC_API_URL + "/people",
-          formData,
+          formDataToSend,
           {
             headers: {
               Authorization: token,
@@ -106,7 +108,7 @@ export default function CreatePeople() {
       } else {
         response = await axios.put(
           `${process.env.NEXT_PUBLIC_API_URL}/people/${id}`,
-          formData,
+          formDataToSend,
           {
             headers: {
               Authorization: token,

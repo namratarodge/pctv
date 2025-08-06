@@ -173,18 +173,17 @@ export type PersonType = {
 
 
 export type PeopleType = {
-  _id: string;
-  id: number;
+  _id : string;
   name: string;
   description: string;
   gender: string;
-  birth_date: string;
-  birth_place: string;
+  death_date: string;
+  birth_date: string ;
+  birth_place: string
   poster: string;
-  allow_update: boolean;
+  allow_update: string;
   known_for: string;
   popularity: string;
-  death_date: string;
 };
 
 // List Type
