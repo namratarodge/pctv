@@ -14,7 +14,7 @@ export const userUpdateSchema = z.object({
   email: z.string().min(1, "email is required"),
   gender: z.string().min(1, "Gender is required"),
   country: z.string().min(1, "Country is required"),
-  phone: z.number().min(1, "Phone is required")
+  phone: z.string().min(1, "Phone is required")
 });
 export type UserUpdateFormData = z.infer<typeof userUpdateSchema>;
 
