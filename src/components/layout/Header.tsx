@@ -159,46 +159,48 @@ export default function Header() {
               />
             </Link>
           </div>
-          <div className="hidden sm:ml-6 sm:block">
-            <div className="flex space-x-4">
-              {navigation.map((item) => (
-                <div key={item.key} className="relative group">
-                  {/* Main menu link */}
-                  <a
-                    href={item.href}
-                    className={classNames(
-                      item.href === pageName && "text-white ",
-                      "text-gray-300 text-sm hover:text-white items-center justify-center px-3 py-2 rounded-md "
-                    )}
-                  >
-                    {item.name}
-                  </a>
-
-                  {/* Submenu */}
-                  {item.children && item.children.length > 0 && (
-                    <div
-                      className=" absolute  whitespace-nowrap
-                     left-0 mt-1 cursor-pointer rounded-md  bg-black ring-opacity-5 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-opacity duration-200 z-50"
+          {user && Object.keys(user).length > 0 && (
+            <div className="hidden sm:ml-6 sm:block">
+              <div className="flex space-x-4">
+                {navigation.map((item) => (
+                  <div key={item.key} className="relative group">
+                    {/* Main menu link */}
+                    <a
+                      href={item.href}
+                      className={classNames(
+                        item.href === pageName && "text-white ",
+                        "text-gray-300 text-sm hover:text-white items-center justify-center px-3 py-2 rounded-md "
+                      )}
                     >
-                      <div className="py-1">
-                        {(
-                          item.children as { name: string; href: string }[]
-                        ).map((subItem) => (
-                          <a
-                            key={subItem.href}
-                            href={subItem.href}
-                            className="capitalize block px-3 py-2 text-xs text-gray-400 hover:text-gray-300 "
-                          >
-                            {subItem.name}
-                          </a>
-                        ))}
+                      {item.name}
+                    </a>
+
+                    {/* Submenu */}
+                    {item.children && item.children.length > 0 && (
+                      <div
+                        className=" absolute  whitespace-nowrap
+                     left-0 mt-1 cursor-pointer rounded-md  bg-black ring-opacity-5 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-opacity duration-200 z-50"
+                      >
+                        <div className="py-1">
+                          {(
+                            item.children as { name: string; href: string }[]
+                          ).map((subItem) => (
+                            <a
+                              key={subItem.href}
+                              href={subItem.href}
+                              className="capitalize block px-3 py-2 text-xs text-gray-400 hover:text-gray-300 "
+                            >
+                              {subItem.name}
+                            </a>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              ))}
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
         <div className="flex lg:hidden">
           <button
@@ -212,22 +214,25 @@ export default function Header() {
         </div>
 
         <div className="relative hidden lg:flex lg:flex-1 lg:justify-end gap-6 items-center">
-          {showSearch && (
-            <>
-              <AutoCompeleteTitleForHeader onSelect={handleUserSelected} />
-              <XMarkIcon className="w-5 h-5  text-white cursor-pointer" onClick={() => setShowSearch(! showSearch)} />
-            </>
-          )}
-
-          {!showSearch && (
-            <MagnifyingGlassIcon
-              className="w-5 h-5 text-white cursor-pointer"
-              onClick={() => setShowSearch(!showSearch)}
-            />
-          )}
-
           {user && Object.keys(user).length > 0 ? (
             <>
+              {showSearch && (
+                <>
+                  <AutoCompeleteTitleForHeader onSelect={handleUserSelected} />
+                  <XMarkIcon
+                    className="w-5 h-5  text-white cursor-pointer"
+                    onClick={() => setShowSearch(!showSearch)}
+                  />
+                </>
+              )}
+
+              {!showSearch && (
+                <MagnifyingGlassIcon
+                  className="w-5 h-5 text-white cursor-pointer"
+                  onClick={() => setShowSearch(!showSearch)}
+                />
+              )}
+
               <Menu as="div" className="relative">
                 <MenuButton className="-m-1.5 flex items-center p-1.5">
                   <span className="sr-only">Open user menu</span>

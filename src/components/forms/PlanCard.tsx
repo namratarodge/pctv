@@ -69,14 +69,16 @@ export default function PlanCard({
       >
         <small className="uppercase tracking-wider">{label}</small>
         <h3 className="text-5xl font-bold">{price}</h3>
-        <button
-          onClick={() => handleSubscribe(paypal_id, interval_count, plan_id)}
-          className={`px-4 py-1.5 w-3/4 rounded-full mt-2 ${
-            isHighlighted ? "bg-white text-red-500" : "bg-red-500 text-white"
-          } cursor-pointer hover:opacity-90 transition`}
-        >
-          Select
-        </button>
+        {!isHighlighted && (
+          <button
+            onClick={() => handleSubscribe(paypal_id, interval_count, plan_id)}
+            className={`px-4 py-1.5 w-3/4 rounded-full mt-2 ${
+              isHighlighted ? "bg-white text-red-500" : "bg-red-500 text-white"
+            } cursor-pointer hover:opacity-90 transition`}
+          >
+            Select
+          </button>
+        )}
       </div>
       {/* Features */}
       <div

@@ -1,21 +1,18 @@
+import { CreditCardIcon, FolderPlusIcon, HomeIcon, ShieldCheckIcon } from "@heroicons/react/16/solid";
 import {
-  BookmarkIcon, // Additional Tags
   CalendarIcon, // Pages
   ChartPieIcon,
-  Cog6ToothIcon, // Plans
-  CreditCardIcon, // Roles
+  Cog6ToothIcon, // Roles
   DocumentTextIcon, // Subscription
   FilmIcon,
-  HomeIcon, // Users
   KeyIcon, // People / Users
   ListBulletIcon,
-  LockClosedIcon, // Lists
   StarIcon, // Settings
-  TagIcon, // Title (or Analytics)
-  UserCircleIcon, // Reviews
+  TagIcon, // Reviews
   UserGroupIcon, // Video
-  UsersIcon, // People / Users
+  UsersIcon
 } from "@heroicons/react/24/outline";
+
 
 export const navigation = [
   { name: "Dashboard", href: "/admin", icon: HomeIcon, current: true },
@@ -70,13 +67,13 @@ export const navigationAccount = [
   {
     name: "Membership",
     href: "/account?name=membership",
-    icon: UserCircleIcon,
+    icon: CreditCardIcon,
   },
-  { name: "Security", href: "/account?name=security", icon: LockClosedIcon },
+  { name: "Security", href: "/account?name=security", icon: ShieldCheckIcon},
   {
     name: "Watchlist",
     href: "/watchlists",
-    icon: BookmarkIcon,
+    icon: FolderPlusIcon,
   },
 ];
 

@@ -1,15 +1,6 @@
 "use client";
-import Image from "next/image";
-
-const navigation = {
-  support: [
-    { name: "Submit ticket", href: "#" },
-    { name: "Documentation", href: "#" },
-    { name: "Guides", href: "#" },
-  ],
-};
-
 import { slidesCountry } from "@/constants/Menu";
+import Image from "next/image";
 
 import {
   FaFacebookF,
@@ -28,10 +19,14 @@ export default function Footer() {
   const { tvtopic, pages } = usePublicData();
   const pageName = usePathname();
   return (
-    <footer className="border-t border-gray-300 ">
+    <footer
+      className={`${
+        WhitePages.includes(pageName) ? "border-gray-300" : "border-gray-700"
+      } border-t border-gray-200 `}
+    >
       <div className="mx-auto max-w-11/12 px-6  pb-8 pt-10 lg:px-2 ">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
-          <div className="space-y-8">
+          <div className="space-y-4">
             {WhitePages.includes(pageName) ? (
               <Image
                 alt="Your Company"
@@ -53,15 +48,14 @@ export default function Footer() {
             )}
 
             <p className="text-sm/6 text-balance ">
-              Making the world a better place through constructing elegant
-              hierarchies.
+             Project Controls TV is the wolrd's first-ever OTT and stremming platform dedicated to empowering the global project controls community.
             </p>
           </div>
           <div className="mt-16 grid grid-cols-1  gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-3 md:gap-8">
               <div>
-                <h3 className="text-sm/6 font-semibold ">TV Topic</h3>
-                <ul role="list" className="mt-6 space-y-4">
+                <h3 className="text-md font-extrabold">TV Topic</h3>
+                <ul role="list" className="mt-2 space-y-2">
                   {tvtopic.map((item: TagType, index: number) => (
                     <li key={index}>
                       <Link
@@ -75,10 +69,10 @@ export default function Footer() {
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <h3 className="text-sm/6 font-semibold ">
+                <h3 className="text-md font-extrabold ">
                   Project Controls Expo
                 </h3>
-                <ul role="list" className="mt-6 space-y-4">
+                <ul role="list" className="mt-2 space-y-2">
                   {slidesCountry.map((item) => (
                     <li key={item.name}>
                       <a target="_blank" href={item.url} className="text-sm/6 ">
@@ -89,11 +83,11 @@ export default function Footer() {
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <h3 className="text-sm/6 font-semibold ">Pages</h3>
-                <ul role="list" className="mt-6 space-y-4 text-sm">
+                <h3 className="text-md font-extrabold ">Pages</h3>
+                <ul role="list" className="mt-2 space-y-2">
                   {pages.map((item: PageType) => (
                     <li key={item._id}>
-                      <Link href={`/pages/${item.slug}`}>{item.title}</Link>
+                      <Link href={`/pages/${item.slug}`} className="text-sm/6" >{item.title}</Link>
                     </li>
                   ))}
                   <li>
@@ -109,20 +103,19 @@ export default function Footer() {
             &copy; 2025 Project Control TV, Inc. All rights reserved.
           </p>
           <div className="flex space-x-4 justify-end ">
-            <label>Connect with us:</label>
             <a
               href="https://www.youtube.com/channel/UCgcNn2Z5CVCuaYDIvnY9xaw"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FaYoutube className="w-6 h-6 text-red-600 hover:text-red-800 hover:scale-110 transition-transform duration-200" />
+              <FaYoutube className="w-8 h-8 text-gray-600 bg-gray-900 p-1 rounded-sm hover:text-red-800 hover:scale-110 transition-transform duration-200" />
             </a>
             <a
               href="https://www.facebook.com/ProjectControlsTV/"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FaFacebookF className="w-6 h-6 text-blue-600 hover:text-blue-800 hover:scale-110 transition-transform duration-200" />
+              <FaFacebookF className="w-8 h-8 text-gray-600 bg-gray-900 p-1 rounded-sm rounded-sm hover:text-blue-800 hover:scale-110 transition-transform duration-200" />
             </a>
 
             <a
@@ -130,14 +123,14 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FaInstagram className="w-6 h-6 text-pink-500 hover:text-pink-700 hover:scale-110 transition-transform duration-200" />
+              <FaInstagram className="w-8 h-8 text-gray-600 bg-gray-900 p-1 rounded-sm hover:text-pink-700 hover:scale-110 transition-transform duration-200" />
             </a>
             <a
               href="https://www.linkedin.com/company/project-controls-tv/"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FaLinkedinIn className="w-6 h-6 text-blue-700 hover:text-blue-900 hover:scale-110 transition-transform duration-200" />
+              <FaLinkedinIn className="w-8 h-8 text-gray-600 bg-gray-900 p-1 rounded-sm hover:text-blue-900 hover:scale-110 transition-transform duration-200" />
             </a>
           </div>
         </div>
