@@ -22,10 +22,10 @@ export default function Footer() {
     <footer
       className={`${
         WhitePages.includes(pageName) ? "border-gray-300" : "border-gray-700"
-      } border-t border-gray-200 `}
+      } border border-gray-200 `}
     >
       <div className="mx-auto max-w-11/12 px-6  pb-8 pt-10 lg:px-2 ">
-        <div className="xl:grid xl:grid-cols-3 xl:gap-8">
+        <div className="xl:grid xl:grid-cols-3 xl:gap-8 ">
           <div className="space-y-4">
             {WhitePages.includes(pageName) ? (
               <Image
@@ -98,7 +98,9 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24 flex justify-between">
+      </div>
+
+      <div className=" border-t border-white/10 py-4 px-16 flex justify-between mx-auto max-w-12/12">
           <p className="text-sm/6 text-gray-400">
             &copy; 2025 Project Control TV, Inc. All rights reserved.
           </p>
@@ -134,7 +136,7 @@ export default function Footer() {
             </a>
           </div>
         </div>
-      </div>
+
     </footer>
   );
 }

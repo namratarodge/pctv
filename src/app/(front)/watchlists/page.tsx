@@ -44,7 +44,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="pt-25 max-w-11/12 mx-auto h-screen">
+    <div className="pt-25 max-w-11/12 mx-auto"> 
     <h2 className="text-white text-4xl font-semibold">Watchlists</h2>
   
     {loading ? (
