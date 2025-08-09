@@ -287,8 +287,8 @@ export default function BrowserInner() {
               onChange={(e) => handleSelectChange(e, setKeywords, "keyword")}
             >
               <option value="all">All</option>
-              {tvtopic.map((data: TvTopicType, index: number) => (
-                <option key={index} value={data.name}>
+              {tvtopic.map((data: TvTopicType) => (
+                <option key={data.name} value={data.name}>
                   {data.display_name}
                 </option>
               ))}
@@ -433,8 +433,8 @@ export default function BrowserInner() {
         {title.length > 0 ? (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-              {title.map((title: TitleType, index) => (
-                <div className=" text-white gap-4" key={index}>
+              {title.map((title: TitleType) => (
+                <div className=" text-white gap-4" key={title._id}>
                   <Link href={`/titles/${title?._id}/${title?.slug}`}>
                     <TitlePoster poster={title.poster} name={title.name} />
                     <div className="mt-4">
