@@ -2,7 +2,6 @@
 
 import { usePublicData } from "@/components/context/PublicDataContext";
 import axios from "axios";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 import { TagType, TitleType, TvTopicType } from "@/constants/Type";
@@ -24,14 +23,15 @@ const Levels = [
 ];
 
 import Loading from "@/components/layout/Loading";
+import { Button } from "@headlessui/react";
 import {
   ChevronDownIcon,
   DocumentMagnifyingGlassIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { YearRange } from ".";
+import { useRouter, useSearchParams } from "next/navigation";
+import { TitlePoster, YearRange } from ".";
 
 const MIN_YEAR = 2010;
 const MAX_YEAR = 2025;
@@ -42,12 +42,12 @@ export default function BrowserInner() {
   const { tvtopic, categories } = usePublicData();
   const [loading, setLoading] = useState(true);
 
-  const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const genreParam = searchParams.get("genre");
   const limitParam = searchParams.get("limit") ?? 16;
   const languageName = searchParams.get("language") ?? "";
+  const keywordName = searchParams.get("keyword") ?? "";
   const [selectedGenres, setSelectedGenres] = useState(
     genreParam ? genreParam.split(",") : []
   );
@@ -55,6 +55,7 @@ export default function BrowserInner() {
 
   const [limit, setLimit] = useState(limitParam);
   const [range, setRange] = useState<[number, number]>([MIN_YEAR, MAX_YEAR]);
+  const [keywords, setKeywords] = useState(keywordName);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState(languageName);
   const [selectedLevel, setSelectedLevel] = useState("");
@@ -157,7 +158,32 @@ export default function BrowserInner() {
       ];
       allowedParams.forEach((key) => {
         const value = searchParams.get(key);
-        if (value) {
+        if (!value) return;
+        if (key === "keyword") {
+          const topic = tvtopic.find(
+            (t: any) => t.name.toLowerCase() === value.toLowerCase()
+          );
+
+          if (topic) {
+            query[key] = topic._id; // store the topic id
+          }
+        } else if (key === "genre") {
+          // Split multiple values by comma, trim spaces, and match category IDs
+          const ids = value
+            .split(",")
+            .map((v) => v.trim().toLowerCase()) // normalize
+            .map((v) => {
+              const category = categories.find(
+                (t: any) => t.name.toLowerCase() === v
+              );
+              return category ? category._id : null;
+            })
+            .filter(Boolean); // remove nulls
+
+          if (ids.length) {
+            query[key] = ids.length === 1 ? ids[0] : ids; // keep single value as string, multiple as array
+          }
+        } else {
           query[key] = value;
         }
       });
@@ -189,8 +215,21 @@ export default function BrowserInner() {
     }
   };
 
-  const restFilter = () => {
-    router.push(`browse`);
+  const clearAllFilters = () => {
+    // Reset state
+    setSelectedGenres([]);
+    setRange([MIN_YEAR, MAX_YEAR]);
+    setKeywords("");
+    setSelectedCountry("");
+    setSelectedLanguage("");
+    setSelectedLevel("");
+    setLimit(16);
+
+    // Clear query params
+    router.push("/browse");
+
+    // Trigger API call without filters
+    fetchTitlte();
   };
 
   useEffect(() => {
@@ -243,7 +282,9 @@ export default function BrowserInner() {
           <div className="relative inline-block mt-4 w-full  bg-gray-800 rounded-full text-sm">
             <select
               className="block appearance-none w-full border border-gray-500 bg-gray-800 text-white   py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2"
-              onChange={handleChangeKeyword}
+              // onChange={handleChangeKeyword}
+              value={keywords}
+              onChange={(e) => handleSelectChange(e, setKeywords, "keyword")}
             >
               <option value="all">All</option>
               {tvtopic.map((data: TvTopicType, index: number) => (
@@ -361,7 +402,7 @@ export default function BrowserInner() {
 
         <div>
           <button
-            onClick={restFilter}
+            onClick={clearAllFilters}
             className="cursor-pointer w-full mt-4 rounded-full bg-red-500 px-6 py-3 text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20"
           >
             Reset Filter
@@ -373,13 +414,13 @@ export default function BrowserInner() {
           <div className="flex gap-4 items-center ">
             <h1 className="text-3xl text-white">PCE Brazil</h1>
             {selectedGenres.length > 0 && (
-              <Link
-                href="/browse"
+              <Button
+                onClick={clearAllFilters}
                 className="flex px-3 py-1.5  text-sm rounded-full bg-gray-700 text-gray-400 items-center cursor-pointer"
               >
                 Reset Filter
                 <XMarkIcon className="w-6 h-6 cursor-pointer text-red-400" />
-              </Link>
+              </Button>
             )}
           </div>
 
@@ -394,14 +435,8 @@ export default function BrowserInner() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
               {title.map((title: TitleType, index) => (
                 <div className=" text-white gap-4" key={index}>
-                  <Link href={`/titles/${title._id}/${title.slug}`}>
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_WEBSITE}/${title.poster}`}
-                      alt={title.name || "Poster"}
-                      width={400} // or any appropriate width
-                      height={450} // adjust height as needed
-                      className="rounded-lg"
-                    />
+                  <Link href={`/titles/${title?._id}/${title?.slug}`}>
+                    <TitlePoster poster={title.poster} name={title.name} />
                     <div className="mt-4">
                       <span className="text-sm">
                         {title?.name.slice(0, 34)}

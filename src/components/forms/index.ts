@@ -17,6 +17,8 @@ export { default as AutoCompleteTitleList } from "./AutoCompleteTitleList";
 export { default as StarRating } from "./StarRating";
 export { default as TenStarRating } from "./TenStarRating";
 
+export { default as TitlePoster } from "./TitlePoster";
+
 export { default as NewTable } from "./NewTable";
 export { default as ViemoEmbed } from './VimeoEmbed';
 
