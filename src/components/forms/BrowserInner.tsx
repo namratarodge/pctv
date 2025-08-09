@@ -161,9 +161,8 @@ export default function BrowserInner() {
         if (!value) return;
         if (key === "keyword") {
           const topic = tvtopic.find(
-            (t: any) => t.name.toLowerCase() === value.toLowerCase()
+            (t:any) => t.name.toLowerCase() === value.toLowerCase()
           );
-
           if (topic) {
             query[key] = topic._id; // store the topic id
           }
