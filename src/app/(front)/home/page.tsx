@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 
 type SliderType = {
   title: string;
+  name : string;
   poster: string;
   _id: string;
   slug: string;
@@ -46,13 +47,12 @@ export default function Home() {
       if (response.data.status) {
         const modifiedData = response.data.data.data.map(
           (item: SliderType) => ({
-            name: item.title,
+            name: item.name,
             _id: item._id,
             slug: item.slug,
             image: process.env.NEXT_PUBLIC_WEBSITE + "/" + item.poster,
           })
         );
-        console.log('sandesh')
         setMainwatch(modifiedData[0]);
         setLoading(false);
         setTitle(modifiedData);
@@ -79,7 +79,7 @@ export default function Home() {
       );
       if (response.data.status) {
         const modifiedData = response.data.data.map((item: SliderType) => ({
-          name: item.title,
+          name: item.name,
           _id: item._id,
           slug: item.slug,
           image: process.env.NEXT_PUBLIC_WEBSITE + "/" + item.poster,
@@ -167,9 +167,9 @@ export default function Home() {
       </div>
       <div className=" mx-auto max-w-11/12">
         <SliderNumber title="PCTv Regions" />
-        <Slider title="Latest Videos" slides={title} />
+        <Slider title="Latest Videos" slides={title} hover={true}/>
         <Slider title="PCTv Top Voice" slides={slides} />
-        <Slider title="PCTv Top 10 Sessions" slides={topTitle} />
+        <Slider title="PCTv Top 10 Sessions" slides={topTitle}  hover={true}/>
         <TopicSlider title="PCTv Topic" />
       </div>
     </>

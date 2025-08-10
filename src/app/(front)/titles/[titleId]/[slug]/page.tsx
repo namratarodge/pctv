@@ -1,4 +1,4 @@
-"use client"; // ✅ client component, hooks allowed
+"use client";
 
 import { StarRating, ViemoEmbed } from "@/components/forms";
 import Loading from "@/components/layout/Loading";
