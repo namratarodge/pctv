@@ -286,8 +286,8 @@ export default function BrowserInner() {
               onChange={(e) => handleSelectChange(e, setKeywords, "keyword")}
             >
               <option value="all">All</option>
-              {tvtopic.map((data: TvTopicType) => (
-                <option key={data.name} value={data.name}>
+              {tvtopic.map((data: any) => (
+                <option key={data._id || data.name} value={data.name}>
                   {data.display_name}
                 </option>
               ))}

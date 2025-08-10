@@ -56,8 +56,8 @@ export default function Footer() {
               <div>
                 <h3 className="text-md font-extrabold">TV Topic</h3>
                 <ul role="list" className="mt-2 space-y-2">
-                  {tvtopic.map((item: TagType, index: number) => (
-                    <li key={index}>
+                  {tvtopic.map((item: TagType) => (
+                    <li key={item._id}>
                       <Link
                         href={`browse?keyword=${item.name}`}
                         className="text-sm/6"

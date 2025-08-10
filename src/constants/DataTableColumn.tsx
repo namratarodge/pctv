@@ -55,9 +55,9 @@ export const SubscriptionsColumn: {
     label: "Plan Name",
     render: (row) => (
       <div>
-        <div className="font-semibold">{row.plan_id.name}</div>
+        <div className="font-semibold">{row.plan_id?.name}</div>
         <small>
-          {row.plan_id.currency} {row.plan_id.amount}
+          {row.plan_id?.currency} {row.plan_id?.amount}
         </small>
       </div>
     ),

@@ -104,6 +104,7 @@ export default function Header() {
         return {
           ...item,
           children: (tvtopic || []).map((topic: TagType) => ({
+            _id: topic._id,
             name: topic.display_name,
             href: `/browse?keyword=${encodeURIComponent(topic.name)}`,
           })),
@@ -114,6 +115,7 @@ export default function Header() {
         return {
           ...item,
           children: (categories || []).map((category: TagType) => ({
+            _id: category._id,
             name: category.display_name,
             href: `/browse?genre=${encodeURIComponent(category.name)}`,
           })),
@@ -184,10 +186,10 @@ export default function Header() {
                       >
                         <div className="py-1">
                           {(
-                            item.children as { name: string; href: string }[]
+                            item.children as { _id: string; name: string; href: string }[]
                           ).map((subItem) => (
                             <a
-                              key={subItem.href}
+                              key={subItem._id}
                               href={subItem.href}
                               className="capitalize block px-3 py-2 text-xs text-gray-400 hover:text-gray-300 "
                             >
@@ -256,9 +258,9 @@ export default function Header() {
                   transition
                   className="absolute right-0 z-10 mt-2.5 w-56 origin-top-right rounded-md text-gray-400  bg-gray-800 py-2  shadow-lg  transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
                 >
-                  {filteredNavigation.map((item, index) =>
+                  {filteredNavigation.map((item) =>
                     item.key === "logout" ? (
-                      <MenuItem key={index}>
+                      <MenuItem key={item.key}>
                         <button
                           onClick={() => singOut()}
                           className="cursor-pointer flex items-center gap-3 w-full text-left px-3 py-2 rounded hover:text-gray-100 transition text-sm"
@@ -268,7 +270,7 @@ export default function Header() {
                         </button>
                       </MenuItem>
                     ) : (
-                      <MenuItem key={index}>
+                      <MenuItem key={item.key}>
                         <Link
                           href={item.href}
                           className="flex  items-center gap-3 w-full text-left px-3 py-2 rounded hover:text-gray-100 transition text-sm"
@@ -346,10 +348,10 @@ export default function Header() {
                       {hasChildren && openIndex === index && (
                         <div className="space-y-1 mt-4">
                           {(
-                            item.children as { name: string; href: string }[]
-                          ).map((child, childIndex) => (
+                            item.children as { _id: string; name: string; href: string }[]
+                          ).map((child) => (
                             <Link
-                              key={childIndex}
+                              key={child._id}
                               href={child.href}
                               className="block rounded-md px-1 py-2 text-sm text-gray-300"
                             >
@@ -362,9 +364,9 @@ export default function Header() {
                   );
 
                   return hasChildren ? (
-                    <div key={index}>{menuContent}</div>
+                    <div key={item.key}>{menuContent}</div>
                   ) : (
-                    <Link key={index} href={item.href} className="block">
+                    <Link key={item.key} href={item.href} className="block">
                       {menuContent}
                     </Link>
                   );
@@ -400,10 +402,10 @@ export default function Header() {
                     </div>
                     {isOpen && (
                       <div className="bg-gray-800 mt-4 rounded-md ">
-                        {filteredNavigation.map((item, index) =>
+                        {filteredNavigation.map((item) =>
                           item.key === "logout" ? (
                             <button
-                              key={index}
+                              key={item.key}
                               onClick={() => singOut()}
                               className="block px-4 py-2 text-sm text-gray-400 hover:text-gray-200 w-full text-left cursor-pointer"
                             >
@@ -411,7 +413,7 @@ export default function Header() {
                             </button>
                           ) : (
                             <Link
-                              key={index}
+                              key={item.key}
                               href={item.href}
                               className="block px-4 py-2 text-sm text-gray-400 hover:text-gray-200 w-full text-left cursor-pointer"
                             >

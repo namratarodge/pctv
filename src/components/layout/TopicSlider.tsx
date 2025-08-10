@@ -43,9 +43,9 @@ export default function TopicSlider({ title }: VoicesSliderProps) {
         }}
         className="relative"
       >
-        {categories.map((item: TagType, index: number) => {
+        {categories.map((item: TagType) => {
           return (
-            <SwiperSlide key={index}>
+            <SwiperSlide key={item._id}>
               <Link
                 href={`browse?genre=${item.name}`}
                 className={`rounded-xl p-3 gap-2 shadow-lg flex flex-col bg-gray-900 h-45 `}
