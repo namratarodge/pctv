@@ -279,9 +279,35 @@ export default function BrowserInner() {
     };
   }, [searchParams.toString()]);
 
-  if (loading) {
-    return <Loading title="" />;
-  }
+  // if (loading) {
+  //   return <Loading title="" />;
+  // }
+
+  // Skeleton component for title cards
+  const TitleCardSkeleton = () => (
+    <div className="animate-pulse">
+      <div className="bg-gray-700 rounded-md h-40 w-full mb-4"></div>
+      <div className="bg-gray-700 rounded h-4 w-3/4"></div>
+    </div>
+  );
+
+  // Skeleton loading state for right section only
+  const SkeletonLoading = () => (
+    <div className="w-full  py-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((i) => (
+          <TitleCardSkeleton key={i} />
+        ))}
+      </div>
+
+      {/* Pagination skeleton */}
+      <div className="mt-10 flex justify-between">
+        <div className="bg-gray-700 rounded-full h-10 w-24"></div>
+        <div className="bg-gray-700 rounded h-6 w-16"></div>
+        <div className="bg-gray-700 rounded-full h-10 w-28"></div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="pt-18  max-w-11/12 mx-auto flex flex-col lg:flex-row mb-10">
@@ -433,8 +459,9 @@ export default function BrowserInner() {
             )}
           </div>
         </div>
-
-        {title.length > 0 ? (
+        {loading ? (
+          <SkeletonLoading />
+        ) : title.length > 0 ? (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
               {title.map((title: TitleType) => (
