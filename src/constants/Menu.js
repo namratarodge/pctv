@@ -5,21 +5,21 @@ import {
   ShieldCheckIcon,
 } from "@heroicons/react/16/solid";
 import {
+  ArrowRightCircleIcon,
   CalendarIcon, // Pages
   ChartPieIcon,
   Cog6ToothIcon, // Roles
-  DocumentTextIcon, // Subscription
+  DocumentTextIcon,
+  EyeIcon, // Subscription
   FilmIcon,
   KeyIcon, // People / Users
   ListBulletIcon,
   StarIcon, // Settings
-  TagIcon, // Reviews
-  UserGroupIcon, // Video
+  TagIcon,
+  UserCircleIcon, // Reviews
+  UserGroupIcon,
+  UserIcon, // Video
   UsersIcon,
-  UserIcon,
-  UserCircleIcon,
-  EyeIcon,
-  ArrowRightCircleIcon,
 } from "@heroicons/react/24/outline";
 
 
@@ -40,7 +40,7 @@ export const userNavigation = [
   { name: "Admin Home", key: "admin_home", href: "/admin", icon: UserIcon },
   { name: "Profile", key: "profile", href: "/account", icon: UserCircleIcon },
   { name: "Watchlist", key: "watchlists", href: "/watchlists", icon: EyeIcon },
-  { name: "Your List", key: "profile", href: "/lists", icon: ListBulletIcon },
+  { name: "Your List", key: "your_list", href: "/lists", icon: ListBulletIcon },
   {
     name: "Account Settings",
     key: "security",

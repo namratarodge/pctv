@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Player from "@vimeo/player";
 import { FC, useEffect, useRef } from "react";
@@ -9,7 +9,11 @@ interface VimeoEmbedProps {
   startTime?: number; // Add this prop
 }
 
-const VimeoEmbed: FC<VimeoEmbedProps> = ({ htmlString, onVideoProgress, startTime = 0  }) => {
+const VimeoEmbed: FC<VimeoEmbedProps> = ({
+  htmlString,
+  onVideoProgress,
+  startTime = 0,
+}) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<Player | null>(null);
   const lastWatchedRef = useRef<number>(0);
@@ -20,7 +24,9 @@ const VimeoEmbed: FC<VimeoEmbedProps> = ({ htmlString, onVideoProgress, startTim
     const iframe = containerRef.current.querySelector("iframe");
     if (!iframe) return;
 
-    const player = new Player(iframe as HTMLIFrameElement);
+    const player = new Player(iframe as HTMLIFrameElement, {
+      autoplay: true,
+    });
     playerRef.current = player;
 
     let isUnmounted = false;
@@ -32,16 +38,24 @@ const VimeoEmbed: FC<VimeoEmbedProps> = ({ htmlString, onVideoProgress, startTim
         if (!isUnmounted && startTime > 0 && startTime < duration) {
           await player.setCurrentTime(startTime);
         }
+        await player.play();
       } catch (error) {
         console.error("Failed to set start time:", error);
       }
     });
 
-    player.on("timeupdate", ({ seconds, duration }: { seconds: number; duration: number }) => {
-      lastWatchedRef.current = seconds;
-      const percent = (seconds / duration) * 100;
-      console.log(`Watched: ${seconds.toFixed(1)}s / ${duration}s (${percent.toFixed(2)}%)`);
-    });
+    player.on(
+      "timeupdate",
+      ({ seconds, duration }: { seconds: number; duration: number }) => {
+        lastWatchedRef.current = seconds;
+        const percent = (seconds / duration) * 100;
+        console.log(
+          `Watched: ${seconds.toFixed(1)}s / ${duration}s (${percent.toFixed(
+            2
+          )}%)`
+        );
+      }
+    );
 
     player.on("ended", () => {
       console.log("Video ended");
@@ -55,13 +69,10 @@ const VimeoEmbed: FC<VimeoEmbedProps> = ({ htmlString, onVideoProgress, startTim
 
       player.unload();
     };
-  }, [htmlString, onVideoProgress,startTime]);
+  }, [htmlString, onVideoProgress, startTime]);
 
   return (
-    <div
-      ref={containerRef}
-      dangerouslySetInnerHTML={{ __html: htmlString }}
-    />
+    <div ref={containerRef} dangerouslySetInnerHTML={{ __html: htmlString }} />
   );
 };
 
