@@ -23,7 +23,7 @@ export default function AccountSideBar() {
         <ul role="list" className=" space-y-1">
           {navigationAccount.map((item,index) => (
             <li key={index}>
-              <a
+              <Link
                 href={item.href}
                 className={classNames(
                   item.href === "/account?name=" + name
@@ -34,7 +34,7 @@ export default function AccountSideBar() {
               >
                 <item.icon className="h-5 w-5" />
                 {item.name}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
