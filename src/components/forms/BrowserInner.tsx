@@ -25,7 +25,8 @@ const Levels = [
 import Loading from "@/components/layout/Loading";
 import { Button } from "@headlessui/react";
 import {
-  ChevronDownIcon,
+  ChevronDoubleLeftIcon,
+  ChevronDoubleRightIcon,
   DocumentMagnifyingGlassIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
@@ -63,7 +64,6 @@ export default function BrowserInner() {
   const handleMore = () => {
     const newLimit = (limit as number) + 4;
     setLimit(newLimit);
-    console.log(newLimit);
     const query = new URLSearchParams(window.location.search);
 
     if (newLimit >= 20) {
@@ -161,7 +161,7 @@ export default function BrowserInner() {
         if (!value) return;
         if (key === "keyword") {
           const topic = tvtopic.find(
-            (t:any) => t.name.toLowerCase() === value.toLowerCase()
+            (t: any) => t.name.toLowerCase() === value.toLowerCase()
           );
           if (topic) {
             query[key] = topic._id; // store the topic id
@@ -422,11 +422,6 @@ export default function BrowserInner() {
               </Button>
             )}
           </div>
-
-          {/* <div className="flex items-center gap-4    px-3 py-1 text-white">
-            <TableCellsIcon className="w-6 h-6 cursor-pointer hover:text-red-400" />
-            <ListBulletIcon className="w-6 h-6 cursor-pointer hover:text-red-400" />
-          </div> */}
         </div>
 
         {title.length > 0 ? (
@@ -445,13 +440,20 @@ export default function BrowserInner() {
                 </div>
               ))}
             </div>
-            <div className="mt-10 flex justify-center">
+            <div className="mt-10 flex justify-between">
               <button
                 className="flex cursor-pointer items-center gap-2 px-5 py-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition"
                 onClick={() => handleMore()}
               >
-                View More
-                <ChevronDownIcon className="w-5 h-5" />
+                <ChevronDoubleLeftIcon className="w-5 h-5" />
+                Back
+              </button>
+              <button
+                className="flex cursor-pointer items-center gap-2 px-5 py-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition"
+                onClick={() => handleMore()}
+              >
+                Next Page
+                <ChevronDoubleRightIcon className="w-5 h-5" />
               </button>
             </div>
           </>

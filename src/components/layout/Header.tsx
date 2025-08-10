@@ -14,12 +14,13 @@ import {
   ArrowRightCircleIcon,
   Bars3Icon,
   ChevronDownIcon,
-  ClipboardIcon,
   Cog6ToothIcon,
   EyeIcon,
+  ListBulletIcon,
   MagnifyingGlassIcon,
+  UserCircleIcon,
   UserIcon,
-  XMarkIcon,
+  XMarkIcon
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
@@ -45,9 +46,9 @@ const baseNavigation = [
 
 const userNavigation = [
   { name: "Admin Home", key: "admin_home", href: "/admin", icon: UserIcon },
-  { name: "Profile", key: "profile", href: "/account", icon: UserIcon },
+  { name: "Profile", key: "profile", href: "/account", icon: UserCircleIcon },
   { name: "Watchlist", key: "watchlists", href: "/watchlists", icon: EyeIcon },
-  { name: "Your List", key: "profile", href: "/lists", icon: ClipboardIcon },
+  { name: "Your List", key: "profile", href: "/lists", icon: ListBulletIcon },
   {
     name: "Account Settings",
     key: "security",

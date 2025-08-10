@@ -61,6 +61,7 @@ export const DateTimeConvert = (dateN) => {
 };
 
 export const truncateToWords = (text, number) => {
+  if (!text) return;
   return text.split(/\s+/).slice(0, number).join(" ");
 };
 

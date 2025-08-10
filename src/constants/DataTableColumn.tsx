@@ -317,9 +317,9 @@ export const VideoColumn: {
     label: "Title",
     render: (row) => (
       <div className="flex items-center space-x-4">
-        <UserAvatar poster={row.title_id?.poster} name={row.title_id?.name} />
+        <UserAvatar poster={row.title_id?.poster} rounded name={row.title_id?.name} />
         <div>
-          <span title={row.title_id.name} className="flex flex-col text-xs">
+          <span title={row.title_id?.name} className="flex flex-col text-xs">
             {truncateToWords(row.title_id?.name, 6)}
           </span>
         </div>
