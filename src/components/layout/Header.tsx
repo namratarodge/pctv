@@ -11,57 +11,20 @@ import {
   MenuItems,
 } from "@headlessui/react";
 import {
-  ArrowRightCircleIcon,
   Bars3Icon,
   ChevronDownIcon,
-  Cog6ToothIcon,
-  EyeIcon,
-  ListBulletIcon,
   MagnifyingGlassIcon,
-  UserCircleIcon,
-  UserIcon,
   XMarkIcon
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-import { NoBGPages } from "@/constants/Menu";
+import { NoBGPages, baseNavigation, userNavigation } from "@/constants/Menu";
 import { TagType, TitleDetailsType } from "@/constants/Type";
 import { redirect, usePathname, useRouter } from "next/navigation";
 import { AutoCompeleteTitleForHeader } from "../forms";
 import UserAvatar from "../forms/UserAvatar";
-
-const baseNavigation = [
-  { name: "Home", key: "home", href: "/home" },
-  {
-    name: "TV Topics",
-    key: "tv_topics",
-    href: "/browse",
-    children: [],
-  },
-  { name: "Course/Zones", key: "categories", href: "/browse", children: [] },
-  { name: "Pricing", key: "price", href: "/pricing" },
-];
-
-const userNavigation = [
-  { name: "Admin Home", key: "admin_home", href: "/admin", icon: UserIcon },
-  { name: "Profile", key: "profile", href: "/account", icon: UserCircleIcon },
-  { name: "Watchlist", key: "watchlists", href: "/watchlists", icon: EyeIcon },
-  { name: "Your List", key: "profile", href: "/lists", icon: ListBulletIcon },
-  {
-    name: "Account Settings",
-    key: "security",
-    href: "/account?name=security",
-    icon: Cog6ToothIcon,
-  },
-  {
-    name: "Log out",
-    key: "logout",
-    href: "#",
-    icon: ArrowRightCircleIcon,
-  },
-];
 
 function classNames(...classes: (string | false | null | undefined)[]): string {
   return classes.filter(Boolean).join(" ");

@@ -4,7 +4,7 @@ import { usePublicData } from "@/components/context/PublicDataContext";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 
-import { TagType, TitleType, TvTopicType } from "@/constants/Type";
+import { TagType, TitleType } from "@/constants/Type";
 
 import { countryOptions } from "@/constants/Main";
 
@@ -47,6 +47,7 @@ export default function BrowserInner() {
 
   const genreParam = searchParams.get("genre");
   const limitParam = searchParams.get("limit") ?? 16;
+  const pageParam = searchParams.get("page") ?? 1;
   const languageName = searchParams.get("language") ?? "";
   const keywordName = searchParams.get("keyword") ?? "";
   const [selectedGenres, setSelectedGenres] = useState(
@@ -55,36 +56,16 @@ export default function BrowserInner() {
   const genreList = genreParam ? genreParam.split(",") : [];
 
   const [limit, setLimit] = useState(limitParam);
+  const [page, setPage] = useState(pageParam);
   const [range, setRange] = useState<[number, number]>([MIN_YEAR, MAX_YEAR]);
   const [keywords, setKeywords] = useState(keywordName);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState(languageName);
   const [selectedLevel, setSelectedLevel] = useState("");
 
-  const handleMore = () => {
-    const newLimit = (limit as number) + 4;
-    setLimit(newLimit);
-    const query = new URLSearchParams(window.location.search);
-
-    if (newLimit >= 20) {
-      query.set("limit", newLimit.toString());
-    } else {
-      query.delete("limit");
-    }
-
-    router.push(`/browse?${query}`);
-  };
-
-  const handleChangeKeyword = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValue = e.target.value;
-    const params = new URLSearchParams(window.location.search);
-    if (selectedValue === "all") {
-      params.delete("keyword");
-    } else {
-      params.set("keyword", selectedValue);
-    }
-    router.push(`/browse?${params.toString()}`);
-  };
+  // Pagination metadata
+  const [totalItems, setTotalItems] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
 
   const handleCheckboxChange = (name: string) => {
     let updatedGenres = [];
@@ -201,8 +182,15 @@ export default function BrowserInner() {
         }
       );
       if (response.data.status) {
-        const modifiedData = response.data.data.data;
-        setTitle(modifiedData);
+        const modifiedData = response.data.data;
+        setTitle(modifiedData.data);
+        if (modifiedData.pagination) {
+          setTotalItems(modifiedData.pagination.total);
+          setPage(modifiedData.pagination.page.toString());
+          setLimit(modifiedData.pagination.limit.toString());
+          setTotalPages(modifiedData.pagination.totalPages);
+        }
+        // Extract pagination metadata
       } else {
         setTitle([]);
       }
@@ -229,6 +217,28 @@ export default function BrowserInner() {
 
     // Trigger API call without filters
     fetchTitlte();
+  };
+
+  const handleNextPage = () => {
+    const currentPage = parseInt(page as string);
+    if (currentPage < totalPages) {
+      const newPage = currentPage + 1;
+      setPage(newPage.toString());
+      const query = new URLSearchParams(window.location.search);
+      query.set("page", newPage.toString());
+      router.push(`/browse?${query}`);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    const currentPage = parseInt(page as string);
+    if (currentPage > 1) {
+      const newPage = currentPage - 1;
+      setPage(newPage.toString());
+      const query = new URLSearchParams(window.location.search);
+      query.set("page", newPage.toString());
+      router.push(`/browse?${query}`);
+    }
   };
 
   useEffect(() => {
@@ -440,17 +450,37 @@ export default function BrowserInner() {
                 </div>
               ))}
             </div>
-            <div className="mt-10 flex justify-between">
+            <div className="mt-10 flex justify-between items-center">
               <button
-                className="flex cursor-pointer items-center gap-2 px-5 py-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition"
-                onClick={() => handleMore()}
+                className={`flex items-center gap-2 px-5 py-2 rounded-full transition ${
+                  parseInt(page as string) <= 1
+                    ? "bg-gray-500 text-gray-300 cursor-not-allowed"
+                    : "bg-red-500 text-white hover:bg-red-600 cursor-pointer"
+                }`}
+                onClick={() => handlePreviousPage()}
+                disabled={parseInt(page as string) <= 1}
               >
                 <ChevronDoubleLeftIcon className="w-5 h-5" />
-                Back
+                Previous
               </button>
+
+              <div className="text-center">
+                <div className="text-white text-sm">
+                  Page {page} of {totalPages}
+                </div>
+                <div className="text-gray-400 text-xs mt-1">
+                  Showing {title.length} of {totalItems} results
+                </div>
+              </div>
+
               <button
-                className="flex cursor-pointer items-center gap-2 px-5 py-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition"
-                onClick={() => handleMore()}
+                className={`flex items-center gap-2 px-5 py-2 rounded-full transition ${
+                  parseInt(page as string) >= totalPages
+                    ? "bg-gray-500 text-gray-300 cursor-not-allowed"
+                    : "bg-red-500 text-white hover:bg-red-600 cursor-pointer"
+                }`}
+                onClick={() => handleNextPage()}
+                disabled={parseInt(page as string) >= totalPages}
               >
                 Next Page
                 <ChevronDoubleRightIcon className="w-5 h-5" />

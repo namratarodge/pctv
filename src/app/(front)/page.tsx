@@ -1,5 +1,9 @@
+"use client";
+
+import { usePublicData } from "@/components/context/PublicDataContext";
 import Image from "next/image";
 import Link from "next/link";
+
 const joinPCTV = [
   {
     title: "Exclusive Access to Industry-Leading Content",
@@ -24,6 +28,8 @@ const joinPCTV = [
 ];
 
 export default function Home() {
+  const { user } = usePublicData();
+
   return (
     <>
       <div className="relative isolate overflow-hidden pt-14 ">
@@ -46,7 +52,7 @@ export default function Home() {
           />
         </div>
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
+          <div className="mx-auto max-w-2xl py-32 sm:py-38 lg:py-56">
             <div className="text-center">
               <h1 className="text-3xl font-semibold tracking-tight text-balance text-white sm:text-5xl">
                 Unlimited session, Workshops, exclusive content and more
@@ -58,11 +64,15 @@ export default function Home() {
                 Ready to watch? Sign up for a free trial and start watching
                 today.
               </p>
-              <div className="mt-10 flex items-center justify-center gap-6 flex-col md:flex-col lg:flex-row ">
-                <Link href="/register" className="cursor-pointer w-40 rounded-full bg-red-500 px-6 py-3 text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                  Get Started
-                </Link>
-              </div>
+                <div className="mt-10 flex items-center justify-center gap-6 flex-col md:flex-col lg:flex-row ">
+                  <Link
+                    href="/register"
+                    className="cursor-pointer w-40 rounded-full bg-red-500 px-6 py-3 text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20"
+                  >
+                    Get Started
+                  </Link>
+                </div>
+              
             </div>
           </div>
         </div>

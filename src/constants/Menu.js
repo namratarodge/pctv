@@ -1,4 +1,9 @@
-import { CreditCardIcon, FolderPlusIcon, HomeIcon, ShieldCheckIcon } from "@heroicons/react/16/solid";
+import {
+  CreditCardIcon,
+  FolderPlusIcon,
+  HomeIcon,
+  ShieldCheckIcon,
+} from "@heroicons/react/16/solid";
 import {
   CalendarIcon, // Pages
   ChartPieIcon,
@@ -10,8 +15,45 @@ import {
   StarIcon, // Settings
   TagIcon, // Reviews
   UserGroupIcon, // Video
-  UsersIcon
+  UsersIcon,
+  UserIcon,
+  UserCircleIcon,
+  EyeIcon,
+  ArrowRightCircleIcon,
 } from "@heroicons/react/24/outline";
+
+
+
+export const baseNavigation = [
+  { name: "Home", key: "home", href: "/home" },
+  {
+    name: "TV Topics",
+    key: "tv_topics",
+    href: "/browse",
+    children: [],
+  },
+  { name: "Course/Zones", key: "categories", href: "/browse", children: [] },
+  { name: "Pricing", key: "price", href: "/pricing" },
+];
+
+export const userNavigation = [
+  { name: "Admin Home", key: "admin_home", href: "/admin", icon: UserIcon },
+  { name: "Profile", key: "profile", href: "/account", icon: UserCircleIcon },
+  { name: "Watchlist", key: "watchlists", href: "/watchlists", icon: EyeIcon },
+  { name: "Your List", key: "profile", href: "/lists", icon: ListBulletIcon },
+  {
+    name: "Account Settings",
+    key: "security",
+    href: "/account?name=security",
+    icon: Cog6ToothIcon,
+  },
+  {
+    name: "Log out",
+    key: "logout",
+    href: "#",
+    icon: ArrowRightCircleIcon,
+  },
+];
 
 
 export const navigation = [
@@ -44,11 +86,6 @@ export const navigation = [
   { name: "Pages", href: "/admin/pages", icon: KeyIcon, current: false },
   { name: "Tags", href: "/admin/tags", icon: DocumentTextIcon, current: false },
 ];
-export const teams = [
-  { id: 1, name: "Heroicons", href: "#", initial: "H", current: false },
-  { id: 2, name: "Tailwind Labs", href: "#", initial: "T", current: false },
-  { id: 3, name: "Workcation", href: "#", initial: "W", current: false },
-];
 
 export const navigationSettings = [
   { name: "General", href: "/admin/settings", current: true },
@@ -69,7 +106,7 @@ export const navigationAccount = [
     href: "/account?name=membership",
     icon: CreditCardIcon,
   },
-  { name: "Security", href: "/account?name=security", icon: ShieldCheckIcon},
+  { name: "Security", href: "/account?name=security", icon: ShieldCheckIcon },
   {
     name: "Watchlist",
     href: "/watchlists",
