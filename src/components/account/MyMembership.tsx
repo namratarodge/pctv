@@ -26,7 +26,7 @@ export default function MyMembership() {
           {subscription ? (
             <>
               <h2 className="font-semibold text-gray-800">
-                {subscription.plan_info?.name || "Unknown Plan"}
+                {subscription.plan_info?.name || "Free Plan"}
                 {subscription?.subscriptionStatus === "trial" && subscription?.trial_end_date && (
                   <span className="ml-4 border border-red-400 text-red-400 px-2 py-1 rounded-full text-xs">
                     {getTrialDaysLeft(subscription.trial_end_date)} days Free Trial left
