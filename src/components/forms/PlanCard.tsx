@@ -19,7 +19,7 @@ export default function PlanCard({
   paypal_id,
   plan_id,
   interval_count,
-  isHighlighted,
+  isHighlighted = false,
   onSelect,
   features,
 }: PlanCardProps) {
@@ -35,16 +35,23 @@ export default function PlanCard({
       if (!token) {
         window.location.href = "/login";
       }
-      const res = await axios.post(
+
+      const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/create-checkout-session`,
         {
           priceId,
-          customerEmail: user.email,
           trial_period_days: interval_count,
           plan_id: plan_id,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
         }
       );
-      window.location.href = res.data.url;
+      if (response.data) {
+        window.location.href = response.data.redirectUrl; // redirect to billing portal if user is already subscribed
+      }
     } catch (error) {
       console.error("Subscription error", error);
     }
@@ -69,16 +76,15 @@ export default function PlanCard({
       >
         <small className="uppercase tracking-wider">{label}</small>
         <h3 className="text-5xl font-bold">{price}</h3>
-        {!isHighlighted && (
-          <button
-            onClick={() => handleSubscribe(paypal_id, interval_count, plan_id)}
-            className={`px-4 py-1.5 w-3/4 rounded-full mt-2 ${
-              isHighlighted ? "bg-white text-red-500" : "bg-red-500 text-white"
-            } cursor-pointer hover:opacity-90 transition`}
-          >
-            Select
-          </button>
-        )}
+
+        <button
+          onClick={() => handleSubscribe(paypal_id, interval_count, plan_id)}
+          className={`px-4 py-1.5 w-3/4 rounded-full mt-2 ${
+            isHighlighted ? "bg-white text-red-500" : "bg-red-500 text-white"
+          } cursor-pointer hover:opacity-90 transition`}
+        >
+          Select
+        </button>
       </div>
       {/* Features */}
       <div

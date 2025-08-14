@@ -77,7 +77,8 @@ export default function Pricing({ step, title, description }: PricingProps) {
       type: plan.interval,
       interval_count: plan.interval_count,
       paypal_id: plan.paypal_id,
-      isHighlighted: plan._id === user.subscriptions?.plan_id._id,
+      // isHighlighted: plan._id === user.subscription?.plan_info._id,
+      isHighlighted: false,
       features: parsedFeatures.map((label) => ({ label })),
       onSelect: () => console.log(`${plan.name} selected`),
     };

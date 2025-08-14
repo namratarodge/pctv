@@ -8,9 +8,13 @@ import { usePublicData } from "../context/PublicDataContext";
 export default function MyMembership() {
   const { user, loading } = usePublicData();
 
+  const subscription = user?.subscription;
+  const subInfo = user?.subscriptionInfo;
+
   return (
     <>
       {loading ? (
+        // Skeleton loading
         <div className="bg-gray-100 mt-4 sm:mt-6 p-4 sm:p-6 rounded-lg space-y-3 sm:space-y-4 animate-pulse">
           <div className="h-5 bg-gray-300 rounded w-1/2"></div>
           <div className="h-4 bg-gray-300 rounded w-1/3"></div>
@@ -19,18 +23,50 @@ export default function MyMembership() {
         </div>
       ) : (
         <div className="bg-gray-100 mt-4 sm:mt-6 p-4 sm:p-6 rounded-lg space-y-3 sm:space-y-4">
-          {user.subscriptions ? (
+          {subscription ? (
             <>
-              <h2>
-                {user.subscriptions.plan_id?.name}
-                {user.subscriptions.trial_ends_at && (
+              <h2 className="font-semibold text-gray-800">
+                {subscription.plan_info?.name || "Unknown Plan"}
+                {subscription?.subscriptionStatus === "trial" && subscription?.trial_end_date && (
                   <span className="ml-4 border border-red-400 text-red-400 px-2 py-1 rounded-full text-xs">
-                    {getTrialDaysLeft(user.subscriptions.trial_ends_at)} days
-                    Free Trial left
+                    {getTrialDaysLeft(subscription.trial_end_date)} days Free Trial left
+                  </span>
+                )}
+                {subInfo?.subscriptionStatus === "trial_active_plan" && (
+                  <span className="ml-4 border border-green-400 text-green-400 px-2 py-1 rounded-full text-xs">
+                    Paid Plan — Trial Ends in {getTrialDaysLeft(subscription.trial_end_date)} days
+                  </span>
+                )}
+                {subInfo?.subscriptionStatus === "active" && (
+                  <span className="ml-4 border border-green-400 text-green-400 px-2 py-1 rounded-full text-xs">
+                    Active Plan
+                  </span>
+                )}
+                {subInfo?.subscriptionStatus === "canceled" && (
+                  <span className="ml-4 border border-yellow-400 text-yellow-400 px-2 py-1 rounded-full text-xs">
+                    Canceled
+                  </span>
+                )}
+                {subInfo?.subscriptionStatus === "expired" && (
+                  <span className="ml-4 border border-gray-400 text-gray-400 px-2 py-1 rounded-full text-xs">
+                    Expired
                   </span>
                 )}
               </h2>
-              <p>Next Payment {formatDate(user.subscriptions.trial_ends_at)}</p>
+
+              {/* Trial End Date */}
+              {subscription?.trial_end_date && (
+                <p className="text-sm text-gray-600">
+                  Trial ends on: {formatDate(subscription.trial_end_date)}
+                </p>
+              )}
+
+              {/* Plan End Date */}
+              {subscription?.plan_end_date && (
+                <p className="text-sm text-gray-600">
+                  Plan renews/ends on: {formatDate(subscription.plan_end_date)}
+                </p>
+              )}
 
               <Link
                 href="/pricing"
@@ -42,9 +78,7 @@ export default function MyMembership() {
             </>
           ) : (
             <>
-              <h2 className="text-gray-600 font-semibold">
-                No active membership
-              </h2>
+              <h2 className="text-gray-600 font-semibold">No active membership</h2>
               <p className="text-sm text-gray-500">
                 You are not subscribed to any plan yet.
               </p>

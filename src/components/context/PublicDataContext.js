@@ -99,7 +99,7 @@ export function PublicDataProvider({ children }) {
             country: modifiedData.country,
             avatar: modifiedData.avatar,
             userType: modifiedData.userType,
-            subscriptions : modifiedData.subscriptions
+            subscription : modifiedData.subscription
           };
           setUser(userData);
         }
