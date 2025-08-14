@@ -154,14 +154,14 @@ export default function TitleDetailPage() {
     });
     setPlay(data);
   };
-  const handleProgress = async (seconds: number) => {
+  const handleProgress = async (seconds: number, percent: number) => {
     const token = localStorage.getItem("token");
-    console.log(seconds);
 
     if (!token || seconds === 0) return;
     const payload = {
       video_id: play?._id,
       time_watched: seconds,
+      percent: percent
     };
 
     try {
@@ -241,9 +241,11 @@ export default function TitleDetailPage() {
               </div>
               <div className="flex justify-between py-2 border-t mt-4 border-b border-[#37454D]  mr-5">
                 <p className="text-gray-400 text-sm">
-                  {titleDetails?.views} views  - &nbsp;
-                  {timeAgo(titleDetails?.created_at)} 
-                  <span className="text-xs ml-1">({formatDate(titleDetails?.created_at)})</span>
+                  {titleDetails?.views} views - &nbsp;
+                  {timeAgo(titleDetails?.created_at)}
+                  <span className="text-xs ml-1">
+                    ({formatDate(titleDetails?.created_at)})
+                  </span>
                 </p>
                 <div className="flex gap-2">
                   <span className="text-gray-400">Rate us</span>

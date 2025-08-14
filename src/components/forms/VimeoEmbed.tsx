@@ -5,7 +5,7 @@ import { FC, useEffect, useRef } from "react";
 
 interface VimeoEmbedProps {
   htmlString: string;
-  onVideoProgress?: (seconds: number) => void;
+  onVideoProgress?: (seconds: number,percent: number) => void;
   startTime?: number; // Add this prop
 }
 
@@ -17,6 +17,7 @@ const VimeoEmbed: FC<VimeoEmbedProps> = ({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<Player | null>(null);
   const lastWatchedRef = useRef<number>(0);
+  const lastPercentRef = useRef<number>(0);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -49,6 +50,7 @@ const VimeoEmbed: FC<VimeoEmbedProps> = ({
       ({ seconds, duration }: { seconds: number; duration: number }) => {
         lastWatchedRef.current = seconds;
         const percent = (seconds / duration) * 100;
+        lastPercentRef.current = percent;
         console.log(
           `Watched: ${seconds.toFixed(1)}s / ${duration}s (${percent.toFixed(
             2
@@ -64,7 +66,7 @@ const VimeoEmbed: FC<VimeoEmbedProps> = ({
     return () => {
       isUnmounted = true;
       if (onVideoProgress) {
-        onVideoProgress(lastWatchedRef.current);
+        onVideoProgress(lastWatchedRef.current,lastPercentRef.current);
       }
 
       player.unload();

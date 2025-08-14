@@ -14,6 +14,8 @@ type Slide = {
   name: string;
   _id: string;
   slug: string;
+  time_watched?: string;
+  percent?: string;
 };
 
 type VoicesSliderProps = {
@@ -43,14 +45,15 @@ export default function VoicesSlider({
           768: { slidesPerView: 3 },
           1024: { slidesPerView: 6 },
         }}
-        className="relative"
+        className="relative mt-4"
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
             <Link
               href={slide.slug && `/titles/${slide._id}/${slide.slug}`}
-              className="relative h-50 flex items-center justify-center overflow-hidden group cursor-pointer transform transition-all duration-300 ease-in-out hover:scale-105 hover:z-10"
+              className="relative h-50 flex flex-col items-center overflow-hidden group cursor-pointer transform transition-all duration-300 ease-in-out hover:scale-105 hover:z-10"
             >
+              {/* Image */}
               <Image
                 width={100}
                 height={100}
@@ -59,7 +62,17 @@ export default function VoicesSlider({
                 className="w-full h-auto rounded-sm transition-transform duration-300 ease-in-out group-hover:scale-110"
               />
 
-              {/* Enhanced overlay with smooth animations */}
+              {/* Progress Bar Container */}
+              {slide.percent && (
+                <div className="w-full h-1 bg-gray-300 rounded-b-sm mt-1">
+                  <div
+                    className="h-full bg-red-500  transition-all duration-500 ease-in-out"
+                    style={{ width: `${slide.percent}%` }} // dynamically set width
+                  />
+                </div>
+              )}
+
+              {/* Optional Hover Overlay */}
               {hover && (
                 <div className="absolute inset-0 bg-black/70 backdrop-blur-sm px-4 py-6 h-70 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out transform translate-y-2 group-hover:translate-y-0 flex flex-col ">
                   <Image
@@ -74,11 +87,6 @@ export default function VoicesSlider({
                   </div>
                 </div>
               )}
-
-              {/* Subtle glow effect on hover */}
-              {/* <div className="absolute inset-0 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out pointer-events-none">
-                <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-white/20 rounded-sm"></div>
-              </div> */}
             </Link>
           </SwiperSlide>
         ))}

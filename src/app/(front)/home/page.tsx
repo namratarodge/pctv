@@ -8,8 +8,17 @@ import { useEffect, useState } from "react";
 
 type SliderType = {
   title: string;
-  name : string;
+  name: string;
   poster: string;
+  _id: string;
+  slug: string;
+};
+
+type VideoWatch = {
+  name: string;
+  poster: string;
+  time_watched: string;
+  percent: string;
   _id: string;
   slug: string;
 };
@@ -27,6 +36,7 @@ const slides = [
 export default function Home() {
   const [title, setTitle] = useState([]);
   const [topTitle, setTopTitle] = useState([]);
+  const [userVideo, setUserVideo] = useState([]);
   const [mainWatch, setMainwatch] = useState<SliderType | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -93,9 +103,44 @@ export default function Home() {
     }
   };
 
+  const fetchVideoPlayer = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/video-play/user`,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+          params: {
+            limit: 10,
+          },
+        }
+      );
+      if (response.data.status) {
+        const modifiedData = response.data.data.map((item: VideoWatch) => ({
+          name: item.name,
+          _id: item._id,
+          time_watched: item.time_watched,
+          percent: item.percent,
+          slug: item.slug,
+
+          image: process.env.NEXT_PUBLIC_WEBSITE + "/" + item.poster,
+        }));
+        console.log(modifiedData);
+        setUserVideo(modifiedData);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error("Error fetching data:", error);
+    }
+  };
+
   useEffect(() => {
     fetchTitlte();
     fetchLatest();
+    fetchVideoPlayer();
   }, []);
 
   return (
@@ -167,9 +212,10 @@ export default function Home() {
       </div>
       <div className=" mx-auto max-w-11/12">
         <SliderNumber title="PCTv Regions" />
-        <Slider title="Latest Videos" slides={title} hover={true}/>
+        <Slider title="Continue Watching" slides={userVideo} />
+        <Slider title="Latest Videos" slides={title} hover={true} />
         <Slider title="PCTv Top Voice" slides={slides} />
-        <Slider title="PCTv Top 10 Sessions" slides={topTitle}  hover={true}/>
+        <Slider title="PCTv Top 10 Sessions" slides={topTitle} hover={true} />
         <TopicSlider title="PCTv Topic" />
       </div>
     </>
