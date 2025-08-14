@@ -212,7 +212,7 @@ export default function Home() {
       </div>
       <div className=" mx-auto max-w-11/12">
         <SliderNumber title="PCTv Regions" />
-        <Slider title="Continue Watching" slides={userVideo} />
+        {userVideo.length > 0 && <Slider title="Continue Watching" slides={userVideo} /> }
         <Slider title="Latest Videos" slides={title} hover={true} />
         <Slider title="PCTv Top Voice" slides={slides} />
         <Slider title="PCTv Top 10 Sessions" slides={topTitle} hover={true} />
