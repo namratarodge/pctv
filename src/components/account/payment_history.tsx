@@ -105,9 +105,6 @@ export default function Payment_history() {
                 <th className="px-6 py-3 font-semibold text-gray-600">
                   Paid At
                 </th>
-                <th className="px-6 py-3 font-semibold text-gray-600">
-                  Created
-                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -125,7 +122,7 @@ export default function Payment_history() {
                     </td>
                     <td className="px-6 py-3 text-gray-600">
                       <span
-                        className={`px-3 py-1 text-xs rounded-full font-semibold ${
+                        className={`px-3 py-1 text-xs rounded-full font-semibold capitalize ${
                           item.status === "paid"
                             ? "bg-green-100 text-green-600"
                             : "bg-yellow-100 text-yellow-600"
@@ -134,14 +131,11 @@ export default function Payment_history() {
                         {item.status}
                       </span>
                     </td>
-                    <td className="px-6 py-3 text-gray-600">
+                    <td className="px-6 py-3 text-gray-600 capitalize text-center">
                       {item.payment_method || "-"}
                     </td>
                     <td className="px-6 py-3 text-gray-600">
                       {formatDate(item.paid_at)}
-                    </td>
-                    <td className="px-6 py-3 text-gray-600">
-                      {formatDate(item.created_at)}
                     </td>
                   </tr>
                 ))
