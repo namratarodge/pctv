@@ -102,8 +102,8 @@ export default function Payment_history() {
                 <th className="px-6 py-3 font-semibold text-gray-600">
                   Payment Method
                 </th>
-                <th className="px-6 py-3 font-semibold text-gray-600">
-                  Paid At
+                <th className="px-6 py-3 font-semibold text-gray-600 text-right">
+                  Paid date
                 </th>
               </tr>
             </thead>
@@ -114,7 +114,7 @@ export default function Payment_history() {
                     key={index}
                     className="bg-white text-left hover:bg-gray-50"
                   >
-                    <td className="px-6 py-3 text-gray-800">
+                    <td className="px-6 py-3 text-gray-800 capitalize">
                       {item.type || "-"}
                     </td>
                     <td className="px-6 py-3 text-gray-800">
@@ -131,10 +131,10 @@ export default function Payment_history() {
                         {item.status}
                       </span>
                     </td>
-                    <td className="px-6 py-3 text-gray-600 capitalize text-center">
+                    <td className="  py-3 text-gray-600 capitalize text-center">
                       {item.payment_method || "-"}
                     </td>
-                    <td className="px-6 py-3 text-gray-600">
+                    <td className="px-6 py-3 text-gray-600 text-right">
                       {formatDate(item.paid_at)}
                     </td>
                   </tr>

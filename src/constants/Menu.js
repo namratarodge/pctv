@@ -116,8 +116,6 @@ export const navigationAccount = [
 
 export const navigationTitleSubMenu = [
   { name: "Primary Facts", href: "general" },
-  { name: "Seasons", href: "seasons" },
-  { name: "Images", href: "images" },
   { name: "Videos", href: "videos" },
   { name: "Cast", href: "cast" },
   { name: "Crew", href: "crew" },

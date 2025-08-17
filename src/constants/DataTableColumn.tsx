@@ -11,7 +11,7 @@ type typeOfSubscriptions = {
     last_name: string;
     email: string;
     userType: string;
-    avatar: string;
+    avatar?: string;
   };
   plan_id: {
     name: string;
@@ -33,11 +33,11 @@ export const SubscriptionsColumn: {
 }[] = [
   {
     key: "user_id",
-    label: "User",
+    label: "User Info",
     render: (row) => (
       <div className="flex items-center space-x-4">
         <UserAvatar
-          direct={true}
+          rounded={true}
           poster={row.user_id?.avatar}
           name={row.user_id?.email}
         />
@@ -62,21 +62,6 @@ export const SubscriptionsColumn: {
       </div>
     ),
   },
-  {
-    key: "gateway_id",
-    label: "Cancelled",
-    render: (row) => (
-      <div>
-        {" "}
-        {row.gateway_id === "none" ? (
-          "-"
-        ) : (
-          <CheckCircleIcon className="w-5 h-5 text-green-800" />
-        )}
-      </div>
-    ),
-  },
-  { key: "renews_at", label: "Renews At" },
   { key: "ends_at", label: "Ends At" },
   { key: "created_at", label: "Created At" },
 ];
@@ -283,7 +268,9 @@ export const PeopleColumn: {
   {
     key: "birth_date",
     label: "Birth Date",
-    render: (row) => <div>{row.birth_date ? formatDate(row.birth_date) : "-"}</div>,
+    render: (row) => (
+      <div>{row.birth_date ? formatDate(row.birth_date) : "-"}</div>
+    ),
   },
   { key: "views", label: "Local View" },
   { key: "popularity", label: "Popularity" },
@@ -317,7 +304,11 @@ export const VideoColumn: {
     label: "Title",
     render: (row) => (
       <div className="flex items-center space-x-4">
-        <UserAvatar poster={row.title_id?.poster} rounded name={row.title_id?.name} />
+        <UserAvatar
+          poster={row.title_id?.poster}
+          rounded
+          name={row.title_id?.name}
+        />
         <div>
           <span title={row.title_id?.name} className="flex flex-col text-xs">
             {truncateToWords(row.title_id?.name, 6)}
