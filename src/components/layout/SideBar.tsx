@@ -107,13 +107,13 @@ export default function SideBar({ sideBarOpen, setSideBarOpen }: SideBarProps) {
       <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-60 lg:flex-col">
         {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-700 px-4 pb-4">
-          <div className="flex h-16 shrink-0 items-center">
+          <div className="flex h-16 shrink-0 ">
             <Image
               alt="Your Company"
               src="/logo-dark.png"
               width={600} // Replace with the actual width of the image or layout container
               height={200} // Replace with the actual height
-              className="w-full p-4"
+              className="w-full py-3"
               unoptimized // required for external images unless configured in next.config.js
             />
           </div>

@@ -11,7 +11,6 @@ import UserAvatar from "../forms/UserAvatar";
 
 const userNavigation = [
   { name: "Your profile", href: "/account" },
-  { name: "Account settings", href: "#" },
   { name: "Sign out", href: "#" },
 ];
 type SideBarProps = {
@@ -83,7 +82,7 @@ export default function TopHeader({
               <span className="hidden lg:flex lg:items-center ">
                 <span
                   aria-hidden="true"
-                  className="ml-4 text-sm/6 font-semibold text-gray-900"
+                  className="ml-4 text-sm/6 font-semibold text-gray-900 capitalize"
                 >
                   {user?.first_name} {user?.last_name}
                 </span>
