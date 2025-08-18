@@ -8,7 +8,7 @@ import { PlayCircleIcon, PlusIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -24,6 +24,8 @@ export default function TitleDetailPage() {
   const [titleReview, setTitleReview] = useState(0);
 
   const [play, setPlay] = useState<VideoType | null>(null);
+
+  const router = useRouter();
 
   const fetchTitleList = async () => {
     const token = localStorage.getItem("token");
@@ -159,7 +161,7 @@ export default function TitleDetailPage() {
     const payload = {
       video_id: play?._id,
       time_watched: seconds,
-      percent: percent
+      percent: percent,
     };
 
     try {
@@ -178,6 +180,13 @@ export default function TitleDetailPage() {
       toast("Error during login:" + error);
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/login");
+    }
+  }, [router]);
 
   return (
     <div className="pt-18 flex flex-col md:flex-row max-w-11/12 mx-auto">

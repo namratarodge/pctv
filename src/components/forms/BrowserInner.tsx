@@ -22,7 +22,6 @@ const Levels = [
   { value: "expert", name: "Expert" },
 ];
 
-import Loading from "@/components/layout/Loading";
 import { Button } from "@headlessui/react";
 import {
   ChevronDoubleLeftIcon,
@@ -311,9 +310,9 @@ export default function BrowserInner() {
 
   return (
     <div className="pt-18  max-w-11/12 mx-auto flex flex-col lg:flex-row mb-10">
-      <div className="w-full  md:w-1/5 sm:w-full px-2 py-4 overflow-auto lg:h-auto h-screen ">
+      <div className="w-full  md:w-1/5 sm:w-full px-4 py-4 h-screen overflow-y-auto scrollable custom-scrollbar">
         <div className="w-full border-b border-gray-500 pb-4">
-          <div className="text-gray-300 text-lg">TV Topic</div>
+          <div className="text-gray-400">TV Topic</div>
           <div className="relative inline-block mt-4 w-full  bg-gray-800 rounded-full text-sm">
             <select
               className="block appearance-none w-full border border-gray-500 bg-gray-800 text-white   py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2"
@@ -365,7 +364,7 @@ export default function BrowserInner() {
           </div>
         </div>
         <div className="w-full border-b border-gray-500 py-6">
-          <div className="text-gray-300">Select Region</div>
+          <div className="text-gray-400">Select Region</div>
           <div className="relative inline-block mt-4 w-full bg-gray-800 rounded-full">
             <select
               value={selectedCountry}
@@ -389,7 +388,7 @@ export default function BrowserInner() {
         </div>
 
         <div className="w-full border-b border-gray-500 py-6">
-          <div className="text-gray-300">Language</div>
+          <div className="text-gray-400">Language</div>
           <div className="relative inline-block mt-4 w-full bg-gray-800 rounded-full text-sm">
             <select
               value={selectedLanguage}
@@ -414,7 +413,7 @@ export default function BrowserInner() {
         </div>
 
         <div className="w-full py-6">
-          <div className="text-gray-300">Levels</div>
+          <div className="text-gray-400">Levels</div>
           <div className="relative inline-block mt-4 w-full bg-gray-800 rounded-full text-sm">
             <select
               value={selectedLevel}
@@ -444,10 +443,10 @@ export default function BrowserInner() {
           </button>
         </div>
       </div>
-      <div className="w-full  lg:w-4/5 px-4 py-2 ">
+      <div className="w-full  lg:w-4/5 px-2 py-2 ">
         <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
           <div className="flex gap-4 items-center ">
-            <h1 className="text-3xl text-white">PCE Brazil</h1>
+            <h1 className="text-3xl text-white">TV Topics</h1>
             {selectedGenres.length > 0 && (
               <Button
                 onClick={clearAllFilters}
@@ -463,13 +462,13 @@ export default function BrowserInner() {
           <SkeletonLoading />
         ) : title.length > 0 ? (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-2 gap-y-6 ">
               {title.map((title: TitleType) => (
-                <div className=" text-white gap-4" key={title._id}>
+                <div className=" text-white gap-2 " key={title._id}>
                   <Link href={`/titles/${title?._id}/${title?.slug}`}>
                     <TitlePoster poster={title.poster} name={title.name} />
-                    <div className="mt-4">
-                      <span className="text-sm">
+                    <div className="mt-0">
+                      <span className="text-xs">
                         {title?.name.slice(0, 34)}
                       </span>
                     </div>
