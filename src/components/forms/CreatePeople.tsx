@@ -1,6 +1,6 @@
 "use client";
 import { ProfileFormData, profileSchema } from "@/constants/Validation";
-import { PhotoIcon } from "@heroicons/react/24/outline";
+import { ChevronDownIcon, PhotoIcon } from "@heroicons/react/24/outline";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
@@ -55,6 +55,7 @@ export default function CreatePeople() {
           setValue("popularity", Number(user.popularity));
           setValue("gender", user.gender);
           setValue("description", user.description);
+          setValue("company_name", user.company_name);
           setValue("allow_update", Boolean(user.allow_update));
 
           // Set thumbnail preview
@@ -82,6 +83,7 @@ export default function CreatePeople() {
     formDataToSend.append("birth_place", formData.birth_place ?? "");
     formDataToSend.append("popularity", String(formData.popularity ?? ""));
     formDataToSend.append("gender", formData.gender);
+    formDataToSend.append("company_name", formData.company_name ?? "");
     formDataToSend.append("description", formData.description);
     formDataToSend.append(
       "allow_update",
@@ -170,7 +172,7 @@ export default function CreatePeople() {
             </div>
 
             <div>
-              <label className="block text-gray-600 mb-1">Known For</label>
+              <label className="block text-gray-600 mb-1">Job Title</label>
               <input
                 type="text"
                 {...register("known_for")}
@@ -229,25 +231,47 @@ export default function CreatePeople() {
                 <p className="text-red-500">{errors.popularity.message}</p>
               )}
             </div>
+
+
+            <div>
+              <label className="block text-gray-600 mb-1">Gender</label>
+              <div className="mt-2 grid grid-cols-1">
+                <select
+                  {...register("gender")}
+                  name="gender"
+                  autoComplete="gender"
+                  className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-red-600 sm:text-sm/6"
+                >
+                  <option value="">Select gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+                <ChevronDownIcon
+                  aria-hidden="true"
+                  className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
+                />
+              </div>
+              {errors.gender && (
+                <p className="text-red-500">{errors.gender.message}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-gray-600 mb-1">Company Name</label>
+              <input
+                type="text"
+                {...register("company_name")}
+                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              {errors.company_name && (
+                <p className="text-red-500">{errors.company_name.message}</p>
+              )}
+            </div>
+
           </div>
 
-          <div>
-            <label className="block text-gray-600 mb-1">Gender</label>
-            <div className="flex gap-6">
-              <select
-                {...register("gender")}
-                className="col-start-1 row-start-1 w-1/6 appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-              >
-                <option value="">Select gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            {errors.gender && (
-              <p className="text-red-500">{errors.gender.message}</p>
-            )}
-          </div>
+
 
           <div>
             <label className="block text-gray-600 mb-1">Bio</label>
@@ -288,7 +312,7 @@ export default function CreatePeople() {
                   htmlFor="thumbnailUpload"
                   className="cursor-pointer inline-block px-4 py-2 text-sm rounded-md border bg-white hover:bg-gray-50 text-gray-700"
                 >
-                  Select Poster
+                 Speaker Headshot
                 </label>
                 <input
                   ref={fileInputRef}
