@@ -125,7 +125,6 @@ export default function TitleDetailPage() {
       title_id: id,
     };
     try {
-      console.log(payload);
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/watchlist`,
         payload,
