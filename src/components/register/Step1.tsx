@@ -42,7 +42,7 @@ export default function Step1() {
       } else {
         toast.error(responseNew?.message?.message);
       }
-    } catch (error) {
+    } catch (error: any) {
       const message =
         error.response?.data?.errors?.[0] || "Error during signup";
       toast.error(message);
