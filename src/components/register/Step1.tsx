@@ -4,6 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import GoogleLoginButton from "@/components/auth/GoogleLoginButton";
+import { GoogleUser } from "@/utils/googleOAuth";
 
 export default function Step1() {
   const {
@@ -49,6 +51,35 @@ export default function Step1() {
     }
   };
 
+  const handleGoogleSuccess = async (googleUser: GoogleUser) => {
+    try {
+      // Send Google user data to backend for registration/login
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/google-login`,
+        {
+          email: googleUser.email,
+          name: googleUser.name,
+          googleId: googleUser.sub,
+          picture: googleUser.picture,
+        }
+      );
+
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        toast.success("Successfully signed up with Google!");
+        window.location.href = "/register?step=two";
+      }
+    } catch (error: any) {
+      console.error("Google signup error:", error);
+      const message = error.response?.data?.message || "Failed to sign up with Google";
+      toast.error(message);
+    }
+  };
+
+  const handleGoogleError = (error: string) => {
+    toast.error(error);
+  };
+
   return (
     <div className=" px-6 py-12  sm:rounded-lg sm:px-12">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -60,6 +91,24 @@ export default function Step1() {
         <p className=" text-sm">
           Set your email & password - light the fuse on your learning journey
         </p>
+        
+        {/* Google Signup Button */}
+        <div className="w-full md:w-3/5 lg:w-3/5">
+          <GoogleLoginButton
+            onGoogleSuccess={handleGoogleSuccess}
+            onGoogleError={handleGoogleError}
+          />
+          
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300" />
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-white text-gray-500">Or continue with email</span>
+            </div>
+          </div>
+        </div>
+
         <div className="w-full space-y-4 md:w-3/5 lg:w-3/5 ">
           <div>
             <input

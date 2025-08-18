@@ -1,5 +1,7 @@
 "use client";
 
+import GoogleLoginButton from "@/components/auth/GoogleLoginButton";
+import { GoogleUser } from "@/utils/googleOAuth";
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -7,9 +9,11 @@ import { toast } from "react-toastify";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setLoading(true);
 
     try {
       const response = await fetch(
@@ -22,12 +26,13 @@ export default function Login() {
           body: JSON.stringify({ email, password }),
         }
       );
-
+      
       if (!response.ok) {
         return toast("Your Email id and Password is not correct");
       }
 
       const data = await response.json();
+      // console.log(data)
       localStorage.setItem("token", data.token);
       if (data.user.userType === "admin") {
         window.location.href = "/admin";
@@ -37,8 +42,58 @@ export default function Login() {
     } catch (error) {
       console.log(error);
       toast("Error during login:" + error);
+    } finally {
+      setLoading(false);
     }
   }
+
+  const handleGoogleSuccess = async (googleUser: GoogleUser) => {
+    setLoading(true);
+    try {
+      // Send Google user data to backend for authentication
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_API_URL + "/auth/google-login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: googleUser.email,
+            name: googleUser.name,
+            googleId: googleUser.sub,
+            picture: googleUser.picture,
+          }),
+        }
+      );
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Google login failed");
+      }
+
+      const data = await response.json();
+      console.log(data);
+      localStorage.setItem("token", data.token);
+      
+      if (data.user.userType === "admin") {
+        window.location.href = "/admin";
+      } else {
+        window.location.href = "/";
+      }
+      
+      toast.success("Successfully logged in with Google!");
+    } catch (error: any) {
+      console.error("Google login error:", error);
+      toast.error(error.message || "Failed to authenticate with Google");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleError = (error: string) => {
+    toast.error(error);
+  };
 
   return (
     <>
@@ -56,6 +111,24 @@ export default function Login() {
                 Log in to access all PCTV Session hosted by experienced industry
                 professionals.
               </p>
+              
+              {/* Google Login Button */}
+              <div className="space-y-4">
+                <GoogleLoginButton
+                  onGoogleSuccess={handleGoogleSuccess}
+                  onGoogleError={handleGoogleError}
+                />
+                
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-gray-600" />
+                  </div>
+                  <div className="relative flex justify-center text-sm">
+                    <span className="px-2 bg-transparent text-gray-300">Or continue with</span>
+                  </div>
+                </div>
+              </div>
+
               <div>
                 <div className="mt-2">
                   <input
@@ -102,9 +175,10 @@ export default function Login() {
               <div>
                 <button
                   type="submit"
-                  className="flex w-full justify-center rounded-full cursor-pointer bg-[#f44336] px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-red-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                  disabled={loading}
+                  className="flex w-full justify-center rounded-full cursor-pointer bg-[#f44336] px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-red-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Log In
+                  {loading ? "Logging in..." : "Log In"}
                 </button>
               </div>
             </form>
