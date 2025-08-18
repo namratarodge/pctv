@@ -91,7 +91,7 @@ export default function Footer() {
                     </li>
                   ))}
                   <li>
-                    <Link href="/contact-us">Contact Us</Link>
+                    <Link href="/contact-us" className="text-sm/6">Contact Us</Link>
                   </li>
                 </ul>
               </div>

@@ -13,7 +13,7 @@ export default function Login() {
 
     try {
       const response = await fetch(
-        process.env.NEXT_PUBLIC_API_URL + "/api/auth/login",
+        process.env.NEXT_PUBLIC_API_URL + "/auth/login",
         {
           method: "POST",
           headers: {
