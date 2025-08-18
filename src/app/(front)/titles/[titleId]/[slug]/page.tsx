@@ -17,7 +17,7 @@ import ShareButtonWithFallback from "@/components/account/ShareButtonWithFallbac
 export default function TitleDetailPage() {
   const params = useParams();
   const titleId = params?.titleId as string;
-  const [title, setTitle] = useState<TitleType[]>([]);
+  const [recommendedTitle, setRecommendedTitle] = useState<TitleType[]>([]);
   const [titleDetails, setTitleDetails] = useState<TitleType | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -41,7 +41,7 @@ export default function TitleDetailPage() {
         }
       );
       if (response.data.status) {
-        setTitle(response.data.data.data);
+        setRecommendedTitle(response.data.data.data);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -147,7 +147,6 @@ export default function TitleDetailPage() {
   };
 
   const handlePlay = (data: VideoType) => {
-    console.log(data);
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -379,7 +378,7 @@ export default function TitleDetailPage() {
               Recommended Videos for you{" "}
             </h2>
             <div className="flex flex-col gap-1 h-screen overflow-y-auto scrollable custom-scrollbar">
-              {title.map((data) => (
+              {recommendedTitle.map((data) => (
                 <Link
                   href={`/titles/${data._id}/${data.slug}`}
                   key={data._id}
