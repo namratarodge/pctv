@@ -11,9 +11,7 @@ import { countryOptions } from "@/constants/Main";
 const Language = [
   { value: "English", name: "English" },
   { value: "Spanish", name: "Spanish" },
-  { value: "French", name: "French" },
-  { value: "German", name: "German" },
-  { value: "Hindi", name: "Hindi" },
+  { value: "Portuguese", name: "Portuguese" },
 ];
 
 const Levels = [

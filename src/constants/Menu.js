@@ -40,7 +40,7 @@ export const userNavigation = [
   { name: "Admin Home", key: "admin_home", href: "/admin", icon: UserIcon },
   { name: "Profile", key: "profile", href: "/account", icon: UserCircleIcon },
   { name: "Watchlist", key: "watchlists", href: "/watchlists", icon: EyeIcon },
-  { name: "Your List", key: "your_list", href: "/lists", icon: ListBulletIcon },
+  // { name: "Your List", key: "your_list", href: "/lists", icon: ListBulletIcon },
   {
     name: "Account Settings",
     key: "security",
