@@ -461,12 +461,12 @@ export const usersColumn: {
       render: (row) => (
         <div className="flex items-center space-x-2">
           {/* <div>{row.avatar}</div> */}
-          <UserAvatar poster={row.avatar} name={row.email}                                                                                                                                                                                                                                                                                                                                               rounded />
-          <span className="flex flex-col capitalize">
-            {row.first_name} {row.last_name}
+          <UserAvatar poster={row.avatar} name={row.email} rounded />
+          <span className="flex flex-col ">
+            <span className="capitalize">{row.first_name} {row.last_name}</span>
             <small>{row.email}</small>
           </span>
-        </div>
+        </div>  
       ),
     },
     { key: "userType", label: "Role" },
