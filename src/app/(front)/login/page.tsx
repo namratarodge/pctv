@@ -26,7 +26,7 @@ export default function Login() {
           body: JSON.stringify({ email, password }),
         }
       );
-      
+
       if (!response.ok) {
         return toast("Your Email id and Password is not correct");
       }
@@ -66,7 +66,7 @@ export default function Login() {
           }),
         }
       );
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || "Google login failed");
@@ -75,13 +75,13 @@ export default function Login() {
       const data = await response.json();
       console.log(data);
       localStorage.setItem("token", data.token);
-      
+
       if (data.user.userType === "admin") {
         window.location.href = "/admin";
       } else {
         window.location.href = "/";
       }
-      
+
       toast.success("Successfully logged in with Google!");
     } catch (error: any) {
       console.error("Google login error:", error);
@@ -111,20 +111,20 @@ export default function Login() {
                 Log in to access all PCTV Session hosted by experienced industry
                 professionals.
               </p>
-              
+
               {/* Google Login Button */}
               <div className="space-y-4">
                 <GoogleLoginButton
                   onGoogleSuccess={handleGoogleSuccess}
                   onGoogleError={handleGoogleError}
                 />
-                
-                <div className="relative">
+
+                <div className="relative my-6">
                   <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-600" />
+                    <div className="w-full border-t border-gray-300" />
                   </div>
                   <div className="relative flex justify-center text-sm">
-                    <span className="px-2 bg-transparent text-gray-300">Or continue with</span>
+                    <span className="px-2 bg-black text-white  rounded-2xl">Or continue with email</span>
                   </div>
                 </div>
               </div>
@@ -184,7 +184,7 @@ export default function Login() {
             </form>
 
             <p className="mt-10 text-center text-sm/6 text-gray-300">
-              Don not have an account? 
+              Don not have an account?
               <Link
                 href="register"
                 className="font-semibold text-red-400 hover:text-red-500 px-2"

@@ -14,7 +14,11 @@ export const userUpdateSchema = z.object({
   email: z.string().min(1, "email is required"),
   gender: z.string().min(1, "Gender is required"),
   country: z.string().min(1, "Country is required"),
-  phone: z.coerce.string().trim().min(1, "Phone is required"),
+  phone: z
+    .string()
+    .min(7, "Phone number must be at least 7 digits")
+    .max(11, "Phone number must be at most 11 digits")
+    .regex(/^\+?[0-9]{7,15}$/, "Phone number must contain only digits and may start with +"),
 });
 export type UserUpdateFormData = z.infer<typeof userUpdateSchema>;
 
@@ -38,14 +42,24 @@ export type UserChangePasswordFormData = z.infer<
 >;
 
 export const userSignUpSchema = z.object({
-  first_name: z.string().min(1, "First Name is required"),
-  last_name: z.string().min(1, "Last Name is required"),
+  first_name: z
+    .string()
+    .min(1, "First Name is required")
+    .regex(/^[A-Za-z\s'-]+$/, "First Name can only contain letters, spaces, hyphens, and apostrophes"),
+
+  last_name: z
+    .string()
+    .min(1, "Last Name is required")
+    .regex(/^[A-Za-z\s'-]+$/, "Last Name can only contain letters, spaces, hyphens, and apostrophes"),
+
 
   email: z.string().min(1, "Email is required").email("Invalid email address"),
   phone: z
     .string()
-    .min(1, "Phone is required")
-    .regex(/^[0-9+\-\s()]{7,20}$/, "Invalid phone number"),
+    .min(7, "Phone number must be at least 7 digits")
+    .max(11, "Phone number must be at most 11 digits")
+    .regex(/^\+?[0-9]{7,15}$/, "Phone number must contain only digits and may start with +"),
+
   password: z.string().min(1, "Password is required"),
 });
 export type UserSignUpFormData = z.infer<typeof userSignUpSchema>;

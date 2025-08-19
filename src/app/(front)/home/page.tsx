@@ -1,4 +1,5 @@
 "use client";
+import ShareButtonWithFallback from "@/components/account/ShareButtonWithFallback";
 import { Slider, SliderNumber, TopicSlider } from "@/components/layout";
 import { PlayCircleIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
@@ -177,22 +178,19 @@ export default function Home() {
               <div className="mt-8 flex  justify-between  ">
                 <div className="flex  gap-4">
                   <Link
-                    href={`/titles/${mainWatch?.slug && mainWatch?._id}/${
-                      mainWatch?.slug
-                    }`}
+                    href={`/titles/${mainWatch?.slug && mainWatch?._id}/${mainWatch?.slug
+                      }`}
                     target="_blank"
                     className=" flex rounded-full bg-red-500 pl-3 pr-1 gap-2 py-1 items-center text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20 cursor-pointer"
                   >
                     Watch Now
                     <PlayCircleIcon className="h-7 w-7 text-white" />
                   </Link>
-                  <button className="w-25 rounded-full bg-gray-500 px-6 py-1 text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20 cursor-pointer">
-                    Share
-                  </button>
+
+                  <ShareButtonWithFallback />
+
                 </div>
-                {/* <button className="p-3 text-center items-center border-gray-300 rounded-full border  text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                  <SpeakerXMarkIcon className="h-5 w-5 text-white" />
-                </button> */}
+
               </div>
             </div>
           </div>
@@ -212,7 +210,7 @@ export default function Home() {
       </div>
       <div className=" mx-auto max-w-11/12">
         <SliderNumber title="PCTv Regions" />
-        {userVideo.length > 0 && <Slider title="Continue Watching" slides={userVideo} /> }
+        {userVideo.length > 0 && <Slider title="Continue Watching" slides={userVideo} />}
         <Slider title="Latest Videos" slides={title} hover={true} />
         <Slider title="PCTv Top Voice" slides={slides} />
         <Slider title="PCTv Top 10 Sessions" slides={topTitle} hover={true} />

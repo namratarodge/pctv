@@ -59,7 +59,7 @@ const ShareButtonWithFallback = () => {
         onClick={handleShare}
         className="flex cursor-pointer items-center gap-2 rounded-full bg-white/10 backdrop-blur-md px-3 py-1.5 text-sm font-medium text-white hover:bg-white/20 transition duration-200 shadow-md ring-1 ring-white/20"
       >
-        <ShareIcon className="h-4 w-4 text-white" />
+        <ShareIcon className="h-6 w-6 text-white" />
         Share
       </button>
 
