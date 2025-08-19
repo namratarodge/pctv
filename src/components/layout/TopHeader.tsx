@@ -76,7 +76,6 @@ export default function TopHeader({
           <Menu as="div" className="relative">
             <MenuButton className="-m-1.5 flex items-center p-1.5 cursor-pointer">
               <span className="sr-only">Open user menu</span>
-
               <UserAvatar poster={user.avatar} rounded={true} />
 
               <span className="hidden lg:flex lg:items-center ">

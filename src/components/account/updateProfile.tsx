@@ -46,7 +46,6 @@ export default function UpdateProfile() {
     formData.append("gender", data.gender);
     formData.append("phone", data.phone);
     formData.append("country", data.country);
-    console.log(previewUrl)
     if (thumbnail) {
       formData.append("thumbnail", thumbnail);
     }
@@ -80,7 +79,7 @@ export default function UpdateProfile() {
         first_name: user.first_name || "",
         last_name: user.last_name || "",
         email: user.email || "",
-        phone: user.phone || "",
+        phone: user.phone != null ? String(user.phone) : "",
         gender: user.gender || "Male",
         country: user.country || "India",
       });
@@ -203,7 +202,7 @@ export default function UpdateProfile() {
                 </div>
 
                 <input
-                  type="text"
+                  type="tel"
                   {...register("phone")}
                   placeholder="Phone no"
                   className="block w-full rounded-full bg-white px-4 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-400 sm:text-sm/6"
