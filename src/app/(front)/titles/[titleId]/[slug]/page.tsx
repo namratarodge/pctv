@@ -76,13 +76,13 @@ export default function TitleDetailPage() {
   }, [titleId]);
 
   const updateTitleView = async (id: string) => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
 
     // Avoid updating view if already done recently
-    const viewedKey = `viewed_${id}`;
-    const lastViewed = sessionStorage.getItem(viewedKey);
+    // const viewedKey = `viewed_${id}`;
+    // const lastViewed = sessionStorage.getItem(viewedKey);
 
-    if (lastViewed) return;
+    // if (lastViewed) return;
 
     try {
       const response = await axios.get(
@@ -93,10 +93,6 @@ export default function TitleDetailPage() {
           },
         }
       );
-
-      if (response.data.status) {
-        sessionStorage.setItem(viewedKey, "true");
-      }
     } catch (error) {
       console.error("Error updating view count:", error);
     }
@@ -296,7 +292,7 @@ export default function TitleDetailPage() {
                 <h2 className="text-white">Related Tags</h2>
                 <div className="flex flex-wrap py-2 gap-3">
                   {titleDetails.genres.length === 0 ||
-                  titleDetails.keywords.length === 0 ? (
+                    titleDetails.keywords.length === 0 ? (
                     <span className="text-gray-400 text-sm">
                       No related tags available
                     </span>
