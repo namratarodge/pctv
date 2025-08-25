@@ -52,7 +52,7 @@ export default function CreatePeople() {
           setValue("birth_date", user.birth_date);
           setValue("death_date", user.death_date);
           setValue("birth_place", user.birth_place);
-          setValue("popularity", Number(user.popularity));
+          setValue("popularity", user.popularity);
           setValue("gender", user.gender);
           setValue("description", user.description);
           setValue("company_name", user.company_name);
