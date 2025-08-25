@@ -1,5 +1,6 @@
 "use client";
 import { navigationSettings } from "@/constants/Menu";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 function classNames(...classes: (string | false | null | undefined)[]): string {
@@ -15,7 +16,7 @@ export default function SettingSideBar() {
         <ul role="list" className=" space-y-1">
           {navigationSettings.map((item) => (
             <li key={item.name}>
-              <a
+              <Link
                 href={item.href}
                 className={classNames(
                   item.href === pageName
@@ -25,7 +26,7 @@ export default function SettingSideBar() {
                 )}
               >
                 {item.name}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
