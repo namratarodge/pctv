@@ -12,15 +12,14 @@ interface GoogleLoginButtonProps {
 export default function GoogleLoginButton({ onGoogleSuccess, onGoogleError }: GoogleLoginButtonProps) {
   const login = useGoogleLogin({
     onSuccess: async (response) => {
-      try { 
+      try {
         if ('access_token' in response) {
           // Get user info from Google
           const userInfo = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
             headers: { Authorization: `Bearer ${response.access_token}` },
           }).then(res => res.json());
 
-          console.log('user Info')
-          console.log(userInfo)
+
 
           const googleUser: GoogleUser = {
             email: userInfo.email,

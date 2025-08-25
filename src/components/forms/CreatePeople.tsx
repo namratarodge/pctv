@@ -312,7 +312,7 @@ export default function CreatePeople() {
                   htmlFor="thumbnailUpload"
                   className="cursor-pointer inline-block px-4 py-2 text-sm rounded-md border bg-white hover:bg-gray-50 text-gray-700"
                 >
-                  Select Poster
+                  Speaker Headshot
                 </label>
                 <input
                   ref={fileInputRef}

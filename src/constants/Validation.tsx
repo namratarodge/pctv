@@ -80,7 +80,7 @@ export const profileSchema = z.object({
   company_name: z.string().optional().nullable(),
 
   popularity: z
-    .number()
+    .string()
     .optional().nullable(),
 
   birth_place: z.string().optional(),
