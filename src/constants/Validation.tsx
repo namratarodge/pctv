@@ -18,7 +18,10 @@ export const userUpdateSchema = z.object({
     .string()
     .min(7, "Phone number must be at least 7 digits")
     .max(11, "Phone number must be at most 11 digits")
-    .regex(/^\+?[0-9]{7,15}$/, "Phone number must contain only digits and may start with +"),
+    .regex(
+      /^\+?[0-9]{7,15}$/,
+      "Phone number must contain only digits and may start with +"
+    ),
 });
 export type UserUpdateFormData = z.infer<typeof userUpdateSchema>;
 
@@ -45,22 +48,33 @@ export const userSignUpSchema = z.object({
   first_name: z
     .string()
     .min(1, "First Name is required")
-    .regex(/^[A-Za-z\s'-]+$/, "First Name can only contain letters, spaces, hyphens, and apostrophes"),
+    .regex(
+      /^[A-Za-z\s'-]+$/,
+      "First Name can only contain letters, spaces, hyphens, and apostrophes"
+    ),
 
   last_name: z
     .string()
     .min(1, "Last Name is required")
-    .regex(/^[A-Za-z\s'-]+$/, "Last Name can only contain letters, spaces, hyphens, and apostrophes"),
-
+    .regex(
+      /^[A-Za-z\s'-]+$/,
+      "Last Name can only contain letters, spaces, hyphens, and apostrophes"
+    ),
 
   email: z.string().min(1, "Email is required").email("Invalid email address"),
   phone: z
     .string()
     .min(7, "Phone number must be at least 7 digits")
     .max(11, "Phone number must be at most 11 digits")
-    .regex(/^\+?[0-9]{7,15}$/, "Phone number must contain only digits and may start with +"),
+    .regex(
+      /^\+?[0-9]{7,15}$/,
+      "Phone number must contain only digits and may start with +"
+    ),
 
-  password: z.string().min(1, "Password is required"),
+  password: z
+    .string()
+    .min(6, "Password must be at least 6 characters")
+    .max(12, "Password must be at most 12 characters"),
 });
 export type UserSignUpFormData = z.infer<typeof userSignUpSchema>;
 
@@ -79,9 +93,7 @@ export const profileSchema = z.object({
   death_date: z.string().optional().nullable(),
   company_name: z.string().optional().nullable(),
 
-  popularity: z
-    .string()
-    .optional().nullable(),
+  popularity: z.string().optional().nullable(),
 
   birth_place: z.string().optional(),
 

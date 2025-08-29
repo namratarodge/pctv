@@ -1,12 +1,12 @@
 import "@/app/globals.css";
-import ClientLayoutWrapper from "./ClientLayoutWrapper";
-import { ToastContainer } from "react-toastify";
 import { PublicDataProvider } from "@/components/context/PublicDataContext";
+import { ToastContainer } from "react-toastify";
+import ClientLayoutWrapper from "./ClientLayoutWrapper";
 
-export const metadata = {
-  title: "Project Control TV",
-  description: "Welcome to Project Control TV!",
-};
+// export const metadata = {
+//   title: "Project Control TV",
+//   description: "Welcome to Project Control TV!",
+// };
 
 export default function RootLayout({
   children,

@@ -167,7 +167,7 @@ export default function Home() {
           />
         </div>
         <div className="mx-auto">
-          <div className="mx-auto max-w-11/12  py-32 sm:py-48 lg:py-46 ">
+          <div className="mx-auto max-w-11/12  py-32 sm:py-48 md:py-36 lg:py-40 ">
             <div className="text-left">
               <h1 className="text-2xl  font-semibold tracking-tight text-balance text-white sm:text-5xl w-full sm:w-2/4 ">
                 Delivering the UKs most complex projects and programmes
