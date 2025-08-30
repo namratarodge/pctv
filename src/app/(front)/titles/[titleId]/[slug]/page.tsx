@@ -13,6 +13,7 @@ import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import ShareButtonWithFallback from "@/components/account/ShareButtonWithFallback";
+import { usePublicData } from "@/components/context/PublicDataContext";
 
 export default function TitleDetailPage() {
   const params = useParams();
@@ -20,6 +21,7 @@ export default function TitleDetailPage() {
   const [recommendedTitle, setRecommendedTitle] = useState<TitleType[]>([]);
   const [titleDetails, setTitleDetails] = useState<TitleType | null>(null);
   const [loading, setLoading] = useState(true);
+  const { user } = usePublicData();
 
   const [titleReview, setTitleReview] = useState(0);
 
@@ -150,7 +152,7 @@ export default function TitleDetailPage() {
     });
     setPlay(data);
   };
-  
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -182,12 +184,26 @@ export default function TitleDetailPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent  rounded-md" />
 
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div
-                        className="bg-white/70 hover:bg-white p-4 rounded-full shadow-lg transition-all duration-300 cursor-pointer"
-                        onClick={() => setPlay(titleDetails?.videos[0])}
-                      >
-                        <PlayCircleIcon className="w-12 h-12 text-red-600" />
-                      </div>
+                      {user?.subscription?.status === "active" ? (
+                        <div
+                          className="bg-white/70 hover:bg-white p-4 rounded-full shadow-lg transition-all duration-300 cursor-pointer"
+                          onClick={() => setPlay(titleDetails?.videos[0])}
+                        >
+                          <PlayCircleIcon className="w-12 h-12 text-red-600" />
+                        </div>
+                      ) : (
+                        <div className="flex flex-col items-center justify-center p-6  rounded-lg shadow">
+                          <p className="text-lg font-semibold text-gray-300 mb-4">
+                            You need to buy a membership to watch this video.
+                          </p>
+                          <button
+                            onClick={() => router.push("/pricing")} // or wherever your membership page is
+                            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700"
+                          >
+                            Buy Membership
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </>
                 )}

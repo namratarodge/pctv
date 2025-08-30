@@ -9,7 +9,6 @@ export default function MyMembership() {
   const { user, loading } = usePublicData();
 
   const subscription = user?.subscription;
-  const subInfo = user?.subscriptionInfo;
 
   return (
     <>
@@ -32,22 +31,22 @@ export default function MyMembership() {
                     {getTrialDaysLeft(subscription.trial_end_date)} days Free Trial left
                   </span>
                 )}
-                {subInfo?.subscriptionStatus === "trial_active_plan" && (
-                  <span className="ml-4 border border-green-400 text-green-400 px-2 py-1 rounded-full text-xs">
+                {subscription?.subscriptionStatus === "trial_active_plan" && (
+                  <span className="ml-4 border border-green-600 text-green-600 px-2 py-1 rounded-full text-xs">
                     Paid Plan — Trial Ends in {getTrialDaysLeft(subscription.trial_end_date)} days
                   </span>
                 )}
-                {subInfo?.subscriptionStatus === "active" && (
+                {subscription?.subscriptionStatus === "active" && (
                   <span className="ml-4 border border-green-400 text-green-400 px-2 py-1 rounded-full text-xs">
                     Active Plan
                   </span>
                 )}
-                {subInfo?.subscriptionStatus === "canceled" && (
+                {subscription?.subscriptionStatus === "canceled" && (
                   <span className="ml-4 border border-yellow-400 text-yellow-400 px-2 py-1 rounded-full text-xs">
                     Canceled
                   </span>
                 )}
-                {subInfo?.subscriptionStatus === "expired" && (
+                {subscription?.subscriptionStatus === "expired" && (
                   <span className="ml-4 border border-gray-400 text-gray-400 px-2 py-1 rounded-full text-xs">
                     Expired
                   </span>
