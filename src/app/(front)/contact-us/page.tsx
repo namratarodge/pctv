@@ -44,7 +44,7 @@ export default function ContactUs() {
       );
       if (response.status) {
         toast("Message sent successfully!");
-        setFormData({ name: "", email: "", message: "" }); // reset form
+        setFormData({ full_name: "", email: "", message: "" }); // reset form
       } else {
         toast("Message not ent successfully! please try again");
       }
