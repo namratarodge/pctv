@@ -146,6 +146,9 @@ export default function TitleDetailPage() {
   };
 
   const handlePlay = (data: VideoType) => {
+    if (user?.subscription?.status === "inactive") {
+      return toast("You need to buy a membership to watch this video.");
+    }
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -345,6 +348,7 @@ export default function TitleDetailPage() {
                               className="aspect-video opacity-50 group-hover:opacity-100 transition duration-300"
                               dangerouslySetInnerHTML={{ __html: item.url }}
                             />
+
                             <div className="absolute inset-0 flex items-center justify-center">
                               <button
                                 className="bg-white/80 hover:bg-white rounded-full p-3 transition duration-300 cursor-pointer"

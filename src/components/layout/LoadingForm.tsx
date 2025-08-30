@@ -5,7 +5,7 @@ type LoadingProps = {
 
 export default function Loading({
   title = "Please hold tight. Data is Loading...",
-  color = "text-red-400",
+  color = "text-red-200",
 }: LoadingProps) {
   return (
     <div className="flex h-100">

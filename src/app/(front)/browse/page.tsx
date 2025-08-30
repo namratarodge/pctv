@@ -13,7 +13,7 @@ export default function BrowserPage() {
       router.push("/login");
     }
   }, [router]);
-  
+
   return (
     <Suspense fallback={<LoadingForm />}>
       <BrowserInner />
