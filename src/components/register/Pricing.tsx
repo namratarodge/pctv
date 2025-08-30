@@ -1,23 +1,18 @@
 "use client";
 
 import PlanCard from "@/components/forms/PlanCard";
-import { PlanFormValues } from "@/constants/Type";
+import { PlanFormValues, PricingProps } from "@/constants/Type";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { usePublicData } from "../context/PublicDataContext";
 import Loading from "../layout/Loading";
-type PricingProps = {
-  step?: string;
-  title: string;
-  description?: string;
-};
+
 
 export default function Pricing({ step, title, description }: PricingProps) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const { user } = usePublicData();
+  // const { user } = usePublicData();
 
   const fetch = async () => {
     const token = localStorage.getItem("token");

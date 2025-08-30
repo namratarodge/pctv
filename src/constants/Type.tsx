@@ -3,6 +3,27 @@ export type TvTopicType = {
   display_name: string;
 };
 
+
+// Price plan
+
+export type PricingProps = {
+  step?: string;
+  title: string;
+  description?: string;
+};
+
+export type PlanCardProps = {
+  label: string;
+  price: string;
+  type: string;
+  paypal_id: string;
+  plan_id: string;
+  interval_count: number;
+  isHighlighted: boolean;
+  onSelect?: () => void;
+  features: { label: string; value?: string }[];
+};
+
 // WhatchList
 
 export type WhatchListType = {

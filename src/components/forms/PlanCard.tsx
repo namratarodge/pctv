@@ -1,17 +1,7 @@
+import { PlanCardProps } from "@/constants/Type";
 import axios from "axios";
 import { usePublicData } from "../context/PublicDataContext";
 
-type PlanCardProps = {
-  label: string;
-  price: string;
-  type: string;
-  paypal_id: string;
-  plan_id: string;
-  interval_count: number;
-  isHighlighted: boolean;
-  onSelect?: () => void;
-  features: { label: string; value?: string }[];
-};
 
 export default function PlanCard({
   label,
