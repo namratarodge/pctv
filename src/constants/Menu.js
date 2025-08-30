@@ -96,7 +96,6 @@ export const navigationSettings = [
     current: false,
   },
   { name: "Analytics", href: "/admin/settings/analytics", current: false },
-  { name: "Recaptcha", href: "/admin/settings/recaptcha", current: false },
 ];
 
 export const navigationAccount = [

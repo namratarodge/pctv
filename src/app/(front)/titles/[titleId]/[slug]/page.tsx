@@ -150,33 +150,7 @@ export default function TitleDetailPage() {
     });
     setPlay(data);
   };
-  const handleProgress = async (seconds: number, percent: number) => {
-    const token = localStorage.getItem("token");
-
-    if (!token || seconds === 0) return;
-    const payload = {
-      video_id: play?._id,
-      time_watched: seconds,
-      percent: percent,
-    };
-
-    try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/video-plays`,
-        payload,
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-      toast("Error during login:" + error);
-    }
-  };
-
+  
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -221,7 +195,7 @@ export default function TitleDetailPage() {
                   <ViemoEmbed
                     htmlString={play.url}
                     startTime={play?.video_play?.time_watched}
-                    onVideoProgress={handleProgress}
+                    videoId={play._id}
                   />
                 )}
               </div>
@@ -292,7 +266,7 @@ export default function TitleDetailPage() {
                 <h2 className="text-white">Related Tags</h2>
                 <div className="flex flex-wrap py-2 gap-3">
                   {titleDetails.genres.length === 0 ||
-                    titleDetails.keywords.length === 0 ? (
+                  titleDetails.keywords.length === 0 ? (
                     <span className="text-gray-400 text-sm">
                       No related tags available
                     </span>

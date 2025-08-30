@@ -6,10 +6,17 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-
 function classNames(...classes: (string | false | null | undefined)[]): string {
   return classes.filter(Boolean).join(" ");
 }
+
+type SliderType = {
+  title: string;
+  name: string;
+  poster: string;
+  _id: string;
+  slug: string;
+};
 
 type StatItemRaw = {
   name: string;
