@@ -15,7 +15,7 @@ export default function ResetPassword() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(token)
+    console.log(token);
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
@@ -35,20 +35,19 @@ export default function ResetPassword() {
           },
         }
       );
-
-      toast.success("Password reset successful! Please login.");
-      router.push("/login");
+      if (response.data.status) {
+        toast.success("Password reset successful! Please login.");
+        router.push("/login");
+      }else{
+        toast.success("Something went wrong. Token expire.");
+      }
     } catch (error: any) {
-      console.log(error)
+      console.log(error);
       if (error.response) {
         toast.error(error.response.data.message || "Something went wrong.");
-      } else {
-        toast.error("Failed to reset password. Try again later.");
       }
-      console.error("Reset Password Error:", error);
-    } finally {
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   return (
