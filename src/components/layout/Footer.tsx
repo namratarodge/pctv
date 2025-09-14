@@ -110,14 +110,14 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FaYoutube className="w-8 h-8 text-gray-600 bg-gray-900 p-1 rounded-sm hover:text-red-800 hover:scale-110 transition-transform duration-200" />
+              <FaYoutube className="w-8 h-8 text-gray-600 p-1 rounded-sm hover:text-red-800 hover:scale-110 transition-transform duration-200" />
             </a>
             <a
               href="https://www.facebook.com/ProjectControlsTV/"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FaFacebookF className="w-8 h-8 text-gray-600 bg-gray-900 p-1 rounded-sm rounded-sm hover:text-blue-800 hover:scale-110 transition-transform duration-200" />
+              <FaFacebookF className="w-8 h-8 text-gray-600 p-1 rounded-sm hover:text-blue-800 hover:scale-110 transition-transform duration-200" />
             </a>
 
             <a
@@ -125,14 +125,14 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FaInstagram className="w-8 h-8 text-gray-600 bg-gray-900 p-1 rounded-sm hover:text-pink-700 hover:scale-110 transition-transform duration-200" />
+              <FaInstagram className="w-8 h-8 text-gray-600  p-1 rounded-sm hover:text-pink-700 hover:scale-110 transition-transform duration-200" />
             </a>
             <a
               href="https://www.linkedin.com/company/project-controls-tv/"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FaLinkedinIn className="w-8 h-8 text-gray-600 bg-gray-900 p-1 rounded-sm hover:text-blue-900 hover:scale-110 transition-transform duration-200" />
+              <FaLinkedinIn className="w-8 h-8 text-gray-600 p-1 rounded-sm hover:text-blue-900 hover:scale-110 transition-transform duration-200" />
             </a>
           </div>
         </div>

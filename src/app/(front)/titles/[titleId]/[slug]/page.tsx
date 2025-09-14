@@ -220,7 +220,7 @@ export default function TitleDetailPage() {
               </div>
               <h1 className="text-xl text-white py-4">{titleDetails?.name}</h1>
 
-              <div className="flex gap-2">
+              <div className="flex gap-2 ">
                 <button
                   onClick={() => handleWhatchList(titleDetails._id)}
                   className="flex cursor-pointer items-center gap-2 rounded-full bg-white/10 backdrop-blur-md px-3 py-1.5 text-sm font-medium text-white hover:bg-white/20 transition duration-200 shadow-md ring-1 ring-white/20"
@@ -229,13 +229,9 @@ export default function TitleDetailPage() {
                   Add to Watchlist
                 </button>
 
-                {/* <button className="flex cursor-pointer items-center gap-2 rounded-full bg-white/10 backdrop-blur-md px-3 py-1.5 text-sm font-medium text-white hover:bg-white/20 transition duration-200 shadow-md ring-1 ring-white/20">
-                  <ShareIcon className="h-4 w-4 text-white" />
-                  Share
-                </button> */}
                 <ShareButtonWithFallback />
               </div>
-              <div className="flex justify-between py-2 border-t mt-4 border-b border-[#37454D]  mr-5">
+              <div className="flex justify-between py-2 border-t mt-4 border-b border-[#37454D]  mr-5 flex-wrap gap-3">
                 <p className="text-gray-400 text-sm">
                   {titleDetails?.views} views - &nbsp;
                   {timeAgo(titleDetails?.created_at)}

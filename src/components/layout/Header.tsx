@@ -14,7 +14,7 @@ import {
   Bars3Icon,
   ChevronDownIcon,
   MagnifyingGlassIcon,
-  XMarkIcon
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
@@ -149,7 +149,11 @@ export default function Header() {
                       >
                         <div className="py-1">
                           {(
-                            item.children as { _id: string; name: string; href: string }[]
+                            item.children as {
+                              _id: string;
+                              name: string;
+                              href: string;
+                            }[]
                           ).map((subItem) => (
                             <a
                               key={subItem._id}
@@ -298,42 +302,49 @@ export default function Header() {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/25">
               <div className="space-y-2 py-6">
-                {navigation.map((item, index) => {
-                  const hasChildren = item.children && item.children.length > 0;
+                {user &&
+                  Object.keys(user).length > 0 &&
+                  navigation.map((item, index) => {
+                    const hasChildren =
+                      item.children && item.children.length > 0;
 
-                  const menuContent = (
-                    <div
-                      className="block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800 cursor-pointer"
-                      onClick={() => hasChildren && toggleSubmenu(index)}
-                    >
-                      {item.name}
+                    const menuContent = (
+                      <div
+                        className="block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800 cursor-pointer"
+                        onClick={() => hasChildren && toggleSubmenu(index)}
+                      >
+                        {item.name}
 
-                      {hasChildren && openIndex === index && (
-                        <div className="space-y-1 mt-4">
-                          {(
-                            item.children as { _id: string; name: string; href: string }[]
-                          ).map((child) => (
-                            <Link
-                              key={child._id}
-                              href={child.href}
-                              className="block rounded-md px-1 py-2 text-sm text-gray-300"
-                            >
-                              {child.name}
-                            </Link>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  );
+                        {hasChildren && openIndex === index && (
+                          <div className="space-y-1 mt-4">
+                            {(
+                              item.children as {
+                                _id: string;
+                                name: string;
+                                href: string;
+                              }[]
+                            ).map((child) => (
+                              <Link
+                                key={child._id}
+                                href={child.href}
+                                className="block rounded-md px-1 py-2 text-sm text-gray-300"
+                              >
+                                {child.name}
+                              </Link>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
 
-                  return hasChildren ? (
-                    <div key={item.key}>{menuContent}</div>
-                  ) : (
-                    <Link key={item.key} href={item.href} className="block">
-                      {menuContent}
-                    </Link>
-                  );
-                })}
+                    return hasChildren ? (
+                      <div key={item.key}>{menuContent}</div>
+                    ) : (
+                      <Link key={item.key} href={item.href} className="block">
+                        {menuContent}
+                      </Link>
+                    );
+                  })}
               </div>
               <div className="py-6">
                 {user && Object.keys(user).length > 0 ? (
@@ -342,19 +353,13 @@ export default function Header() {
                       className="flex items-center"
                       onClick={() => setIsOpen(!isOpen)}
                     >
-                      <Image
-                        src="/default-front.svg"
-                        alt="test"
-                        width={10}
-                        height={10}
-                        className="w-10 h-auto object-cover rounded-full"
-                      />
-                      {/* <UserCircleIcon className="w-6 h-6 text-gray-300 " /> */}
+                      <UserAvatar poster={user.avatar} rounded={true} />
                       <span
                         aria-hidden="true"
-                        className="ml-4 text-sm font-semibold text-white"
+                        className="ml-4 text-sm font-semibold text-white capitalize"
                       >
-                        {user.full_name}
+                        {user?.first_name} &nbsp;
+                        {user?.last_name}
                       </span>
                       <ChevronDownIcon
                         aria-hidden="true"
