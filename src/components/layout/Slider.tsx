@@ -45,13 +45,13 @@ export default function VoicesSlider({
           768: { slidesPerView: 3 },
           1024: { slidesPerView: 6 },
         }}
-        className="relative mt-4"
+        className="relative mt-2"
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
             <Link
               href={slide.slug && `/titles/${slide._id}/${slide.slug}`}
-              className="relative h-50 flex flex-col items-center overflow-hidden group cursor-pointer transform transition-all duration-300 ease-in-out hover:scale-105 hover:z-10"
+              className="relative h-40 flex flex-col items-center overflow-hidden group cursor-pointer transform transition-all duration-300 ease-in-out hover:scale-105 hover:z-10"
             >
               {/* Image */}
               <Image

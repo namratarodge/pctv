@@ -24,7 +24,7 @@ export default function Footer() {
         WhitePages.includes(pageName) ? "border-gray-300" : "border-gray-700"
       } border border-gray-200 `}
     >
-      <div className="mx-auto max-w-11/12 px-6  pb-8 pt-10 lg:px-2 ">
+      <div className="mx-auto max-w-11/12 px-2  pb-8 pt-10 lg:px-2 ">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8 ">
           <div className="space-y-4">
             {WhitePages.includes(pageName) ? (

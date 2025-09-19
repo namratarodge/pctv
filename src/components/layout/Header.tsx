@@ -90,6 +90,13 @@ export default function Header() {
     setNavigation(merged);
   }, [tvtopic, categories]);
 
+  const pathname = usePathname();
+
+  useEffect(() => {
+    // any route change closes the sheet
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
   const singOut = async () => {
     localStorage.clear(); // or remove specific keys
     window.location.href = "/login"; // or use router.push('/login') if using Next.js router
@@ -131,7 +138,7 @@ export default function Header() {
                 {navigation.map((item) => (
                   <div key={item.key} className="relative group">
                     {/* Main menu link */}
-                    <a
+                    <Link
                       href={item.href}
                       className={classNames(
                         item.href === pageName && "text-white ",
@@ -139,7 +146,7 @@ export default function Header() {
                       )}
                     >
                       {item.name}
-                    </a>
+                    </Link>
 
                     {/* Submenu */}
                     {item.children && item.children.length > 0 && (

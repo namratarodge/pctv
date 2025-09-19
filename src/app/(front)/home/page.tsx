@@ -146,7 +146,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="relative isolate overflow-hidden pt-14 h-[55vh] sm:h-[80vh] ">
+      <div className="relative isolate overflow-hidden pt-14 h-[55vh] sm:h-[70vh] ">
         <Image
           alt=""
           src="/Home-page.png"
@@ -169,7 +169,7 @@ export default function Home() {
         <div className="mx-auto">
           <div className="mx-auto max-w-11/12  py-32 sm:py-48 md:py-36 lg:py-40 ">
             <div className="text-left">
-              <h1 className="text-1xl  font-semibold tracking-tight text-balance text-white sm:text-4xl  sm:w-2/4  md:text-4xl  md:w-2/4 w-full lg:w-2/4">
+              <h1 className="text-3xl  font-semibold tracking-tight text-balance text-white sm:text-4xl  sm:w-2/4  md:text-4xl  md:w-2/4 w-full lg:w-2/4">
                 Delivering the UKs most complex projects and programmes
               </h1>
               <p className="mt-8 text-lg text-pretty text-white sm:text-md">
