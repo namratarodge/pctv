@@ -146,7 +146,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="relative isolate overflow-hidden pt-14 h-[55vh] sm:h-[70vh] ">
+      <div className="relative isolate overflow-hidden pt-14 h-[55vh] sm:h-[80vh] ">
         <Image
           alt=""
           src="/Home-page.png"
@@ -169,8 +169,16 @@ export default function Home() {
         <div className="mx-auto">
           <div className="mx-auto max-w-11/12  py-32 sm:py-48 md:py-36 lg:py-40 ">
             <div className="text-left">
-              <h1 className="text-3xl  font-semibold tracking-tight text-balance text-white sm:text-4xl  sm:w-2/4  md:text-4xl  md:w-2/4 w-full lg:w-2/4">
-                Delivering the UKs most complex projects and programmes
+              <h1
+                className="
+    text-xl leading-snug font-semibold tracking-tight text-white text-balance w-full
+    sm:text-2xl sm:leading-snug sm:w-4/5
+    md:text-3xl md:leading-snug md:w-3/4
+    lg:text-4xl lg:leading-tight lg:w-2/3
+    xl:text-5xl xl:leading-tight xl:w-1/2
+  "
+              >
+                Delivering the UK’s most complex projects and programmes
               </h1>
               <p className="mt-8 text-lg text-pretty text-white sm:text-md">
                 Mathew Vickerstaff
@@ -178,8 +186,9 @@ export default function Home() {
               <div className="mt-8 flex  justify-between  ">
                 <div className="flex  gap-4">
                   <Link
-                    href={`/titles/${mainWatch?.slug && mainWatch?._id}/${mainWatch?.slug
-                      }`}
+                    href={`/titles/${mainWatch?.slug && mainWatch?._id}/${
+                      mainWatch?.slug
+                    }`}
                     target="_blank"
                     className=" flex rounded-full bg-red-500 pl-3 pr-1 gap-2 py-1 items-center text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20 cursor-pointer"
                   >
@@ -188,9 +197,7 @@ export default function Home() {
                   </Link>
 
                   <ShareButtonWithFallback />
-
                 </div>
-
               </div>
             </div>
           </div>
@@ -210,7 +217,9 @@ export default function Home() {
       </div>
       <div className=" mx-auto max-w-11/12">
         <SliderNumber title="PCTv Regions" />
-        {userVideo.length > 0 && <Slider title="Continue Watching" slides={userVideo} />}
+        {userVideo.length > 0 && (
+          <Slider title="Continue Watching" slides={userVideo} />
+        )}
         <Slider title="Latest Videos" slides={title} hover={true} />
         <Slider title="PCTv Top Voice" slides={slides} />
         <Slider title="PCTv Top 10 Sessions" slides={topTitle} hover={true} />
