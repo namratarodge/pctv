@@ -22,7 +22,7 @@ export default function Footer() {
     <footer
       className={`${
         WhitePages.includes(pageName) ? "border-gray-300" : "border-gray-700"
-      } border border-gray-200 `}
+      } border-b border-t border-gray-200 `}
     >
       <div className="mx-auto max-w-11/12 px-2  pb-8 pt-10 lg:px-2 ">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8 ">
@@ -48,7 +48,9 @@ export default function Footer() {
             )}
 
             <p className="text-sm/6 text-balance ">
-             Project Controls TV is the wolrd's first-ever OTT and stremming platform dedicated to empowering the global project controls community.
+              Project Controls TV is the wolrd's first-ever OTT and stremming
+              platform dedicated to empowering the global project controls
+              community.
             </p>
           </div>
           <div className="mt-16 grid grid-cols-1  gap-8 xl:col-span-2 xl:mt-0">
@@ -87,11 +89,15 @@ export default function Footer() {
                 <ul role="list" className="mt-2 space-y-2">
                   {pages.map((item: PageType) => (
                     <li key={item._id}>
-                      <Link href={`/pages/${item.slug}`} className="text-sm/6" >{item.title}</Link>
+                      <Link href={`/pages/${item.slug}`} className="text-sm/6">
+                        {item.title}
+                      </Link>
                     </li>
                   ))}
                   <li>
-                    <Link href="/contact-us" className="text-sm/6">Contact Us</Link>
+                    <Link href="/contact-us" className="text-sm/6">
+                      Contact Us
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -100,7 +106,8 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className=" border-t border-white/10 py-4 px-16 flex justify-between mx-auto max-w-12/12">
+      <div className=" border-t border-white/10 py-4   ">
+        <div className="max-w-11/12 flex justify-between mx-auto">
           <p className="text-sm/6 text-gray-400">
             &copy; 2025 Project Control TV, Inc. All rights reserved.
           </p>
@@ -136,7 +143,7 @@ export default function Footer() {
             </a>
           </div>
         </div>
-
+      </div>
     </footer>
   );
 }
