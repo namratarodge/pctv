@@ -150,7 +150,6 @@ export default function ListMain() {
                     </span>
                   </div>
                   <div className="text-sm text-gray-500 mt-4">
-                    {formatDate(data.created_at)} |{" "}
                     {formatDate(data.updated_at, true)}
                   </div>
                 </div>

@@ -1,23 +1,23 @@
 "use client";
-import { Filter, Paginations, ModelForm } from "@/components/forms";
+import { Filter, ModelForm, Paginations } from "@/components/forms";
+import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
+import Loading from "@/components/layout/Loading";
+import { tagsColumn } from "@/constants/DataTableColumn";
+import { TagsfilterType } from "@/constants/Filter";
+import { formatDate } from "@/utils/common";
 import {
   PencilIcon,
   PlusCircleIcon,
   TrashIcon,
 } from "@heroicons/react/16/solid";
-import { useCallback, useEffect, useState } from "react";
-import { TagsfilterType } from "@/constants/Filter";
 import axios from "axios";
-import { formatDate } from "@/utils/common";
-import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
-import { tagsColumn } from "@/constants/DataTableColumn";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import Loading from "@/components/layout/Loading";
 
-import { TagType, TagFormValue } from "@/constants/Type";
-import { useDebounce } from "use-debounce";
+import { TagFormValue, TagType } from "@/constants/Type";
 import { parseQueryString } from "@/utils/helper";
+import { useDebounce } from "use-debounce";
 
 export default function Tags() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -266,7 +266,7 @@ export default function Tags() {
             {...register("type", { required: "type is required" })}
             className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
           >
-            <option value="tv_type">TV Topic</option>
+            <option value="keyword">TV Topic</option>
             <option value="genre">Categories</option>
             <option value="production_country">Production Country</option>
             <option value="custom">Custom</option>

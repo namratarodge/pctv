@@ -263,7 +263,7 @@ export default function CreateVideo() {
                   Embed Code
                 </label>
                 <textarea
-                  {...register("url")}
+                  {...register("url",{ required: "URL is required" })}
                   rows={3}
                   className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none"
                 />
