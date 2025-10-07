@@ -2,11 +2,12 @@
 
 import Loading from "@/components/layout/Loading";
 import { WhatchListType } from "@/constants/Type";
-import { DocumentMagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { DocumentMagnifyingGlassIcon, TrashIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Home() {
   const [data, setData] = useState<WhatchListType[]>([]);
@@ -44,6 +45,63 @@ export default function Home() {
     fetch();
   }, []);
 
+  const handleDeleteWithConfirm = (id: string, fetch: () => void) => {
+    toast(
+      ({ closeToast }) => (
+        <div className="space-y-3">
+          <p className="text-gray-800 font-medium">
+            Are you sure you want to delete this Watchlists?
+          </p>
+          <div className="flex justify-end gap-2">
+            <button
+              onClick={() => closeToast()}
+              className="px-3 py-1 text-sm rounded bg-gray-200 hover:bg-gray-300"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={async () => {
+                closeToast();
+
+                const token = localStorage.getItem("token");
+                try {
+                  const response = await axios.delete(
+                    `${process.env.NEXT_PUBLIC_API_URL}/watchlist/${id}`,
+                    {
+                      headers: {
+                        Authorization: token,
+                        "Content-Type": "application/json",
+                      },
+                    }
+                  );
+
+                  if (response.data.status) {
+                    toast.success("Whatchlist deleted successfully");
+                    fetch(); // Refresh list
+                  } else {
+                    toast.error(`Delete failed: ${response.data.message}`);
+                  }
+                } catch (error) {
+                  console.error(error);
+                  toast.error("Error deleting page.");
+                }
+              }}
+              className="px-3 py-1 text-sm rounded bg-red-500 text-white hover:bg-red-600"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      ),
+      {
+        autoClose: false,
+        closeOnClick: false,
+        draggable: false,
+        closeButton: false,
+      }
+    );
+  };
+
   return (
     <div className="pt-25 max-w-11/12 mx-auto">
       <h2 className="text-white text-4xl font-semibold">Watchlists</h2>
@@ -71,6 +129,19 @@ export default function Home() {
                 </h2>
                 <p className="text-gray-400 text-sm">{item.title_id.type}</p>
               </div>
+
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleDeleteWithConfirm(item._id, fetch);
+                }}
+                className="ml-auto mr-2 inline-flex items-center justify-center rounded-md border border-red-500/30 px-2.5 py-2 text-xs font-medium text-red-300 hover:text-white hover:bg-red-500/20 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                aria-label="Remove from watchlist"
+                title="Remove from watchlist"
+              >
+                <TrashIcon className="h-5 w-5 " /> 
+              </button>
             </Link>
           ))}
         </div>

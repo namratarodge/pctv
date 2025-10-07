@@ -1,22 +1,22 @@
 "use client";
 import { Filter, Paginations } from "@/components/forms";
+import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
+import Loading from "@/components/layout/Loading";
+import { TitleColumn } from "@/constants/DataTableColumn";
+import { TitleFilter } from "@/constants/Filter";
+import { TitleDetailsType, TitleType } from "@/constants/Type";
+import { formatDate } from "@/utils/common";
+import { parseQueryString } from "@/utils/helper";
 import {
   PencilIcon,
   PlusCircleIcon,
   TrashIcon,
 } from "@heroicons/react/16/solid";
-import { useEffect, useState, useCallback } from "react";
-import { TitleFilter } from "@/constants/Filter";
 import axios from "axios";
-import { formatDate } from "@/utils/common";
-import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
-import { TitleColumn } from "@/constants/DataTableColumn";
-import Loading from "@/components/layout/Loading";
 import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { TitleDetailsType, TitleType } from "@/constants/Type";
 import { useDebounce } from "use-debounce";
-import { parseQueryString } from "@/utils/helper"
 
 export default function Title() {
   const [data, setData] = useState([]);
@@ -81,30 +81,87 @@ export default function Title() {
     }
   }, [limits, pages, debouncedFilterQuery]); // dependencies used inside fetch
 
-  const handleDelete = async (id: string) => {
-    const token = localStorage.getItem("token");
+  // const handleDelete = async (id: string) => {
+  //   const token = localStorage.getItem("token");
 
-    try {
-      const response = await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/title/${id}`,
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+  //   try {
+  //     const response = await axios.delete(
+  //       `${process.env.NEXT_PUBLIC_API_URL}/title/${id}`,
+  //       {
+  //         headers: {
+  //           Authorization: token,
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
 
-      if (response.data.status) {
-        toast("Titles deleted successfully");
-        fetch(); // Refresh the plans list
-      } else {
-        toast("Delete failed:", response.data.message);
+  //     if (response.data.status) {
+  //       toast("Titles deleted successfully");
+  //       fetch(); // Refresh the plans list
+  //     } else {
+  //       toast("Delete failed:", response.data.message);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast("Error deleting plan:");
+  //   }
+  // };
+
+  const handleDeleteWithConfirm = (id: string, fetch: () => void) => {
+    toast(
+      ({ closeToast }) => (
+        <div className="space-y-3">
+          <p className="text-gray-800 font-medium">
+            Are you sure you want to delete this title?
+          </p>
+          <div className="flex justify-end gap-2">
+            <button
+              onClick={() => closeToast()}
+              className="px-3 py-1 text-sm rounded bg-gray-200 hover:bg-gray-300"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={async () => {
+                closeToast();
+
+                const token = localStorage.getItem("token");
+                try {
+                  const response = await axios.delete(
+                   `${process.env.NEXT_PUBLIC_API_URL}/title/${id}`,
+                    {
+                      headers: {
+                        Authorization: token,
+                        "Content-Type": "application/json",
+                      },
+                    }
+                  );
+
+                  if (response.data.status) {
+                    toast.success("Title deleted successfully");
+                    fetch(); // Refresh list
+                  } else {
+                    toast.error(`Delete failed: ${response.data.message}`);
+                  }
+                } catch (error) {
+                  console.error(error);
+                  toast.error("Error deleting page.");
+                }
+              }}
+              className="px-3 py-1 text-sm rounded bg-red-500 text-white hover:bg-red-600"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      ),
+      {
+        autoClose: false,
+        closeOnClick: false,
+        draggable: false,
+        closeButton: false,
       }
-    } catch (error) {
-      console.log(error);
-      toast("Error deleting plan:");
-    }
+    );
   };
 
   useEffect(() => {
@@ -145,7 +202,7 @@ export default function Title() {
                         <PencilIcon className="w-5 h-5" />
                       </Link>
                       <button
-                        onClick={() => handleDelete(person._id)}
+                        onClick={() => handleDeleteWithConfirm(person._id , fetch)}
                         className="text-red-600 hover:text-red-800 cursor-pointer"
                       >
                         <TrashIcon className="w-5 h-5" />
