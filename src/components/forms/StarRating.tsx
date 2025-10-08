@@ -7,11 +7,12 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 type RatingProps = {
+  userType: string;
   score?: number;
   titleId: string;
 };
 
-export default function StarRating({ score = 0, titleId }: RatingProps) {
+export default function StarRating({ userType ,score = 0, titleId }: RatingProps) {
   const [hovered, setHovered] = useState<number | null>(null);
   const [selected, setSelected] = useState<number>(score);
 
@@ -20,6 +21,10 @@ export default function StarRating({ score = 0, titleId }: RatingProps) {
   }, [score]);
 
   const handleClick = async (value: number) => {
+    if(userType === 'user'){
+      toast("Only admin can rate.");
+      return;
+    }
     setSelected(value);
     const token = localStorage.getItem("token");
     if(!token){

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { Range } from "react-range";
@@ -12,7 +12,10 @@ type YearRangeProps = {
   onChange?: (values: [number, number]) => void;
 };
 
-export default function YearRange({ values: parentValues, onChange }: YearRangeProps) {
+export default function YearRange({
+  values: parentValues,
+  onChange,
+}: YearRangeProps) {
   const [values, setValues] = useState<number[]>(parentValues);
 
   useEffect(() => setValues(parentValues), [parentValues]);
@@ -60,7 +63,9 @@ export default function YearRange({ values: parentValues, onChange }: YearRangeP
                 style={{ left: `${midPct}%`, transform: "translateX(-50%)" }}
               >
                 <div className="relative inline-flex items-center gap-1 rounded-full bg-gray-900/95 px-2.5 py-1 text-xs font-semibold text-white shadow">
-                  <span>{values[0]}–{values[1]}</span>
+                  <span>
+                    {values[0]}–{values[1]}
+                  </span>
                   {/* caret */}
                   <span className="absolute left-1/2 top-full block h-0 w-0 -translate-x-1/2 border-x-8 border-x-transparent border-t-8 border-t-gray-900/95" />
                 </div>
@@ -75,9 +80,11 @@ export default function YearRange({ values: parentValues, onChange }: YearRangeP
 
           // small horizontal nudge at the extremes so labels don't clip the edges
           const nudge =
-            values[index] === MIN ? "translateX(10%)"
-            : values[index] === MAX ? "translateX(-10%)"
-            : "translateX(-50%)";
+            values[index] === MIN
+              ? "translateX(10%)"
+              : values[index] === MAX
+              ? "translateX(-10%)"
+              : "translateX(-50%)";
 
           return (
             <div
@@ -91,10 +98,16 @@ export default function YearRange({ values: parentValues, onChange }: YearRangeP
                   className="pointer-events-none absolute -top-10 left-1/2"
                   style={{ transform: nudge }}
                 >
-                  <div className="relative inline-flex items-center rounded-full bg-gray-900/95 px-2 py-0.5 text-xs font-semibold text-white shadow">
+                  <div
+                    className={`relative inline-flex items-center rounded-full bg-gray-900/95 px-2 py-0.5 text-xs font-semibold text-white shadow ${
+                      index ? "-ml-5" : "-ml-5"
+                    } `}
+                  >
                     {values[index]}
                     {/* caret */}
-                    <span className="absolute left-1/2 top-full block h-0 w-0 -translate-x-1/2 border-x-6 border-x-transparent border-t-6 border-t-gray-900/95" />
+                    <span
+                      className={`absolute left-1/2 top-full block h-0 w-0 -translate-x-1/2 border-x-6 border-x-transparent border-t-6 border-t-gray-900/95 `}
+                    />
                   </div>
                 </div>
               )}

@@ -239,16 +239,16 @@ export default function TitleDetailPage() {
                     ({formatDate(titleDetails?.created_at)})
                   </span>
                 </p>
-                {user.userType === 'admin' && (
                 <div className="flex gap-2">
                   <span className="text-gray-400">Rate us</span>
                   <div className="flex gap-1 items-center">
                     <StarRating
+                      userType={user.userType}
                       score={titleReview}
                       titleId={titleDetails._id}
                     />
                   </div>
-                </div>)}
+                </div>
               </div>
               <div className="py-4">
                 <p className="text-gray-400">{titleDetails.description}</p>
