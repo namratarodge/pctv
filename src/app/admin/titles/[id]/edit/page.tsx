@@ -13,6 +13,7 @@ import Video from "@/components/pages/video";
 import { navigationTitleSubMenu } from "@/constants/Menu";
 import { TitleDetailsType } from "@/constants/Type";
 import axios from "axios";
+import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 
 function classNames(...classes: (string | false | null | undefined)[]): string {
@@ -109,7 +110,7 @@ export default function EditTitles() {
             const isDisabled = isNew && index !== 0;
             return (
               <li key={item.name}>
-                <a
+                <Link
                   href={isDisabled ? "#" : "edit?active=" + item.href}
                   onClick={(e) => {
                     if (isDisabled) e.preventDefault();
@@ -125,7 +126,7 @@ export default function EditTitles() {
                   aria-disabled={isDisabled}
                 >
                   {item.name}
-                </a>
+                </Link>
               </li>
             );
           })}

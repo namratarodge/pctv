@@ -1,23 +1,20 @@
 "use client";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { useForm } from "react-hook-form";
-import { Error } from "../layout";
-import { titleSchema, TitleFormData } from "@/constants/Validation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
 import { TitleDetailsType } from "@/constants/Type";
+import { TitleFormData, titleSchema } from "@/constants/Validation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { Error } from "../layout";
 
 type PageProps = {
   titleId: string;
   data: TitleDetailsType | null;
 };
 
-export default function General({
-  titleId,
-  data,
-}: PageProps) {
+export default function General({ titleId, data }: PageProps) {
   const isNew = titleId === "new";
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -56,6 +53,8 @@ export default function General({
           const newId = isNew ? response.data.data._id : titleId;
           toast("Sucessfully Title Created.");
           router.push(`/admin/titles/${newId}/edit?active=general`);
+        } else {
+          toast("Sucessfully Title Updated.");
         }
       }
     } catch (error) {
@@ -71,7 +70,7 @@ export default function General({
         name: data.name || "",
         original_title: data.original_title || "",
         type: data.type === "movie" ? "Tv_topic" : "Categories", // adapt if needed
-        allow_update: data.allow_update ? "yes" : "no",
+        allow_update: data.allow_update || 0,
         poster: data.poster || "",
         backdrop: data.backdrop || "",
         release_date: data.release_date || "",
@@ -79,11 +78,11 @@ export default function General({
         overview: data.description || "",
         runtime: data.runtime?.toString() || "",
         certification: data.certification || "",
-        budget: data.budget?.toString() || "",
-        revenue: data.revenue?.toString() || "",
-        popularity: data.popularity?.toString() || "",
+        budget: data.budget || 0,
+        revenue: data.revenue || 0,
+        popularity: data.popularity || 0,
         language: data.language || "",
-        free: data.is_free ? "Free" : "Premium",
+        is_free: data.is_free,
       });
     }
   }, [titleId, data, reset]);
@@ -149,13 +148,11 @@ export default function General({
                   Allow Auto Update
                 </label>
                 <select
-                  {...register("allow_update", {
-                    required: "allow_update is required",
-                  })}
+                  {...register("allow_update", { valueAsNumber: true })}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
+                  <option value={1}>Yes</option>
+                  <option value={0}>No</option>
                 </select>
 
                 {errors.allow_update && (
@@ -246,9 +243,10 @@ export default function General({
                   Budget
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   {...register("budget", {
-                    required: "Budget is required",
+                    setValueAs: (v) =>
+                      v === "" || v === null ? undefined : Number(v),
                   })}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
@@ -261,10 +259,8 @@ export default function General({
                   Revenue
                 </label>
                 <input
-                  type="text"
-                  {...register("revenue", {
-                    required: "Revenue is required",
-                  })}
+                  type="number"
+                  {...register("revenue", { valueAsNumber: true })}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
 
@@ -276,9 +272,10 @@ export default function General({
                   Popularity
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   {...register("popularity", {
-                    required: "Popularity is required",
+                    setValueAs: (v) =>
+                      v === "" || v === null ? undefined : Number(v),
                   })}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
@@ -309,16 +306,14 @@ export default function General({
               <div>
                 <label className="block text-sm text-gray-600 mb-1">Free</label>
                 <select
-                  {...register("free", {
-                    required: "Free is required",
-                  })}
+                  {...register("is_free", { valueAsNumber: true })}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="Free">Free</option>
-                  <option value="Premium">Premium</option>
+                  <option value={1}>Free</option>
+                  <option value={0}>Premium</option>
                 </select>
 
-                {errors.free && <Error message={errors.free.message} />}
+                {errors.is_free && <Error message={errors.is_free.message} />}
               </div>
 
               <div>

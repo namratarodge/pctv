@@ -90,10 +90,11 @@ export const profileSchema = z.object({
   }),
 
   birth_date: z.string().optional().nullable(),
-  death_date: z.string().optional().nullable(),
+  // death_date: z.string().optional().nullable(),
   company_name: z.string().optional().nullable(),
 
-  popularity: z.string().optional().nullable(),
+  // popularity: z.string().optional().nullable(),
+  popularity: z.number().optional(),
 
   birth_place: z.string().optional(),
 
@@ -174,7 +175,8 @@ export const titleSchema = z.object({
   type: z.enum(["Tv_topic", "Categories"], {
     errorMap: () => ({ message: "type is required" }),
   }),
-  allow_update: z.string().optional(),
+  allow_update: z.number(),
+
   poster: z.any().nullable(),
   backdrop: z.any().nullable(),
   release_date: z.string().min(1, "release_date is required"),
@@ -182,10 +184,13 @@ export const titleSchema = z.object({
   overview: z.string().optional(),
   runtime: z.string().optional(),
   certification: z.string().optional(),
-  budget: z.string().optional(),
-  revenue: z.string().optional(),
-  popularity: z.string().optional(),
+
+  budget: z.number().optional(),
+  revenue: z.number().optional(),
+  
+  popularity: z.number().optional(),
+
   language: z.string().min(1, "language is required"),
-  free: z.string().min(1, "free is required"),
+  is_free: z.number(),
 });
 export type TitleFormData = z.infer<typeof titleSchema>;

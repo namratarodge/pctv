@@ -147,7 +147,7 @@ export type TitleDetailsType = {
   tmdb_id: string | null;
   season_count: number | null;
   fully_synced: boolean;
-  allow_update: boolean;
+  allow_update: number;
   created_at: string;
   updated_at: string;
   language: string;
@@ -162,7 +162,7 @@ export type TitleDetailsType = {
   show_videos: boolean;
   adult: boolean;
   local_vote_count: number;
-  is_free: boolean;
+  is_free: number;
   slug: string;
   genres: TagType[];
   keywords: TagType[];

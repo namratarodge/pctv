@@ -175,7 +175,8 @@ export default function CreateVideo() {
               <div className="relative">
                 <input
                   type="text"
-                  {...register("name")}
+                  {...register("name",{ required: "Name is required" })}
+
                   className="w-full border rounded-md py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none border-gray-300"
                 />
                 <VideoCameraIcon className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />

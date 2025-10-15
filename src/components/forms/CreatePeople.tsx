@@ -50,7 +50,7 @@ export default function CreatePeople() {
           setValue("name", user.name);
           setValue("known_for", user.known_for);
           setValue("birth_date", user.birth_date);
-          setValue("death_date", user.death_date);
+          // setValue("death_date", user.death_date);
           setValue("birth_place", user.birth_place);
           setValue("popularity", user.popularity);
           setValue("gender", user.gender);
@@ -79,7 +79,7 @@ export default function CreatePeople() {
     formDataToSend.append("name", formData.name);
     formDataToSend.append("known_for", formData.known_for);
     formDataToSend.append("birth_date", formData.birth_date ?? "");
-    formDataToSend.append("death_date", formData.death_date ?? "");
+    // formDataToSend.append("death_date", formData.death_date ?? "");
     formDataToSend.append("birth_place", formData.birth_place ?? "");
     formDataToSend.append("popularity", String(formData.popularity ?? ""));
     formDataToSend.append("gender", formData.gender);
@@ -196,7 +196,7 @@ export default function CreatePeople() {
               )}
             </div>
 
-            <div>
+            {/* <div>
               <label className="block text-gray-600 mb-1">Death Date</label>
               <input
                 type="date"
@@ -206,7 +206,7 @@ export default function CreatePeople() {
               {errors.death_date && (
                 <p className="text-red-500">{errors.death_date.message}</p>
               )}
-            </div>
+            </div> */}
 
             <div>
               <label className="block text-gray-600 mb-1">Birth Place</label>
@@ -223,15 +223,17 @@ export default function CreatePeople() {
             <div>
               <label className="block text-gray-600 mb-1">Popularity</label>
               <input
-                type="text"
-                {...register("popularity")}
+                type="number"
+                {...register("popularity", {
+                  setValueAs: (v) =>
+                    v === "" || v === null ? undefined : Number(v),
+                })}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               {errors.popularity && (
                 <p className="text-red-500">{errors.popularity.message}</p>
               )}
             </div>
-
 
             <div>
               <label className="block text-gray-600 mb-1">Gender</label>
@@ -268,10 +270,7 @@ export default function CreatePeople() {
                 <p className="text-red-500">{errors.company_name.message}</p>
               )}
             </div>
-
           </div>
-
-
 
           <div>
             <label className="block text-gray-600 mb-1">Bio</label>
