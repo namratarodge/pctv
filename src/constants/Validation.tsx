@@ -87,14 +87,14 @@ export const profileSchema = z.object({
 
   gender: z.enum(["male", "female", "other"], {
     errorMap: () => ({ message: "Gender is required" }),
-  }),
+  }).optional(),
 
   birth_date: z.string().optional().nullable(),
-  // death_date: z.string().optional().nullable(),
+  death_date: z.string().optional().nullable(),
   company_name: z.string().optional().nullable(),
 
-  // popularity: z.string().optional().nullable(),
-  popularity: z.number().optional(),
+  popularity: z.string().optional().nullable(),
+  // popularity: z.number().optional(),
 
   birth_place: z.string().optional(),
 

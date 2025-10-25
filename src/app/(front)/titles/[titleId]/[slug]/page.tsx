@@ -1,6 +1,6 @@
 "use client";
 
-import { StarRating, ViemoEmbed } from "@/components/forms";
+import { FallbackImage, StarRating, ViemoEmbed } from "@/components/forms";
 import Loading from "@/components/layout/Loading";
 import { TitleType, VideoType } from "@/constants/Type";
 import { formatDate, timeAgo } from "@/utils/common";
@@ -379,12 +379,12 @@ export default function TitleDetailPage() {
                   key={data._id}
                   className="flex items-center gap-4 md:px-4 py-1 "
                 >
-                  <Image
+                  <FallbackImage
                     src={`${process.env.NEXT_PUBLIC_WEBSITE}/${data?.poster}`}
-                    alt={data.poster}
-                    width={800} // You can adjust this
-                    height={500} // Adjust as needed for layout
-                    className="w-2/5  rounded-lg"
+                    alt={data.name}
+                    width={800}
+                    height={500}
+                    className="w-2/5 rounded-lg"
                   />
                   <div>
                     <h2 className="text-sm font-semibold text-gray-300 mb-2">

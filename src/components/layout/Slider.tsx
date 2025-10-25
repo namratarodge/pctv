@@ -57,8 +57,11 @@ export default function VoicesSlider({
               <Image
                 width={100}
                 height={100}
-                alt="Masterclass Card"
-                src={slide.image}
+                alt={slide.name}
+                src={slide?.image || "/default-image.jpg"}
+                onError={(e) => {
+                  e.currentTarget.src = "/default-image.jpg";
+                }}
                 className="w-full h-auto rounded-sm transition-transform duration-300 ease-in-out group-hover:scale-110"
               />
 
@@ -78,8 +81,11 @@ export default function VoicesSlider({
                   <Image
                     width={100}
                     height={100}
-                    alt="Masterclass Card"
-                    src={slide.image}
+                    alt={slide.name}
+                    src={slide?.image || "/default-image.jpg"}
+                    onError={(e) => {
+                      e.currentTarget.src = "/default-image.jpg";
+                    }}
                     className="w-full h-auto rounded-sm transition-transform duration-300 ease-in-out group-hover:scale-105"
                   />
                   <div className="text-white text-xs font-medium text-center  mt-2  transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-in-out delay-100">

@@ -21,10 +21,10 @@ export default function StarRating({ userType ,score = 0, titleId }: RatingProps
   }, [score]);
 
   const handleClick = async (value: number) => {
-    if(userType === 'user'){
-      toast("Only admin can rate.");
-      return;
-    }
+    // if(userType === 'user'){
+    //   toast("Only admin can rate.");
+    //   return;
+    // }
     setSelected(value);
     const token = localStorage.getItem("token");
     if(!token){

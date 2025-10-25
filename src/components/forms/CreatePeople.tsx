@@ -82,7 +82,7 @@ export default function CreatePeople() {
     // formDataToSend.append("death_date", formData.death_date ?? "");
     formDataToSend.append("birth_place", formData.birth_place ?? "");
     formDataToSend.append("popularity", String(formData.popularity ?? ""));
-    formDataToSend.append("gender", formData.gender);
+    formDataToSend.append("gender", formData.gender ?? "");
     formDataToSend.append("company_name", formData.company_name ?? "");
     formDataToSend.append("description", formData.description);
     formDataToSend.append(
@@ -154,7 +154,8 @@ export default function CreatePeople() {
       <div className="w-full bg-white rounded-md shadow-xl p-8">
         <div className="flex gap-2">
           <h1 className="text-xl font-bold mb-6  text-gray-800">
-            {isEditMode ? "Edit" : "Add"} New People
+            {isEditMode ? "Edit" : "Add"}{" "}
+            {!!Known_for ? "Additional Form" : "New People"}
           </h1>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -184,7 +185,7 @@ export default function CreatePeople() {
               )}
             </div>
 
-            <div>
+            {/* <div>
               <label className="block text-gray-600 mb-1">Birth Date</label>
               <input
                 {...register("birth_date")}
@@ -194,7 +195,7 @@ export default function CreatePeople() {
               {errors.birth_date && (
                 <p className="text-red-500">{errors.birth_date.message}</p>
               )}
-            </div>
+            </div> */}
 
             {/* <div>
               <label className="block text-gray-600 mb-1">Death Date</label>
@@ -208,7 +209,7 @@ export default function CreatePeople() {
               )}
             </div> */}
 
-            <div>
+            {/* <div>
               <label className="block text-gray-600 mb-1">Birth Place</label>
               <input
                 type="text"
@@ -218,46 +219,50 @@ export default function CreatePeople() {
               {errors.birth_place && (
                 <p className="text-red-500">{errors.birth_place.message}</p>
               )}
-            </div>
+            </div> */}
 
-            <div>
-              <label className="block text-gray-600 mb-1">Popularity</label>
-              <input
-                type="number"
-                {...register("popularity", {
-                  setValueAs: (v) =>
-                    v === "" || v === null ? undefined : Number(v),
-                })}
-                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              {errors.popularity && (
-                <p className="text-red-500">{errors.popularity.message}</p>
-              )}
-            </div>
+            {!Known_for && (
+              <>
+                <div>
+                  <label className="block text-gray-600 mb-1">Popularity</label>
+                  <input
+                    type="number"
+                    {...register("popularity", {
+                      setValueAs: (v) =>
+                        v === "" || v === null ? undefined : Number(v),
+                    })}
+                    className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  {errors.popularity && (
+                    <p className="text-red-500">{errors.popularity.message}</p>
+                  )}
+                </div>
 
-            <div>
-              <label className="block text-gray-600 mb-1">Gender</label>
-              <div className="mt-2 grid grid-cols-1">
-                <select
-                  {...register("gender")}
-                  name="gender"
-                  autoComplete="gender"
-                  className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-red-600 sm:text-sm/6"
-                >
-                  <option value="">Select gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
-                <ChevronDownIcon
-                  aria-hidden="true"
-                  className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
-                />
-              </div>
-              {errors.gender && (
-                <p className="text-red-500">{errors.gender.message}</p>
-              )}
-            </div>
+                <div>
+                  <label className="block text-gray-600 mb-1">Gender</label>
+                  <div className=" grid grid-cols-1">
+                    <select
+                      {...register("gender")}
+                      name="gender"
+                      autoComplete="gender"
+                      className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-red-600 sm:text-sm/6"
+                    >
+                      <option value="">Select gender</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                    </select>
+                    <ChevronDownIcon
+                      aria-hidden="true"
+                      className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
+                    />
+                  </div>
+                  {errors.gender && (
+                    <p className="text-red-500">{errors.gender.message}</p>
+                  )}
+                </div>
+              </>
+            )}
 
             <div>
               <label className="block text-gray-600 mb-1">Company Name</label>

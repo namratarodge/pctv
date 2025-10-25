@@ -61,7 +61,7 @@ export default function Home() {
             name: item.name,
             _id: item._id,
             slug: item.slug,
-            image: process.env.NEXT_PUBLIC_WEBSITE + "/" + item.poster,
+            image: item.poster && process.env.NEXT_PUBLIC_WEBSITE + "/" + item.poster,
           })
         );
         setMainwatch(modifiedData[0]);

@@ -19,6 +19,7 @@ export { default as TenStarRating } from "./TenStarRating";
 
 export { default as TitlePoster } from "./TitlePoster";
 
+export { default as FallbackImage } from './FallbackImage';
 export { default as NewTable } from "./NewTable";
 export { default as ViemoEmbed } from './VimeoEmbed';
 
