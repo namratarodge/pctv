@@ -29,8 +29,8 @@ export default function Pages() {
           },
         }
       );
-
-      const listData = response.data?.data.data[0];
+      console.log("response", response);
+      const listData = response.data?.data.data;
       if (listData) {
         setPage(listData);
         setLoading(false);

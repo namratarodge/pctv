@@ -1,8 +1,11 @@
 "use client";
 
 import { usePublicData } from "@/components/context/PublicDataContext";
+import Loading from "@/components/layout/Loading";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const joinPCTV = [
   {
@@ -26,9 +29,50 @@ const joinPCTV = [
       "Join a growing international network of professionals who share your passion for projects excellence and continuous learning.",
   },
 ];
+type Page = {
+  body: string;
+  title: string;
+};
 
 export default function Home() {
   const { user } = usePublicData();
+  const [loading, setLoading] = useState(true);
+
+  const [page, setPage] = useState<Page | null>(null);
+  const fetchListData = async () => {
+    setLoading(true);
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/pages`,
+        {
+          headers: {
+            Authorization: token,
+          },
+          params: {
+            slug: "home",
+          },
+        }
+      );
+
+      const listData = response.data?.data.data;
+      console.log("listData", listData);
+      if (listData) {
+        setPage(listData);
+        setLoading(false);
+      }
+    } catch (error) {
+      // window.location.href = "/lists";
+      console.error("Error loading list:", error);
+      setLoading(false);
+    }
+  };
+
+  // Add this in your component
+  useEffect(() => {
+    fetchListData();
+  }, []);
 
   return (
     <>
@@ -64,15 +108,14 @@ export default function Home() {
                 Ready to watch? Sign up for a free trial and start watching
                 today.
               </p>
-                <div className="mt-10 flex items-center justify-center gap-6 flex-col md:flex-col lg:flex-row ">
-                  <Link
-                    href="/register"
-                    className="cursor-pointer w-40 rounded-full bg-red-500 px-6 py-3 text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20"
-                  >
-                    Get Started
-                  </Link>
-                </div>
-              
+              <div className="mt-10 flex items-center justify-center gap-6 flex-col md:flex-col lg:flex-row ">
+                <Link
+                  href="/register"
+                  className="cursor-pointer w-40 rounded-full bg-red-500 px-6 py-3 text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20"
+                >
+                  Get Started
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -89,7 +132,14 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="p-6 lg:px-8 mx-auto max-w-11/12">
+      <div>
+        {loading && <Loading />}
+        {page?.body && (
+          <div dangerouslySetInnerHTML={{ __html: page?.body ?? "" }} />
+        )}
+      </div>
+
+      {/* <div className="p-6 lg:px-8 mx-auto max-w-11/12">
         <h2 className="text-white text-xl">More reasons To Join PCTV</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {joinPCTV.map((item, index) => (
@@ -118,7 +168,7 @@ export default function Home() {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
