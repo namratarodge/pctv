@@ -1,16 +1,15 @@
 "use client";
-import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { AutoCompeleteList, DataTable, ModelForm } from "@/components/forms";
-import { useCallback, useEffect, useState } from "react";
-import { Error } from "../layout";
-import { Controller } from "react-hook-form";
-import { formatDate } from "@/utils/common";
-import axios from "axios";
 import Loading from "@/components/layout/Loading";
 import { CrewColumn } from "@/constants/DataTableColumn";
-import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import { CastCreditType, CrewTypes, UserTag } from "@/constants/Type";
+import { formatDate } from "@/utils/common";
+import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
+import { useCallback, useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { Error } from "../layout";
 
 export default function Crew({ titleId }: { titleId: string }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -164,13 +163,13 @@ export default function Crew({ titleId }: { titleId: string }) {
           <ModelForm
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
-            title="Select Categories"
+            title="Select Crew Member"
             onSubmit={handleSubmit(handleFormSubmit)}
           >
             <div className="flex flex-col  gap-3 ">
               <div>
                 <label className="font-semibold pl-2 pb-2  text-gray-600">
-                  Person{" "}
+                 Speaker Name
                 </label>
                 <Controller
                   name="person_id"

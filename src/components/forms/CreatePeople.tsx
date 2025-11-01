@@ -155,7 +155,7 @@ export default function CreatePeople() {
         <div className="flex gap-2">
           <h1 className="text-xl font-bold mb-6  text-gray-800">
             {isEditMode ? "Edit" : "Add"}{" "}
-            {!!Known_for ? "Additional Form" : "New People"}
+            {!!Known_for ? "Additional Tag" : "New People"}
           </h1>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">

@@ -149,7 +149,7 @@ export default function Videos({ titleId = null }: VideosProps) {
         <Filter filterType={VideoFilter} onQueryChange={setFilterQuery} />
         <div className="mt-4 sm:mt-0 sm:flex-none ">
           <Link
-            href="/admin/videos/new"
+            href={`/admin/videos/new?title_id=${titleId || ""}`}
             className="flex items-center  gap-2 rounded-md bg-red-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             <PlusCircleIcon className="w-6 h-6" /> Add New Video

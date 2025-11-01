@@ -3,6 +3,7 @@
 import { VideoFormType } from "@/constants/Type";
 import { PhotoIcon, VideoCameraIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -14,12 +15,16 @@ import {
   languageOptions,
   videoOptions,
 } from "@/constants/Main";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 
 export default function CreateVideo() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [videoType, setVideoType] = useState("embed");
   const params = useParams();
+  const router = useRouter();
+  const searchParams = useSearchParams(); // 👈 NEW
+  const preselectedTitleId = searchParams.get("title_id") || ""; // 👈 NEW
+
   const videoId = params.id as string;
   const isNew = videoId === "new";
   const [isLoading, setIsLoading] = useState(false);
@@ -33,7 +38,18 @@ export default function CreateVideo() {
     control,
     formState: { errors },
     reset,
-  } = useForm<VideoFormType>();
+    setValue,
+  } = useForm<VideoFormType>({
+    defaultValues: {
+      title_id: preselectedTitleId,
+    },
+  });
+
+  useEffect(() => {
+    if (isNew && preselectedTitleId) {
+      setValue("title_id", preselectedTitleId); // 👈 NEW
+    }
+  }, [isNew, preselectedTitleId, setValue]);
 
   const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setVideoType(e.target.value);
@@ -80,10 +96,13 @@ export default function CreateVideo() {
       }
 
       if (response.data.status) {
+        
         toast.success(`Video ${isNew ? "created" : "updated"} successfully.`);
-        if (isNew) {
+         if (isNew) {
           reset({});
         }
+         router.push(`/admin/titles/${preselectedTitleId}/edit?active=videos`);
+       
       }
     } catch (error) {
       console.log(error);
@@ -175,8 +194,7 @@ export default function CreateVideo() {
               <div className="relative">
                 <input
                   type="text"
-                  {...register("name",{ required: "Name is required" })}
-
+                  {...register("name", { required: "Name is required" })}
                   className="w-full border rounded-md py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none border-gray-300"
                 />
                 <VideoCameraIcon className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
@@ -264,7 +282,7 @@ export default function CreateVideo() {
                   Embed Code
                 </label>
                 <textarea
-                  {...register("url",{ required: "URL is required" })}
+                  {...register("url", { required: "URL is required" })}
                   rows={3}
                   className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none"
                 />

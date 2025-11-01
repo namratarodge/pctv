@@ -3,7 +3,6 @@ export type TvTopicType = {
   display_name: string;
 };
 
-
 // Price plan
 
 export type PricingProps = {
@@ -79,9 +78,9 @@ export type SubscriptionType = {
   id: number;
   user_id: string;
   plan_id: {
-    name : string;
-    amount : string;
-    currency : string;
+    name: string;
+    amount: string;
+    currency: string;
   };
   gateway_name: string;
   gateway_id: string;
@@ -117,9 +116,9 @@ export type TitleType = {
   views: string;
   genres: TagType[];
   keywords: TagType[];
-  credit : CastCreditType[];
-  cast : CastCreditType[];
-  videos : VideoType[];
+  credit: CastCreditType[];
+  cast: CastCreditType[];
+  videos: VideoType[];
   description: string;
   created_at: string;
 };
@@ -135,8 +134,8 @@ export type TitleDetailsType = {
   description: string;
   genre: string | null;
   tagline: string | null;
-  poster: string;
-  backdrop: string;
+  poster?: FileList;
+  backdrop?: FileList;
   runtime: number | null;
   trailer: string | null;
   budget: number | null;
@@ -147,7 +146,7 @@ export type TitleDetailsType = {
   tmdb_id: string | null;
   season_count: number | null;
   fully_synced: boolean;
-  allow_update: number;
+  allow_update: number | null;
   created_at: string;
   updated_at: string;
   language: string;
@@ -192,15 +191,14 @@ export type PersonType = {
   adult: boolean;
 };
 
-
 export type PeopleType = {
-  _id : string;
+  _id: string;
   name: string;
   description: string;
   gender: string;
   death_date: string;
-  birth_date: string ;
-  birth_place: string
+  birth_date: string;
+  birth_place: string;
   poster: string;
   allow_update: string;
   known_for: string;
@@ -225,8 +223,6 @@ export type ListType = {
   userId: number;
 };
 
-
-
 // Page Types
 export type TransactionType = {
   _id: string;
@@ -246,7 +242,6 @@ export type TransactionType = {
   updated_at: string; // ISO date string
   __v?: number;
 };
-
 
 // Page Types
 export type PageType = {
@@ -276,7 +271,7 @@ export type PlanFormValues = {
   currency_symbol: string;
   recommended: string;
   interval: string;
-  paypal_id : string;
+  paypal_id: string;
   interval_count: number;
   features?: Array<NameForPlan>;
 };
@@ -388,17 +383,17 @@ export type UserType = {
 // Video Type
 
 export type VideoFormType = {
-  _id : string;
-  name : string;
+  _id: string;
+  name: string;
   thumbnail: string;
-  type : string;
-  embed_code : string;
-  url : string;
-  quality : string;
-  language : string;
-  title_id : string;
-  category : string;
-}
+  type: string;
+  embed_code: string;
+  url: string;
+  quality: string;
+  language: string;
+  title_id: string;
+  category: string;
+};
 
 export type VideoType = {
   _id: string;
@@ -424,17 +419,17 @@ export type VideoType = {
   category: string;
   episode_id: number | null;
   userId: number;
-  video_play : VideoPlayed
+  video_play: VideoPlayed;
 };
 
-export type VideoPlayed =  {
+export type VideoPlayed = {
   _id: string;
   user_id: string;
   video_id: string;
   time_watched: number;
   created_at: string; // ISO date string
   __v: number;
-}
+};
 
 // Filter Types
 

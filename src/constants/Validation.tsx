@@ -85,9 +85,11 @@ export const profileSchema = z.object({
 
   description: z.string().min(1, "Bio is required"),
 
-  gender: z.enum(["male", "female", "other"], {
-    errorMap: () => ({ message: "Gender is required" }),
-  }).optional(),
+  gender: z
+    .enum(["male", "female", "other"], {
+      errorMap: () => ({ message: "Gender is required" }),
+    })
+    .optional(),
 
   birth_date: z.string().optional().nullable(),
   death_date: z.string().optional().nullable(),
@@ -175,7 +177,7 @@ export const titleSchema = z.object({
   type: z.enum(["Tv_topic", "Categories"], {
     errorMap: () => ({ message: "type is required" }),
   }),
-  allow_update: z.number(),
+  allow_update: z.number().optional(),
 
   poster: z.any().nullable(),
   backdrop: z.any().nullable(),
@@ -187,7 +189,7 @@ export const titleSchema = z.object({
 
   budget: z.number().optional(),
   revenue: z.number().optional(),
-  
+
   popularity: z.number().optional(),
 
   language: z.string().min(1, "language is required"),
