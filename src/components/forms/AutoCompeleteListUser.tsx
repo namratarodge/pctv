@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { toUserTag, UserTagForUser } from "@/constants/Type";
 import axios from "axios";
-import UserAvatar from "./UserAvatar";
-import { UserTagForUser } from "@/constants/Type";
+import { useEffect, useState } from "react";
 
 type AutoCompletePersonListProps = {
   value?: UserTagForUser | null;
@@ -21,10 +20,8 @@ export default function AutoCompeleteListUser({
 
   useEffect(() => {
     if (value) {
-      // setSelectedUser(value);
       setQuery(value.email);
     } else {
-      // setSelectedUser(null);
       setQuery("");
     }
   }, [value]);
@@ -58,7 +55,8 @@ export default function AutoCompeleteListUser({
         }
       );
       if (response.data.status) {
-        setSuggestions(response.data.data.data || []);
+        const raws = response.data.data.data || [];
+        setSuggestions(raws.map(toUserTag)); // 👈 adapt here
       }
     } catch (err) {
       console.error("Failed to fetch suggestions", err);
@@ -94,14 +92,14 @@ export default function AutoCompeleteListUser({
         <ul className="border border-gray-300 mt-2 rounded-md shadow-md bg-white max-h-60 overflow-y-auto">
           {suggestions.map((user) => (
             <li
-              key={user._id}
+              key={user.id ?? user._id}
               onClick={() => handleSelect(user)}
               className="flex items-center gap-1 px-2 py-2 cursor-pointer hover:bg-blue-50"
             >
-              <UserAvatar direct={true} poster={user?.avatar} />
+              {/* <UserAvatar direct={true} poster={user?.avatar} /> */}
               <div className="flex flex-col">
                 <span>{user?.first_name}</span>
-                <small>{user.email}</small>
+                <small>{user?.email}</small>
               </div>
             </li>
           ))}

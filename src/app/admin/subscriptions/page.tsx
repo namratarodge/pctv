@@ -5,33 +5,47 @@ import {
   ModelForm,
   Paginations,
 } from "@/components/forms";
+import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
+import { Error, LoadingForm } from "@/components/layout";
+import { SubscriptionsFilter } from "@/constants/Filter";
 import {
   PencilIcon,
   PlusCircleIcon,
   TrashIcon,
 } from "@heroicons/react/16/solid";
-import { SubscriptionsFilter } from "@/constants/Filter";
-import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
-import { Error, LoadingForm } from "@/components/layout";
 import { useCallback, useEffect, useState } from "react";
 
 import { SubscriptionsColumn } from "@/constants/DataTableColumn";
 import { formatNormal } from "@/utils/common";
 import axios from "axios";
 
-import {
-  SubscriptionType,
-  SubscriptionFormValue,
-  SubscriptionEditFormValue,
-  SubscriptionPlanType,
-  UserTagForUser,
-} from "@/constants/Type";
 import Loading from "@/components/layout/Loading";
-import { Controller, useForm, SubmitHandler } from "react-hook-form";
-import { toast } from "react-toastify";
-import { Button } from "@headlessui/react";
-import { useDebounce } from "use-debounce";
+import {
+  SubscriptionEditFormValue,
+  SubscriptionFormValue,
+  SubscriptionPlanType,
+  SubscriptionType,
+  toUserTag,
+  UserTagForUser,
+  UserType,
+} from "@/constants/Type";
 import { parseQueryString } from "@/utils/helper";
+import { Button } from "@headlessui/react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { useDebounce } from "use-debounce";
+
+type RawUser = {
+  _id: string;
+  email?: string;
+  first_name?: string;
+  last_name?: string;
+  username?: string;
+  avatar?: string;
+  poster?: string;
+  known_for?: string;
+  // ...whatever your API returns
+};
 
 export default function Subscription() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -61,8 +75,26 @@ export default function Subscription() {
     handleSubmit,
     reset,
     control,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<SubscriptionFormValue>();
+
+  const watchPlanId = watch("plan_id");
+  const watchStart = watch("renews_at"); // "Starting At"
+
+  // helper: yyyy-mm-dd
+  const toYMD = (d: Date) =>
+    `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
+      d.getDate()
+    ).padStart(2, "0")}`;
+
+  // helper: add days
+  const addDays = (date: Date, days: number) => {
+    const d = new Date(date);
+    d.setDate(d.getDate() + days);
+    return d;
+  };
 
   const fetch = useCallback(async () => {
     const token = localStorage.getItem("token");
@@ -227,13 +259,14 @@ export default function Subscription() {
     setIsEditing(true);
     setEditingId(data._id ?? null);
     setIsModalOpen(true);
-    let user: UserTagForUser | null = null;
+    let raw: RawUser | null = null;
     if (data.user_id._id) {
-      user = await fetchUserById(data.user_id._id);
+      raw = await fetchUserById(data.user_id._id); // RawUser | null
     }
+    console.log(raw);
     // Populate form with existing data
     reset({
-      person_id: user?.data,
+      person_id: raw ? toUserTag(raw) : null,
       plan_id: data.plan_id._id,
       description: data.description,
       renews_at: formatNormal(data.renews_at),
@@ -242,7 +275,7 @@ export default function Subscription() {
     setLoadingForm(false);
   };
 
-  const fetchUserById = async (id: string): Promise<UserTagForUser | null> => {
+  const fetchUserById = async (id: string): Promise<UserType | null> => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
@@ -258,9 +291,12 @@ export default function Subscription() {
         }
       );
 
-      if (response.data.status) {
-        return response.data.data;
-      }
+      const responseData = response.data;
+
+      if (!responseData?.status) return null;
+      // unwrap safely depending on your API shape
+      // try data.data or data if needed
+      return response.data.data?.data ?? response.data.data ?? null;
     } catch (error) {
       console.error("Failed to fetch user", error);
     }
@@ -271,6 +307,27 @@ export default function Subscription() {
     fetchGetPlans();
     fetch();
   }, [fetch]);
+
+  useEffect(() => {
+    // need both a plan and a start date to compute
+    if (!watchPlanId || !watchStart) return;
+
+    // find the selected plan
+    const plan = plans.find((p: SubscriptionPlanType) => p._id === watchPlanId);
+    if (!plan) return;
+
+    const start = new Date(watchStart);
+    if (isNaN(start.getTime())) return;
+
+    // OPTION A: exactly 30 days for monthly and 365 for yearly (as you asked)
+    const days = plan.interval === "month" ? 30 : 365;
+    const end = addDays(start, days);
+
+    setValue("ends_at", toYMD(end), {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+  }, [watchPlanId, watchStart, plans, setValue]);
 
   return (
     <div className="p-6 sm:px-6 lg:px-8 bg-white rounded-md ">
@@ -343,6 +400,7 @@ export default function Subscription() {
                 rules={{ required: "Person is required" }}
                 render={({ field }) => (
                   <AutoCompeleteListUser
+                    value={field.value as UserTagForUser | null}
                     onSelect={(user: UserTagForUser) => {
                       field.onChange(user);
                     }}
@@ -358,6 +416,7 @@ export default function Subscription() {
                 {...register("plan_id", { required: "Plan is required" })}
                 className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               >
+                <option value="">Select a plan</option>
                 {plans.map((item: SubscriptionPlanType) => {
                   return (
                     <option key={item.id} value={item._id}>
@@ -385,7 +444,7 @@ export default function Subscription() {
             </div>
 
             <div className="flex flex-col">
-              <label className="mb-1 text-gray-800"> Renews At</label>
+              <label className="mb-1 text-gray-800"> Starting At</label>
               <input
                 type="date"
                 {...register("renews_at")}
@@ -403,6 +462,7 @@ export default function Subscription() {
                 {...register("ends_at", {
                   required: "Ends At is required",
                 })}
+                readOnly
                 className="px-4 py-2 rounded-md border border-gray-300 text-gray-700"
               />
               {errors.ends_at && (

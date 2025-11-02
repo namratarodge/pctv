@@ -61,12 +61,7 @@ export type SubscriptionFormValue = {
 export type SubscriptionEditFormValue = {
   _id: string;
   user_id: { _id: string };
-  person_id: {
-    _id: string;
-    name: string;
-    poster: string;
-    known_for: string;
-  };
+  person_id:  UserTagForUser | null;
   plan_id: { _id: string };
   description: string;
   renews_at: string | null;
@@ -92,6 +87,29 @@ export type SubscriptionType = {
   created_at: string;
   updated_at: string;
 };
+
+export function toUserTag(raw: any): UserTagForUser {
+  const fullName =
+    raw.username ??
+    raw.name ??
+    [raw.first_name, raw.last_name].filter(Boolean).join(" ");
+
+  return {
+    // fields your type requires:
+    id: raw._id,
+    value: raw._id,
+    username: raw.username ?? fullName ?? "",
+    data: raw,
+
+    // common optional fields most people have on this tag type
+    _id: raw._id,
+    email: raw.email ?? "",
+    avatar: raw.avatar ?? raw.poster ?? "",
+    first_name: raw.first_name ?? raw.name ?? "",
+    last_name: raw.last_name ?? "",
+    // add any other required keys your UserTagForUser interface mandates
+  };
+}
 
 export type UserTagForUser = {
   value: string;
@@ -283,8 +301,8 @@ export type SubscriptionPlanType = {
   amount: string;
   currency: string;
   currency_symbol: string;
-  interval: string;
-  interval_count: string;
+  interval: "month" | "year";
+  interval_count?: number;
   parent_id: string | null;
   legacy_permissions: string | null;
   uuid: string;
