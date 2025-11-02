@@ -73,9 +73,9 @@ export default function CreateProfile() {
         toast.success(id ? "User updated successfully." : "User created successfully.");
         if (!id) reset(); // reset only on create
       }
-    } catch (error) {
-      console.log(error);
-      toast.error(id ? "Failed to update user." : "Failed to create user.");
+    } catch (error : string | any) { 
+      console.log(error.response.data.message);
+      toast.error(error.response.data.message || "Failed to create user.");
     }
   };
 
@@ -118,7 +118,7 @@ export default function CreateProfile() {
               <input
                 type="email"
                 {...register("email")}
-                disabled={!!id} // Disable if editing existing user
+                // disabled={!!id} // Disable if editing existing user
                 autoComplete="email"
                 name="email"
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -157,6 +157,7 @@ export default function CreateProfile() {
                 disabled={!!id}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+              <small>Password must be at least 6 characters</small>
               {errors.password && (
                 <p className="text-red-500">{errors.password.message}</p>
               )}
