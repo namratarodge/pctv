@@ -274,7 +274,7 @@ export default function TitleDetailPage() {
                   className="flex items-center justify-between gap-2 px-2 py-2  hover:bg-blue-200"
                 >
                   <div className="flex gap-4">
-                    <UserAvatar poster={item.poster} />
+                    <UserAvatar poster={item?.poster} />
                     <div className="flex flex-col text-gray-800 ">
                       <span className="text-sm">{item.name}</span>
                       <small>

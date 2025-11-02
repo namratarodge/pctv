@@ -22,6 +22,7 @@ export default function MyMembership() {
         </div>
       ) : (
         <div className="bg-gray-100 mt-4 sm:mt-6 p-4 sm:p-6 rounded-lg space-y-3 sm:space-y-4">
+        
           {subscription ? (
             <>
               <h2 className="font-semibold text-gray-800">

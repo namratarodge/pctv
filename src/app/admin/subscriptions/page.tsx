@@ -25,7 +25,6 @@ import {
   SubscriptionFormValue,
   SubscriptionPlanType,
   SubscriptionType,
-  toUserTag,
   UserTagForUser,
   UserType,
 } from "@/constants/Type";
@@ -137,10 +136,27 @@ export default function Subscription() {
   }, [limits, pages, debouncedFilterQuery]);
 
   const handleFormSubmit: SubmitHandler<SubscriptionFormValue> = async (
-    data
+    form
   ) => {
     const token = localStorage.getItem("token");
-    data.user_id = data.person_id?._id;
+    const payload = {
+      // server-needed fields only
+      user_id: form.person_id?._id ?? form.person_id?.id, // tolerate both
+      plan_id: form.plan_id,
+      description: form.description,
+      renews_at: form.renews_at, // YYYY-MM-DD from input
+      ends_at: form.ends_at,
+    };
+
+    if (!payload.user_id) {
+      toast.error("Please select a user");
+      return;
+    }
+    if (!payload.plan_id) {
+      toast.error("Please select a plan");
+      return;
+    }
+
     try {
       const url = isEditing
         ? `${process.env.NEXT_PUBLIC_API_URL}/subscription/${editingId}`
@@ -148,34 +164,38 @@ export default function Subscription() {
 
       const method = isEditing ? "put" : "post";
 
-      const response = await axios({
+      const { data } = await axios({
         url,
         method,
-        data,
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json",
-        },
+        data: payload,
+        headers: { Authorization: token, "Content-Type": "application/json" },
       });
 
-      if (response.data.status) {
+      if (data.status) {
         toast.success(
           `Subscriptions ${isEditing ? "updated" : "created"} successfully`
         );
-        setIsModalOpen(false); // Close modal
-        fetch(); // Refresh list
+        setIsModalOpen(false);
+        fetch();
         reset();
         setIsEditing(false);
         setEditingId(null);
       } else {
-        toast("Tags creation failed:", response.data.message);
+        toast.error(data.message || "Failed to save subscription");
       }
-    } catch (error) {
-      console.log(error);
-      toast("Error creating plan:");
+    } catch (err: any) {
+      // Optional: special-case duplicate/existing subscription from API
+      if (err?.response?.status === 409) {
+        toast.info(
+          err.response.data?.message ??
+            "Subscription already exists. Updated instead."
+        );
+      } else {
+        console.error(err);
+        toast.error("Error creating plan");
+      }
     }
   };
-
   const setPage = (value: number) => {
     setPages(value);
   };
@@ -266,7 +286,7 @@ export default function Subscription() {
     console.log(raw);
     // Populate form with existing data
     reset({
-      person_id: raw ? toUserTag(raw) : null,
+      person_id: raw ?? null,
       plan_id: data.plan_id._id,
       description: data.description,
       renews_at: formatNormal(data.renews_at),

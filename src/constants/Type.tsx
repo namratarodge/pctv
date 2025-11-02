@@ -46,12 +46,7 @@ export type SettingsFormValues = {
 export type SubscriptionFormValue = {
   _id?: string;
   user_id: string;
-  person_id: {
-    _id: string;
-    name: string;
-    poster: string;
-    known_for: string;
-  };
+  person_id: UserTagForUser | null;
   plan_id: string;
   description: string;
   renews_at: string | null;
@@ -152,8 +147,10 @@ export type TitleDetailsType = {
   description: string;
   genre: string | null;
   tagline: string | null;
-  poster?: FileList;
-  backdrop?: FileList;
+  poster?: string ;
+  backdrop?: string;
+  // poster?: FileList;
+  // backdrop?: FileList;
   runtime: number | null;
   trailer: string | null;
   budget: number | null;
