@@ -67,7 +67,7 @@ export default function Subscription() {
 
   const [pages, setPages] = useState(1);
   const [limits, setLimits] = useState(10);
-  const [plans, setPlans] = useState([]);
+  const [plans, setPlans] =  useState<SubscriptionPlanType[]>([]);
 
   const {
     register,
