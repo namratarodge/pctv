@@ -154,7 +154,6 @@ export default function CreateProfile() {
               <input
                 type="text"
                 {...register("password")}
-                disabled={!!id}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <small>Password must be at least 6 characters</small>
@@ -170,7 +169,6 @@ export default function CreateProfile() {
               <input
                 type="text"
                 {...register("password_confirmed")}
-                disabled={!!id}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               {errors.password_confirmed && (

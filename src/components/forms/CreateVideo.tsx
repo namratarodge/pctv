@@ -101,7 +101,12 @@ export default function CreateVideo() {
          if (isNew) {
           reset({});
         }
-         router.push(`/admin/titles/${preselectedTitleId}/edit?active=videos`);
+        if(preselectedTitleId){
+           router.push(`/admin/titles/${preselectedTitleId}/edit?active=videos`);
+        }else{
+          router.push("/admin/videos"); 
+        }
+        
        
       }
     } catch (error) {
