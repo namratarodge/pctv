@@ -1,24 +1,21 @@
 "use client";
-import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { DataTable, ModelForm } from "@/components/forms";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Controller } from "react-hook-form";
+import AutoCompletePersonList from "@/components/forms/AutoCompletePersonList";
 import Loading from "@/components/layout/Loading";
 import { CategoriesColumn } from "@/constants/DataTableColumn";
-import { useForm } from "react-hook-form";
+import { CountryFormType, TagType, UserTag } from "@/constants/Type";
+import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Error } from "../layout";
-import AutoCompletePersonList from "@/components/forms/AutoCompletePersonList";
-import { CountryFormType, TagType, UserTag } from "@/constants/Type";
 
 type PageProps = {
   titleId: string;
   data?: TagType[];
   onSubmit: () => void;
 };
-
-
 
 export default function Keywords({ titleId, data, onSubmit }: PageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -64,7 +61,7 @@ export default function Keywords({ titleId, data, onSubmit }: PageProps) {
     const payload = {
       taggable_id: titleId,
       taggable_type: "keyword",
-      tag_id: data.person_id.map((user : UserTag) => user.id),
+      tag_id: data.person_id.map((user: UserTag) => user.id),
     };
 
     try {
@@ -110,12 +107,8 @@ export default function Keywords({ titleId, data, onSubmit }: PageProps) {
         }
       );
 
-      if (response.data.status) {
-        toast("Keyword deleted successfully");
-        onSubmit(); // Refresh the data
-      } else {
-        toast("Failed to delete keyword:", response.data.message);
-      }
+      toast("Keyword deleted successfully");
+      onSubmit();
     } catch (error) {
       console.log(error);
       toast("Error deleting keyword:");
@@ -150,10 +143,10 @@ export default function Keywords({ titleId, data, onSubmit }: PageProps) {
             <DataTable
               columns={CategoriesColumn}
               data={data || []}
-              renderActions={(person) => (
+              renderActions={(person: any) => (
                 <div className="flex gap-3 justify-end">
                   <button
-                    onClick={() => handleDelete(person._id)}
+                    onClick={() => handleDelete(person.taggable_id)}
                     className="text-gray-600 hover:text-gray-800 cursor-pointer"
                   >
                     <TrashIcon className="w-5 h-5" />

@@ -125,7 +125,7 @@ export default function General({ titleId, data }: PageProps) {
         runtime: data.runtime?.toString() || "",
         certification: data.certification || "",
         budget: data.budget || 0,
-        revenue: data.revenue || 0,
+        revenue: data.revenue || "",
         popularity: data.popularity || 0,
         language: data.language || "",
         is_free: data.is_free,
@@ -347,8 +347,8 @@ export default function General({ titleId, data }: PageProps) {
                   Revenue
                 </label>
                 <input
-                  type="number"
-                  {...register("revenue", { valueAsNumber: true })}
+                  type="text"
+                  {...register("revenue")}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
 
@@ -393,13 +393,14 @@ export default function General({ titleId, data }: PageProps) {
               </div>
 
               <div>
-                <label className="block text-sm text-gray-600 mb-1">Free</label>
+                <label className="block text-sm text-gray-600 mb-1">Video Type</label>
                 <select
                   {...register("is_free", { valueAsNumber: true })}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  {/* <option value={1}>Free</option> */}
+
                   <option value={0}>Premium</option>
+                  <option value={1}>Free</option>
                 </select>
 
                 {errors.is_free && <Error message={errors.is_free.message} />}

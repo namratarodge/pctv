@@ -1,21 +1,20 @@
 "use client";
 import { Filter, Paginations } from "@/components/forms";
-import {
-  PencilIcon,
-  PlusCircleIcon,
-  TrashIcon,
-} from "@heroicons/react/16/solid";
-import axios from "axios";
-import { AdditionalTagFilter } from "@/constants/Filter";
 import AdvanceDataTable from "@/components/forms/AdvanceDataTable";
-import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
 import Loading from "@/components/layout/Loading";
 import { AdditionalTagColumn } from "@/constants/DataTableColumn";
-import { formatDate } from "@/utils/common";
+import { AdditionalTagFilter } from "@/constants/Filter";
 import { PersonType } from "@/constants/Type";
+import { formatDate } from "@/utils/common";
+import { parseQueryString } from "@/utils/helper";
+import {
+  PencilIcon,
+  PlusCircleIcon
+} from "@heroicons/react/16/solid";
+import axios from "axios";
+import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { parseQueryString } from "@/utils/helper"
 
 export default function Subscription() {
   const [additionalTags, setAdditionalTags] = useState([]);
@@ -113,14 +112,14 @@ export default function Subscription() {
                 <AdvanceDataTable
                   columns={AdditionalTagColumn}
                   data={additionalTags}
-                  renderActions={(person) => (
+                  renderActions={(person : PersonType) => (
                     <div className="flex gap-3 justify-end">
-                      <button
-                        onClick={() => console.log("Edit", person)}
+                      <Link
+                        href={"people/create?id=" + person._id}
                         className="text-blue-600 hover:text-blue-800 cursor-pointer"
                       >
                         <PencilIcon className="w-5 h-5" />
-                      </button>
+                      </Link>
                     </div>
                   )}
                 />

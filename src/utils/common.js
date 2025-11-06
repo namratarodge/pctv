@@ -61,8 +61,12 @@ export const DateTimeConvert = (dateN) => {
 };
 
 export const truncateToWords = (text, number) => {
-  if (!text) return;
-  return text.split(/\s+/).slice(0, number).join(" ");
+  if (!text) return "";
+  const words = text.trim().split(/\s+/);
+  if (words.length <= number) {
+    return text; // No truncation needed
+  }
+  return words.slice(0, number).join(" ") + "...";
 };
 
 export const getTrialDaysLeft = (trialEndsAt) => {

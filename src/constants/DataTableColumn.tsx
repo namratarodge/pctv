@@ -193,7 +193,7 @@ export const AdditionalTagColumn: {
           <UserAvatar poster={row.poster} name={row.name} />
 
           <span title={row.name} className="line-clamp-2">
-            {truncateToWords(row.name, 7)}...{" "}
+            {truncateToWords(row.name, 4)}
           </span>
         </div>
       ),

@@ -4,9 +4,7 @@ import { usePublicData } from "@/components/context/PublicDataContext";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 
-import { TagType, TitleType } from "@/constants/Type";
-
-import { countryOptions } from "@/constants/Main";
+import { SettingsFormValues, TagType, TitleType } from "@/constants/Type";
 
 const Language = [
   { value: "English", name: "English" },
@@ -59,6 +57,10 @@ export default function BrowserInner() {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState(languageName);
   const [selectedLevel, setSelectedLevel] = useState("");
+
+  const [appRating, setAppRating] = useState<string[]>([]);
+  const [languages, setLanguages] = useState<string[]>([]);
+  const [country, setCountry] = useState<string[]>([]);
 
   // Pagination metadata
   const [totalItems, setTotalItems] = useState(0);
@@ -288,6 +290,52 @@ export default function BrowserInner() {
     </div>
   );
 
+  const fetcSettings = async () => {
+    const token = localStorage.getItem("token");
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/settings`,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+          params: {
+            name: "streaming.qualities,browse.languages,homepage.countries,browse.ageRatings",
+          },
+        }
+      );
+      if (response.data.status) {
+        const modifiedData = response.data.data.data;
+        // setSettings(modifiedData);
+
+        // Find each setting by name, parse JSON value to string arrays
+        const findSetting = (name: string) =>
+          modifiedData.find((item: SettingsFormValues) => item.name === name);
+
+        setAppRating(
+          JSON.parse(findSetting("browse.ageRatings")?.value ?? "[]")
+        );
+        setLanguages(
+          JSON.parse(findSetting("browse.languages")?.value ?? "[]")
+        );
+        setCountry(
+          JSON.parse(findSetting("homepage.countries")?.value ?? "[]")
+        );
+
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetcSettings();
+  }, []);
+
   // Skeleton loading state for right section only
   const SkeletonLoading = () => (
     <div className="w-full  py-2">
@@ -363,6 +411,7 @@ export default function BrowserInner() {
         </div>
         <div className="w-full border-b border-gray-500 py-6">
           <div className="text-gray-400">Select Region</div>
+
           <div className="relative inline-block mt-4 w-full bg-gray-800 rounded-full">
             <select
               value={selectedCountry}
@@ -371,9 +420,9 @@ export default function BrowserInner() {
               }
               className="text-sm block appearance-none w-full border border-gray-500 bg-gray-800 text-white  py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
             >
-              {countryOptions.map((country, index) => (
-                <option key={index} value={country.value}>
-                  {country.name}
+              {country.map((row, index) => (
+                <option key={index} value={row}>
+                  {row}
                 </option>
               ))}
             </select>
@@ -387,7 +436,9 @@ export default function BrowserInner() {
 
         <div className="w-full border-b border-gray-500 py-6">
           <div className="text-gray-400">Language</div>
+
           <div className="relative inline-block mt-4 w-full bg-gray-800 rounded-full text-sm">
+           
             <select
               value={selectedLanguage}
               onChange={(e) =>
@@ -396,9 +447,9 @@ export default function BrowserInner() {
               className="block appearance-none w-full border border-gray-500  bg-gray-800 text-white  py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
             >
               <option>Select Language</option>
-              {Language.map((language) => (
-                <option key={language.value} value={language.value}>
-                  {language.name}
+              {languages.map((language) => (
+                <option key={language} value={language}>
+                  {language}
                 </option>
               ))}
             </select>
@@ -418,9 +469,9 @@ export default function BrowserInner() {
               onChange={(e) => handleSelectChange(e, setSelectedLevel, "level")}
               className="block appearance-none w-full border border-gray-500 bg-gray-800 text-white   py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
             >
-              {Levels.map((level) => (
-                <option key={level.name} value={level.value}>
-                  {level.name}
+              {appRating.map((level) => (
+                <option key={level} value={level}>
+                  {level}
                 </option>
               ))}
             </select>

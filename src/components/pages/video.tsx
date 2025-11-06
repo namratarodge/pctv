@@ -169,7 +169,7 @@ export default function Videos({ titleId = null }: VideosProps) {
                   renderActions={(person: VideoType) => (
                     <div className="flex gap-3 justify-end">
                       <Link
-                        href={`videos/${person._id}`}
+                        href={`/admin/videos/${person._id}`}
                         className="text-blue-600 hover:text-blue-800 cursor-pointer"
                       >
                         <PencilIcon className="w-5 h-5" />

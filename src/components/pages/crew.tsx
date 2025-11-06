@@ -127,7 +127,7 @@ export default function Crew({ titleId }: { titleId: string }) {
     <div className=" bg-white rounded-md ">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold text-gray-900">Crew</h1>
+          <h1 className="text-base font-semibold text-gray-900">Speaker</h1>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <button
@@ -136,7 +136,7 @@ export default function Crew({ titleId }: { titleId: string }) {
             className="cursor-pointer flex items-center gap-2 rounded-md bg-red-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             <PlusCircleIcon className="w-6 h-6" />
-            Add Cradit
+            Add Speaker
           </button>
         </div>
       </div>
@@ -163,7 +163,7 @@ export default function Crew({ titleId }: { titleId: string }) {
           <ModelForm
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
-            title="Select Crew Member"
+            title="Select Speaker Member"
             onSubmit={handleSubmit(handleFormSubmit)}
           >
             <div className="flex flex-col  gap-3 ">

@@ -188,7 +188,7 @@ export const titleSchema = z.object({
   certification: z.string().optional(),
 
   budget: z.number().optional(),
-  revenue: z.number().optional(),
+  revenue: z.string().optional(),
 
   popularity: z.number().optional(),
 

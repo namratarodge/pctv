@@ -14,6 +14,7 @@ export default function Content() {
   const [languages, setLanguages] = useState<string[]>([]);
   const [country, setCountry] = useState<string[]>([]);
   const [qualities, setQualities] = useState<string[]>([]);
+  const [saving, setSaving] = useState(false);
 
   const [loading, setLoading] = useState(true);
 
@@ -53,7 +54,7 @@ export default function Content() {
         setQualities(
           JSON.parse(findSetting("streaming.qualities")?.value ?? "[]")
         );
-        
+
         setLoading(false);
       }
     } catch (error) {
@@ -67,6 +68,38 @@ export default function Content() {
     fetch();
   }, []);
 
+  const handleSave = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return (window.location.href = "/login");
+
+    // NOTE: replace these _ids with the real ones returned by /settings
+    // Best is to keep those ids when you fetch (store them in state).
+    const payload = [
+      { _id: "6856a33a3e2804ea5de6743b", value: JSON.stringify(appRating) }, // browse.ageRatings
+      { _id: "6856a33a3e2804ea5de67471", value: JSON.stringify(languages) }, // browse.languages
+      { _id: "6856a33a3e2804ea5de67470", value: JSON.stringify(country) }, // homepage.countries
+      { _id: "6856a33a3e2804ea5de6743e", value: JSON.stringify(qualities) }, // streaming.qualities (👈 avoid duplicate id)
+    ];
+
+    try {
+      setSaving(true);
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/settings/update`,
+        payload,
+        {
+          headers: { Authorization: token, "Content-Type": "application/json" },
+        }
+      );
+      toast.success("Settings updated");
+      // optionally re-fetch to reflect sanitized values from server
+      // await fetch();
+    } catch (err: any) {
+      console.error(err);
+      toast.error(err?.response?.data?.message ?? "Failed to update settings");
+    } finally {
+      setSaving(false);
+    }
+  };
   return (
     <div className="px-4">
       <h1 className="text-lg">General</h1>
@@ -77,7 +110,7 @@ export default function Content() {
         {!loading && appRating && (
           <SectorMultiSelect
             data={appRating}
-            title="Age Ratings"
+            title="Certification"
             onChange={(newData) => setAppRating(newData)}
           />
         )}
@@ -128,8 +161,12 @@ export default function Content() {
             />
           </div>
         </div>
-        <button className="px-4 py-2 bg-red-500 text-white rounded-md  text-sm cursor-pointer">
-          Update
+        <button
+          onClick={handleSave} // ✅ actually calls the function
+          disabled={saving}
+          className="px-4 py-2 bg-red-500 text-white rounded-md  text-sm cursor-pointer"
+        >
+          {saving ? "Saving..." : "Update"}
         </button>
       </div>
     </div>
