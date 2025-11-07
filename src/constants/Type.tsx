@@ -154,7 +154,7 @@ export type TitleDetailsType = {
   runtime: number | null;
   trailer: string | null;
   budget: number | null;
-  revenue: number | null;
+  revenue: string | null;
   views: number;
   popularity: number;
   imdb_id: string | null;

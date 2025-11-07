@@ -38,13 +38,20 @@ const EditorInput: React.FC<EditorInputProps> = ({
     const doc = ed.getDoc(); // iframe document
     if (!doc) return;
 
-    let styleEl = doc.getElementById("user-inline-styles") as HTMLStyleElement | null;
-    if (!styleEl) {
+    let styleEl: HTMLStyleElement;
+
+    const existing = doc.getElementById(
+      "user-inline-styles"
+    ) as HTMLStyleElement | null;
+    if (existing) {
+      styleEl = existing;
+    } else {
       styleEl = doc.createElement("style");
       styleEl.type = "text/css";
       styleEl.id = "user-inline-styles";
       doc.head.appendChild(styleEl);
     }
+
     styleEl.textContent = combinedCSS;
   };
 
@@ -72,7 +79,15 @@ const EditorInput: React.FC<EditorInputProps> = ({
           height: 360,
           menubar: false,
           branding: false,
-          plugins: ["lists", "link", "table", "autolink", "preview", "code", "paste"],
+          plugins: [
+            "lists",
+            "link",
+            "table",
+            "autolink",
+            "preview",
+            "code",
+            "paste",
+          ],
           toolbar:
             "undo redo | blocks | bold italic underline | " +
             "alignleft aligncenter alignright alignjustify | " +
