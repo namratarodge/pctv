@@ -58,6 +58,9 @@ export default function BrowserInner() {
   const [selectedLanguage, setSelectedLanguage] = useState(languageName);
   const [selectedLevel, setSelectedLevel] = useState("");
 
+  const [minYear, setMinYear] = useState<number>();
+  const [maxYear, setMaxYear] = useState<number>();
+
   const [appRating, setAppRating] = useState<string[]>([]);
   const [languages, setLanguages] = useState<string[]>([]);
   const [country, setCountry] = useState<string[]>([]);
@@ -302,7 +305,7 @@ export default function BrowserInner() {
             "Content-Type": "application/json",
           },
           params: {
-            name: "streaming.qualities,browse.languages,homepage.countries,browse.ageRatings",
+            name: "streaming.qualities,browse.languages,homepage.countries,browse.ageRatings,browse.year_slider_min,browse.year_slider_max",
           },
         }
       );
@@ -324,6 +327,14 @@ export default function BrowserInner() {
           JSON.parse(findSetting("homepage.countries")?.value ?? "[]")
         );
 
+        setMinYear(
+          JSON.parse(findSetting("browse.year_slider_min")?.value ?? 0)
+        );
+
+        setMaxYear(
+          JSON.parse(findSetting("browse.year_slider_max")?.value ?? 0)
+        );
+        console.log(JSON.parse(findSetting("browse.year_slider_max")?.value ?? 0))
         setLoading(false);
       }
     } catch (error) {
@@ -438,7 +449,6 @@ export default function BrowserInner() {
           <div className="text-gray-400">Language</div>
 
           <div className="relative inline-block mt-4 w-full bg-gray-800 rounded-full text-sm">
-           
             <select
               value={selectedLanguage}
               onChange={(e) =>

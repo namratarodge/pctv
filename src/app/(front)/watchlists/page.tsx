@@ -33,6 +33,8 @@ export default function Home() {
       if (response.data.status) {
         const modifiedData = response.data.data.data;
         setData(modifiedData);
+      }else{
+         setData([]);
       }
       setLoading(false);
     } catch (error) {

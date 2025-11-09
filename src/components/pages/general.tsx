@@ -1,5 +1,5 @@
 "use client";
-import { TitleDetailsType } from "@/constants/Type";
+import { SettingsFormValues, TitleDetailsType } from "@/constants/Type";
 import { TitleFormData, titleSchema } from "@/constants/Validation";
 import { PhotoIcon } from "@heroicons/react/24/outline";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,6 +29,9 @@ export default function General({ titleId, data }: PageProps) {
   const [previewBackdropUrl, setPreviewBackdroprUrl] = useState<string | null>(
     null
   );
+
+  const [appRating, setAppRating] = useState<string[]>([]);
+  const [languages, setLanguages] = useState<string[]>([]);
 
   const {
     register,
@@ -109,6 +112,50 @@ export default function General({ titleId, data }: PageProps) {
       setLoading(false);
     }
   };
+
+  const fetch = async () => {
+    const token = localStorage.getItem("token");
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/settings`,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+          params: {
+            name: "streaming.qualities,browse.languages,homepage.countries,browse.ageRatings,browse.year_slider_min,browse.year_slider_max",
+          },
+        }
+      );
+      if (response.data.status) {
+        const modifiedData = response.data.data.data;
+        // setSettings(modifiedData);
+
+        // Find each setting by name, parse JSON value to string arrays
+        const findSetting = (name: string) =>
+          modifiedData.find((item: SettingsFormValues) => item.name === name);
+
+        setAppRating(
+          JSON.parse(findSetting("browse.ageRatings")?.value ?? "[]")
+        );
+        setLanguages(
+          JSON.parse(findSetting("browse.languages")?.value ?? "[]")
+        );
+
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      toast("Error fetching data:");
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetch();
+  }, []);
 
   useEffect(() => {
     if (data) {
@@ -316,9 +363,12 @@ export default function General({ titleId, data }: PageProps) {
                   })}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="Beginner">Beginner</option>
-                  <option value="Intermediate">Intermediate</option>
-                  <option value="Advance">Advance</option>
+                  <option value="">Select Certification</option>
+                  {appRating?.map((rating: string, i: number) => (
+                    <option key={i} value={rating}>
+                      {rating}
+                    </option>
+                  ))}
                 </select>
 
                 {errors.certification && (
@@ -384,21 +434,24 @@ export default function General({ titleId, data }: PageProps) {
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="">Select Language</option>
-                  <option value="Portuguese">Portuguese</option>
-                  <option value="English">English</option>
-                  <option value="Spnish">Spnish</option>
+                  {languages?.map((row: string, i: number) => (
+                    <option key={i} value={row}>
+                      {row}
+                    </option>
+                  ))}
                 </select>
 
                 {errors.language && <Error message={errors.language.message} />}
               </div>
 
               <div>
-                <label className="block text-sm text-gray-600 mb-1">Video Type</label>
+                <label className="block text-sm text-gray-600 mb-1">
+                  Video Type
+                </label>
                 <select
                   {...register("is_free", { valueAsNumber: true })}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-
                   <option value={0}>Premium</option>
                   <option value={1}>Free</option>
                 </select>

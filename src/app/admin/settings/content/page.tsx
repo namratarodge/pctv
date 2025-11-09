@@ -14,6 +14,9 @@ export default function Content() {
   const [languages, setLanguages] = useState<string[]>([]);
   const [country, setCountry] = useState<string[]>([]);
   const [qualities, setQualities] = useState<string[]>([]);
+  const [minYear, setMinYear] = useState<string>("");
+  const [maxYear, setMaxYear] = useState<string>("");
+
   const [saving, setSaving] = useState(false);
 
   const [loading, setLoading] = useState(true);
@@ -30,7 +33,7 @@ export default function Content() {
             "Content-Type": "application/json",
           },
           params: {
-            name: "streaming.qualities,browse.languages,homepage.countries,browse.ageRatings",
+            name: "streaming.qualities,browse.languages,homepage.countries,browse.ageRatings,browse.year_slider_min,browse.year_slider_max",
           },
         }
       );
@@ -55,6 +58,14 @@ export default function Content() {
           JSON.parse(findSetting("streaming.qualities")?.value ?? "[]")
         );
 
+        setMinYear(
+          JSON.parse(findSetting("browse.year_slider_min")?.value ?? "[]")
+        );
+
+        setMaxYear(
+          JSON.parse(findSetting("browse.year_slider_max")?.value ?? "[]")
+        );
+
         setLoading(false);
       }
     } catch (error) {
@@ -71,14 +82,13 @@ export default function Content() {
   const handleSave = async () => {
     const token = localStorage.getItem("token");
     if (!token) return (window.location.href = "/login");
-
-    // NOTE: replace these _ids with the real ones returned by /settings
-    // Best is to keep those ids when you fetch (store them in state).
     const payload = [
       { _id: "6856a33a3e2804ea5de6743b", value: JSON.stringify(appRating) }, // browse.ageRatings
       { _id: "6856a33a3e2804ea5de67471", value: JSON.stringify(languages) }, // browse.languages
       { _id: "6856a33a3e2804ea5de67470", value: JSON.stringify(country) }, // homepage.countries
       { _id: "6856a33a3e2804ea5de6743e", value: JSON.stringify(qualities) }, // streaming.qualities (👈 avoid duplicate id)
+      { _id: "6856a33a3e2804ea5de6743c", value: JSON.stringify(minYear) }, // streaming.qualities (👈 avoid duplicate id)
+      { _id: "6856a33a3e2804ea5de6743d", value: JSON.stringify(maxYear) }, // streaming.qualities (👈 avoid duplicate id)
     ];
 
     try {
@@ -144,18 +154,20 @@ export default function Content() {
             <label className="text-md">Browse Min Year</label>
             <input
               type="text"
-              name="siteUrl"
-              id="siteUrl"
+              inputMode="numeric"
+              value={minYear}
+              onChange={(e) => setMinYear(e.target.value)}
               className="mt-1 px-4 py-2 block w-full rounded-sm border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               placeholder="2020"
             />
           </div>
           <div className="w-1/2 mt-4">
-            <label className="text-md">Browse Min Year</label>
+            <label className="text-md">Browse Max Year</label>
             <input
               type="text"
-              name="siteUrl"
-              id="siteUrl"
+              inputMode="numeric"
+              value={maxYear}
+              onChange={(e) => setMaxYear(e.target.value)}
               className="mt-1 px-4 py-2 block w-full rounded-sm border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               placeholder="2020"
             />
