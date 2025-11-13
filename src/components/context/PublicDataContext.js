@@ -6,45 +6,44 @@ import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 const PublicDataContext = createContext();
 
+function getItemDataByType(items, type) {
+  if (!Array.isArray(items)) return [];
+
+  return items.filter((item) => item.type === type);
+}
+
 export function PublicDataProvider({ children }) {
   const [user, setUser] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [masterContry, setMasterCountry] = useState([]);
   const [tvtopic, setTvtopic] = useState([]);
   const [pages, setPages] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchTVTopic = async () => {
+  const fetchCategory = async () => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/tags?type=keyword`,
+        `${process.env.NEXT_PUBLIC_API_URL}/tags`,
         {
           headers: {
             "Content-Type": "application/json",
+          },
+          params: {
+            limit: 100,
           },
         }
       );
       if (response.data.status) {
         const modifiedData = response.data.data.data;
-        setTvtopic(modifiedData);
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/tags?type=genre`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (response.data.status) {
-        const modifiedData = response.data.data.data;
-        setCategories(modifiedData);
+        const keyword = getItemDataByType(modifiedData, "keyword");
+        const genre = getItemDataByType(modifiedData, "genre");
+        const production_country = getItemDataByType(
+          modifiedData,
+          "production_country"
+        );
+        setTvtopic(keyword);
+        setCategories(genre);
+        setMasterCountry(production_country);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -84,7 +83,7 @@ export function PublicDataProvider({ children }) {
             headers: {
               Authorization: token,
               "Content-Type": "application/json",
-            }
+            },
           }
         );
         if (response.data.status) {
@@ -99,7 +98,7 @@ export function PublicDataProvider({ children }) {
             country: modifiedData.country,
             avatar: modifiedData.avatar,
             userType: modifiedData.userType,
-            subscription : modifiedData.subscription
+            subscription: modifiedData.subscription,
           };
           setUser(userData);
         }
@@ -116,8 +115,7 @@ export function PublicDataProvider({ children }) {
 
   useEffect(() => {
     fetchUser();
-    fetchTVTopic();
-    fetchCategories();
+    fetchCategory();
     fetchPages();
   }, []);
 
@@ -126,6 +124,7 @@ export function PublicDataProvider({ children }) {
       value={{
         tvtopic,
         categories,
+        masterContry,
         pages,
         user,
         loading,

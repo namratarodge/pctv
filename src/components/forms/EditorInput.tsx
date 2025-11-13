@@ -23,7 +23,6 @@ const EditorInput: React.FC<EditorInputProps> = ({
     const ed = editorRef.current;
     if (!ed) return;
 
-    // Get current HTML (as TinyMCE has it)
     const html = ed.getContent({ format: "html" });
 
     // Extract ALL <style>...</style> blocks from content
@@ -34,15 +33,14 @@ const EditorInput: React.FC<EditorInputProps> = ({
       combinedCSS += match[1] + "\n";
     }
 
-    // Write combined CSS into a single <style id="user-inline-styles"> in the iframe <head>
     const doc = ed.getDoc(); // iframe document
     if (!doc) return;
 
     let styleEl: HTMLStyleElement;
-
     const existing = doc.getElementById(
       "user-inline-styles"
     ) as HTMLStyleElement | null;
+
     if (existing) {
       styleEl = existing;
     } else {
@@ -66,13 +64,11 @@ const EditorInput: React.FC<EditorInputProps> = ({
         apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
         onInit={(_, editor) => {
           editorRef.current = editor;
-          // After init, ensure existing content styles apply
           setTimeout(syncInlineStylesToHead, 0);
         }}
         value={value}
         onEditorChange={(content) => {
           onChange(content);
-          // keep styles in sync whenever content changes
           syncInlineStylesToHead();
         }}
         init={{
@@ -86,24 +82,25 @@ const EditorInput: React.FC<EditorInputProps> = ({
             "autolink",
             "preview",
             "code",
-            "paste",
+            "media",
           ],
+
+          // 👇 allow ALL elements + attributes
+          valid_elements: "*[*]",
+
           toolbar:
             "undo redo | blocks | bold italic underline | " +
             "alignleft aligncenter alignright alignjustify | " +
-            "bullist numlist outdent indent | link table | code preview",
+            "bullist numlist outdent indent | link table media | code preview",
 
-          // 1) Allow <style> tags and style attributes
-          //    (We still keep a whitelist of styles via valid_styles below)
+          // 👇 just extend for style + iframe (no need to repeat all tags)
           extended_valid_elements:
-            "style[type|media],p[*],span[*],div[*],h1[*],h2[*],h3[*],h4[*],h5[*],h6[*]," +
-            "a[href|target|rel|class|style],img[src|alt|width|height|class|style]," +
-            "ul[*],ol[*],li[*],blockquote[*],code[*],pre[*],strong[*],em[*],u[*],br",
+            "style[type|media]," +
+            "iframe[src|width|height|frameborder|allow|allowfullscreen|loading|referrerpolicy|style|class]",
 
-          // Allow <style> as a child of <body>
-          valid_children: "+body[style]",
+          // 👇 allow iframe in body/div/p
+          valid_children: "+body[style|iframe],+div[iframe],+p[iframe]",
 
-          // 2) Whitelist CSS properties we’ll accept in style=""
           valid_styles: {
             "*":
               "color,background-color,font-size,font-family,text-align," +
@@ -113,10 +110,8 @@ const EditorInput: React.FC<EditorInputProps> = ({
               "border,border-top,border-right,border-bottom,border-left,border-color,border-width,border-style",
           },
 
-          // Optional paste behavior (keep formatting)
           paste_as_text: false,
 
-          // Editor chrome styling (only affects the editing iframe, not saved HTML)
           content_style:
             "body { font-family: Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6 } " +
             "p { margin: 0 0 0.75em }",

@@ -93,7 +93,7 @@ export const CrewColumn: {
       ),
     },
     { key: "job", label: "Job" },
-    { key: "department", label: "Department" },
+    // { key: "department", label: "Department" },
   ];
 
 // Cast Column

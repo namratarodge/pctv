@@ -28,7 +28,7 @@ export default function Crew({ titleId }: { titleId: string }) {
       person_id: data.person_id._id,
       creditable_id: titleId,
       order: 0,
-      department: data.department,
+      department: 'directing',
       job: data.job,
     };
     try {
@@ -199,7 +199,7 @@ export default function Crew({ titleId }: { titleId: string }) {
 
                 {errors.job && <Error message={errors.job.message} />}
               </div>
-              <div className="pl-2  pb-4">
+              {/* <div className="pl-2  pb-4">
                 <label className="block text-sm text-gray-600 mb-1 font-semibold">
                   Department
                 </label>
@@ -210,11 +210,12 @@ export default function Crew({ titleId }: { titleId: string }) {
                   })}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
+                <small>Note : If Want to show in Speaker add :  directing</small>
 
                 {errors.department && (
                   <Error message={errors.department.message} />
                 )}
-              </div>
+              </div> */}
             </div>
           </ModelForm>
         </div>

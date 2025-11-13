@@ -1,15 +1,14 @@
 "use client";
-import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { AutoCompeleteList, DataTable, ModelForm } from "@/components/forms";
-import { useCallback, useEffect, useState } from "react";
-import { Error } from "../layout";
-import { Controller } from "react-hook-form";
-import { formatDate } from "@/utils/common";
-import axios from "axios";
 import Loading from "@/components/layout/Loading";
 import { CastColumn } from "@/constants/DataTableColumn";
-import { useForm } from "react-hook-form";
+import { formatDate } from "@/utils/common";
+import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
+import { useCallback, useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { Error } from "../layout";
 
 import { CastCreditType, UserTag } from "@/constants/Type";
 
@@ -180,6 +179,7 @@ export default function Genre({ titleId }: { titleId: string }) {
                   rules={{ required: "Person is required" }}
                   render={({ field }) => (
                     <AutoCompeleteList
+                      type="sub-tv-topic"
                       onSelect={(user: UserTag) => {
                         field.onChange(user); // updates form value
                       }}

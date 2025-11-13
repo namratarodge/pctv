@@ -1,22 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import UserAvatar from "./UserAvatar";
 
 type User = {
-  id : string;
+  id: string;
   _id: string;
   name: string;
   poster: string; // URL to image
-  known_for : string;
+  known_for: string;
 };
 
 type AutoCompletePersonListProps = {
+  type?: string;
   onSelect: (selected: User) => void;
 };
 
-export default function UserAutoComplete({
+export default function AutoCompeleteList({
+  type,
   onSelect,
 }: AutoCompletePersonListProps) {
   const [query, setQuery] = useState("");
@@ -48,6 +50,7 @@ export default function UserAutoComplete({
             "Content-Type": "application/json",
           },
           params: {
+            known_for: type,
             name: searchText,
           },
         }

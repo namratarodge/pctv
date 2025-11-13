@@ -272,7 +272,7 @@ export default function TitleDetailPage() {
                         {item.person_id.name}
                       </p>
                       <p className="text-gray-400 text-xs capitalize">
-                        {item.department}
+                        {item.job}
                       </p>
                     </div>
                   </div>

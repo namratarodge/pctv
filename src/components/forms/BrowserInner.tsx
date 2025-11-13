@@ -35,7 +35,7 @@ const MAX_YEAR = 2025;
 export default function BrowserInner() {
   const router = useRouter();
   const [title, setTitle] = useState([]);
-  const { tvtopic, categories } = usePublicData();
+  const { tvtopic, categories, masterContry } = usePublicData();
   const [loading, setLoading] = useState(true);
 
   const searchParams = useSearchParams();
@@ -367,7 +367,7 @@ export default function BrowserInner() {
 
   return (
     <div className="pt-18  max-w-11/12 mx-auto flex flex-col lg:flex-row mb-10">
-      <div className="w-full  md:w-1/5 sm:w-full px-4 py-4 h-screen overflow-y-auto scrollable custom-scrollbar">
+      <div className="w-full  md:w-1/5 sm:w-full pr-4 py-4 h-screen overflow-y-auto scrollable custom-scrollbar">
         <div className="w-full border-b border-gray-500 pb-4">
           <div className="text-gray-400">TV Topic</div>
           <div className="relative inline-block mt-4 w-full  bg-gray-800 rounded-full text-sm">
@@ -400,7 +400,7 @@ export default function BrowserInner() {
                   className="text-gray-300 py-1 cursor-pointer text-sm"
                   key={category._id}
                 >
-                  <label className="cursor-pointer">
+                  <label className="cursor-pointer items-center flex gap-2">
                     <input
                       type="checkbox"
                       checked={genreList.includes(category.name)}
@@ -431,9 +431,10 @@ export default function BrowserInner() {
               }
               className="text-sm block appearance-none w-full border border-gray-500 bg-gray-800 text-white  py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
             >
-              {country.map((row, index) => (
-                <option key={index} value={row}>
-                  {row}
+              <option>Select Country</option>
+              {masterContry.map((row : TagType) => (
+                <option key={row._id} value={row.name}>
+                  {row.display_name}
                 </option>
               ))}
             </select>
@@ -479,6 +480,7 @@ export default function BrowserInner() {
               onChange={(e) => handleSelectChange(e, setSelectedLevel, "level")}
               className="block appearance-none w-full border border-gray-500 bg-gray-800 text-white   py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
             >
+              <option>Select Level</option>
               {appRating.map((level) => (
                 <option key={level} value={level}>
                   {level}
