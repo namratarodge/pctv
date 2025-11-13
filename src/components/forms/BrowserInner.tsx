@@ -433,7 +433,7 @@ export default function BrowserInner() {
             >
               <option>Select Country</option>
               {masterContry.map((row : TagType) => (
-                <option key={row._id} value={row.name}>
+                <option key={row._id} value={row._id}>
                   {row.display_name}
                 </option>
               ))}
