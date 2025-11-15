@@ -114,6 +114,24 @@ const EditorInput: React.FC<EditorInputProps> = ({
           content_style:
             "body { font-family: Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6 } " +
             "p { margin: 0 0 0.75em }",
+
+          setup: (editor: any) => {
+            editor.on("PreProcess", (e: any) => {
+              // remove sandbox attribute from all iframes BEFORE saving content
+              e.node.querySelectorAll("iframe").forEach((el: any) => {
+                el.removeAttribute("sandbox");
+              });
+            });
+            editor.on("PostProcess", (e: any) => {
+              // remove sandbox AFTER loading content
+              const div = document.createElement("div");
+              div.innerHTML = e.content;
+              div.querySelectorAll("iframe").forEach((el) => {
+                el.removeAttribute("sandbox");
+              });
+              e.content = div.innerHTML;
+            });
+          },
         }}
       />
     </div>
