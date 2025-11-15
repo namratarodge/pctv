@@ -176,7 +176,7 @@ export default function Genre({ titleId }: { titleId: string }) {
                 <Controller
                   name="person_id"
                   control={control}
-                  rules={{ required: "Person is required" }}
+                  rules={{ required: "Data is required" }}
                   render={({ field }) => (
                     <AutoCompeleteList
                       type="sub-tv-topic"

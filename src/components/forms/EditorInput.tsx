@@ -95,8 +95,7 @@ const EditorInput: React.FC<EditorInputProps> = ({
 
           // 👇 just extend for style + iframe (no need to repeat all tags)
           extended_valid_elements:
-            "style[type|media]," +
-            "iframe[src|width|height|frameborder|allow|allowfullscreen|loading|referrerpolicy|style|class]",
+            "iframe[src|width|height|frameborder|style|class|referrerpolicy|sandbox]",
 
           // 👇 allow iframe in body/div/p
           valid_children: "+body[style|iframe],+div[iframe],+p[iframe]",

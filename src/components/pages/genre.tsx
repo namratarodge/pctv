@@ -166,7 +166,7 @@ export default function Genre({ titleId, data, onSubmit }: PageProps) {
               <Controller
                 name="person_id"
                 control={control}
-                rules={{ required: "Person is required" }}
+                rules={{ required: "Data is required" }}
                 render={({ field }) => (
                   <AutoCompletePersonList
                     users={categories}
