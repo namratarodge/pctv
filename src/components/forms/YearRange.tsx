@@ -62,7 +62,7 @@ export default function YearRange({
                 className="absolute -top-10 pointer-events-none"
                 style={{ left: `${midPct}%`, transform: "translateX(-50%)" }}
               >
-                <div className="relative inline-flex items-center gap-1 rounded-full bg-gray-900/95 px-2.5 py-1 text-xs font-semibold text-white shadow">
+                <div className="relative inline-flex items-center gap-1 rounded-full w-30 text-center bg-gray-900/95 px-2.5 py-1 text-xs font-semibold text-white shadow">
                   <span>
                     {values[0]}–{values[1]}
                   </span>
