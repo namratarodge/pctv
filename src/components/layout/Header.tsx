@@ -121,7 +121,7 @@ export default function Header() {
         <div className="flex lg:flex-1  items-center ">
           <div className="p-1.5">
             <span className="sr-only">Project Control TV</span>
-            <Link href="/">
+            <Link href={user && Object.keys(user).length > 0 ? "/home" : "/"}>
               <Image
                 alt="Your Company"
                 src="/logo-dark.png"
@@ -286,7 +286,7 @@ export default function Header() {
           <div className="flex items-center justify-between">
             <div className="-m-1.5 p-1.5">
               <span className="sr-only">Project Control TV</span>
-              <Link href="/">
+              <Link href={user && Object.keys(user).length > 0 ? "/home" : "/"}>
                 <Image
                   alt="Your Company"
                   src="/logo-dark.png"

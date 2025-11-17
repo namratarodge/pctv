@@ -42,29 +42,49 @@ export default function General({ titleId, data }: PageProps) {
     resolver: zodResolver(titleSchema),
   });
 
-  const addNewTitle = async (data: TitleFormData) => {
-    console.log("Submitting data:", data);
+  // Full-screen loader overlay
+  const FullScreenLoader = () => (
+    <div className="fixed inset-0 bg-white/70 flex items-center justify-center z-50">
+      <div className="animate-spin h-12 w-12 border-4 border-red-600 border-t-transparent rounded-full" />
+    </div>
+  );
+
+  const addNewTitle = async (formValues: TitleFormData) => {
+    console.log("Submitting data:", formValues);
     const token = localStorage.getItem("token");
     const formData = new FormData();
 
-    // JSON fields
-    formData.append("name", data.name);
-    formData.append("original_title", data.original_title);
-    formData.append("type", data.type);
-    formData.append("allow_update", data.allow_update ? "1" : "0");
-    formData.append("release_date", data.release_date);
-    formData.append("tagline", data.tagline || "");
-    formData.append("overview", data.overview || "");
-    formData.append("runtime", data.runtime || "");
-    formData.append("certification", data.certification || "");
-    if (data.budget !== undefined)
-      formData.append("budget", String(data.budget));
-    if (data.revenue !== undefined)
-      formData.append("revenue", String(data.revenue));
-    if (data.popularity !== undefined)
-      formData.append("popularity", String(data.popularity));
-    formData.append("language", data.language);
-    formData.append("is_free", data.is_free ? "1" : "0");
+    // JSON / text fields
+    formData.append("name", formValues.name);
+    formData.append("original_title", formValues.original_title);
+    formData.append("type", formValues.type);
+
+    // allow_update likely string "1"/"0" in your form – normalize:
+    // @ts-ignore if TitleFormData defines differently
+    formData.append(
+      "allow_update",
+      // @ts-ignore
+      formValues.allow_update === "1" || formValues.allow_update === 1
+        ? "1"
+        : "0"
+    );
+
+    formData.append("release_date", formValues.release_date);
+    formData.append("tagline", formValues.tagline || "");
+    formData.append("overview", formValues.overview || "");
+    formData.append("runtime", formValues.runtime || "");
+    formData.append("certification", formValues.certification || "");
+
+    if (formValues.budget !== undefined)
+      formData.append("budget", String(formValues.budget));
+    if (formValues.revenue !== undefined)
+      formData.append("revenue", String(formValues.revenue));
+    if (formValues.popularity !== undefined)
+      formData.append("popularity", String(formValues.popularity));
+
+    formData.append("language", formValues.language);
+    // is_free is registered with valueAsNumber (0/1)
+    formData.append("is_free", formValues.is_free ? "1" : "0");
 
     if (posterData) {
       formData.append("poster", posterData);
@@ -92,9 +112,9 @@ export default function General({ titleId, data }: PageProps) {
       const response = await axios({
         method,
         url,
-        data: formData, // ← important
+        data: formData,
         headers: {
-          Authorization: token,
+          Authorization: token ?? "",
         },
       });
 
@@ -121,7 +141,7 @@ export default function General({ titleId, data }: PageProps) {
         `${process.env.NEXT_PUBLIC_API_URL}/settings`,
         {
           headers: {
-            Authorization: token,
+            Authorization: token ?? "",
             "Content-Type": "application/json",
           },
           params: {
@@ -131,9 +151,7 @@ export default function General({ titleId, data }: PageProps) {
       );
       if (response.data.status) {
         const modifiedData = response.data.data.data;
-        // setSettings(modifiedData);
 
-        // Find each setting by name, parse JSON value to string arrays
         const findSetting = (name: string) =>
           modifiedData.find((item: SettingsFormValues) => item.name === name);
 
@@ -143,29 +161,33 @@ export default function General({ titleId, data }: PageProps) {
         setLanguages(
           JSON.parse(findSetting("browse.languages")?.value ?? "[]")
         );
-
-        setLoading(false);
       }
     } catch (error) {
       console.log(error);
-      toast("Error fetching data:");
+      toast.error("Error fetching settings");
+    } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
     fetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Make sure we only reset after data + options are loaded
   useEffect(() => {
-    if (data) {
+    if (data && appRating.length > 0 && languages.length > 0) {
+      console.log(data.language);
+      console.log(data.certification);
+
       reset({
         name: data.name || "",
         original_title: data.original_title || "",
         type: data.type === "movie" ? "Tv_topic" : "Categories", // adapt if needed
-        allow_update: data.allow_update ? 1 : 0,
-        // poster: data.poster || "",
-        // backdrop: data.backdrop || "",
+        // store as "1"/"0" so select matches
+        // @ts-ignore depending on TitleFormData
+        allow_update: data.allow_update ? "1" : "0",
         release_date: data.release_date || "",
         tagline: data.tagline || "",
         overview: data.description || "",
@@ -177,9 +199,10 @@ export default function General({ titleId, data }: PageProps) {
         language: data.language || "",
         is_free: data.is_free,
       });
+
       if (data.poster) {
         setPreviewPosterUrl(
-          process.env.NEXT_PUBLIC_WEBSITE + "/" + data.poster || null
+          (process.env.NEXT_PUBLIC_WEBSITE || "") + "/" + data.poster
         );
       } else {
         setPreviewPosterUrl(null);
@@ -187,13 +210,13 @@ export default function General({ titleId, data }: PageProps) {
 
       if (data.backdrop) {
         setPreviewBackdroprUrl(
-          process.env.NEXT_PUBLIC_WEBSITE + "/" + data.backdrop || null
+          (process.env.NEXT_PUBLIC_WEBSITE || "") + "/" + data.backdrop
         );
       } else {
         setPreviewBackdroprUrl(null);
       }
     }
-  }, [titleId, data, reset]);
+  }, [titleId, data, appRating, languages, reset]);
 
   const handleImageChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -222,15 +245,18 @@ export default function General({ titleId, data }: PageProps) {
   };
 
   return (
-    <div className=" bg-white rounded-md ">
+    <div className="bg-white rounded-md relative">
+      {/* Full screen loader while loading / saving */}
+      {loading && <FullScreenLoader />}
+
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold text-gray-900">
             {isNew ? "Create New title" : "General"}{" "}
           </h1>
-          {loading && "Loading..."}
         </div>
       </div>
+
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 px-8">
           <form onSubmit={handleSubmit(addNewTitle)} className="space-y-8">
@@ -283,11 +309,12 @@ export default function General({ titleId, data }: PageProps) {
                   Allow Auto Update
                 </label>
                 <select
-                  {...(register("allow_update"), { valueAsNumber: true })}
+                  // keep as string "1"/"0"
+                  {...register("allow_update")}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value={1}>Yes</option>
-                  <option value={0}>No</option>
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
                 </select>
 
                 {errors.allow_update && (
@@ -325,7 +352,8 @@ export default function General({ titleId, data }: PageProps) {
                 {errors.tagline && <Error message={errors.tagline.message} />}
               </div>
             </div>
-            <div className="">
+
+            <div>
               <label className="block text-sm text-gray-600 mb-1">
                 Overview
               </label>
@@ -337,6 +365,7 @@ export default function General({ titleId, data }: PageProps) {
               />
               {errors.overview && <Error message={errors.overview.message} />}
             </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm text-gray-600 mb-1">
@@ -349,7 +378,6 @@ export default function General({ titleId, data }: PageProps) {
                   })}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-
                 {errors.runtime && <Error message={errors.runtime.message} />}
               </div>
 
@@ -370,7 +398,6 @@ export default function General({ titleId, data }: PageProps) {
                     </option>
                   ))}
                 </select>
-
                 {errors.certification && (
                   <Error message={errors.certification.message} />
                 )}
@@ -388,7 +415,6 @@ export default function General({ titleId, data }: PageProps) {
                   })}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-
                 {errors.budget && <Error message={errors.budget.message} />}
               </div>
 
@@ -401,7 +427,6 @@ export default function General({ titleId, data }: PageProps) {
                   {...register("revenue")}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-
                 {errors.revenue && <Error message={errors.revenue.message} />}
               </div>
 
@@ -417,7 +442,6 @@ export default function General({ titleId, data }: PageProps) {
                   })}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-
                 {errors.popularity && (
                   <Error message={errors.popularity.message} />
                 )}
@@ -440,7 +464,6 @@ export default function General({ titleId, data }: PageProps) {
                     </option>
                   ))}
                 </select>
-
                 {errors.language && <Error message={errors.language.message} />}
               </div>
 
@@ -455,7 +478,6 @@ export default function General({ titleId, data }: PageProps) {
                   <option value={0}>Premium</option>
                   <option value={1}>Free</option>
                 </select>
-
                 {errors.is_free && <Error message={errors.is_free.message} />}
               </div>
 
@@ -504,13 +526,6 @@ export default function General({ titleId, data }: PageProps) {
                     />
                   </div>
                 </div>
-
-                {/* <input
-                  type="file"
-                  accept="image/*"
-                  {...register("poster")}
-                  className="w-full file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200"
-                /> */}
               </div>
 
               <div>
@@ -545,7 +560,7 @@ export default function General({ titleId, data }: PageProps) {
                       htmlFor="backdropUpload"
                       className="cursor-pointer inline-block px-4 py-2 text-sm rounded-md border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 shadow-sm"
                     >
-                      {previewPosterUrl ? "Change" : "Upload"} Poster
+                      {previewBackdropUrl ? "Change" : "Upload"} Backdrop
                     </label>
                     <input
                       ref={fileInputRef}
@@ -558,19 +573,14 @@ export default function General({ titleId, data }: PageProps) {
                     />
                   </div>
                 </div>
-
-                {/* <input
-                  type="file"
-                  accept="image/*"
-                  {...register("backdrop")}
-                  className="w-full file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200"
-                /> */}
               </div>
-              {/* <div className="border rounded-md border-gray-300"></div> */}
             </div>
 
             <div className="flex justify-end gap-4">
-              <button className="cursor-pointer bg-gray-300  text-gray-600 font-semibold py-3 px-6 rounded-lg shadow-md transition-all">
+              <button
+                type="button"
+                className="cursor-pointer bg-gray-300  text-gray-600 font-semibold py-3 px-6 rounded-lg shadow-md transition-all"
+              >
                 Cancel
               </button>
 

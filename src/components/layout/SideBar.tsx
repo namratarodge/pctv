@@ -108,7 +108,7 @@ export default function SideBar({ sideBarOpen, setSideBarOpen }: SideBarProps) {
         {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-700 px-4 pb-4">
           <div className="flex h-16 shrink-0 ">
-            <Link href="/" className="w-full">
+            <Link href="/home" className="w-full">
             <Image
               alt="Your Company"
               src="/logo-dark.png"

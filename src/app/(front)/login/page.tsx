@@ -3,13 +3,15 @@
 import GoogleLoginButton from "@/components/auth/GoogleLoginButton";
 import { GoogleUser } from "@/utils/googleOAuth";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -95,6 +97,16 @@ export default function Login() {
     toast.error(error);
   };
 
+  useEffect(() => {
+    // ✅ Ensure this runs only on the client
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("token");
+      if (token) {
+        router.push("/account");
+      }
+    }
+  }, [router]);
+
   return (
     <>
       <div
@@ -124,7 +136,9 @@ export default function Login() {
                     <div className="w-full border-t border-gray-300" />
                   </div>
                   <div className="relative flex justify-center text-sm">
-                    <span className="px-2 bg-black text-white  rounded-2xl">Or continue with email</span>
+                    <span className="px-2 bg-black text-white  rounded-2xl">
+                      Or continue with email
+                    </span>
                   </div>
                 </div>
               </div>

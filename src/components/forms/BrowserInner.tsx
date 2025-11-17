@@ -171,7 +171,7 @@ export default function BrowserInner() {
       });
 
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/titles`,
+        `${process.env.NEXT_PUBLIC_API_URL}/titlesSearch`,
         {
           headers: {
             Authorization: token,
@@ -298,7 +298,7 @@ export default function BrowserInner() {
     setLoading(true);
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/settings`,
+        `${process.env.NEXT_PUBLIC_API_URL}/settings_api`,
         {
           headers: {
             Authorization: token,

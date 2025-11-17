@@ -177,7 +177,7 @@ export const titleSchema = z.object({
   type: z.enum(["Tv_topic", "Categories"], {
     errorMap: () => ({ message: "type is required" }),
   }),
-  allow_update: z.number().optional(),
+  allow_update: z.string().optional(),
 
   poster: z.any().nullable(),
   backdrop: z.any().nullable(),

@@ -3,21 +3,22 @@ import Pricing from "@/components/register/Pricing";
 import Step1 from "@/components/register/Step1";
 import Step3 from "@/components/register/Step3";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Main() {
   const searchParams = useSearchParams();
   const step = searchParams.get("step");
   const router = useRouter();
 
-  // useEffect(() => {
-  //   // ✅ Ensure this runs only on the client
-  //   if (typeof window !== "undefined") {
-  //     const token = localStorage.getItem("token");
-  //     if (token) {
-  //       router.push("/account");
-  //     }
-  //   }
-  // }, [router]);
+  useEffect(() => {
+    // ✅ Ensure this runs only on the client
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("token");
+      if (token) {
+        router.push("/account");
+      }
+    }
+  }, [router]);
 
   return (
     <>
