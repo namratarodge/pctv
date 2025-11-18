@@ -381,7 +381,7 @@ export default function BrowserInner() {
             >
               <option value="all">All</option>
               {tvtopic.map((data: any) => (
-                <option key={data._id || data.name} value={data._id}>
+                <option key={data._id || data.name} value={data.name}>
                   {data.display_name} 
                 </option>
               ))}
@@ -405,8 +405,8 @@ export default function BrowserInner() {
                   <label className="cursor-pointer items-center flex gap-2">
                     <input
                       type="checkbox"
-                      checked={genreList.includes(category._id)}
-                      onChange={() => handleCheckboxChange(category._id)}
+                      checked={genreList.includes(category.name)}
+                      onChange={() => handleCheckboxChange(category.name)}
                       className="mr-1 form-checkbox accent-red-500 border border-red-400"
                     />{" "}
                     {category.display_name}
