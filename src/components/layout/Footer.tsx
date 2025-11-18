@@ -61,7 +61,7 @@ export default function Footer() {
                   {tvtopic.map((item: TagType) => (
                     <li key={item._id}>
                       <Link
-                        href={`browse?keyword=${item.name}`}
+                        href={`/browse?keyword=${item.name}`}
                         className="text-sm/6"
                       >
                         {item.display_name}
