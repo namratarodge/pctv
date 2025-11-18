@@ -6,18 +6,6 @@ import { useEffect, useRef, useState } from "react";
 
 import { SettingsFormValues, TagType, TitleType } from "@/constants/Type";
 
-const Language = [
-  { value: "English", name: "English" },
-  { value: "Spanish", name: "Spanish" },
-  { value: "Portuguese", name: "Portuguese" },
-];
-
-const Levels = [
-  { value: "beginner", name: "Beginner" },
-  { value: "intermediate", name: "Intermediate" },
-  { value: "expert", name: "Expert" },
-];
-
 import { Button } from "@headlessui/react";
 import {
   ChevronDoubleLeftIcon,
@@ -393,8 +381,8 @@ export default function BrowserInner() {
             >
               <option value="all">All</option>
               {tvtopic.map((data: any) => (
-                <option key={data._id || data.name} value={data.name}>
-                  {data.display_name}
+                <option key={data._id || data.name} value={data._id}>
+                  {data.display_name} 
                 </option>
               ))}
             </select>
@@ -417,8 +405,8 @@ export default function BrowserInner() {
                   <label className="cursor-pointer items-center flex gap-2">
                     <input
                       type="checkbox"
-                      checked={genreList.includes(category.name)}
-                      onChange={() => handleCheckboxChange(category.name)}
+                      checked={genreList.includes(category._id)}
+                      onChange={() => handleCheckboxChange(category._id)}
                       className="mr-1 form-checkbox accent-red-500 border border-red-400"
                     />{" "}
                     {category.display_name}
