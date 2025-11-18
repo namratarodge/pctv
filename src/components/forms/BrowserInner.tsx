@@ -445,7 +445,7 @@ export default function BrowserInner() {
               }
               className="text-sm block appearance-none w-full border border-gray-500 bg-gray-800 text-white  py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
             >
-              <option>Select Country</option>
+              <option value="">Select Country</option>
               {masterContry.map((row: TagType) => (
                 <option key={row._id} value={row._id}>
                   {row.display_name}
@@ -471,7 +471,7 @@ export default function BrowserInner() {
               }
               className="block appearance-none w-full border border-gray-500  bg-gray-800 text-white  py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
             >
-              <option>Select Language</option>
+              <option value="">Select Language</option>
               {languages.map((language) => (
                 <option key={language} value={language}>
                   {language}
@@ -494,7 +494,7 @@ export default function BrowserInner() {
               onChange={(e) => handleSelectChange(e, setSelectedLevel, "level")}
               className="block appearance-none w-full border border-gray-500 bg-gray-800 text-white   py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
             >
-              <option>Select Level</option>
+              <option value="">Select Level</option>
               {appRating.map((level) => (
                 <option key={level} value={level}>
                   {level}
