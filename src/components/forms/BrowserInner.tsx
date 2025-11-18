@@ -45,10 +45,22 @@ export default function BrowserInner() {
   const pageParam = searchParams.get("page") ?? 1;
   const languageName = searchParams.get("language") ?? "";
   const keywordName = searchParams.get("keyword") ?? "";
+  const countryParam = searchParams.get("country") ?? "";
+  const levelParam = searchParams.get("level") ?? "";
+  const releasedParam = searchParams.get("released") ?? "";
   const [selectedGenres, setSelectedGenres] = useState(
     genreParam ? genreParam.split(",") : []
   );
   const genreList = genreParam ? genreParam.split(",") : [];
+
+  // 👇 ANY filter present in URL?
+  const hasActiveFilters =
+    !!genreParam ||
+    !!releasedParam ||
+    (!!keywordName && keywordName !== "all") ||
+    !!countryParam ||
+    !!languageName ||
+    !!levelParam;
 
   const [limit, setLimit] = useState(limitParam);
   const [page, setPage] = useState(pageParam);
@@ -334,7 +346,9 @@ export default function BrowserInner() {
         setMaxYear(
           JSON.parse(findSetting("browse.year_slider_max")?.value ?? 0)
         );
-        console.log(JSON.parse(findSetting("browse.year_slider_max")?.value ?? 0))
+        console.log(
+          JSON.parse(findSetting("browse.year_slider_max")?.value ?? 0)
+        );
         setLoading(false);
       }
     } catch (error) {
@@ -432,7 +446,7 @@ export default function BrowserInner() {
               className="text-sm block appearance-none w-full border border-gray-500 bg-gray-800 text-white  py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:ring-2 "
             >
               <option>Select Country</option>
-              {masterContry.map((row : TagType) => (
+              {masterContry.map((row: TagType) => (
                 <option key={row._id} value={row._id}>
                   {row.display_name}
                 </option>
@@ -494,21 +508,22 @@ export default function BrowserInner() {
             </div>
           </div>
         </div>
-
-        <div>
-          <button
-            onClick={clearAllFilters}
-            className="cursor-pointer w-full mt-4 rounded-full bg-red-500 px-6 py-3 text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20"
-          >
-            Reset Filter
-          </button>
-        </div>
+        {hasActiveFilters && (
+          <div>
+            <button
+              onClick={clearAllFilters}
+              className="cursor-pointer w-full mt-4 rounded-full bg-red-500 px-6 py-3 text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20"
+            >
+              Reset Filter
+            </button>
+          </div>
+        )}
       </div>
       <div className="w-full  lg:w-4/5 px-2 py-2 ">
         <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
           <div className="flex gap-4 items-center ">
             <h1 className="text-3xl text-white">TV Topics</h1>
-            {selectedGenres.length > 0 && (
+            {hasActiveFilters && (
               <Button
                 onClick={clearAllFilters}
                 className="flex px-3 py-1.5  text-sm rounded-full bg-gray-700 text-gray-400 items-center cursor-pointer"
@@ -537,42 +552,44 @@ export default function BrowserInner() {
                 </div>
               ))}
             </div>
-            <div className="mt-10 flex justify-between items-center">
-              <button
-                className={`flex items-center gap-2 px-5 py-2 rounded-full transition ${
-                  parseInt(page as string) <= 1
-                    ? "bg-gray-500 text-gray-300 cursor-not-allowed"
-                    : "bg-red-500 text-white hover:bg-red-600 cursor-pointer"
-                }`}
-                onClick={() => handlePreviousPage()}
-                disabled={parseInt(page as string) <= 1}
-              >
-                <ChevronDoubleLeftIcon className="w-5 h-5" />
-                Previous
-              </button>
+            {title.length > 9 && (
+              <div className="mt-10 flex justify-between items-center">
+                <button
+                  className={`flex items-center gap-2 px-5 py-2 rounded-full transition ${
+                    parseInt(page as string) <= 1
+                      ? "bg-gray-500 text-gray-300 cursor-not-allowed"
+                      : "bg-red-500 text-white hover:bg-red-600 cursor-pointer"
+                  }`}
+                  onClick={() => handlePreviousPage()}
+                  disabled={parseInt(page as string) <= 1}
+                >
+                  <ChevronDoubleLeftIcon className="w-5 h-5" />
+                  Previous
+                </button>
 
-              <div className="text-center">
-                <div className="text-white text-sm">
-                  Page {page} of {totalPages}
+                <div className="text-center">
+                  <div className="text-white text-sm">
+                    Page {page} of {totalPages}
+                  </div>
+                  <div className="text-gray-400 text-xs mt-1">
+                    Showing {title.length} of {totalItems} results
+                  </div>
                 </div>
-                <div className="text-gray-400 text-xs mt-1">
-                  Showing {title.length} of {totalItems} results
-                </div>
+
+                <button
+                  className={`flex items-center gap-2 px-5 py-2 rounded-full transition ${
+                    parseInt(page as string) >= totalPages
+                      ? "bg-gray-500 text-gray-300 cursor-not-allowed"
+                      : "bg-red-500 text-white hover:bg-red-600 cursor-pointer"
+                  }`}
+                  onClick={() => handleNextPage()}
+                  disabled={parseInt(page as string) >= totalPages}
+                >
+                  Next Page
+                  <ChevronDoubleRightIcon className="w-5 h-5" />
+                </button>
               </div>
-
-              <button
-                className={`flex items-center gap-2 px-5 py-2 rounded-full transition ${
-                  parseInt(page as string) >= totalPages
-                    ? "bg-gray-500 text-gray-300 cursor-not-allowed"
-                    : "bg-red-500 text-white hover:bg-red-600 cursor-pointer"
-                }`}
-                onClick={() => handleNextPage()}
-                disabled={parseInt(page as string) >= totalPages}
-              >
-                Next Page
-                <ChevronDoubleRightIcon className="w-5 h-5" />
-              </button>
-            </div>
+            )}
           </>
         ) : (
           <div className="flex flex-col items-center justify-center p-6 text-gray-400  h-100 w-full">

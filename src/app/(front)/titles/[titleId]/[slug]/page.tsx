@@ -254,30 +254,32 @@ export default function TitleDetailPage() {
                 <p className="text-gray-400">{titleDetails.description}</p>
               </div>
 
-              <div className="border-t border-b border-[#37454D] py-3 mr-5">
-                <h2 className="text-white">About Speaker</h2>
+              {titleDetails.credit.length > 0 && (
+                <div className="border-t border-b border-[#37454D] py-3 mr-5">
+                  <h2 className="text-white">About Speaker</h2>
 
-                {titleDetails.credit.map((item, index) => (
-                  <div className="flex gap-3 py-2 items-center" key={index}>
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_WEBSITE}/${item.person_id?.poster}`}
-                      alt="poster"
-                      width={800} // You can adjust this
-                      height={500} // Adjust as needed for layout
-                      className="w-15 h-15 rounded-full"
-                    />
+                  {titleDetails.credit.map((item, index) => (
+                    <div className="flex gap-3 py-2 items-center" key={index}>
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_WEBSITE}/${item.person_id?.poster}`}
+                        alt="poster"
+                        width={800} // You can adjust this
+                        height={500} // Adjust as needed for layout
+                        className="w-15 h-15 rounded-full"
+                      />
 
-                    <div className="items-center justify-center">
-                      <p className="text-white text-sm mb-2">
-                        {item.person_id.name}
-                      </p>
-                      <p className="text-gray-400 text-xs capitalize">
-                        {item.job}
-                      </p>
+                      <div className="items-center justify-center">
+                        <p className="text-white text-sm mb-2">
+                          {item.person_id.name}
+                        </p>
+                        <p className="text-gray-400 text-xs capitalize">
+                          {item.job}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
               <div className="py-4">
                 <h2 className="text-white">Related Tags</h2>
                 <div className="flex flex-wrap py-2 gap-3">
