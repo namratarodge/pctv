@@ -4,8 +4,10 @@ import GoogleLoginButton from "@/components/auth/GoogleLoginButton";
 import { GoogleUser } from "@/utils/googleOAuth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
+
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -39,7 +41,7 @@ export default function Login() {
       if (data.user.userType === "admin") {
         window.location.href = "/admin";
       } else {
-        window.location.href = "/";
+        window.location.href = "/home";
       }
     } catch (error) {
       console.log(error);
@@ -97,15 +99,15 @@ export default function Login() {
     toast.error(error);
   };
 
-  useEffect(() => {
-    // ✅ Ensure this runs only on the client
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("token");
-      if (token) {
-        router.push("/account");
-      }
-    }
-  }, [router]);
+  // useEffect(() => {
+  //   // ✅ Ensure this runs only on the client
+  //   if (typeof window !== "undefined") {
+  //     const token = localStorage.getItem("token");
+  //     if (token) {
+  //       router.push("/account");
+  //     }
+  //   }
+  // }, [router]);
 
   return (
     <>

@@ -9,6 +9,8 @@ import { usePathname } from "next/navigation";
 import Script from "next/script";
 import { ToastContainer } from "react-toastify";
 
+
+
 export default function FrontLayout({
   children,
 }: Readonly<{
