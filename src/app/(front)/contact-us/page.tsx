@@ -2,8 +2,7 @@
 
 import {
   BuildingOffice2Icon,
-  EnvelopeIcon,
-  PhoneIcon,
+  EnvelopeIcon
 } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useState } from "react";
@@ -109,12 +108,15 @@ export default function ContactUs() {
                   />
                 </dt>
                 <dd>
-                  545 Mavis Island
-                  <br />
-                  Chicago, IL 99191
+                  Projcon Group Limited <br />
+                  Suite G02, Rourke House <br />
+                  Watermans Business Park, <br />
+                  The Causeway <br />
+                  Staines-upon-Thames, TW18 3BA <br />
+                  United Kingdom <br />
                 </dd>
               </div>
-              <div className="flex gap-x-4">
+              {/* <div className="flex gap-x-4">
                 <dt className="flex-none">
                   <span className="sr-only">Telephone</span>
                   <PhoneIcon
@@ -130,7 +132,7 @@ export default function ContactUs() {
                     +1 (555) 234-5678
                   </a>
                 </dd>
-              </div>
+              </div> */}
               <div className="flex gap-x-4">
                 <dt className="flex-none">
                   <span className="sr-only">Email</span>
@@ -141,10 +143,10 @@ export default function ContactUs() {
                 </dt>
                 <dd>
                   <a
-                    href="mailto:hello@example.com"
+                    href="mailto:pctv@projectcontrolstv.com"
                     className="hover:text-gray-900"
                   >
-                    hello@example.com
+                    pctv@projectcontrolstv.com
                   </a>
                 </dd>
               </div>
@@ -169,7 +171,7 @@ export default function ContactUs() {
                     id="full_name"
                     name="full_name"
                     type="text"
-                    value={formData.full_name ?? ''}
+                    value={formData.full_name ?? ""}
                     onChange={handleChange}
                     required
                     className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-600"
@@ -188,7 +190,7 @@ export default function ContactUs() {
                     id="email"
                     name="email"
                     type="email"
-                    value={formData.email ?? ''}
+                    value={formData.email ?? ""}
                     onChange={handleChange}
                     required
                     className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-600"
@@ -207,7 +209,7 @@ export default function ContactUs() {
                     id="message"
                     name="message"
                     rows={4}
-                    value={formData.message ?? ''}
+                    value={formData.message ?? ""}
                     onChange={handleChange}
                     required
                     className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-600"
@@ -219,7 +221,7 @@ export default function ContactUs() {
               <button
                 type="submit"
                 disabled={loading}
-                className="rounded-md bg-red-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-500 disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                className="rounded-md bg-red-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-red-500 disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
               >
                 {loading ? "Sending..." : "Send message"}
               </button>
