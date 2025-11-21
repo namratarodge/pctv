@@ -31,41 +31,41 @@ export const SubscriptionsColumn: {
   label: string;
   render?: (row: typeOfSubscriptions) => React.ReactNode;
 }[] = [
-    {
-      key: "user_id",
-      label: "User Info",
-      render: (row) => (
-        <div className="flex items-center space-x-4">
-          <UserAvatar
-            rounded={true}
-            poster={row.user_id?.avatar}
-            name={row.user_id?.email}
-          />
-          <div>
-            <span className="flex flex-col text-xs">
-              {row.user_id?.first_name} {row.user_id?.last_name}{" "}
-            </span>
-            <span className="text-xs">{row.user_id?.email} </span>
-          </div>
-        </div>
-      ),
-    },
-    {
-      key: "plan_id",
-      label: "Plan Name",
-      render: (row) => (
+  {
+    key: "user_id",
+    label: "User Info",
+    render: (row) => (
+      <div className="flex items-center space-x-4">
+        <UserAvatar
+          rounded={true}
+          poster={row.user_id?.avatar}
+          name={row.user_id?.email}
+        />
         <div>
-          <div className="font-semibold">{row.plan_id?.name}</div>
-          <small>
-            {row.plan_id?.currency} {row.plan_id?.amount}
-          </small>
+          <span className="flex flex-col text-xs">
+            {row.user_id?.first_name} {row.user_id?.last_name}{" "}
+          </span>
+          <span className="text-xs">{row.user_id?.email} </span>
         </div>
-      ),
-    },
-    { key: "gateway_name", label: "Gateway Name" },
-    { key: "renews_at", label: "Start At" },
-    { key: "ends_at", label: "Ends At" },
-  ];
+      </div>
+    ),
+  },
+  {
+    key: "plan_id",
+    label: "Plan Name",
+    render: (row) => (
+      <div>
+        <div className="font-semibold">{row.plan_id?.name}</div>
+        <small>
+          {row.plan_id?.currency} {row.plan_id?.amount}
+        </small>
+      </div>
+    ),
+  },
+  { key: "gateway_name", label: "Gateway Name" },
+  { key: "renews_at", label: "Start At" },
+  { key: "ends_at", label: "Ends At" },
+];
 
 // Crew Column
 type typeOfCrew = {
@@ -82,19 +82,19 @@ export const CrewColumn: {
   label: string;
   render?: (row: typeOfCrew) => React.ReactNode;
 }[] = [
-    {
-      key: "person_id",
-      label: "Name",
-      render: (row) => (
-        <div className="flex items-center space-x-2">
-          <UserAvatar poster={row.person_id?.poster} name={row.person_id?.name} />
-          <span className="flex flex-col">{row.person_id?.name} </span>
-        </div>
-      ),
-    },
-    { key: "job", label: "Job" },
-    // { key: "department", label: "Department" },
-  ];
+  {
+    key: "person_id",
+    label: "Name",
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        <UserAvatar poster={row.person_id?.poster} name={row.person_id?.name} />
+        <span className="flex flex-col">{row.person_id?.name} </span>
+      </div>
+    ),
+  },
+  { key: "job", label: "Job" },
+  // { key: "department", label: "Department" },
+];
 
 // Cast Column
 type typeOfCast = {
@@ -110,18 +110,18 @@ export const CastColumn: {
   label: string;
   render?: (row: typeOfCast) => React.ReactNode;
 }[] = [
-    {
-      key: "person_id",
-      label: "Name",
-      render: (row) => (
-        <div className="flex items-center space-x-2">
-          <UserAvatar poster={row.person_id?.poster} name={row.person_id?.name} />
-          <span className="flex flex-col">{row.person_id?.name} </span>
-        </div>
-      ),
-    },
-    { key: "character", label: "Character" },
-  ];
+  {
+    key: "person_id",
+    label: "Name",
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        <UserAvatar poster={row.person_id?.poster} name={row.person_id?.name} />
+        <span className="flex flex-col">{row.person_id?.name} </span>
+      </div>
+    ),
+  },
+  { key: "character", label: "Character" },
+];
 
 // Plans Column
 type typeOfCategories = {
@@ -133,9 +133,9 @@ export const CategoriesColumn: {
   key: keyof typeOfCategories;
   label: string;
 }[] = [
-    { key: "name", label: "Name" },
-    { key: "display_name", label: "Display Name" },
-  ];
+  { key: "name", label: "Name" },
+  { key: "display_name", label: "Display Name" },
+];
 
 // Plans Column
 type typeOfPlans = {
@@ -153,22 +153,22 @@ export const planColumn: {
   label: string;
   render?: (row: typeOfPlans) => React.ReactNode;
 }[] = [
-    { key: "name", label: "Name" },
-    {
-      key: "amount",
-      label: "Amount",
-      render: (row) => (
-        <div>
-          <span>{row.currency_symbol}</span>
-          <span>{row.amount}</span>
-        </div>
-      ),
-    },
-    { key: "currency", label: "Currency" },
-    { key: "interval", label: "Interval" },
-    { key: "position", label: "position" },
-    { key: "updated_at", label: "Last Updated" },
-  ];
+  { key: "name", label: "Name" },
+  {
+    key: "amount",
+    label: "Amount",
+    render: (row) => (
+      <div>
+        <span>{row.currency_symbol}</span>
+        <span>{row.amount}</span>
+      </div>
+    ),
+  },
+  { key: "currency", label: "Currency" },
+  { key: "interval", label: "Interval" },
+  { key: "position", label: "position" },
+  { key: "updated_at", label: "Last Updated" },
+];
 
 // Additional Tag Column
 type AdditionalTagItem = {
@@ -185,24 +185,24 @@ export const AdditionalTagColumn: {
   label: string;
   render?: (row: AdditionalTagItem) => React.ReactNode;
 }[] = [
-    {
-      key: "name",
-      label: "Name",
-      render: (row) => (
-        <div className="flex items-center space-x-2">
-          <UserAvatar poster={row.poster} name={row.name} />
+  {
+    key: "name",
+    label: "Name",
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        <UserAvatar poster={row.poster} name={row.name} />
 
-          <span title={row.name} className="line-clamp-2">
-            {truncateToWords(row.name, 4)}
-          </span>
-        </div>
-      ),
-    },
-    { key: "birth_place", label: "Birthday" },
-    { key: "views", label: "Local View" },
-    { key: "popularity", label: "Popularity" },
-    { key: "updated_at", label: "Last Updated" },
-  ];
+        <span title={row.name} className="line-clamp-2">
+          {truncateToWords(row.name, 4)}
+        </span>
+      </div>
+    ),
+  },
+  { key: "birth_place", label: "Birthday" },
+  { key: "views", label: "Local View" },
+  { key: "popularity", label: "Popularity" },
+  { key: "updated_at", label: "Last Updated" },
+];
 
 // Title  Column
 type TitleType = {
@@ -221,24 +221,24 @@ export const TitleColumn: {
   label: string;
   render?: (row: TitleType) => React.ReactNode;
 }[] = [
-    {
-      key: "name",
-      label: "Name",
-      render: (row) => (
-        <div className="flex items-center space-x-2">
-          <UserAvatar poster={row.poster} name={row.name} />
+  {
+    key: "name",
+    label: "Name",
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        <UserAvatar poster={row.poster} name={row.name} />
 
-          <span title={row.name} className="line-clamp-2">
-            {truncateToWords(row.name, 7)}...{" "}
-          </span>
-        </div>
-      ),
-    },
-    { key: "type", label: "Type", render: () => <div>TV Topic</div> },
-    { key: "release_date", label: "Release Date" },
-    { key: "views", label: "Local View" },
-    { key: "popularity", label: "Popularity" },
-  ];
+        <span title={row.name} className="line-clamp-2">
+          {truncateToWords(row.name, 7)}...{" "}
+        </span>
+      </div>
+    ),
+  },
+  { key: "type", label: "Type", render: () => <div>TV Topic</div> },
+  { key: "release_date", label: "Release Date" },
+  { key: "views", label: "Local View" },
+  { key: "popularity", label: "Popularity" },
+];
 
 // People  Column
 type PeopleItem = {
@@ -256,27 +256,27 @@ export const PeopleColumn: {
   label: string;
   render?: (row: PeopleItem) => React.ReactNode;
 }[] = [
-    {
-      key: "name",
-      label: "Name",
-      render: (row) => (
-        <div className="flex items-center space-x-2">
-          <UserAvatar poster={row.poster} name={row.name} />
-          <span className="flex flex-col text-sm">{row.name}</span>
-        </div>
-      ),
-    },
-    {
-      key: "birth_date",
-      label: "Birth Date",
-      render: (row) => (
-        <div>{row.birth_date ? formatDate(row.birth_date) : "-"}</div>
-      ),
-    },
-    { key: "views", label: "Local View" },
-    { key: "popularity", label: "Popularity" },
-    { key: "updated_at", label: "Last Update" },
-  ];
+  {
+    key: "name",
+    label: "Name",
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        <UserAvatar poster={row.poster} name={row.name} />
+        <span className="flex flex-col text-sm">{row.name}</span>
+      </div>
+    ),
+  },
+  {
+    key: "birth_date",
+    label: "Birth Date",
+    render: (row) => (
+      <div>{row.birth_date ? formatDate(row.birth_date) : "-"}</div>
+    ),
+  },
+  { key: "views", label: "Local View" },
+  { key: "popularity", label: "Popularity" },
+  { key: "updated_at", label: "Last Update" },
+];
 
 // Video  Column
 type VideoItem = {
@@ -299,59 +299,59 @@ export const VideoColumn: {
   label: string;
   render?: (row: VideoItem) => React.ReactNode;
 }[] = [
-    { key: "name", label: "Name" },
-    {
-      key: "title_id",
-      label: "Title",
-      render: (row) => (
-        <div className="flex items-center space-x-4">
-          <UserAvatar
-            poster={row.title_id?.poster}
-            rounded
-            name={row.title_id?.name}
-          />
-          <div>
-            <span title={row.title_id?.name} className="flex flex-col text-xs">
-              {truncateToWords(row.title_id?.name, 6)}
-            </span>
-          </div>
+  { key: "name", label: "Name" },
+  {
+    key: "title_id",
+    label: "Title",
+    render: (row) => (
+      <div className="flex items-center space-x-4">
+        <UserAvatar
+          poster={row.title_id?.poster}
+          rounded
+          name={row.title_id?.name}
+        />
+        <div>
+          <span title={row.title_id?.name} className="flex flex-col text-xs">
+            {truncateToWords(row.title_id?.name, 6)}
+          </span>
         </div>
-      ),
-    },
-    {
-      key: "type",
-      label: "Type",
+      </div>
+    ),
+  },
+  {
+    key: "type",
+    label: "Type",
 
-      render: (row) => <div className=" capitalize">{row.type}</div>,
-    },
-    {
-      key: "category",
-      label: "Category",
-      render: (row) => <div className=" capitalize">{row.category}</div>,
-    },
-    {
-      key: "approved",
-      label: "Approved",
+    render: (row) => <div className=" capitalize">{row.type}</div>,
+  },
+  {
+    key: "category",
+    label: "Category",
+    render: (row) => <div className=" capitalize">{row.category}</div>,
+  },
+  {
+    key: "approved",
+    label: "Approved",
 
-      render: (row) => (
-        <div className=" flex">
-          {row.approved ? (
-            <CheckCircleIcon className="w-5 h-5 text-green-500" />
-          ) : (
-            "No"
-          )}
-        </div>
-      ),
-    },
-    // {
-    //   key: "plays",
-    //   label: "Plays",
-    //   render: (row) => <span>{row.plays ? row.plays : "-"}</span>,
-    // },
-    // { key: "quality", label: "Quality" },
-    // { key: "score", label: "Score" },
-    // { key: "reports", label: "Reports" },
-  ];
+    render: (row) => (
+      <div className=" flex">
+        {row.approved ? (
+          <CheckCircleIcon className="w-5 h-5 text-green-500" />
+        ) : (
+          "No"
+        )}
+      </div>
+    ),
+  },
+  // {
+  //   key: "plays",
+  //   label: "Plays",
+  //   render: (row) => <span>{row.plays ? row.plays : "-"}</span>,
+  // },
+  // { key: "quality", label: "Quality" },
+  // { key: "score", label: "Score" },
+  // { key: "reports", label: "Reports" },
+];
 
 // List Column
 type typeOfList = {
@@ -374,31 +374,31 @@ export const listColumn: {
   label: string;
   render?: (row: typeOfList) => React.ReactNode;
 }[] = [
-    { key: "name", label: "Name" },
-    {
-      key: "owner",
-      label: "Owner",
-      render: (row) => (
-        <div className="flex items-center space-x-2">
-          <UserAvatar
-            poster={row.user_id?.avatar}
-            name={row.user_id?.first_name}
-            rounded={true}
-          />
-          <span className="flex flex-col text-sm">
-            {row.user_id?.first_name} {row.user_id?.last_name}
-          </span>
-        </div>
-      ),
-    },
-    { key: "item_count", label: "Item Count" },
-    {
-      key: "public",
-      label: "Public",
-      render: (row) => <div>{row.public == 1 ? "True" : "False"}</div>,
-    },
-    { key: "updated_at", label: "Last Updated" },
-  ];
+  { key: "name", label: "Name" },
+  {
+    key: "owner",
+    label: "Owner",
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        <UserAvatar
+          poster={row.user_id?.avatar}
+          name={row.user_id?.first_name}
+          rounded={true}
+        />
+        <span className="flex flex-col text-sm">
+          {row.user_id?.first_name} {row.user_id?.last_name}
+        </span>
+      </div>
+    ),
+  },
+  { key: "item_count", label: "Item Count" },
+  {
+    key: "public",
+    label: "Public",
+    render: (row) => <div>{row.public == 1 ? "True" : "False"}</div>,
+  },
+  { key: "updated_at", label: "Last Updated" },
+];
 
 // tags Column
 type typeOTags = {
@@ -423,17 +423,17 @@ export const tagsColumn: {
   label: string;
   render?: (row: typeOTags) => React.ReactNode;
 }[] = [
-    { key: "name", label: "Name" },
-    {
-      key: "type",
-      label: "Type",
-      render: (row) => (
-        <div className="flex items-center space-x-2">{replaceName(row.type)}</div>
-      ),
-    },
-    { key: "display_name", label: "Display Name" },
-    { key: "updated_at", label: "Last Updated" },
-  ];
+  { key: "name", label: "Name" },
+  {
+    key: "type",
+    label: "Type",
+    render: (row) => (
+      <div className="flex items-center space-x-2">{replaceName(row.type)}</div>
+    ),
+  },
+  { key: "display_name", label: "Display Name" },
+  { key: "updated_at", label: "Last Updated" },
+];
 
 // users Column
 type typeOfUsers = {
@@ -447,6 +447,7 @@ type typeOfUsers = {
   google_id: string;
   username: string;
   created_at: string;
+  updated_at: string;
   avatar?: string;
   profile_picture?: string;
 };
@@ -456,29 +457,43 @@ export const usersColumn: {
   label: string;
   render?: (row: typeOfUsers) => React.ReactNode;
 }[] = [
-    {
-      key: "user",
-      label: "User",
-      render: (row) => (
-        <div className="flex items-center space-x-2">
-          {/* <div>{row.avatar}</div> */}
-          <UserAvatar poster={row.avatar} name={row.email} rounded />
-          <span className="flex flex-col ">
-            <span className="capitalize">{row.first_name} {row.last_name}</span>
-            <small>{row.email}</small>
+  {
+    key: "user",
+    label: "User",
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        {/* <div>{row.avatar}</div> */}
+        <UserAvatar poster={row.avatar} name={row.email} rounded />
+        <span className="flex flex-col ">
+          <span className="capitalize">
+            {row.first_name} {row.last_name}
           </span>
-        </div>  
-      ),
-    },
-    { key: "userType", label: "Role" },
-    { key: "google_id", label: "Google", render: (row) => <div>{row.google_id && 'Yes'}</div> },
-    {
-      key: "first_name",
-      label: "Full Name",
-      render: (row) => <div className="capitalize">{row.first_name + " " + row.last_name}</div>,
-    },
-    { key: "created_at", label: "Created Updated" },
-  ];
+          <small>{row.email}</small>
+        </span>
+      </div>
+    ),
+  },
+  { key: "userType", label: "Role" },
+  {
+    key: "google_id",
+    label: "Google",
+    render: (row) => <div>{row.google_id && "Yes"}</div>,
+  },
+  {
+    key: "first_name",
+    label: "Full Name",
+    render: (row) => (
+      <div className="capitalize">{row.first_name + " " + row.last_name}</div>
+    ),
+  },
+  {
+    key: "updated_at",
+    label: "Created Updated",
+    render: (row) => (
+      <div className="capitalize">{ formatDate(row.updated_at)}</div>
+    ),
+  },
+];
 
 // pages Column
 export type typeOfPages = {
@@ -500,22 +515,22 @@ export const pagesColumn: {
   label: string;
   render?: (row: typeOfPages) => React.ReactNode;
 }[] = [
-    { key: "slug", label: "Slug" },
-    {
-      key: "user_id",
-      label: "Owner",
-      render: (row) => (
-        <div className="flex items-center space-x-2">
-          <span className="flex flex-col text-md">
-            {row?.user_id?.first_name} {row?.user_id?.last_name}
-            <small className="text-gray-400"> {row?.user_id?.email}</small>
-          </span>
-        </div>
-      ),
-    },
-    { key: "type", label: "Type" },
-    { key: "updated_at", label: "Last Updated" },
-  ];
+  { key: "slug", label: "Slug" },
+  {
+    key: "user_id",
+    label: "Owner",
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        <span className="flex flex-col text-md">
+          {row?.user_id?.first_name} {row?.user_id?.last_name}
+          <small className="text-gray-400"> {row?.user_id?.email}</small>
+        </span>
+      </div>
+    ),
+  },
+  { key: "type", label: "Type" },
+  { key: "updated_at", label: "Last Updated" },
+];
 
 // review Column
 type reviewOfPages = {
@@ -546,53 +561,53 @@ export const reviewColumn: {
   label: string;
   render?: (row: reviewOfPages) => React.ReactNode;
 }[] = [
-    {
-      key: "score",
-      label: "Score",
-      render: (row) => (
-        <div className="flex items-center flex-col space-x-2">
-          <StarIcon className="h-5 w-5 text-yellow-400" />
-          {row.score} / 5
-        </div>
-      ),
-    },
+  {
+    key: "score",
+    label: "Score",
+    render: (row) => (
+      <div className="flex items-center flex-col space-x-2">
+        <StarIcon className="h-5 w-5 text-yellow-400" />
+        {row.score} / 5
+      </div>
+    ),
+  },
 
-    {
-      key: "user_id",
-      label: "Owner",
+  {
+    key: "user_id",
+    label: "Owner",
 
-      render: (row) => (
-        <div className="flex items-center space-x-2">
-          <UserAvatar
-            rounded={true}
-            poster={row.user_id?.avatar}
-            name={row.user_id?.email}
-          />
-          <span className="flex flex-col text-md">
-            {row?.user_id?.first_name} {row?.user_id?.last_name}
-            <small className="text-gray-400"> {row?.user_id?.email}</small>
-          </span>
-        </div>
-      ),
-    },
-    {
-      key: "reviewable_id",
-      label: "Reviewable",
+    render: (row) => (
+      <div className="flex items-center space-x-2">
+        <UserAvatar
+          rounded={true}
+          poster={row.user_id?.avatar}
+          name={row.user_id?.email}
+        />
+        <span className="flex flex-col text-md">
+          {row?.user_id?.first_name} {row?.user_id?.last_name}
+          <small className="text-gray-400"> {row?.user_id?.email}</small>
+        </span>
+      </div>
+    ),
+  },
+  {
+    key: "reviewable_id",
+    label: "Reviewable",
 
-      render: (row) => (
-        <div className="flex space-x-3 items-center">
-          <UserAvatar
-            poster={row.reviewable_id?.backdrop}
-            name={row.reviewable_id?.name}
-          />
-          <p className="line-clamp-2 flex ">
-            {truncateToWords(row.reviewable_id?.name, 5)}...{" "}
-          </p>
-        </div>
-      ),
-    },
-    { key: "updated_at", label: "Last Updated" },
-  ];
+    render: (row) => (
+      <div className="flex space-x-3 items-center">
+        <UserAvatar
+          poster={row.reviewable_id?.backdrop}
+          name={row.reviewable_id?.name}
+        />
+        <p className="line-clamp-2 flex ">
+          {truncateToWords(row.reviewable_id?.name, 5)}...{" "}
+        </p>
+      </div>
+    ),
+  },
+  { key: "updated_at", label: "Last Updated" },
+];
 
 // review Column title
 type reviewOfTitles = {
@@ -607,26 +622,26 @@ export const reviewTitleColumn: {
   label: string;
   render?: (row: reviewOfTitles) => React.ReactNode;
 }[] = [
-    {
-      key: "score",
-      label: "Score",
-      render: (row) => (
-        <div className="flex items-center flex-col space-x-2">
-          <StarIcon className="h-5 w-5 text-yellow-400" />
-          {row.score} / 10
-        </div>
-      ),
-    },
-    {
-      key: "reviewable_id",
-      label: "Reviewable",
+  {
+    key: "score",
+    label: "Score",
+    render: (row) => (
+      <div className="flex items-center flex-col space-x-2">
+        <StarIcon className="h-5 w-5 text-yellow-400" />
+        {row.score} / 10
+      </div>
+    ),
+  },
+  {
+    key: "reviewable_id",
+    label: "Reviewable",
 
-      render: () => (
-        <div className="flex items-center space-x-2">
-          <span className="flex flex-col">Project communications</span>
-        </div>
-      ),
-    },
-    { key: "reviewable_type", label: "Type" },
-    { key: "updated_at", label: "Last Updated" },
-  ];
+    render: () => (
+      <div className="flex items-center space-x-2">
+        <span className="flex flex-col">Project communications</span>
+      </div>
+    ),
+  },
+  { key: "reviewable_type", label: "Type" },
+  { key: "updated_at", label: "Last Updated" },
+];
