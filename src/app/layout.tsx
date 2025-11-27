@@ -1,8 +1,14 @@
-"use client";
-
 import "@/app/globals.css";
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import { GOOGLE_CLIENT_ID } from '@/utils/googleOAuth';
+import GoogleAuthProvider from "@/components/providers/GoogleAuthProvider";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s | Project Control TV",
+    default: "Project Control TV",
+  },
+  description: "Project Control TV - Exclusive Project Controls Content",
+};
 
 export default function RootLayout({
   children,
@@ -12,9 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+        <GoogleAuthProvider>
           {children}
-        </GoogleOAuthProvider>
+        </GoogleAuthProvider>
       </body>
     </html>
   );
