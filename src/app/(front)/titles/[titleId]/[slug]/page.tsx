@@ -186,14 +186,41 @@ export default function TitleDetailPage() {
 
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent  rounded-md" />
 
-                    <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="absolute inset-0 flex items-center justify-center ">
                       {user?.subscription?.status === "active" ? (
-                        <div
-                          className="bg-white/70 hover:bg-white p-4 rounded-full shadow-lg transition-all duration-300 cursor-pointer"
-                          onClick={() => setPlay(titleDetails?.videos[0])}
+                        <button
+                          onClick={() =>
+                            setPlay(titleDetails?.videos?.[0] || null)
+                          }
+                          aria-label="Play video"
+                          className="group relative cursor-pointer transition transform hover:scale-105 active:scale-95"
                         >
-                          <PlayCircleIcon className="w-12 h-12 text-red-600" />
-                        </div>
+                          {/* Outer soft glow */}
+                          <span className="absolute inset-0 rounded-full bg-white/20 blur-xl opacity-0 group-hover:opacity-100 transition duration-500" />
+
+                          {/* Pulse ring */}
+                          <span className="absolute inset-0 rounded-full bg-white/40 animate-ping opacity-0 group-hover:opacity-75" />
+
+                          {/* Main circle */}
+                          <div className="relative z-10 w-20 h-20 rounded-full bg-white text-gray-800 shadow-2xl flex items-center justify-center overflow-hidden">
+                            {/* Shine sweep */}
+                            <span
+                              className="absolute inset-0 translate-x-[-150%] group-hover:translate-x-[150%] 
+      transition-transform duration-[1200ms] ease-out 
+      bg-gradient-to-r from-transparent via-white/40 to-transparent"
+                            />
+
+                            {/* Play icon */}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="currentColor"
+                              viewBox="0 0 24 24"
+                              className="w-10 h-10 translate-x-[2px] text-gray-600"
+                            >
+                              <path d="M8 5.14v13.72L19 12 8 5.14z" />
+                            </svg>
+                          </div>
+                        </button>
                       ) : (
                         <div className="flex flex-col items-center justify-center p-6  rounded-lg shadow">
                           <p className="text-lg font-semibold text-gray-300 mb-4">

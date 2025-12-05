@@ -215,7 +215,7 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className=" mx-auto max-w-11/12">
+      <div className=" mx-auto max-w-11/12 flex flex-col gap-8">
         <SliderNumber title="PCTv Regions" />
         {userVideo.length > 0 && (
           <Slider title="Continue Watching" slides={userVideo} />
