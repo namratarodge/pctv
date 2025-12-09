@@ -82,10 +82,10 @@ export default function Pricing({ step, title, description }: PricingProps) {
   return (
     <div className="px-6 py-12 sm:rounded-lg sm:px-12 space-y-6">
       {step && <small className="text-sm font-extralight">{step}</small>}
-      <h2 className="mt-3 text-left text-5xl font-bold tracking-tight text-gray-800 w-2/3">
+      <h2 className="mt-3 line-clamp-3 text-left text-5xl font-bold tracking-tight text-gray-800 w-2/3">
         {title}
       </h2>
-      {description && <p className="text-sm">{description}</p>}
+      {description && <p className="text-lg">{description}</p>}
 
       {loading ? (
         <Loading />
