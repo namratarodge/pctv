@@ -2,7 +2,6 @@ import { PlanCardProps } from "@/constants/Type";
 import axios from "axios";
 import { usePublicData } from "../context/PublicDataContext";
 
-
 export default function PlanCard({
   label,
   price,
@@ -46,6 +45,7 @@ export default function PlanCard({
       console.error("Subscription error", error);
     }
   };
+
   return (
     <div
       className={`relative rounded-xl w-full max-w-xs py-10 h-auto shadow-lg hover:bg-red-200 cursor-pointer ${

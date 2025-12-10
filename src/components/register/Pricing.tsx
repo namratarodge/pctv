@@ -68,7 +68,7 @@ export default function Pricing({ step, title, description }: PricingProps) {
     return {
       plan_id: plan._id,
       label: plan.name,
-      price: `${plan.currency_symbol}${plan.amount}`,
+      price: `US${plan.currency_symbol} ${plan.amount}`,
       type: plan.interval,
       interval_count: plan.interval_count,
       paypal_id: plan.paypal_id,
