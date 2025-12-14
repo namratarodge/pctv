@@ -31,7 +31,7 @@ export default function ChangePassword() {
     const token = localStorage.getItem("token");
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/changePassword`,
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/change-password`,
         payload,
         {
           headers: {
@@ -49,8 +49,25 @@ export default function ChangePassword() {
       } else {
         toast.error(responseNew.message);
       }
-    } catch (error) {
-      toast("Error during login:" + error);
+    } catch (err) {
+      /**
+       * Axios error handling (IMPORTANT)
+       * Priority:
+       * 1. API message
+       * 2. Network / timeout
+       * 3. Fallback
+       */
+      let message = "Something went wrong";
+
+      if (axios.isAxiosError(err)) {
+        message =
+          err.response?.data?.error ||
+          err.response?.data?.message ||
+          err.message;
+      }
+
+      toast.error(message);
+      console.error("Change password error:", err);
     }
   };
 

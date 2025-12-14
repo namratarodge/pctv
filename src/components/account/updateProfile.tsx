@@ -49,7 +49,7 @@ export default function UpdateProfile() {
     if (thumbnail) {
       formData.append("thumbnail", thumbnail);
     }
-    if(!previewUrl){
+    if (!previewUrl) {
       formData.append("remove_thumbnail", "true");
     }
     try {
@@ -84,7 +84,11 @@ export default function UpdateProfile() {
         country: user.country || "India",
       });
       if (user.avatar) {
-        setPreviewUrl(process.env.NEXT_PUBLIC_WEBSITE + "/" + user.avatar);
+        const avatarUrl = user.avatar.startsWith("http")
+          ? user.avatar
+          : `${process.env.NEXT_PUBLIC_WEBSITE}/${user.avatar}`;
+
+        setPreviewUrl(avatarUrl);
       }
     }
   }, [user, reset]);

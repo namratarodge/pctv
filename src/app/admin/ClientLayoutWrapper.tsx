@@ -1,10 +1,12 @@
 "use client";
 
+import { TopHeader } from "@/components/layout";
+import dynamic from "next/dynamic";
 import { useState } from "react";
-import dynamic from 'next/dynamic';
-import {  TopHeader } from "@/components/layout";
 
-const SideBar = dynamic(() => import('@/components/layout/SideBar'), { ssr: false });
+const SideBar = dynamic(() => import("@/components/layout/SideBar"), {
+  ssr: false,
+});
 
 export default function ClientLayoutWrapper({
   children,
