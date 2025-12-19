@@ -104,7 +104,7 @@ export default function Home() {
               <p className="mt-8 text-lg text-pretty text-white sm:text-xl/8">
                 Sign Up. Start Free. Stay in Control.
               </p>
-              <p className="mt-8 text-sm font-extralight text-white sm:text-sm">
+              <p className="mt-8 text-md font-extralight text-white sm:text-md">
                 Ready to watch? Sign up for a free trial and start watching
                 today.
               </p>
