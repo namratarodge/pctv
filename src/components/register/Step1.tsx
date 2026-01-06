@@ -4,7 +4,8 @@ import { UserSignUpFormData, userSignUpSchema } from "@/constants/Validation";
 import { GoogleUser } from "@/utils/googleOAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -13,6 +14,8 @@ export default function Step1() {
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<UserSignUpFormData>({
     resolver: zodResolver(userSignUpSchema),
@@ -21,6 +24,16 @@ export default function Step1() {
   // 🔒 reCAPTCHA state
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
   const recaptchaRef = useRef<ReCAPTCHA | null>(null);
+
+  const searchParams = useSearchParams();
+  const emailValue = watch("email");
+  // 📧 Pre-populate email from URL query parameter
+  useEffect(() => {
+    const emailFromUrl = searchParams.get("email");
+    if (emailFromUrl) {
+      setValue("email", decodeURIComponent(emailFromUrl));
+    }
+  }, [searchParams, setValue]);
 
   // ✅ Create or Update
   const onSubmit = async (data: UserSignUpFormData) => {
@@ -100,14 +113,14 @@ export default function Step1() {
   };
 
   return (
-    <div className="px-6 py-12 sm:rounded-lg sm:px-12">
+    <div className="px-6 py-12  sm:rounded-lg sm:px-12">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <small className="text-sm font-extralight">Step 1 OF 3</small>
-        <h2 className="mt-3 text-left text-5xl font-bold tracking-tight text-gray-800">
+        <small className="text-lg font-extralight">Step 1 OF 3</small>
+        <h2 className="mt-3 text-left text-5xl font-bold tracking-tight text-gray-800 leading-tight">
           Welcome to PCTV! <br />
           Create Your Digital Key
         </h2>
-        <p className="text-sm">
+        <p className="text-md">
           Set your email & password - light the fuse on your learning journey
         </p>
 
@@ -137,7 +150,9 @@ export default function Step1() {
               {...register("email")}
               placeholder="Your email"
               autoComplete="email"
-              className="block w-full rounded-full bg-white px-4 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-400 sm:text-sm/6"
+              className={`block w-full rounded-full px-4 py-2.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-red-400 sm:text-sm/6 ${
+                emailValue ? "bg-gray-100" : "bg-white"
+              }`}
             />
             {errors.email && (
               <p className="text-red-500 text-sm mt-2 px-2">
@@ -152,7 +167,7 @@ export default function Step1() {
                 {...register("first_name")}
                 placeholder="First Name"
                 autoComplete="given-name"
-                className="block w-full rounded-full bg-white px-4 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-400 sm:text-sm/6"
+                className="block w-full rounded-full bg-white px-4 py-2.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-red-400  placeholder:text-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-red-400 sm:text-sm/6"
               />
               {errors.first_name && (
                 <p className="text-red-500 text-sm mt-2 px-2">
@@ -166,7 +181,7 @@ export default function Step1() {
                 {...register("last_name")}
                 placeholder="Last Name"
                 autoComplete="family-name"
-                className="block w-full rounded-full bg-white px-4 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-400 sm:text-sm/6"
+                className="block w-full rounded-full bg-white px-4 py-2.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-red-400  placeholder:text-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-red-400 sm:text-sm/6"
               />
               {errors.last_name && (
                 <p className="text-red-500 text-sm mt-2 px-2">
@@ -182,7 +197,7 @@ export default function Step1() {
               {...register("phone")}
               placeholder="Contact Number"
               autoComplete="tel"
-              className="block w-full rounded-full bg-white px-4 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-400 sm:text-sm/6"
+              className="block w-full rounded-full bg-white px-4 py-2.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-red-400  placeholder:text-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-red-400 sm:text-sm/6"
             />
             {errors.phone && (
               <p className="text-red-500 text-sm mt-2 px-2">
@@ -197,7 +212,7 @@ export default function Step1() {
               {...register("password")}
               placeholder="Enter your password"
               autoComplete="new-password"
-              className="block w-full rounded-full bg-white px-4 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-400 sm:text-sm/6"
+              className="block w-full rounded-full bg-white px-4 py-2.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-red-400  placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-400 sm:text-sm/6"
             />
             {errors.password && (
               <p className="text-red-500 text-sm mt-2 px-2">
@@ -225,7 +240,7 @@ export default function Step1() {
           <button
             type="submit"
             disabled={!recaptchaToken || isSubmitting}
-            className="cursor-pointer flex w-30 justify-center rounded-full bg-[#f44336] px-3 py-2 text-sm/6 font-semibold text-white shadow-xs hover:bg-red-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="cursor-pointer flex w-40 justify-center rounded-full bg-[#f44336] px-3 py-2.5 text-sm/6  text-white shadow-xs hover:bg-red-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting ? "Submitting..." : "Get Started"}
           </button>

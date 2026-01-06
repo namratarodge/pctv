@@ -5,6 +5,7 @@ import { PlanFormValues, PricingProps } from "@/constants/Type";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { usePublicData } from "../context/PublicDataContext";
 import Loading from "../layout/Loading";
 
 
@@ -12,7 +13,7 @@ export default function Pricing({ step, title, description }: PricingProps) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // const { user } = usePublicData();
+  const { user } = usePublicData();
 
   const fetch = async () => {
     const token = localStorage.getItem("token");
@@ -72,8 +73,8 @@ export default function Pricing({ step, title, description }: PricingProps) {
       type: plan.interval,
       interval_count: plan.interval_count,
       paypal_id: plan.paypal_id,
-      // isHighlighted: plan._id === user.subscription?.plan_info._id,
-      isHighlighted: false,
+      isHighlighted: plan._id === user.subscription?.plan_info._id,
+      // isHighlighted: false,
       features: parsedFeatures.map((label) => ({ label })),
       onSelect: () => console.log(`${plan.name} selected`),
     };
