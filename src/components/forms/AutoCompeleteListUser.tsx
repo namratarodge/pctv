@@ -50,7 +50,7 @@ export default function AutoCompeleteListUser({
             "Content-Type": "application/json",
           },
           params: {
-            email: searchText,
+            name: searchText,
           },
         }
       );
