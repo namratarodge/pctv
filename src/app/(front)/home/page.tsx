@@ -31,8 +31,8 @@ const slides = [
   { _id: "4", slug: "", image: "/topvoice/Group4.png", name: "Group1" },
   { _id: "5", slug: "", image: "/topvoice/Group5.png", name: "Group1" },
   { _id: "6", slug: "", image: "/topvoice/Group6.png", name: "Group1" },
-  { _id: "7", slug: "", image: "/topvoice/Group7.png", name: "Group1" },
-  { _id: "8", slug: "", image: "/topvoice/Group8.png", name: "Group1" },
+  // { _id: "7", slug: "", image: "/topvoice/Group7.png", name: "Group1" },
+  // { _id: "8", slug: "", image: "/topvoice/Group8.png", name: "Group1" },
 ];
 export default function Home() {
   const [title, setTitle] = useState([]);

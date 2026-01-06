@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -25,32 +26,41 @@ type VoicesSliderProps = {
 };
 
 function Card({ slide, percentNum, hover }: any) {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <div
-      className={[
-        "relative w-full",
-        "rounded-xl overflow-hidden",
-        "shadow-[0_6px_24px_-8px_rgba(0,0,0,0.45)]",
-        "ring-1 ring-white/10",
-        "transition-transform duration-300 ease-out",
-        hover ? "group-hover:scale-[1.02]" : "",
-        "aspect-[16/9]",
-        "bg-neutral-800",
-      ].join(" ")}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="relative"
     >
-      {/* IMAGE */}
-      <Image
-        src={slide.image || "/default-image.jpg"}
-        alt={slide.name}
-        fill
-        className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
-        onError={(e) => {
-          (e.currentTarget as HTMLImageElement).src = "/default-image.jpg";
-        }}
-      />
 
-      {/* TITLE GRADIENT */}
-      {/* <div className="absolute inset-x-0 bottom-0">
+      
+      <div
+        className={[
+          "relative w-full",
+          "rounded-sm overflow-hidden",
+          "shadow-[0_6px_24px_-8px_rgba(0,0,0,0.45)]",
+          "ring-1 ring-white/10",
+          "transition-transform duration-300 ease-out",
+          hover ? "group-hover:scale-[1.02]" : "",
+          "aspect-[16/9]",
+          "bg-neutral-800",
+        ].join(" ")}
+      >
+        {/* IMAGE */}
+        <Image
+          src={slide.image || "/default-image.jpg"}
+          alt={slide.name}
+          fill
+          className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+          onError={(e) => {
+            (e.currentTarget as HTMLImageElement).src = "/default-image.jpg";
+          }}
+        />
+
+        {/* TITLE GRADIENT */}
+        {/* <div className="absolute inset-x-0 bottom-0">
         <div className="h-full bg-gradient-to-t to-transparent" />
         <div className="px-2 pb-2">
           <div className="text-[13px] font-semibold leading-tight line-clamp-2">
@@ -59,45 +69,20 @@ function Card({ slide, percentNum, hover }: any) {
         </div>
       </div> */}
 
-      {/* PROGRESS BAR */}
-      {percentNum > 0 && (
-        <div className="absolute left-0 right-0 bottom-0 h-1.5 bg-white/10">
-          <div
-            className="h-full bg-red-500"
-            style={{ width: `${Math.min(100, percentNum)}%` }}
-          />
-        </div>
-      )}
-
-      {/* HOVER OVERLAY ONLY IF CLICKABLE */}
-      {hover && (
-        <div
-          className={[
-            "absolute inset-0 bg-black/0 group-hover:bg-black/35",
-            "transition-all duration-300 flex items-center justify-center",
-          ].join(" ")}
-        >
-          {/* Play button */}
-          <div
-            className={[
-              "opacity-0 group-hover:opacity-100",
-              "transition-opacity duration-300 relative",
-            ].join(" ")}
-          >
-            <span className="absolute inset-0 rounded-full animate-ping bg-white/30" />
-            <div className="relative z-10 w-12 h-12 bg-white text-black rounded-full grid place-items-center shadow-lg">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                className="w-6 h-6 translate-x-[1px]"
-              >
-                <path d="M8 5.14v13.72L19 12 8 5.14z" />
-              </svg>
-            </div>
+        {/* PROGRESS BAR */}
+        {percentNum > 0 && (
+          <div className="absolute left-0 right-0 bottom-0 h-0.5 bg-white/10">
+            <div
+              className="h-full bg-red-500"
+              style={{ width: `${Math.min(100, percentNum)}%` }}
+            />
           </div>
-        </div>
-      )}
+        )}
+
+        {/* HOVER OVERLAY ONLY IF CLICKABLE */}
+
+       
+      </div>
     </div>
   );
 }
@@ -127,7 +112,7 @@ export default function VoicesSlider({
           1024: { slidesPerView: 5 },
           1280: { slidesPerView: 6 },
         }}
-        className="relative mt-3"
+        className="relative mt-3 "
       >
         {slides.map((slide) => {
           const isClickable = Boolean(slide.slug);
@@ -155,7 +140,7 @@ export default function VoicesSlider({
               >
                 {/* Wrap only if clickable */}
                 {isClickable ? (
-                  <Link href={href ?? '#'} className="block">
+                  <Link href={href ?? "#"} className="block">
                     {/* CARD */}
                     <Card slide={slide} percentNum={percentNum} hover={true} />
                   </Link>
@@ -167,6 +152,35 @@ export default function VoicesSlider({
           );
         })}
       </Swiper>
+      <style jsx global>{`
+        .custom-swiper-nav .swiper-button-next,
+        .custom-swiper-nav .swiper-button-prev {
+          background-color: rgba(255, 255, 255, 0.15);
+          backdrop-filter: blur(8px);
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          transition: all 0.3s ease;
+        }
+
+        .custom-swiper-nav .swiper-button-next:hover,
+        .custom-swiper-nav .swiper-button-prev:hover {
+          background-color: rgba(255, 255, 255, 0.25);
+          transform: scale(1.1);
+        }
+
+        .custom-swiper-nav .swiper-button-next::after,
+        .custom-swiper-nav .swiper-button-prev::after {
+          font-size: 18px;
+          font-weight: bold;
+          color: white;
+        }
+
+        .custom-swiper-nav .swiper-button-disabled {
+          opacity: 0.3;
+          cursor: not-allowed;
+        }
+      `}</style>
     </div>
   );
 }
