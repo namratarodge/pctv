@@ -399,10 +399,10 @@ export default function BrowserInner() {
             <ul className="list-none">
               {categories.map((category: TagType) => (
                 <li
-                  className="text-gray-300 py-1 cursor-pointer text-sm"
+                  className="text-gray-300 py-2 cursor-pointer text-sm"
                   key={category._id}
                 >
-                  <label className="cursor-pointer items-center flex gap-2">
+                  <label className="cursor-pointer items-center flex gap-3">
                     <input
                       type="checkbox"
                       checked={genreList.includes(category.name)}
@@ -510,7 +510,7 @@ export default function BrowserInner() {
       <div className="w-full  lg:w-4/5 px-2 py-2 ">
         <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
           <div className="flex gap-4 items-center ">
-            <h1 className="text-3xl text-white">TV Topics</h1>
+            <h1 className="text-4xl font-bold text-white">TV Topics</h1>
             {hasActiveFilters && (
               <Button
                 onClick={clearAllFilters}
@@ -526,16 +526,16 @@ export default function BrowserInner() {
           <SkeletonLoading />
         ) : title.length > 0 ? (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-2 gap-y-6 ">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-2 gap-y-2 ">
               {title.map((title: TitleType) => (
                 <div className=" text-white gap-2 " key={title._id}>
                   <Link href={`/titles/${title?._id}/${title?.slug}`}>
                     <TitlePoster poster={title.poster} name={title.name} />
-                    <div className="mt-0">
+                    {/* <div className="mt-0">
                       <span className="text-xs">
                         {title?.name.slice(0, 34)}
                       </span>
-                    </div>
+                    </div> */}
                   </Link>
                 </div>
               ))}

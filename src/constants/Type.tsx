@@ -181,6 +181,8 @@ export type TitleDetailsType = {
   genres: TagType[];
   keywords: TagType[];
   country?: TagType[];
+  credit: CastCreditType[];
+  cast: CastCreditType[];
 };
 
 // Person for Additional Tags

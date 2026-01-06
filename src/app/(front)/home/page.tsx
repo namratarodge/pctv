@@ -1,7 +1,7 @@
 "use client";
 import ShareButtonWithFallback from "@/components/account/ShareButtonWithFallback";
 import { Slider, SliderNumber, TopicSlider } from "@/components/layout";
-import { PlayCircleIcon } from "@heroicons/react/24/outline";
+import { PlayCircleIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -38,7 +38,7 @@ export default function Home() {
   const [title, setTitle] = useState([]);
   const [topTitle, setTopTitle] = useState([]);
   const [userVideo, setUserVideo] = useState([]);
-  const [mainWatch, setMainwatch] = useState<SliderType | null>(null);
+  const [mainWatch, setMainwatch] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const fetchTitlte = async () => {
@@ -61,10 +61,14 @@ export default function Home() {
             name: item.name,
             _id: item._id,
             slug: item.slug,
-            image: item.poster && process.env.NEXT_PUBLIC_WEBSITE + "/" + item.poster,
+            image:
+              item.poster &&
+              process.env.NEXT_PUBLIC_WEBSITE + "/" + item.poster,
           })
         );
-        setMainwatch(modifiedData[0]);
+        setMainwatch(
+          "./titles/6856a3433e2804ea5de686dc/delivering-the-uks-most-complex-projects-and-programmes"
+        );
         setLoading(false);
         setTitle(modifiedData);
       }
@@ -154,24 +158,13 @@ export default function Home() {
           className="absolute inset-0 -z-10 object-cover"
           priority // optional, if it's above-the-fold
         />
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-        >
-          <div
-            style={{
-              clipPath:
-                "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
-            }}
-            className="relative left-[calc(50%-11rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-          />
-        </div>
+
         <div className="mx-auto">
           <div className="mx-auto max-w-11/12  py-32 sm:py-48 md:py-36 lg:py-40 ">
             <div className="text-left">
               <h1
                 className="
-    text-xl leading-snug font-semibold tracking-tight text-white text-balance w-full
+    text-xl  font-semibold tracking-tight leading-tight text-white text-balance w-full
     sm:text-2xl sm:leading-snug sm:w-4/5
     md:text-3xl md:leading-snug md:w-3/4
     lg:text-4xl lg:leading-tight lg:w-2/3
@@ -186,14 +179,12 @@ export default function Home() {
               <div className="mt-8 flex  justify-between  ">
                 <div className="flex  gap-4">
                   <Link
-                    href={`/titles/${mainWatch?.slug && mainWatch?._id}/${
-                      mainWatch?.slug
-                    }`}
+                    href={`titles/6856a3433e2804ea5de686dc/delivering-the-uks-most-complex-projects-and-programmes`}
                     target="_blank"
-                    className=" flex rounded-full bg-red-500 pl-3 pr-1 gap-2 py-1 items-center text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20 cursor-pointer"
+                    className=" flex rounded-full bg-red-500 px-6 pr-3 gap-2 py-1 items-center text-md  text-white shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20 cursor-pointer"
                   >
                     Watch Now
-                    <PlayCircleIcon className="h-7 w-7 text-white" />
+                    <PlayCircleIcon className="h-8 w-8 text-white" />
                   </Link>
 
                   <ShareButtonWithFallback />
@@ -201,18 +192,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
-        >
-          <div
-            style={{
-              clipPath:
-                "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
-            }}
-            className="relative left-[calc(50%+3rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
-          />
         </div>
       </div>
       <div className=" mx-auto max-w-11/12 flex flex-col gap-8">

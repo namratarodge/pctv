@@ -1,6 +1,5 @@
 "use client";
 
-import { ShareIcon } from '@heroicons/react/24/outline'; // or your own icon
 
 import { useState } from "react";
 
@@ -57,9 +56,9 @@ const ShareButtonWithFallback = () => {
     <div className="relative inline-block">
       <button
         onClick={handleShare}
-        className="flex cursor-pointer items-center gap-2 rounded-full bg-white/10 backdrop-blur-md px-3 py-1.5 text-sm font-medium text-white hover:bg-white/20 transition duration-200 shadow-md ring-1 ring-white/20"
+        className="flex cursor-pointer items-center gap-2 rounded-full bg-white/10 backdrop-blur-md px-5 py-2.5 text-sm  text-white hover:bg-white/20 transition duration-200 shadow-md ring-1 ring-white/20"
       >
-        <ShareIcon className="h-6 w-6 text-white" />
+        {/* <ShareIcon className="h-6 w-6 text-white" /> */}
         Share
       </button>
 

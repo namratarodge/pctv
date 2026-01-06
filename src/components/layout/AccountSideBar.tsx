@@ -16,8 +16,8 @@ export default function AccountSideBar() {
     <>
       <nav aria-label="Sidebar" className="flex flex-1 flex-col">
       <Link href="/home">
-        <Button className="bg-gray-200 items-center flex gap-4 px-3 py-2 mb-2 cursor-pointer text-md">
-          <ArrowLongLeftIcon className="h-6 w-6 " /> Back to PCTVc
+        <Button className="bg-gray-200 items-center flex gap-4 px-4 py-2 mb-2 cursor-pointer text-md">
+          <ArrowLongLeftIcon className="h-6 w-6 " /> Back to PCTV
         </Button>
         </Link>
         <ul role="list" className=" space-y-1">

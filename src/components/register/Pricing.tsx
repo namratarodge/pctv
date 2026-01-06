@@ -73,7 +73,7 @@ export default function Pricing({ step, title, description }: PricingProps) {
       type: plan.interval,
       interval_count: plan.interval_count,
       paypal_id: plan.paypal_id,
-      isHighlighted: plan._id === user.subscription?.plan_info._id,
+      isHighlighted: plan.name === 'Monthly',
       // isHighlighted: false,
       features: parsedFeatures.map((label) => ({ label })),
       onSelect: () => console.log(`${plan.name} selected`),
@@ -82,8 +82,8 @@ export default function Pricing({ step, title, description }: PricingProps) {
 
   return (
     <div className="px-6 py-12 sm:rounded-lg sm:px-12 space-y-6">
-      {step && <small className="text-sm font-extralight">{step}</small>}
-      <h2 className="mt-3 line-clamp-3 text-left text-5xl font-bold tracking-tight text-gray-800 w-2/3">
+      {step && <small className="text-lg font-extralight">{step}</small>}
+      <h2 className="mt-3 line-clamp-3 text-left text-5xl font-bold tracking-tight text-gray-800 w-2/3 capitalize leading-tight">
         {title}
       </h2>
       {description && <p className="text-lg">{description}</p>}

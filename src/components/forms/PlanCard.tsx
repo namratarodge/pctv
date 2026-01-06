@@ -39,7 +39,7 @@ export default function PlanCard({
         }
       );
       if (response.data) {
-        window.location.href = response.data.redirectUrl; // redirect to billing portal if user is already subscribed
+        window.location.href = response.data.redirectUrl;
       }
     } catch (error) {
       console.error("Subscription error", error);
@@ -48,58 +48,58 @@ export default function PlanCard({
 
   return (
     <div
-      className={`relative rounded-xl w-full max-w-xs  h-auto shadow-lg cursor-pointer py-20 ${
-        isHighlighted ? "bg-red-500 text-white" : "border border-red-500"
+      className={`relative rounded-3xl w-full max-w-sm h-auto shadow-lg cursor-pointer p-8 overflow-hidden ${
+        isHighlighted ? "bg-[#f44336] text-white" : "bg-white border-2 border-red-500"
       }`}
     >
-      {/* Best Value badge */}
+      {/* Best Value Ribbon */}
       {isHighlighted && (
-        <div className="absolute top-2 right-2 flex items-center gap-1 bg-gray-600 text-white text-xs font-bold px-2 py-1 rounded-full">
-          Your Plan
+        <div className="absolute top-6 -right-10 bg-[#c9382e] text-gray-300 px-6 py-1.5 text-xs font-semibold transform rotate-45 shadow-sm w-40 text-center">
+          Best Value
         </div>
       )}
-      {/* Header */}
-      <div
-        className={`text-center space-y-3 ${
-          isHighlighted ? "text-white" : "text-gray-600"
-        }`}
-      >
-        <small className="uppercase tracking-wider">{label}</small>
-        <h3 className="text-5xl font-bold">{price}</h3>
+
+      {/* Header Section */}
+      <div className="text-center mb-8">
+        <p className={`text-base mb-4 ${isHighlighted ? "text-white" : "text-gray-600"}`}>
+          {label}
+        </p>
+        <h3 className={`text-3xl font-bold mb-6 ${isHighlighted ? "text-white" : "text-gray-900"}`}>
+          {price}
+        </h3>
 
         <button
           onClick={() => handleSubscribe(paypal_id, interval_count, plan_id)}
-          className={`px-4 py-1.5 w-3/4 rounded-full mt-2 ${
-            isHighlighted ? "bg-white text-red-500" : "bg-red-500 text-white"
-          } cursor-pointer hover:opacity-90 transition`}
+          className={`w-3/4 py-2 rounded-full text-lg font-semibold transition-all duration-200 ${
+            isHighlighted 
+              ? "bg-white text-red-500 hover:bg-gray-100" 
+              : "bg-red-500 text-white hover:bg-red-600"
+          }`}
         >
           Select
         </button>
       </div>
-      {/* Features */}
-      <div
-        className={`mt-10 text-xs px-4 space-y-4 ${
-          isHighlighted ? "text-white" : "text-gray-700"
-        }`}
-      >
+
+      {/* Features List */}
+      <div className="space-y-6">
         {features.map((f, i) => (
-          <p
+          <div
             key={i}
-            className={`border-b pb-2 text-sm border-gray-300 ${
-              i === features.length - 1 ? "border-none" : ""
+            className={`pt-6 ${
+              i === 0 ? "" : "border-t"
+            } ${
+              isHighlighted ? "border-white/30" : "border-gray-300"
             }`}
           >
-            {f.label}
+            <p className={`text-sm mb-1 ${isHighlighted ? "text-white" : "text-gray-600"}`}>
+              {f.label}
+            </p>
             {f.value && (
-              <span
-                className={`font-semibold block ${
-                  !isHighlighted && "text-gray-700"
-                }`}
-              >
+              <p className={`font-bold text-base ${isHighlighted ? "text-white" : "text-gray-900"}`}>
                 {f.value}
-              </span>
+              </p>
             )}
-          </p>
+          </div>
         ))}
       </div>
     </div>

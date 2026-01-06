@@ -110,7 +110,7 @@ export default function VoicesSlider({
   return (
     <div className="text-white relative">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold">{title}</h2>
+        <h2 className="text-xl">{title}</h2>
         {/* Swiper progressbar target */}
         <div className="swiper-progressbar h-1 w-32 bg-white/10 rounded overflow-hidden" />
       </div>

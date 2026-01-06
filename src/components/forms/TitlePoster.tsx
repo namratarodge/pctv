@@ -28,7 +28,7 @@ const TitlePoster: React.FC<PersonImageProps> = ({
       alt={name}
       width={400}
       height={100}
-      className={` rounded-md  border-gray-600 border`}
+      className={` rounded-sm  border-gray-600 `}
       onError={() => setImgSrc(avatar)}
     />
   );

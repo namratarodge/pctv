@@ -2,7 +2,10 @@
 
 import Loading from "@/components/layout/Loading";
 import { WhatchListType } from "@/constants/Type";
-import { DocumentMagnifyingGlassIcon, TrashIcon } from "@heroicons/react/24/outline";
+import {
+  DocumentMagnifyingGlassIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -33,8 +36,8 @@ export default function Home() {
       if (response.data.status) {
         const modifiedData = response.data.data.data;
         setData(modifiedData);
-      }else{
-         setData([]);
+      } else {
+        setData([]);
       }
       setLoading(false);
     } catch (error) {
@@ -106,7 +109,7 @@ export default function Home() {
 
   return (
     <div className="pt-25 max-w-11/12 mx-auto">
-      <h2 className="text-white text-4xl font-semibold">Watchlists</h2>
+      <h2 className="text-white text-4xl font-semibold">Watchlist</h2>
 
       {loading ? (
         <Loading />
@@ -127,9 +130,12 @@ export default function Home() {
               />
               <div>
                 <h2 className="text-sm font-semibold text-gray-300 mb-2">
-                  {item.title_id.name}
+                  {item.title_id.name.slice(0, 50)}
                 </h2>
-                <p className="text-gray-400 text-sm">{item.title_id.type}</p>
+                <p className="text-gray-500 text-xs">
+                  {item.title_id?.credit[0]?.person_id?.name} - <br />
+                  {item.title_id?.credit[0]?.job}
+                </p>
               </div>
 
               <button
@@ -142,7 +148,7 @@ export default function Home() {
                 aria-label="Remove from watchlist"
                 title="Remove from watchlist"
               >
-                <TrashIcon className="h-5 w-5 " /> 
+                <TrashIcon className="h-5 w-5 " />
               </button>
             </Link>
           ))}

@@ -9,44 +9,45 @@ import Script from "next/script";
 import { ToastContainer } from "react-toastify";
 
 export default function FrontLayoutClient({
-    children,
+  children,
 }: {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-    const GA_ID = process.env.NEXT_PUBLIC_GA_ID; // e.g. G-XXXXXXX
-    const pageName = usePathname();
+  const GA_ID = process.env.NEXT_PUBLIC_GA_ID; // e.g. G-XXXXXXX
+  const pageName = usePathname();
 
-    return (
-        <>
-            <div
-                className={`${WhitePages.includes(pageName)
-                        ? "bg-white text-gray-700 "
-                        : "bg-[#161f27] text-gray-300 "
-                    } `}
-            >
-                <PublicDataProvider>
-                    <Header />
-                    {children}
-                    <Footer />
-                </PublicDataProvider>
-                {GA_ID && (
-                    <>
-                        <Script
-                            src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-                            strategy="afterInteractive"
-                        />
-                        <Script id="ga-init" strategy="afterInteractive">
-                            {`
+  return (
+    <>
+      <div
+        className={`${
+          WhitePages.includes(pageName)
+            ? "bg-white text-gray-700 "
+            : "bg-[#161f27] text-gray-300 "
+        } `}
+      >
+        <PublicDataProvider>
+          <Header />
+          {children}
+          <Footer />
+        </PublicDataProvider>
+        {GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga-init" strategy="afterInteractive">
+              {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
                 gtag('config', '${GA_ID}', { page_path: window.location.pathname });
               `}
-                        </Script>
-                    </>
-                )}
-            </div>
-            <ToastContainer />
-        </>
-    );
+            </Script>
+          </>
+        )}
+      </div>
+      <ToastContainer />
+    </>
+  );
 }

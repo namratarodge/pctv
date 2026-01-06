@@ -250,10 +250,10 @@ export default function TitleDetailPage() {
               <div className="flex gap-2 ">
                 <button
                   onClick={() => handleWhatchList(titleDetails._id)}
-                  className="flex cursor-pointer items-center gap-2 rounded-full bg-white/10 backdrop-blur-md px-3 py-1.5 text-sm font-medium text-white hover:bg-white/20 transition duration-200 shadow-md ring-1 ring-white/20"
+                  className="flex cursor-pointer items-center gap-2 rounded-full bg-white/10 backdrop-blur-md px-3 py-1.5 text-sm  text-white hover:bg-white/20 transition duration-200 shadow-md ring-1 ring-white/20"
                 >
                   <PlusIcon className="h-4 w-4 text-white" />
-                  Add to Watchlist
+                  Watchlist
                 </button>
 
                 <ShareButtonWithFallback />
@@ -398,10 +398,10 @@ export default function TitleDetailPage() {
             </div>
           )}
           <div className="w-full md:w-1/3 ">
-            <h2 className="text-white md:px-4 pb-4 ">
+            <h2 className="text-white text-md md:px-4 text-xl pb-2 ">
               Recommended Videos for you{" "}
             </h2>
-            <div className="flex flex-col gap-1 h-screen overflow-y-auto scrollable custom-scrollbar">
+            <div className="flex flex-col gap-1  mb-8 overflow-y-auto scrollable custom-scrollbar">
               {recommendedTitle.map((data) => (
                 <Link
                   href={`/titles/${data._id}/${data.slug}`}
@@ -413,13 +413,16 @@ export default function TitleDetailPage() {
                     alt={data.name}
                     width={800}
                     height={500}
-                    className="w-2/5 rounded-lg"
+                    className="w-2/5 rounded-sm object-cover"
                   />
-                  <div>
-                    <h2 className="text-sm font-semibold text-gray-300 mb-2">
-                      {data.name.slice(0, 65)}
+                  <div className="flex flex-col ">
+                    <h2 className="text-sm  text-gray-300 mb-2">
+                      {data.name.slice(0, 50)}
                     </h2>
-                    <p className="text-gray-400 text-sm">{data.language}</p>
+                    <p className="text-gray-500 text-xs">
+                      {data.credit[0]?.person_id?.name} - <br />
+                      {data.credit[0]?.job}
+                    </p>
                   </div>
                 </Link>
               ))}
