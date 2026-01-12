@@ -125,7 +125,7 @@ export default function Step1() {
         </p>
 
         {/* Google Signup Button */}
-        <div className="w-full md:w-3/5 lg:w-3/5">
+        <div className="w-full ">
           <GoogleLoginButton
             onGoogleSuccess={handleGoogleSuccess}
             onGoogleError={handleGoogleError}
@@ -143,7 +143,7 @@ export default function Step1() {
           </div>
         </div>
 
-        <div className="w-full space-y-4 md:w-3/5 lg:w-3/5 ">
+        <div className="w-full space-y-4  ">
           <div>
             <input
               type="text"

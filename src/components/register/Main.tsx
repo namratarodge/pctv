@@ -21,8 +21,8 @@ export default function Main() {
 
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center py-4 sm:px-6 lg:px-8 ">
-        <div className="mt-5 sm:mx-auto sm:w-full max-w-8/12 mx-auto ">
+      <div className="flex min-h-full flex-1 flex-col justify-center items-center py-4 sm:px-6 lg:px-8">
+        <div className="mt-5 w-full max-w-4xl mx-auto">
           {!step && <Step1 />}
           {step === "two" && (
             <Pricing
