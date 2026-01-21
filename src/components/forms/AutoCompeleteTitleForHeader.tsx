@@ -91,12 +91,12 @@ export default function AutoCompeleteTitleForHeader({
             <li
               key={data._id}
               onClick={() => handleSelect(data)}
-              className="flex items-center gap-2 px-2 py-2 cursor-pointer hover:bg-blue-50"
+              className="flex items-center gap-4 px-2 py-2 cursor-pointer hover:bg-blue-50"
             >
               <UserAvatar poster={data.poster} />
               <div className="flex flex-col text-gray-800">
-                <span>{data.name}</span>
-                <small>{data.type}</small>
+                <span className="text-sm"> {data.name.slice(0, 40)}</span>
+                <small className="text-xs">{data.credit[0]?.person_id?.name}</small>
               </div>
             </li>
           ))}

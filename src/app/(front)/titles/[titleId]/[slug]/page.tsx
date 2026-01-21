@@ -42,7 +42,7 @@ export default function TitleDetailPage() {
           params: {
             limit: 20,
           },
-        }
+        },
       );
       if (response.data.status) {
         setRecommendedTitle(response.data.data.data);
@@ -65,7 +65,7 @@ export default function TitleDetailPage() {
           params: {
             _id: titleId,
           },
-        }
+        },
       );
       if (response.data.status) {
         console.log(response.data.data);
@@ -93,7 +93,7 @@ export default function TitleDetailPage() {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
     } catch (error) {
       console.error("Error updating view count:", error);
@@ -133,7 +133,7 @@ export default function TitleDetailPage() {
             Authorization: token,
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       if (response.data.status) {
         toast("Successfully added to the watchlist.");
@@ -278,9 +278,10 @@ export default function TitleDetailPage() {
                 </div>
               </div>
               <div className="py-4">
-                <p className="text-gray-400">{titleDetails.description}</p>
+                <p className="text-gray-400 whitespace-pre-line leading-relaxed [&>*]:mb-4">
+                  {titleDetails.description}
+                </p>
               </div>
-
               {titleDetails.credit.length > 0 && (
                 <div className="border-t border-b border-[#37454D] py-3 mr-5">
                   <h2 className="text-white">About Speaker</h2>
