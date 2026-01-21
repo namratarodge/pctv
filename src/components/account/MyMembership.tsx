@@ -69,7 +69,7 @@ export default function MyMembership() {
               )}
 
               <Link
-                href="/pricing"
+                href="/account?name=change-plan"
                 className="py-3 flex justify-between border-t border-gray-300 cursor-pointer"
               >
                 <div className="flex gap-2 text-sm">Change Membership</div>

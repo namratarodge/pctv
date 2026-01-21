@@ -55,7 +55,7 @@ export default function TopHeader({
       >
         <span className="sr-only">Open sidebar</span>
         <Bars3Icon aria-hidden="true" className="size-6" />
-      </button>
+      </button> 
 
       <div aria-hidden="true" className="h-6 w-px bg-gray-900/10 lg:hidden" />
 

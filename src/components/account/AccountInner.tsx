@@ -11,8 +11,9 @@ import ManagePayment from "@/components/account/managePayment";
 import Membership from "@/components/account/membership";
 import MembershipPause from "@/components/account/membership_pause";
 import Payment_history from "@/components/account/payment_history";
-import Security from "@/components/account/security";
+import Security from "@/components/account/SecurityPage";
 import UpdateProfile from "@/components/account/updateProfile";
+import ChangePlanPage from "./ChangePlanPage";
 
 export default function AccountInner() {
   const searchParams = useSearchParams();
@@ -22,6 +23,7 @@ export default function AccountInner() {
     <>
       {!name && <General />}
       {name === "membership" && <Membership />}
+      {name === "change-plan" && <ChangePlanPage />}
       {name === "payment_history" && <Payment_history />}
       {name === "change_membership" && <ChangeMembership />}
       {name === "cancel_membership" && <CancelMembership />}

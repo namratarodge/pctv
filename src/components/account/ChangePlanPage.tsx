@@ -1,19 +1,15 @@
 "use client";
 
 import PlanCard from "@/components/forms/PlanCard";
-import { PlanFormValues, PricingProps } from "@/constants/Type";
+import { PlanFormValues } from "@/constants/Type";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { usePublicData } from "../context/PublicDataContext";
 import Loading from "../layout/Loading";
 
-
-export default function Pricing({ step, title, description }: PricingProps) {
+export default function Pricing() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const { user } = usePublicData();
 
   const fetch = async () => {
     const token = localStorage.getItem("token");
@@ -26,7 +22,7 @@ export default function Pricing({ step, title, description }: PricingProps) {
             Authorization: token,
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       if (response.data.status) {
         const modifiedData = response.data.data.data;
@@ -73,7 +69,7 @@ export default function Pricing({ step, title, description }: PricingProps) {
       type: plan.interval,
       interval_count: plan.interval_count,
       paypal_id: plan.paypal_id,
-      isHighlighted: plan.name === 'Monthly',
+      isHighlighted: plan.name === "Monthly",
       // isHighlighted: false,
       features: parsedFeatures.map((label) => ({ label })),
       onSelect: () => console.log(`${plan.name} selected`),
@@ -81,17 +77,18 @@ export default function Pricing({ step, title, description }: PricingProps) {
   };
 
   return (
-    <div className="px-6 py-12 sm:rounded-lg sm:px-12 space-y-6">
-      {step && <small className="text-lg font-extralight">{step}</small>}
-      <h2 className="mt-3 line-clamp-3 text-left text-2xl font-bold tracking-tight text-gray-800 w-2/3 capitalize leading-tight">
-        {title}
+    <div className="px-6 sm:rounded-lg sm:px-12 space-y-6">
+      <h2 className="mt-3 line-clamp-3 text-left text-4xl font-bold tracking-tight text-gray-800 w-2/3 capitalize leading-tight">
+        Change Plan
       </h2>
-      {description && <p className="text-lg">{description}</p>}
+      <p>
+        Try out a new plan. You can alwasy switch back if you do not love it.
+      </p>
 
       {loading ? (
         <Loading />
       ) : (
-        <div className="w-full flex gap-4 h-auto">
+        <div className="w-full flex  gap-4   ">
           {data.map((plan, idx) => (
             <PlanCard key={idx} {...mapPlanToPlanCardProps(plan)} />
           ))}

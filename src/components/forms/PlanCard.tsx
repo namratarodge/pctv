@@ -48,7 +48,7 @@ export default function PlanCard({
 
   return (
     <div
-      className={`relative rounded-3xl w-full max-w-sm h-auto shadow-lg cursor-pointer p-8 overflow-hidden ${
+      className={`relative rounded-3xl w-1/2 h-auto shadow-lg cursor-pointer p-4 overflow-hidden ${
         isHighlighted ? "bg-[#f44336] text-white" : "bg-white border-2 border-red-500"
       }`}
     >

@@ -4,7 +4,7 @@ import ChangePassword from "@/components/account/change_password";
 import General from "@/components/account/general";
 import ManagePayment from "@/components/account/managePayment";
 import Membership from "@/components/account/membership";
-import Security from "@/components/account/security";
+import Security from "@/components/account/SecurityPage";
 import UpdateProfile from "@/components/account/updateProfile";
 
 import CancelMembership from "@/components/account/cancel_membership";

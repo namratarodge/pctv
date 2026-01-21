@@ -33,7 +33,7 @@ export const baseNavigation = [
     children: [],
   },
   { name: "Course/Zones", key: "categories", href: "/browse", children: [] },
-  { name: "Pricing", key: "price", href: "/pricing" },
+  { name: "Pricing", key: "price", href: "/account?name=change-plan" },
 ];
 
 export const userNavigation = [

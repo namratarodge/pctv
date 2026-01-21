@@ -38,7 +38,7 @@ export default function ChangePassword() {
             Authorization: token,
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       const responseNew = response.data;
       console.log(responseNew);
@@ -71,6 +71,10 @@ export default function ChangePassword() {
     }
   };
 
+  const handleCancel = () => {
+    reset();
+  };
+
   return (
     <div className="min-h-screen bg-white text-black max-w-3xl mx-auto ">
       <h1 className="text-4xl font-semibold">Change Password</h1>
@@ -81,7 +85,7 @@ export default function ChangePassword() {
           <small>
             Protect your account with a unique at least 6 charachters long
           </small>
-          <div className="mt-4 w-2/3 space-y-3">
+          <div className="mt-4 w-2/3 space-y-4">
             <input
               type="text"
               {...register("old_password")}
@@ -122,6 +126,13 @@ export default function ChangePassword() {
           <div className="flex gap-4">
             <button className="rounded-full bg-red-500 text-white px-8 py-1.5 mt-4 text-md cursor-pointer">
               Save
+            </button>
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="rounded-full bg-white border-red-400 border text-red-400 px-8 py-1.5 mt-4 text-md cursor-pointer"
+            >
+              Cancel
             </button>
           </div>
         </div>

@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  LockClosedIcon,
-  UserCircleIcon
-} from "@heroicons/react/24/outline";
+import { LockClosedIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 
 import ListButton from "./ListButton";
 
@@ -31,16 +28,22 @@ export default function General() {
   return (
     <>
       <div className="min-h-screen bg-white text-black max-w-3xl mx-auto ">
-        <h1 className="text-4xl font-semibold">Account</h1> 
+        <h1 className="text-4xl font-semibold">Account</h1>
         <p className="my-4">Membership Details</p>
         <MyMembership />
 
         <p className="my-4">Quick List</p>
         <div className="bg-gray-100 mt-4 py-2 px-6 rounded-sm">
-          {accountSettingsLinks.map((item,index) => (
+          {accountSettingsLinks.map((item, index) => (
             <ListButton item={item} key={index} />
           ))}
         </div>
+        <button
+          type="button"
+          className="rounded-full bg-white border-red-400 border text-red-400 px-8 py-1.5 mt-4 text-md cursor-pointer"
+        >
+          Cancel Membership
+        </button>
       </div>
     </>
   );
