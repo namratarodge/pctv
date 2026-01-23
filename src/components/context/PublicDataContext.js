@@ -127,6 +127,7 @@ export function PublicDataProvider({ children }) {
         masterContry,
         pages,
         user,
+        refetchUser : fetchUser,
         loading,
       }}
     >

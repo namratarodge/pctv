@@ -38,12 +38,6 @@ export default function General() {
             <ListButton item={item} key={index} />
           ))}
         </div>
-        <button
-          type="button"
-          className="rounded-full bg-white border-red-400 border text-red-400 px-8 py-1.5 mt-4 text-md cursor-pointer"
-        >
-          Cancel Membership
-        </button>
       </div>
     </>
   );
