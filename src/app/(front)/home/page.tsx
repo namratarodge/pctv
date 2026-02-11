@@ -25,15 +25,15 @@ type VideoWatch = {
 };
 
 const slides = [
-  { _id: "1", slug: "", image: "/topvoice/Group1.png", name: "Group1" },
-  { _id: "2", slug: "", image: "/topvoice/Group2.png", name: "Group1" },
-  { _id: "3", slug: "", image: "/topvoice/Group3.png", name: "Group1" },
-  { _id: "4", slug: "", image: "/topvoice/Group4.png", name: "Group1" },
-  { _id: "5", slug: "", image: "/topvoice/Group5.png", name: "Group1" },
-  { _id: "6", slug: "", image: "/topvoice/Group6.png", name: "Group1" },
-  // { _id: "7", slug: "", image: "/topvoice/Group7.png", name: "Group1" },
-  // { _id: "8", slug: "", image: "/topvoice/Group8.png", name: "Group1" },
+  { _id: "1", slug: "", image: "/topvoice/Ashley_Turner.png", name: "Group1" },
+  { _id: "2", slug: "", image: "/topvoice/Atif_Ansar.png", name: "Group1" },
+  { _id: "3", slug: "", image: "/topvoice/Dr_Alexia_Nalewaik.png", name: "Group1" },
+  { _id: "4", slug: "", image: "/topvoice/Eddie_Obeng.png", name: "Group1" },
+  { _id: "5", slug: "", image: "/topvoice/Greg_Lawton.png", name: "Group1" },
+  { _id: "6", slug: "", image: "/topvoice/Lisa_Silander.png", name: "Group1" },
 ];
+
+
 export default function Home() {
   const [title, setTitle] = useState([]);
   const [topTitle, setTopTitle] = useState([]);
@@ -200,7 +200,7 @@ export default function Home() {
           <Slider title="Continue Watching" slides={userVideo} />
         )}
         <Slider title="Latest Videos" slides={title} hover={true} />
-        <Slider title="PCTv Top Voice" slides={slides} />
+        <Slider title="PCTv Top Voices" slides={slides} />
         <Slider title="PCTv Top 10 Sessions" slides={topTitle} hover={true} />
         <TopicSlider title="PCTv Topic" />
       </div>
