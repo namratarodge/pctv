@@ -28,6 +28,45 @@ const joinPCTV = [
   },
 ];
 
+const TeamMember = [
+  {
+    id: 1,
+    name: "Ashley Turner",
+    filename: "Ashley_Turner.png",
+    image_path: "/topvoice/Ashley_Turner.png",
+  },
+  {
+    id: 2,
+    name: "Atif Ansar",
+    filename: "Atif_Ansar.png",
+    image_path: "/topvoice/Atif_Ansar.png",
+  },
+  {
+    id: 3,
+    name: "Dr. Alexia Nalewaik",
+    filename: "Dr_Alexia_Nalewaik.png",
+    image_path: "/topvoice/Dr_Alexia_Nalewaik.png",
+  },
+  {
+    id: 4,
+    name: "Eddie Obeng",
+    filename: "Eddie_Obeng.png",
+    image_path: "/topvoice/Eddie_Obeng.png",
+  },
+  {
+    id: 5,
+    name: "Greg Lawton",
+    filename: "Greg_Lawton.png",
+    image_path: "/topvoice/Greg_Lawton.png",
+  },
+  {
+    id: 6,
+    name: "Lisa Silander",
+    filename: "Lisa_Silander.png",
+    image_path: "/topvoice/Lisa_Silander.png",
+  },
+];
+
 type Page = {
   body: string;
   title: string;
@@ -53,7 +92,7 @@ export default function Home() {
           params: {
             slug: "home",
           },
-        }
+        },
       );
 
       const listData = response.data?.data.data;
@@ -213,11 +252,11 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-10">
           <h2 className="text-white text-xl">Our Top Voice</h2>
           <div className="mt-4 grid  gap-4  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
-            {Array.from({ length: 6}, (_, index) => (
-              <div key={index}>
+            {TeamMember.map((member) => (
+              <div key={member.id}>
                 <Image
-                  src={`/topvoice/Group${index + 1}.png`}
-                  alt="test"
+                  src={member.image_path}
+                  alt={member.name}
                   width={300}
                   height={200}
                   className="w-full h-auto object-cover rounded-md"
