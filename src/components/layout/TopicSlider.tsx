@@ -15,6 +15,9 @@ type VoicesSliderProps = {
   title: string;
 };
 
+const focusVisibleTopicLink =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900";
+
 type Slide = {
   image: string;
   name: string;
@@ -61,7 +64,7 @@ export default function TopicSlider({ title }: VoicesSliderProps) {
 
   return (
     <div className="   text-white relative">
-      <h2 className="text-xl font-bold mb-4">{title}</h2>
+      <h2 className="text-xl  mb-4">{title}</h2>
       <Swiper
         modules={[Navigation, Pagination]}
         spaceBetween={16}
@@ -82,7 +85,7 @@ export default function TopicSlider({ title }: VoicesSliderProps) {
             <SwiperSlide key={item._id}>
               <Link
                 href={`browse?keyword=${item.name}`}
-                className={`rounded-xl   shadow-lg flex flex-col  h-60 `}
+                className={`rounded-xl   shadow-lg flex flex-col  h-60 ${focusVisibleTopicLink}`}
               >
                 <Image
                   width={100}

@@ -32,7 +32,7 @@ export default function AccountSideBar() {
                   "group flex gap-x-3 rounded-md p-2 pl-3 text-sm/6 items-center"
                 )}
               >
-                <item.icon className="h-5 w-5" />
+                <item.icon className="h-5 w-5 text-gray-700" />
                 {item.name}
               </Link>
             </li>

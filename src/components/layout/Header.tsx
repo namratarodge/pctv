@@ -44,7 +44,7 @@ export default function Header() {
   };
 
   const filteredNavigation = userNavigation.filter(
-    (item) => item.key !== "admin_home" || user?.userType === "admin"
+    (item) => item.key !== "admin_home" || user?.userType === "admin",
   );
 
   const loginButton = (type: string) => {
@@ -142,7 +142,7 @@ export default function Header() {
                       href={item.href}
                       className={classNames(
                         item.href === pageName && "text-white ",
-                        "text-gray-300 text-sm hover:text-white items-center justify-center px-3 py-2 rounded-md "
+                        "text-gray-300 text-sm hover:text-white items-center justify-center px-3 py-2 rounded-md ",
                       )}
                     >
                       {item.name}
@@ -253,25 +253,30 @@ export default function Header() {
                           {item.name}
                         </Link>
                       </MenuItem>
-                    )
+                    ),
                   )}
                 </MenuItems>
               </Menu>
             </>
           ) : (
             <div className="flex gap-2">
-              <Link
-                href="/login"
-                className="text-sm/6  text-white bg-gray-800 px-6 py-1 rounded-full"
-              >
-                Log in
-              </Link>
-              <Link
-                href="/register"
-                className="text-sm/6  text-white bg-red-500 px-6 py-1 rounded-full"
-              >
-                Sign Up
-              </Link>
+              {pathname !== "/login" && (
+                <Link
+                  href="/login"
+                  className="text-sm/6  text-white bg-gray-800 px-6 py-1 rounded-full"
+                >
+                  Log in
+                </Link>
+              )}
+
+              {pathname !== "/register" && (
+                <Link
+                  href="/register"
+                  className="text-sm/6  text-white bg-red-500 px-6 py-1 rounded-full"
+                >
+                  Sign Up
+                </Link>
+              )}
             </div>
           )}
         </div>
@@ -394,7 +399,7 @@ export default function Header() {
                             >
                               {item.name}
                             </Link>
-                          )
+                          ),
                         )}
                       </div>
                     )}

@@ -14,7 +14,7 @@ type VoicesSliderProps = {
 
 export default function SliderNumber({ title }: VoicesSliderProps) {
   return (
-    <div className="   text-white relative">
+    <div className="text-white relative">
       <h2 className="text-xl">{title}</h2>
       <Swiper
         modules={[Navigation, Pagination]}

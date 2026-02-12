@@ -164,7 +164,7 @@ export default function Home() {
             <div className="text-left">
               <h1
                 className="
-    text-xl  font-semibold tracking-tight leading-tight text-white text-balance w-full
+    text-xl font-semibold tracking-tight leading-tight text-white text-balance w-full
     sm:text-2xl sm:leading-snug sm:w-4/5
     md:text-3xl md:leading-snug md:w-3/4
     lg:text-4xl lg:leading-tight lg:w-2/3

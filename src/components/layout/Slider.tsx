@@ -25,6 +25,9 @@ type VoicesSliderProps = {
   hover?: boolean;
 };
 
+const focusVisibleLinkClasses =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900";
+
 function Card({ slide, percentNum, hover }: any) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -139,8 +142,11 @@ export default function VoicesSlider({
         `}
               >
                 {/* Wrap only if clickable */}
-                {isClickable ? (
-                  <Link href={href ?? "#"} className="block">
+              {isClickable ? (
+                <Link
+                  href={href ?? "#"}
+                  className={`block ${focusVisibleLinkClasses}`}
+                >
                     {/* CARD */}
                     <Card slide={slide} percentNum={percentNum} hover={true} />
                   </Link>

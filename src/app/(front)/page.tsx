@@ -12,7 +12,7 @@ const joinPCTV = [
       "Get access to high-quality sessions led by seasoned project controls professionals covering real-world challenges, solutions and innovations.",
   },
   {
-    title: "Learn from Global Experts AnyTime, AnyWhere",
+    title: "Learn from Global Experts AnyTime, AnyWwere",
     description:
       "Watch anytime, anywhere-from desktop to mobile. Perfect for busy professionals looking to grow their expertise at their own pace.",
   },

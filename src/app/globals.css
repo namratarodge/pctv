@@ -33,3 +33,15 @@ box-shadow: inset 0 40px 20px rgba(0,0,0,0.7);   /* top edge */
   scrollbar-width: thin;
   scrollbar-color: #ef4444 #1f2937;
 }
+
+.swiper-button-prev:focus-visible,
+.swiper-button-next:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.85);
+  border-radius: 9999px;
+}
+
+*:focus,
+*:focus-visible {
+  outline: none !important;
+}

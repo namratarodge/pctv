@@ -82,7 +82,7 @@ export default function Pricing() {
         Change Plan
       </h2>
       <p>
-        Try out a new plan. You can alwasy switch back if you do not love it.
+        Try out a new plan. You can always switch back if you do not love it.
       </p>
 
       {loading ? (

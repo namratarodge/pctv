@@ -48,7 +48,7 @@ export default function Footer() {
             )}
 
             <p className="text-sm/6 text-balance ">
-              Project Controls TV is the wolrd's first-ever OTT and stremming
+              Project Controls TV is the world's first-ever OTT and streaming
               platform dedicated to empowering the global project controls
               community.
             </p>
@@ -56,7 +56,7 @@ export default function Footer() {
           <div className="mt-16 grid grid-cols-1  gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-3 md:gap-8">
               <div>
-                <h3 className="text-md font-extrabold">TV Topic</h3>
+                <h3 className="text-md font-extrabold">TV Topics</h3>
                 <ul role="list" className="mt-2 space-y-2">
                   {tvtopic.map((item: TagType) => (
                     <li key={item._id}>

@@ -5,7 +5,7 @@ export default function Step3() {
     <div className=" px-6 py-12  sm:rounded-lg sm:px-12">
       <form action="#" method="POST" className="space-y-6">
         <small className="text-sm font-extralight">Step 3 OF 3</small>
-        <h2 className="mt-3 text-left text-5xl font-bold tracking-tight text-gray-800">
+        <h2 className="mt-3 text-left text-5xl font-bold tracking-tight text-gray-800 leading-tight">
          Enter payment info to <br />
           Start your free trail
         </h2>
