@@ -37,7 +37,7 @@ export default function BrowserInner() {
   const levelParam = searchParams.get("level") ?? "";
   const releasedParam = searchParams.get("released") ?? "";
   const [selectedGenres, setSelectedGenres] = useState(
-    genreParam ? genreParam.split(",") : []
+    genreParam ? genreParam.split(",") : [],
   );
   const genreList = genreParam ? genreParam.split(",") : [];
 
@@ -108,7 +108,7 @@ export default function BrowserInner() {
   const handleSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
     setter: (value: string) => void,
-    paramName: string
+    paramName: string,
   ) => {
     const value = event.target.value;
     setter(value);
@@ -144,7 +144,7 @@ export default function BrowserInner() {
         if (!value) return;
         if (key === "keyword") {
           const topic = tvtopic.find(
-            (t: any) => t.name.toLowerCase() === value.toLowerCase()
+            (t: any) => t.name.toLowerCase() === value.toLowerCase(),
           );
           if (topic) {
             query[key] = topic._id; // store the topic id
@@ -156,7 +156,7 @@ export default function BrowserInner() {
             .map((v) => v.trim().toLowerCase()) // normalize
             .map((v) => {
               const category = categories.find(
-                (t: any) => t.name.toLowerCase() === v
+                (t: any) => t.name.toLowerCase() === v,
               );
               return category ? category._id : null;
             })
@@ -181,7 +181,7 @@ export default function BrowserInner() {
             ...query,
             limit: limit,
           },
-        }
+        },
       );
       if (response.data.status) {
         const modifiedData = response.data.data;
@@ -307,7 +307,7 @@ export default function BrowserInner() {
           params: {
             name: "streaming.qualities,browse.languages,homepage.countries,browse.ageRatings,browse.year_slider_min,browse.year_slider_max",
           },
-        }
+        },
       );
       if (response.data.status) {
         const modifiedData = response.data.data.data;
@@ -318,24 +318,24 @@ export default function BrowserInner() {
           modifiedData.find((item: SettingsFormValues) => item.name === name);
 
         setAppRating(
-          JSON.parse(findSetting("browse.ageRatings")?.value ?? "[]")
+          JSON.parse(findSetting("browse.ageRatings")?.value ?? "[]"),
         );
         setLanguages(
-          JSON.parse(findSetting("browse.languages")?.value ?? "[]")
+          JSON.parse(findSetting("browse.languages")?.value ?? "[]"),
         );
         setCountry(
-          JSON.parse(findSetting("homepage.countries")?.value ?? "[]")
+          JSON.parse(findSetting("homepage.countries")?.value ?? "[]"),
         );
 
         setMinYear(
-          JSON.parse(findSetting("browse.year_slider_min")?.value ?? 0)
+          JSON.parse(findSetting("browse.year_slider_min")?.value ?? 0),
         );
 
         setMaxYear(
-          JSON.parse(findSetting("browse.year_slider_max")?.value ?? 0)
+          JSON.parse(findSetting("browse.year_slider_max")?.value ?? 0),
         );
         console.log(
-          JSON.parse(findSetting("browse.year_slider_max")?.value ?? 0)
+          JSON.parse(findSetting("browse.year_slider_max")?.value ?? 0),
         );
         setLoading(false);
       }
@@ -348,6 +348,10 @@ export default function BrowserInner() {
   useEffect(() => {
     fetcSettings();
   }, []);
+
+  const selectedCountryName = countryParam
+    ? masterContry.find((c: TagType) => c._id === countryParam)?.display_name
+    : null;
 
   // Skeleton loading state for right section only
   const SkeletonLoading = () => (
@@ -382,7 +386,7 @@ export default function BrowserInner() {
               <option value="all">All</option>
               {tvtopic.map((data: any) => (
                 <option key={data._id || data.name} value={data.name}>
-                  {data.display_name} 
+                  {data.display_name}
                 </option>
               ))}
             </select>
@@ -508,9 +512,11 @@ export default function BrowserInner() {
         )}
       </div>
       <div className="w-full  lg:w-4/5 px-2 py-2 ">
-        <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
+        <div className="flex items-center justify-between flex-wrap gap-4 mb-8">
           <div className="flex gap-4 items-center ">
-            <h1 className="text-4xl font-bold text-white">TV Topics</h1>
+            <h1 className="text-4xl font-bold text-white">
+              {selectedCountryName ? 'PCE '+selectedCountryName : "TV Topics"}
+            </h1>
             {hasActiveFilters && (
               <Button
                 onClick={clearAllFilters}

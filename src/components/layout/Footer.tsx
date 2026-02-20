@@ -109,7 +109,7 @@ export default function Footer() {
       <div className=" border-t border-white/10 py-4   ">
         <div className="max-w-11/12 flex justify-between mx-auto">
           <p className="text-sm/6 text-gray-400">
-            &copy; 2025 Project Control TV, Inc. All rights reserved.
+            &copy; 2026 Project Controls TV, Inc. All rights reserved.
           </p>
           <div className="flex space-x-4 justify-end ">
             <a
