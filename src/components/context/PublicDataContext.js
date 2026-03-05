@@ -4,6 +4,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 import axios from "axios";
+import { usePathname } from "next/navigation"; // ✅ add this
 const PublicDataContext = createContext();
 
 function getItemDataByType(items, type) {
@@ -12,20 +13,21 @@ function getItemDataByType(items, type) {
   return items.filter((item) => item.type === type);
 }
 
-export function PublicDataProvider({ children }) {
-  const ALLOWED_INACTIVE_PATHS = [
-    "/pricing",
-    "/admin",
-    "/login",
-    "/logout",
-    "/",
-    "/contact",
-    "/pages/privacy-policy",
-    "/pages/terms-of-services",
-    "/pages/media-pack",
-    "/pages/faqs",
-  ];
+const ALLOWED_INACTIVE_PATHS = [
+  "/pricing",
+  "/admin",
+  "/login",
+  "/logout",
+  "/",
+  "/contact",
+  "/pages/privacy-policy",
+  "/pages/terms-of-services",
+  "/pages/media-pack",
+  "/pages/faqs",
+];
 
+export function PublicDataProvider({ children }) {
+  const pathname = usePathname();
   const [user, setUser] = useState([]);
   const [categories, setCategories] = useState([]);
   const [masterContry, setMasterCountry] = useState([]);
@@ -117,16 +119,14 @@ export function PublicDataProvider({ children }) {
 
           if (
             modifiedData.subscription?.status === "inactive" &&
-            !ALLOWED_INACTIVE_PATHS.includes(window.location.pathname)
+            !ALLOWED_INACTIVE_PATHS.includes(window.location.pathname) &&
+            modifiedData.userType === "user"
           ) {
             window.location.href = "/pricing";
           }
         }
         setLoading(false);
       } catch (error) {
-        // if(error.code === 'ERR_BAD_REQUEST'){
-        //   window.location.href = "/login";
-        // }
         console.error("Error fetching data:", error);
         setLoading(false);
       }
@@ -134,10 +134,13 @@ export function PublicDataProvider({ children }) {
   };
 
   useEffect(() => {
-    fetchUser();
     fetchCategory();
     fetchPages();
   }, []);
+
+  useEffect(() => {
+    fetchUser();
+  }, [pathname]);
 
   return (
     <PublicDataContext.Provider
