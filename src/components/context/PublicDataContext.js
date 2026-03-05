@@ -15,6 +15,7 @@ function getItemDataByType(items, type) {
 export function PublicDataProvider({ children }) {
   const ALLOWED_INACTIVE_PATHS = [
     "/pricing",
+    "/admin",
     "/login",
     "/logout",
     "/",
