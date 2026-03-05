@@ -33,7 +33,7 @@ export default function SliderNumber({ title }: VoicesSliderProps) {
         {slidesCountry.map((slide, index) => (
           <SwiperSlide key={index}>
             <div className="relative h-40 flex items-center justify-center  overflow-hidden ">
-              <Link href={slide.url} target="_blank">
+            <Link href={`browse?country=${slide.id}`} target="_blank">
                 <img
                   src={slide.image}
                   width={100}

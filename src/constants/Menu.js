@@ -133,30 +133,36 @@ export const slidesCountry = [
     name: "Australia",
     image: "regions/PCE-AUS.png",
     url: "https://projectcontrolexpo.com/aus",
+    id : "6856a3433e2804ea5de6837a",
   },
   {
     name: "Brazil",
     image: "regions/PCE-BRAZIL.png",
     url: "https://projectcontrolexpo.com/brazil",
+    id : "6856a3433e2804ea5de6837f"
   },
   {
     name: "United Arab Emirates",
     image: "regions/PCE-UAE.png",
     url: "https://projectcontrolexpo.com/dubai",
+    id : "6856a3433e2804ea5de68380"
   },
   {
     name: "United Kingdom",
     image: "regions/PCE-UK.png",
     url: "https://projectcontrolexpo.com/uk",
+    id : "6856a3433e2804ea5de68370"
   },
   {
     name: "United States",
     image: "regions/PCE-USA.png",
     url: "https://projectcontrolexpo.com/usa",
+    id : "6856a3433e2804ea5de68376"
   },
   {
     name: "Virtual",
     image: "regions/PCE-VIRTUAL.png",
     url: "https://projectcontrolexpo.com/virtual",
+    id : "6856a3433e2804ea5de68374"
   },
 ];

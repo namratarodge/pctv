@@ -13,6 +13,18 @@ function getItemDataByType(items, type) {
 }
 
 export function PublicDataProvider({ children }) {
+  const ALLOWED_INACTIVE_PATHS = [
+    "/pricing",
+    "/login",
+    "/logout",
+    "/",
+    "/contact",
+    "/pages/privacy-policy",
+    "/pages/terms-of-services",
+    "/pages/media-pack",
+    "/pages/faqs",
+  ];
+
   const [user, setUser] = useState([]);
   const [categories, setCategories] = useState([]);
   const [masterContry, setMasterCountry] = useState([]);
@@ -31,7 +43,7 @@ export function PublicDataProvider({ children }) {
           params: {
             limit: 100,
           },
-        }
+        },
       );
       if (response.data.status) {
         const modifiedData = response.data.data.data;
@@ -39,7 +51,7 @@ export function PublicDataProvider({ children }) {
         const genre = getItemDataByType(modifiedData, "genre");
         const production_country = getItemDataByType(
           modifiedData,
-          "production_country"
+          "production_country",
         );
         setTvtopic(keyword);
         setCategories(genre);
@@ -61,7 +73,7 @@ export function PublicDataProvider({ children }) {
           params: {
             limit: 10,
           },
-        }
+        },
       );
       if (response.data.status) {
         const modifiedData = response.data.data.data;
@@ -84,7 +96,7 @@ export function PublicDataProvider({ children }) {
               Authorization: token,
               "Content-Type": "application/json",
             },
-          }
+          },
         );
         if (response.data.status) {
           const modifiedData = response.data.data;
@@ -101,6 +113,13 @@ export function PublicDataProvider({ children }) {
             subscription: modifiedData.subscription,
           };
           setUser(userData);
+
+          if (
+            modifiedData.subscription?.status === "inactive" &&
+            !ALLOWED_INACTIVE_PATHS.includes(window.location.pathname)
+          ) {
+            window.location.href = "/pricing";
+          }
         }
         setLoading(false);
       } catch (error) {
@@ -127,7 +146,7 @@ export function PublicDataProvider({ children }) {
         masterContry,
         pages,
         user,
-        refetchUser : fetchUser,
+        refetchUser: fetchUser,
         loading,
       }}
     >

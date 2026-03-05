@@ -77,7 +77,7 @@ export default function Footer() {
                 <ul role="list" className="mt-2 space-y-2">
                   {slidesCountry.map((item) => (
                     <li key={item.name}>
-                      <a target="_blank" href={item.url} className="text-sm/6 ">
+                      <a target="_blank" href={`browse?country=${item.id}`}  className="text-sm/6 ">
                         {item.name}
                       </a>
                     </li>

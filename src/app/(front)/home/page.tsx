@@ -5,6 +5,8 @@ import { PlayCircleIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 import { useEffect, useState } from "react";
 
 type SliderType = {
@@ -27,14 +29,19 @@ type VideoWatch = {
 const slides = [
   { _id: "1", slug: "", image: "/topvoice/Ashley_Turner.png", name: "Group1" },
   { _id: "2", slug: "", image: "/topvoice/Atif_Ansar.png", name: "Group1" },
-  { _id: "3", slug: "", image: "/topvoice/Dr_Alexia_Nalewaik.png", name: "Group1" },
+  {
+    _id: "3",
+    slug: "",
+    image: "/topvoice/Dr_Alexia_Nalewaik.png",
+    name: "Group1",
+  },
   { _id: "4", slug: "", image: "/topvoice/Eddie_Obeng.png", name: "Group1" },
   { _id: "5", slug: "", image: "/topvoice/Greg_Lawton.png", name: "Group1" },
   { _id: "6", slug: "", image: "/topvoice/Lisa_Silander.png", name: "Group1" },
 ];
 
-
 export default function Home() {
+  const router = useRouter();
   const [title, setTitle] = useState([]);
   const [topTitle, setTopTitle] = useState([]);
   const [userVideo, setUserVideo] = useState([]);
@@ -53,7 +60,7 @@ export default function Home() {
           params: {
             limit: 10,
           },
-        }
+        },
       );
       if (response.data.status) {
         const modifiedData = response.data.data.data.map(
@@ -64,10 +71,10 @@ export default function Home() {
             image:
               item.poster &&
               process.env.NEXT_PUBLIC_WEBSITE + "/" + item.poster,
-          })
+          }),
         );
         setMainwatch(
-          "./titles/6856a3433e2804ea5de686dc/delivering-the-uks-most-complex-projects-and-programmes"
+          "./titles/6856a3433e2804ea5de686dc/delivering-the-uks-most-complex-projects-and-programmes",
         );
         setLoading(false);
         setTitle(modifiedData);
@@ -90,7 +97,7 @@ export default function Home() {
           params: {
             limit: 10,
           },
-        }
+        },
       );
       if (response.data.status) {
         const modifiedData = response.data.data.map((item: SliderType) => ({
@@ -121,7 +128,7 @@ export default function Home() {
           params: {
             limit: 10,
           },
-        }
+        },
       );
       if (response.data.status) {
         const modifiedData = response.data.data.map((item: VideoWatch) => ({
@@ -141,6 +148,13 @@ export default function Home() {
       console.error("Error fetching data:", error);
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/login");
+    }
+  }, [router]);
 
   useEffect(() => {
     fetchTitlte();
