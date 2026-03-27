@@ -22,9 +22,7 @@ export default function ClientLayoutWrapper({
       <div className="lg:pl-60">
         <TopHeader sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} />
 
-        <main className="py-5">
-          <div className="px-2 sm:px-4 lg:px-4">{children}</div>
-        </main>
+        <main>{children}</main>
       </div>
     </>
   );

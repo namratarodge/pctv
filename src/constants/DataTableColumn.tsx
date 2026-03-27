@@ -65,6 +65,7 @@ export const SubscriptionsColumn: {
   { key: "gateway_name", label: "Gateway Name" },
   { key: "renews_at", label: "Start At" },
   { key: "ends_at", label: "Ends At" },
+  { key: "created_at", label: "Created" },
 ];
 
 // Crew Column

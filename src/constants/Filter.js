@@ -132,10 +132,10 @@ export const SubscriptionsFilter = [
   },
   {
     name: "Gateway",
-    key: "Gateway",
+    key: "gateway_name",
     option: [
-      { name: "Stripe", value: "Stripe" },
-      { name: "Paypal", value: "Paypal" },
+      { name: "Stripe", value: "stripe" },
+      { name: "Admin", value: "admin-created" },
       { name: "None", value: "None" },
     ],
   },

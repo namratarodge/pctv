@@ -45,7 +45,6 @@ export default function Home() {
       );
       if (response.data.status) {
         const modifiedData = response.data.data;
-        console.log(modifiedData);
         setLoading(false);
         setData(modifiedData);
       }
@@ -71,9 +70,9 @@ export default function Home() {
             <dd className="mt-1 flex items-baseline justify-between md:block lg:flex">
               <div className="flex items-baseline text-xl font-semibold text-red-600">
                 {item.stat}
-                <span className="ml-2 text-xs font-medium text-gray-500">
+                {/* <span className="ml-2 text-xs font-medium text-gray-500">
                   from {item.previousStat}
-                </span>
+                </span> */}
               </div>
 
               <div
