@@ -59,7 +59,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
+    <div className="p-4">
       <h3 className="text-base font-semibold text-gray-900">
         Welcome, ADMIN Back!
       </h3>
