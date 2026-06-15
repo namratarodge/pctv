@@ -96,7 +96,7 @@ export default function Footer() {
                   ))}
                   <li>
                     <Link href="/contact" className="text-sm/6">
-                      Contact Us !!!!!
+                      Contact Us 
                     </Link>
                   </li>
                 </ul>
