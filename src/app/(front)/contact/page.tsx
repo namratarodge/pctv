@@ -2,7 +2,7 @@
 
 import {
   BuildingOffice2Icon,
-  EnvelopeIcon
+  EnvelopeIcon,PhoneIcon
 } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useState } from "react";
@@ -116,7 +116,7 @@ export default function ContactUs() {
                   United Kingdom <br />
                 </dd>
               </div>
-              {/* <div className="flex gap-x-4">
+               <div className="flex gap-x-4">
                 <dt className="flex-none">
                   <span className="sr-only">Telephone</span>
                   <PhoneIcon
@@ -129,10 +129,10 @@ export default function ContactUs() {
                     href="tel:+1 (555) 234-5678"
                     className="hover:text-gray-900"
                   >
-                    +1 (555) 234-5678
+                    +1 (201) 478-8967
                   </a>
                 </dd>
-              </div> */}
+              </div> 
               <div className="flex gap-x-4">
                 <dt className="flex-none">
                   <span className="sr-only">Email</span>
